@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/add_plan.dart';
-import 'package:implementation_intentions/goal_shielding.dart';
-import 'package:implementation_intentions/shield_repitition.dart';
+import 'package:implementation_intentions/screens/add_goal.dart';
+import 'package:implementation_intentions/screens/goal_shielding.dart';
+import 'package:implementation_intentions/screens/shield_repitition.dart';
+import 'package:provider/provider.dart';
+
+import 'models/implementation_intention.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,9 +24,16 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
+        primaryColor: Color(0xff003c7e),
+        backgroundColor: Color(0xff344865),
+        textTheme: TextTheme(
+            body1: TextStyle(fontSize: 16.0, color: Colors.black),
+            body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: ChangeNotifierProvider<ImplementationIntentionModel>(
+          builder: (_) => ImplementationIntentionModel(),
+          child: MyHomePage(title: 'Serene')),
     );
   }
 }
@@ -47,17 +57,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    setState(() {});
   }
 
   @override
@@ -75,50 +76,48 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: PageView(children: <Widget>[
-          AddPlan(),
-          GoalShielding(),
-          ShieldRepitition()
-        ],)
-        // child: Column(
-        //   // Column is also layout widget. It takes a list of children and
-        //   // arranges them vertically. By default, it sizes itself to fit its
-        //   // children horizontally, and tries to be as tall as its parent.
-        //   //
-        //   // Invoke "debug painting" (press "p" in the console, choose the
-        //   // "Toggle Debug Paint" action from the Flutter Inspector in Android
-        //   // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-        //   // to see the wireframe for each widget.
-        //   //
-        //   // Column has various properties to control how it sizes itself and
-        //   // how it positions its children. Here we use mainAxisAlignment to
-        //   // center the children vertically; the main axis here is the vertical
-        //   // axis because Columns are vertical (the cross axis would be
-        //   // horizontal).
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: <Widget>[
-        //     Text(
-        //       'You have miau the button this many times:',
-        //     ),
-        //     Text(
-        //       '$_counter',
-        //       style: Theme.of(context).textTheme.display1,
-        //     ),
-        //     RaisedButton(
-        //       child: Text("New Plan"),
-        //       elevation: 4.0,
-        //       onPressed: () {
-        //         Navigator.push(
-        //           context, 
-        //           MaterialPageRoute(builder: (context) => AddPlan())
-        //         );
-        //       },
-        //     )
-        //   ],
-        // ),
-      ),
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: PageView(
+        children: <Widget>[AddGoal(), GoalShielding(), ShieldRepitition()],
+      )
+          // child: Column(
+          //   // Column is also layout widget. It takes a list of children and
+          //   // arranges them vertically. By default, it sizes itself to fit its
+          //   // children horizontally, and tries to be as tall as its parent.
+          //   //
+          //   // Invoke "debug painting" (press "p" in the console, choose the
+          //   // "Toggle Debug Paint" action from the Flutter Inspector in Android
+          //   // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+          //   // to see the wireframe for each widget.
+          //   //
+          //   // Column has various properties to control how it sizes itself and
+          //   // how it positions its children. Here we use mainAxisAlignment to
+          //   // center the children vertically; the main axis here is the vertical
+          //   // axis because Columns are vertical (the cross axis would be
+          //   // horizontal).
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     Text(
+          //       'You have miau the button this many times:',
+          //     ),
+          //     Text(
+          //       '$_counter',
+          //       style: Theme.of(context).textTheme.display1,
+          //     ),
+          //     RaisedButton(
+          //       child: Text("New Plan"),
+          //       elevation: 4.0,
+          //       onPressed: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(builder: (context) => AddPlan())
+          //         );
+          //       },
+          //     )
+          //   ],
+          // ),
+          ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
