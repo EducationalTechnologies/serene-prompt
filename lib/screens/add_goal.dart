@@ -60,15 +60,13 @@ class AddGoalState extends State<AddGoal> {
   Widget build(BuildContext context) {
     final intention = Provider.of<ImplementationIntentionModel>(context);
 
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(
-          children: <Widget>[
-            buildTextEntry(intention),
-            buildDatePicker(),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: <Widget>[
+          buildTextEntry(intention),
+          buildDatePicker(),
+        ],
       ),
     );
   }

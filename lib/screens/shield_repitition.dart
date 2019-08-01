@@ -8,19 +8,105 @@ class ShieldRepitition extends StatefulWidget {
 }
 
 class _ShieldRepititionState extends State<ShieldRepitition> {
+  int _longPressCounter = 0;
+  bool _counterPressed = false;
+  bool _loopActive = false;
+  int _highlightIndex = 0;
+  int _textHighlightDelay = 50;
+  int _fullTextLength = 0;
+  int _repeatCounter = 0;
+
+  buildShieldActionTextPart(String shieldText) {
+    return TextSpan(text: "$shieldText ");
+  }
+
   buildShieldingText() {
     final intention = Provider.of<ImplementationIntentionModel>(context);
+
+    List<String> fullText = ["When ", "I ", "start "];
+
+    List<TextSpan> texts = [];
+
+    for (var i = 0; i < fullText.length; i++) {
+      texts.add(TextSpan(
+          text: fullText[i], style: TextStyle(fontWeight: FontWeight.normal)));
+    }
+
+    var split = intention.hindrance.split(" ");
+
+    for (var s in split) {
+      texts.add(TextSpan(
+          text: "$s ", style: TextStyle(fontWeight: FontWeight.normal)));
+    }
+
+    texts.add(
+        TextSpan(text: "I ", style: TextStyle(fontWeight: FontWeight.normal)));
+    texts.add(TextSpan(
+        text: "will ", style: TextStyle(fontWeight: FontWeight.normal)));
+
+    var splitShieldingActions = intention.shieldingActions.join().split(" ");
+
+    for (var s in splitShieldingActions) {
+      texts.add(TextSpan(
+          text: "$s ", style: TextStyle(fontWeight: FontWeight.normal)));
+    }
+
+    // for (var i = 0; i < intention.shieldingActions.length; i++) {
+    //   texts.add(TextSpan(
+    //       text: fullText[i], style: TextStyle(fontWeight: FontWeight.normal)));
+    // }
+
+    texts[_highlightIndex] = TextSpan(
+        text: texts[_highlightIndex].text,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16));
+
+    _fullTextLength = texts.length;
+    
     return RichText(
         text: TextSpan(
             style: DefaultTextStyle.of(context).style,
             children: <TextSpan>[
-          TextSpan(
-              text: "When I start ",
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          TextSpan(text: intention.hindrance),
-          TextSpan(text: " I will "),
-          TextSpan(text: "Continue here and add the shieldings")
+          ...texts
         ]));
+  }
+
+  void _increaseCounterWhilePressed() async {
+    // make sure that only one loop is active
+    if (_loopActive) return;
+
+    _loopActive = true;
+
+    while (_counterPressed) {
+      // do your thing
+      setState(() {
+        _longPressCounter++;
+        _highlightIndex = _longPressCounter % _fullTextLength;
+      });
+
+      // wait a bit
+      await Future.delayed(Duration(milliseconds: _textHighlightDelay));
+    }
+
+    _loopActive = false;
+  }
+
+  buildRepetitionButton() {
+    return GestureDetector(
+        onLongPressStart: (details) {
+          _counterPressed = true;
+          _increaseCounterWhilePressed();
+        },
+        // onLongPress: () {
+        //   _counterPressed = true;
+        //   _increaseCounterWhilePressed();
+        // },
+        onLongPressEnd: (details) {
+          _counterPressed = false;
+        },
+        child: RaisedButton(
+          onPressed: () {},
+          child: Text("$_longPressCounter", style: TextStyle(fontSize: 20)),
+        ));
   }
 
   @override
@@ -33,10 +119,9 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
           SizedBox(height: 50),
           Text("Repeat this mentally three times"),
           SizedBox(height: 5),
-          RaisedButton(
-            onPressed: () {},
-            child: const Text('1', style: TextStyle(fontSize: 20)),
-          ),
+          buildRepetitionButton(),
+          SizedBox(height: 20),
+          Text("Debug Stuff")
         ],
       ),
     );
