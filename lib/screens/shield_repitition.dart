@@ -12,7 +12,7 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
   bool _counterPressed = false;
   bool _loopActive = false;
   int _highlightIndex = 0;
-  int _textHighlightDelay = 50;
+
   int _fullTextLength = 0;
   int _repeatCounter = 0;
 
@@ -58,19 +58,19 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
 
     texts[_highlightIndex] = TextSpan(
         text: texts[_highlightIndex].text,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16));
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18));
 
     _fullTextLength = texts.length;
-    
+
     return RichText(
         text: TextSpan(
             style: DefaultTextStyle.of(context).style,
-            children: <TextSpan>[
-          ...texts
-        ]));
+            children: <TextSpan>[...texts]));
   }
 
   void _increaseCounterWhilePressed() async {
+    final int _textHighlightDelay = 200;
+
     // make sure that only one loop is active
     if (_loopActive) return;
 
@@ -84,6 +84,12 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
       });
 
       // wait a bit
+      if (_highlightIndex == _fullTextLength - 1) {
+        setState(() {
+          _repeatCounter++;
+        });
+        break;
+      }
       await Future.delayed(Duration(milliseconds: _textHighlightDelay));
     }
 
@@ -105,7 +111,7 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
         },
         child: RaisedButton(
           onPressed: () {},
-          child: Text("$_longPressCounter", style: TextStyle(fontSize: 20)),
+          child: Text("$_repeatCounter", style: TextStyle(fontSize: 20)),
         ));
   }
 
@@ -121,7 +127,7 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
           SizedBox(height: 5),
           buildRepetitionButton(),
           SizedBox(height: 20),
-          Text("Debug Stuff")
+          Text("Debug Stuff Counter: $_longPressCounter")
         ],
       ),
     );

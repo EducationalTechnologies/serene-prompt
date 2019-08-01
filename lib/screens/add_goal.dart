@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AddGoal extends StatefulWidget {
@@ -39,10 +40,15 @@ class AddGoalState extends State<AddGoal> {
 
   Widget buildDatePicker() {
     final intention = Provider.of<ImplementationIntentionModel>(context);
+
+    var dateText = DateFormat('dd.MM.yyy - kk:mm').format(intention.deadline);
     return Column(
       children: <Widget>[
-        SizedBox(height: 100),
-        Text("Until..."),
+        SizedBox(height: 50),
+        Text(
+          "Until...",
+          textAlign: TextAlign.left,
+        ),
         SizedBox(height: 10),
         GestureDetector(
             onTap: () {
@@ -50,7 +56,7 @@ class AddGoalState extends State<AddGoal> {
             },
             child: Row(children: [
               Icon(Icons.calendar_today, color: Colors.black),
-              Text("${intention.deadline.toLocal()}")
+              Text("$dateText")
             ]))
       ],
     );

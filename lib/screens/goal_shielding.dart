@@ -54,7 +54,7 @@ class _GoalShieldingState extends State<GoalShielding> {
     return Container(
       child: Column(
         children: <Widget>[
-          SizedBox(height: 100),
+          SizedBox(height: 50),
           Text("My biggest obstacle is...", textAlign: TextAlign.left),
           SizedBox(height: 10),
           buildObstacleDropdown(),
