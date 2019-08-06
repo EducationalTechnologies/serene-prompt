@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class ImplementationIntentionModel with ChangeNotifier {
+  int id;
   String goal = "";
   List<String> shieldingActions = [];
   String _hindrance = "";

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 0,
+    "name": "Watch series",
+    "shields": ["Turn device off"]
+  },
+  {
+    "id": 1,
+    "name": "Play games",
+    "shields": ["Switch off my computer"]
+  },
+  {
+    "id": 2,
+    "name": "",
+    "shields": ["A", "B", "C"]
+  }
+]

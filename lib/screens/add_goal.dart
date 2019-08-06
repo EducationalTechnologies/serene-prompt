@@ -21,13 +21,31 @@ class AddGoalState extends State<AddGoal> {
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate) intention.deadline = picked;
+
+    final TimeOfDay pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(intention.deadline),
+    );
+
+    if (pickedTime != null) {
+      var newDeadline = new DateTime(
+          intention.deadline.year,
+          intention.deadline.month,
+          intention.deadline.day,
+          pickedTime.hour,
+          pickedTime.minute);
+      intention.deadline = newDeadline;
+    }
   }
 
   Widget buildTextEntry(ImplementationIntentionModel intention) {
     return Column(
       children: <Widget>[
         SizedBox(height: 100),
-        Text("My goal is...:", textAlign: TextAlign.left,),
+        Text(
+          "My goal is...:",
+          textAlign: TextAlign.left,
+        ),
         SizedBox(height: 10),
         TextField(
           onChanged: (text) {
@@ -38,10 +56,15 @@ class AddGoalState extends State<AddGoal> {
     );
   }
 
+  getTextStyleForPicker() {
+    return TextStyle(fontWeight: FontWeight.w600, fontSize: 18);
+  }
+
   Widget buildDatePicker() {
     final intention = Provider.of<ImplementationIntentionModel>(context);
 
-    var dateText = DateFormat('dd.MM.yyy - kk:mm').format(intention.deadline);
+    var dateText = DateFormat('dd.MM.yyy').format(intention.deadline);
+    var timeText = DateFormat('kk:mm').format(intention.deadline);
     return Column(
       children: <Widget>[
         SizedBox(height: 50),
@@ -56,7 +79,18 @@ class AddGoalState extends State<AddGoal> {
             },
             child: Row(children: [
               Icon(Icons.calendar_today, color: Colors.black),
-              Text("$dateText")
+              SizedBox(width: 10),
+              Text(
+                "$dateText",
+                style: getTextStyleForPicker(),
+              ),
+              SizedBox(width: 10),
+              Icon(Icons.timer, color: Colors.black),
+              SizedBox(width: 10),
+              Text(
+                "$timeText",
+                style: getTextStyleForPicker(),
+              ),
             ]))
       ],
     );
