@@ -12,7 +12,14 @@ class ImplementationIntentionModel with ChangeNotifier {
     notifyListeners();
   }
 
-  DateTime deadline = DateTime.now();
+  DateTime _deadline = DateTime.now();
+
+  DateTime get deadline => _deadline;
+
+  set deadline(DateTime deadline) {
+    _deadline = deadline;
+    notifyListeners();
+  }
 
   setGoal(String goal) {
     this.goal = goal;

@@ -27,7 +27,7 @@ class AddGoalState extends State<AddGoal> {
     return Column(
       children: <Widget>[
         SizedBox(height: 100),
-        Text("My goal is...:"),
+        Text("My goal is...:", textAlign: TextAlign.left,),
         SizedBox(height: 10),
         TextField(
           onChanged: (text) {
