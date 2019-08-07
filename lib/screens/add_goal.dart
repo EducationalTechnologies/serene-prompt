@@ -41,16 +41,23 @@ class AddGoalState extends State<AddGoal> {
   Widget buildTextEntry(ImplementationIntentionModel intention) {
     return Column(
       children: <Widget>[
-        SizedBox(height: 100),
         Text(
-          "My goal is...:",
+          "My goal:",
           textAlign: TextAlign.left,
+          style: Theme.of(context).textTheme.display1,
         ),
         SizedBox(height: 10),
-        TextField(
-          onChanged: (text) {
-            intention.setGoal(text);
-          },
+        Container(
+          padding: EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(15)),
+          child: TextField(
+            keyboardType: TextInputType.multiline,
+            onChanged: (text) {
+              intention.setGoal(text);
+            },
+          ),
         )
       ],
     );
@@ -67,31 +74,34 @@ class AddGoalState extends State<AddGoal> {
     var timeText = DateFormat('kk:mm').format(intention.deadline);
     return Column(
       children: <Widget>[
-        SizedBox(height: 50),
         Text(
-          "Until...",
+          "Until",
           textAlign: TextAlign.left,
+          style: Theme.of(context).textTheme.display1,
         ),
-        SizedBox(height: 10),
-        GestureDetector(
+        SizedBox(height: 20),
+        InkWell(
             onTap: () {
               _selectDate(context);
             },
-            child: Row(children: [
-              Icon(Icons.calendar_today, color: Colors.black),
-              SizedBox(width: 10),
-              Text(
-                "$dateText",
-                style: getTextStyleForPicker(),
-              ),
-              SizedBox(width: 10),
-              Icon(Icons.timer, color: Colors.black),
-              SizedBox(width: 10),
-              Text(
-                "$timeText",
-                style: getTextStyleForPicker(),
-              ),
-            ]))
+            child: Row(
+              children: [
+                Icon(Icons.calendar_today, color: Colors.black),
+                SizedBox(width: 20),
+                Text(
+                  "$dateText",
+                  style: getTextStyleForPicker(),
+                ),
+                SizedBox(width: 20),
+                Icon(Icons.timer, color: Colors.black),
+                SizedBox(width: 20),
+                Text(
+                  "$timeText",
+                  style: getTextStyleForPicker(),
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ))
       ],
     );
   }
@@ -104,7 +114,9 @@ class AddGoalState extends State<AddGoal> {
       margin: EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
         children: <Widget>[
+          SizedBox(height: 50),
           buildTextEntry(intention),
+          SizedBox(height: 50),
           buildDatePicker(),
         ],
       ),
