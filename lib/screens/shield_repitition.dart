@@ -20,6 +20,18 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
     return TextSpan(text: "$shieldText ");
   }
 
+  getRegularText(String text) {
+    return TextSpan(
+        text: text,
+        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20));
+  }
+
+  getHighlightedText(String text) {
+    return TextSpan(
+        text: text,
+        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20));
+  }
+
   buildShieldingText() {
     final intention = Provider.of<ImplementationIntentionModel>(context);
 
@@ -28,37 +40,25 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
     List<TextSpan> texts = [];
 
     for (var i = 0; i < fullText.length; i++) {
-      texts.add(TextSpan(
-          text: fullText[i], style: TextStyle(fontWeight: FontWeight.normal)));
+      texts.add(getRegularText(fullText[i]));
     }
 
     var split = intention.hindrance.split(" ");
 
     for (var s in split) {
-      texts.add(TextSpan(
-          text: "$s ", style: TextStyle(fontWeight: FontWeight.normal)));
+      texts.add(getRegularText("$s "));
     }
 
-    texts.add(
-        TextSpan(text: "I ", style: TextStyle(fontWeight: FontWeight.normal)));
-    texts.add(TextSpan(
-        text: "will ", style: TextStyle(fontWeight: FontWeight.normal)));
+    texts.add(getRegularText("I "));
+    texts.add(getRegularText("will "));
 
     var splitShieldingActions = intention.shieldingActions.join().split(" ");
 
     for (var s in splitShieldingActions) {
-      texts.add(TextSpan(
-          text: "$s ", style: TextStyle(fontWeight: FontWeight.normal)));
+      texts.add(getRegularText("$s "));
     }
 
-    // for (var i = 0; i < intention.shieldingActions.length; i++) {
-    //   texts.add(TextSpan(
-    //       text: fullText[i], style: TextStyle(fontWeight: FontWeight.normal)));
-    // }
-
-    texts[_highlightIndex] = TextSpan(
-        text: texts[_highlightIndex].text,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18));
+    texts[_highlightIndex] = getHighlightedText(texts[_highlightIndex].text);
 
     _fullTextLength = texts.length;
 
@@ -109,10 +109,15 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
         onLongPressEnd: (details) {
           _counterPressed = false;
         },
-        child: RaisedButton(
-          onPressed: () {},
-          child: Text("$_repeatCounter", style: TextStyle(fontSize: 20)),
-        ));
+        child: SizedBox(
+            width: 250,
+            height: 80,
+            child: RaisedButton(
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(15.0)),
+              child: Text("$_repeatCounter", style: TextStyle(fontSize: 20)),
+            )));
   }
 
   @override
