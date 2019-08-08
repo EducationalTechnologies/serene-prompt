@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import 'models/implementation_intention.dart';
 
+// Currently following https://medium.com/flutter-community/flutter-architecture-provider-implementation-guide-d33133a9a4e8
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -75,48 +77,35 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Drawer Header"),
+              decoration: BoxDecoration(color: Colors.orange),
+            ),
+            ListTile(
+              title: Text("Add Goal"),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text("Monitor"),
+              onTap: () {},
+            ),
+            ListTile(
+              title: Text("Reflect"),
+              onTap: () {},
+            )
+          ],
+        ),
+      ),
       backgroundColor: Colors.amber,
       body: Container(
-          child: PageView(
-        children: <Widget>[AddGoal(), GoalShielding(), ShieldRepitition()],
-      )
-          // child: Column(
-          //   // Column is also layout widget. It takes a list of children and
-          //   // arranges them vertically. By default, it sizes itself to fit its
-          //   // children horizontally, and tries to be as tall as its parent.
-          //   //
-          //   // Invoke "debug painting" (press "p" in the console, choose the
-          //   // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          //   // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          //   // to see the wireframe for each widget.
-          //   //
-          //   // Column has various properties to control how it sizes itself and
-          //   // how it positions its children. Here we use mainAxisAlignment to
-          //   // center the children vertically; the main axis here is the vertical
-          //   // axis because Columns are vertical (the cross axis would be
-          //   // horizontal).
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Text(
-          //       'You have miau the button this many times:',
-          //     ),
-          //     Text(
-          //       '$_counter',
-          //       style: Theme.of(context).textTheme.display1,
-          //     ),
-          //     RaisedButton(
-          //       child: Text("New Plan"),
-          //       elevation: 4.0,
-          //       onPressed: () {
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(builder: (context) => AddPlan())
-          //         );
-          //       },
-          //     )
-          //   ],
-          // ),
-          ),
+        child: PageView(
+          children: <Widget>[AddGoal(), GoalShielding(), ShieldRepitition()],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
