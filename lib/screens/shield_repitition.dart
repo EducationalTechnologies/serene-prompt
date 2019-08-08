@@ -127,7 +127,7 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
           SizedBox(height: 5),
           buildRepetitionButton(),
           SizedBox(height: 20),
-          Text("Debug Stuff Counter: $_longPressCounter")
+          // Text("Debug Stuff Counter: $_longPressCounter")
         ],
       ),
     );

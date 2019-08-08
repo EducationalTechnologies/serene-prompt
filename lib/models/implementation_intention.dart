@@ -2,7 +2,15 @@ import 'package:flutter/cupertino.dart';
 
 class ImplementationIntentionModel with ChangeNotifier {
   int id;
-  String goal = "";
+  String _goal = "";
+
+  String get goal => _goal;
+
+  set goal(String goal) {
+    _goal = goal;
+    notifyListeners();
+  }
+
   List<String> shieldingActions = [];
   String _hindrance = "";
 
@@ -43,4 +51,14 @@ class ImplementationIntentionModel with ChangeNotifier {
     shieldingActions.removeWhere((a) => a == action);
     notifyListeners();
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "goal", this.goal,
+      "deadline"
+    };
+  }
+
+  ImplementationIntentionModel();
 }
