@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:implementation_intentions/services/database_helpers.dart';
+import 'package:implementation_intentions/shared/text_styles.dart';
+import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +16,16 @@ class AddGoal extends StatefulWidget {
 
 class AddGoalState extends State<AddGoal> {
   DateTime selectedDate = DateTime.now();
+  String _goalText = "";
+
+  _submitGoal() {
+    var goal = new Goal();
+    goal.deadline = selectedDate;
+    goal.goal = _goalText;
+    goal.progress = 0;
+
+    DBProvider.db.insertGoal(goal);
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     final intention = Provider.of<ImplementationIntentionModel>(context);
@@ -38,13 +52,15 @@ class AddGoalState extends State<AddGoal> {
     }
   }
 
-  Widget buildTextEntry(ImplementationIntentionModel intention) {
+  Widget buildTextEntry() {
+    final intention = Provider.of<ImplementationIntentionModel>(context);
+
     return Column(
       children: <Widget>[
         Text(
           "My goal:",
           textAlign: TextAlign.left,
-          style: Theme.of(context).textTheme.display1,
+          style: subHeaderStyle,
         ),
         SizedBox(height: 10),
         Container(
@@ -53,18 +69,18 @@ class AddGoalState extends State<AddGoal> {
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(15)),
           child: TextField(
-            keyboardType: TextInputType.multiline,
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.done,
             onChanged: (text) {
               intention.setGoal(text);
+              setState(() {
+                _goalText = text;
+              });
             },
           ),
         )
       ],
     );
-  }
-
-  getTextStyleForPicker() {
-    return TextStyle(fontWeight: FontWeight.w600, fontSize: 18);
   }
 
   Widget buildDatePicker() {
@@ -77,7 +93,7 @@ class AddGoalState extends State<AddGoal> {
         Text(
           "Until",
           textAlign: TextAlign.left,
-          style: Theme.of(context).textTheme.display1,
+          style: subHeaderStyle,
         ),
         SizedBox(height: 20),
         InkWell(
@@ -87,17 +103,17 @@ class AddGoalState extends State<AddGoal> {
             child: Row(
               children: [
                 Icon(Icons.calendar_today, color: Colors.black),
-                SizedBox(width: 20),
+                UIHelper.horizontalSpaceSmall(),
                 Text(
                   "$dateText",
-                  style: getTextStyleForPicker(),
+                  style: pickerStyle,
                 ),
-                SizedBox(width: 20),
+                UIHelper.horizontalSpaceMedium(),
                 Icon(Icons.timer, color: Colors.black),
-                SizedBox(width: 20),
+                UIHelper.horizontalSpaceSmall(),
                 Text(
                   "$timeText",
-                  style: getTextStyleForPicker(),
+                  style: pickerStyle,
                 ),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
@@ -108,16 +124,26 @@ class AddGoalState extends State<AddGoal> {
 
   @override
   Widget build(BuildContext context) {
-    final intention = Provider.of<ImplementationIntentionModel>(context);
-
     return Container(
       margin: EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
         children: <Widget>[
-          SizedBox(height: 50),
-          buildTextEntry(intention),
-          SizedBox(height: 50),
+          UIHelper.verticalSpaceMedium(),
+          buildTextEntry(),
+          UIHelper.verticalSpaceLarge(),
           buildDatePicker(),
+          UIHelper.verticalSpaceLarge(),
+          SizedBox(
+              width: 250,
+              height: 80,
+              child: RaisedButton(
+                onPressed: () {
+                  _submitGoal();
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(15.0)),
+                child: Text("Submit", style: TextStyle(fontSize: 20)),
+              ))
         ],
       ),
     );

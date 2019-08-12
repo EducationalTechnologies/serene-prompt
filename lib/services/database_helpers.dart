@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:implementation_intentions/models/goal.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -27,16 +28,34 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "TestDB.db");
-    return await openDatabase(
-      path, 
-      version: 1, 
-      onOpen: (db) {},
-      onCreate: (Database db, int version) async {
-        await db.execute("CREATE TABLE goals(id INTEGER PRIMARY KEY, " +
-        "goal STRING, " +
-        "deadline STRING, " +
-        ""
-        ")");
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+      await db
+          .execute("CREATE TABLE goals(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+              "goal STRING, " +
+              "deadline STRING, " +
+              "progress INTEGER"
+                  ")");
+    });
+  }
+
+  insertGoal(Goal goal) async {
+    final Database db = await database;
+
+    await db.insert("goals", goal.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  getGoals() async {
+    final db = await database;
+    var maps = await db.query("goals");
+
+    return List.generate(maps.length, (i) {
+      return Goal(
+          deadline: DateTime.parse(maps[i]["deadline"]),
+          id: maps[i]["id"],
+          goal: maps[i]["goal"],
+          progress: maps[i]["progress"]);
     });
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:implementation_intentions/shared/text_styles.dart';
+import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
 
 class GoalShielding extends StatefulWidget {
@@ -54,21 +56,21 @@ class _GoalShieldingState extends State<GoalShielding> {
     return Container(
       child: Column(
         children: <Widget>[
-          SizedBox(height: 50),
+          UIHelper.verticalSpaceMedium(),
           Text(
             "My biggest obstacle is:",
             textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.display1,
+            style: subHeaderStyle,
           ),
-          SizedBox(height: 10),
+          UIHelper.verticalSpaceSmall(),
           buildObstacleDropdown(),
-          SizedBox(height: 10),
+          UIHelper.verticalSpaceSmall(),
           Text(
             "To overcome this, I will:",
             textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.display1,
+            style: subHeaderStyle,
           ),
-          SizedBox(height: 10),
+          UIHelper.verticalSpaceSmall(),
           buildShieldSelection()
         ],
       ),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:implementation_intentions/shared/text_styles.dart';
+import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
 
-class ShieldRepitition extends StatefulWidget {
+class ShieldRepetition extends StatefulWidget {
   @override
-  _ShieldRepititionState createState() => _ShieldRepititionState();
+  _ShieldRepetitionState createState() => _ShieldRepetitionState();
 }
 
-class _ShieldRepititionState extends State<ShieldRepitition> {
+class _ShieldRepetitionState extends State<ShieldRepetition> {
   int _longPressCounter = 0;
   bool _counterPressed = false;
   bool _loopActive = false;
@@ -125,13 +127,15 @@ class _ShieldRepititionState extends State<ShieldRepitition> {
     return Container(
       child: Column(
         children: <Widget>[
-          SizedBox(height: 50),
+          UIHelper.verticalSpaceMedium(),
+          Text(
+            "Repeat the following text mentally three times, while pressing the button",
+            style: subHeaderStyle,
+          ),
+          UIHelper.verticalSpaceMedium(),
           buildShieldingText(),
-          SizedBox(height: 50),
-          Text("Repeat this mentally three times"),
-          SizedBox(height: 5),
+          UIHelper.verticalSpaceMedium(),
           buildRepetitionButton(),
-          SizedBox(height: 20),
           // Text("Debug Stuff Counter: $_longPressCounter")
         ],
       ),

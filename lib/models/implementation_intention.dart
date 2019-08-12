@@ -55,8 +55,8 @@ class ImplementationIntentionModel with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       "id": id,
-      "goal", this.goal,
-      "deadline"
+      "goal": this._goal,
+      "deadline": this._deadline.toIso8601String()
     };
   }
 

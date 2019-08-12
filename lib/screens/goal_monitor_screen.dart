@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal.dart';
+import 'package:implementation_intentions/services/database_helpers.dart';
 
 class GoalMonitorScreen extends StatefulWidget {
   @override
@@ -6,40 +8,40 @@ class GoalMonitorScreen extends StatefulWidget {
 }
 
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
-  final goals = [
-    'Goal One',
-    'Goal Two',
-    'Goal Three',
-    'Goal Four',
-    'Goal Five',
-    'Goal Six',
-    'Goal Seven',
-    'Goal Eight'
-  ];
+  buildListView(List<Goal> goals) {
+    return ListView.builder(
+      itemCount: goals.length,
+      itemBuilder: (context, index) {
+        return CheckboxListTile(
+            value: goals.elementAt(index).progress == 100,
+            title: Text(goals.elementAt(index).goal),
+            onChanged: (bool value) {
+              setState(() {
+                goals.elementAt(index).progress = 100;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: <Widget>[
-          ListView.builder(
-            itemCount: goals.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  leading: Icon(Icons.today),
-                  title: Text(goals[index]),
-                ),
-              );
-            },
-          )
-        ],
-      ),
-    );
+        child: FutureBuilder<dynamic>(
+      future: DBProvider.db.getGoals(),
+      initialData: List(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return buildListView(snapshot.data as List<Goal>);
+          }
+        }
+        return Center(child: CircularProgressIndicator());
+      },
+    ));
   }
 }
-
-abstract class ListItem {}
 
 // class CheckboxItem implements ListItem {
 //   final String goal;
