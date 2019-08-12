@@ -3,6 +3,7 @@ import 'package:implementation_intentions/models/goal.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:async';
 
 // database table and column names
 final String tableWords = 'implementationIntentions';
