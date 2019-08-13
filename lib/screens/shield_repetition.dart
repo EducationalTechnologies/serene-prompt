@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:implementation_intentions/models/implementation_intention_state.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ class _ShieldRepetitionState extends State<ShieldRepetition> {
   }
 
   buildShieldingText() {
-    final intention = Provider.of<ImplementationIntentionModel>(context);
+    final intention = Provider.of<ImplementationIntentionState>(context);
 
     List<String> fullText = ["When ", "I ", "start "];
 

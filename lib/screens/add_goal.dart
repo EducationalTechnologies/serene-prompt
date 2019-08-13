@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:implementation_intentions/models/goal_state.dart';
 import 'package:implementation_intentions/services/database_helpers.dart';
+import 'package:implementation_intentions/shared/app_colors.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +17,7 @@ class AddGoal extends StatefulWidget {
 
 class AddGoalState extends State<AddGoal> {
   DateTime selectedDate = DateTime.now();
+  Goal _goal;
   String _goalText = "";
 
   _submitGoal() {
@@ -28,37 +30,36 @@ class AddGoalState extends State<AddGoal> {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final intention = Provider.of<ImplementationIntentionModel>(context);
+    final appState = Provider.of<GoalState>(context);
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) intention.deadline = picked;
+    if (picked != null && picked != selectedDate)
+      appState.currentGoal.deadline = picked;
 
     final TimeOfDay pickedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.fromDateTime(intention.deadline),
+      initialTime: TimeOfDay.fromDateTime(appState.currentGoal.deadline),
     );
 
     if (pickedTime != null) {
       var newDeadline = new DateTime(
-          intention.deadline.year,
-          intention.deadline.month,
-          intention.deadline.day,
+          appState.currentGoal.deadline.year,
+          appState.currentGoal.deadline.month,
+          appState.currentGoal.deadline.day,
           pickedTime.hour,
           pickedTime.minute);
-      intention.deadline = newDeadline;
+      appState.currentGoal.deadline = newDeadline;
     }
   }
 
   Widget buildTextEntry() {
-    final intention = Provider.of<ImplementationIntentionModel>(context);
-
     return Column(
       children: <Widget>[
         Text(
-          "My goal:",
+          "Ziel",
           textAlign: TextAlign.left,
           style: subHeaderStyle,
         ),
@@ -72,7 +73,6 @@ class AddGoalState extends State<AddGoal> {
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
             onChanged: (text) {
-              intention.setGoal(text);
               setState(() {
                 _goalText = text;
               });
@@ -84,14 +84,14 @@ class AddGoalState extends State<AddGoal> {
   }
 
   Widget buildDatePicker() {
-    final intention = Provider.of<ImplementationIntentionModel>(context);
-
-    var dateText = DateFormat('dd.MM.yyy').format(intention.deadline);
-    var timeText = DateFormat('kk:mm').format(intention.deadline);
+    final appState = Provider.of<GoalState>(context);
+    var dateText =
+        DateFormat('dd.MM.yyy').format(appState.currentGoal.deadline);
+    var timeText = DateFormat('kk:mm').format(appState.currentGoal.deadline);
     return Column(
       children: <Widget>[
         Text(
-          "Until",
+          "Deadline",
           textAlign: TextAlign.left,
           style: subHeaderStyle,
         ),
@@ -137,12 +137,13 @@ class AddGoalState extends State<AddGoal> {
               width: 250,
               height: 80,
               child: RaisedButton(
+                color: primaryColor,
                 onPressed: () {
                   _submitGoal();
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(15.0)),
-                child: Text("Submit", style: TextStyle(fontSize: 20)),
+                child: Text("Speichern", style: TextStyle(fontSize: 20)),
               ))
         ],
       ),

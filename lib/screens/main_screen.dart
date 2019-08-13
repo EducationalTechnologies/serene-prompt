@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal_state.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -10,7 +12,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
+  int _selectedPageIndex = 0;
+  PageController _controller;
+
+  @override
+  void initState() {
+    _controller = new PageController(initialPage: _selectedPageIndex);
+    super.initState();
+  }
 
   static List<Widget> _widgetOptions = [
     AddGoal(),
@@ -18,11 +27,16 @@ class _MainScreenState extends State<MainScreen> {
     ReflectScreen()
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _fetchData() {
+    final appState = Provider.of<GoalState>(context);
+    appState.fetchGoals();
   }
+
+  void _onItemTapped(int index) {
+    this._controller.animateToPage(index,
+        duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +47,16 @@ class _MainScreenState extends State<MainScreen> {
         title: Text("Serene"),
       ),
       drawer: SereneDrawer(),
-      backgroundColor: Colors.amber,
-      body: Container(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      backgroundColor: Colors.white,
+      body: PageView(
+        controller: _controller,
+        onPageChanged: (newPage) {
+          this._fetchData();
+          setState(() {
+            _selectedPageIndex = newPage;
+          });
+        },
+        children: _widgetOptions,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -46,9 +67,11 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
               icon: Icon(Icons.wallpaper), title: Text("Statistiken"))
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: _selectedPageIndex,
         selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        onTap: (index) {
+          _onItemTapped(index);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

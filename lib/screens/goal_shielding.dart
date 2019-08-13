@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:implementation_intentions/models/implementation_intention_state.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +15,7 @@ class _GoalShieldingState extends State<GoalShielding> {
   String selectedHindrance;
 
   buildObstacleDropdown() {
-    final intention = Provider.of<ImplementationIntentionModel>(context);
+    final intention = Provider.of<ImplementationIntentionState>(context);
     return DropdownButton<String>(
       value: selectedHindrance,
       onChanged: (String newValue) {
@@ -31,7 +31,7 @@ class _GoalShieldingState extends State<GoalShielding> {
   }
 
   buildShieldItem(String shield) {
-    final intention = Provider.of<ImplementationIntentionModel>(context);
+    final intention = Provider.of<ImplementationIntentionState>(context);
 
     return CheckboxListTile(
       title: Text(shield),

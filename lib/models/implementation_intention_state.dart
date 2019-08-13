@@ -1,15 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal_state.dart';
 
-class ImplementationIntentionModel with ChangeNotifier {
+mixin ImplementationIntentionState implements GoalState {
   int id;
-  String _goal = "";
-
-  String get goal => _goal;
-
-  set goal(String goal) {
-    _goal = goal;
-    notifyListeners();
-  }
 
   List<String> shieldingActions = [];
   String _hindrance = "";
@@ -30,16 +22,6 @@ class ImplementationIntentionModel with ChangeNotifier {
     notifyListeners();
   }
 
-  setGoal(String goal) {
-    this.goal = goal;
-    print("New Goal is: $goal");
-    notifyListeners();
-  }
-
-  getGoal() {
-    return this.goal;
-  }
-
   addShieldingAction(String action) {
     print("Adding Shielding Action $action");
     shieldingActions.add(action);
@@ -51,14 +33,4 @@ class ImplementationIntentionModel with ChangeNotifier {
     shieldingActions.removeWhere((a) => a == action);
     notifyListeners();
   }
-
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "goal": this._goal,
-      "deadline": this._deadline.toIso8601String()
-    };
-  }
-
-  ImplementationIntentionModel();
 }

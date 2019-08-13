@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal_state.dart';
+import 'package:implementation_intentions/models/implementation_intention.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/goal_shielding.dart';
@@ -7,8 +9,6 @@ import 'package:implementation_intentions/screens/shield_repetition.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
 import 'package:provider/provider.dart';
-
-import 'models/implementation_intention.dart';
 
 // Currently following https://medium.com/flutter-community/flutter-architecture-provider-implementation-guide-d33133a9a4e8
 
@@ -42,15 +42,14 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider<ImplementationIntentionModel>(
                   builder: (_) => ImplementationIntentionModel(),
                   child: MyHomePage(title: 'Serene')),
-          GOALS: (BuildContext context) => GoalMonitorScreen(),
-          GOAL_SHIELDING: (BuildContext context) =>
+          NamedRoutes.GOALS: (BuildContext context) => GoalMonitorScreen(),
+          NamedRoutes.GOAL_SHIELDING: (BuildContext context) =>
               ChangeNotifierProvider<ImplementationIntentionModel>(
                   builder: (_) => ImplementationIntentionModel(),
                   child: MyHomePage(title: 'Serene')),
-          MAIN: (BuildContext context) =>
-              ChangeNotifierProvider<ImplementationIntentionModel>(
-                  builder: (_) => ImplementationIntentionModel(),
-                  child: MainScreen())
+          NamedRoutes.MAIN: (BuildContext context) =>
+              ChangeNotifierProvider<GoalState>(
+                  builder: (_) => GoalState(), child: MainScreen())
         }
         // home: ChangeNotifierProvider<ImplementationIntentionModel>(
         //     builder: (_) => ImplementationIntentionModel(),
@@ -103,11 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[AddGoal(), GoalShielding(), ShieldRepetition()],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

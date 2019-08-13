@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/services/database_helpers.dart';
+import 'package:implementation_intentions/models/goal_state.dart';
+import 'package:provider/provider.dart';
 
 class GoalMonitorScreen extends StatefulWidget {
   @override
@@ -20,26 +21,37 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                 goals.elementAt(index).progress = 100;
               });
             },
-            controlAffinity: ListTileControlAffinity.leading);
+            controlAffinity: ListTileControlAffinity.leading,
+            );
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: FutureBuilder<dynamic>(
-      future: DBProvider.db.getGoals(),
-      initialData: List(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return buildListView(snapshot.data as List<Goal>);
-          }
-        }
-        return Center(child: CircularProgressIndicator());
-      },
-    ));
+    final appState = Provider.of<GoalState>(context);
+
+    if (appState.isFetching) {
+      return Center(child: CircularProgressIndicator());
+    } else {
+      return Container(
+        child: buildListView(appState.getGoals()),
+      );
+    }
+
+    // return Container(
+    //     child: FutureBuilder<dynamic>(
+    //   future: DBProvider.db.getGoals(),
+    //   initialData: List(),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         return buildListView(snapshot.data as List<Goal>);
+    //       }
+    //     }
+    //     return Center(child: CircularProgressIndicator());
+    //   },
+    // ));
   }
 }
 

@@ -15,25 +15,25 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
             title: Text("Neues Ziel"),
             onTap: () {
-              Navigator.pushNamed(context, MAIN);
+              Navigator.pushNamed(context, NamedRoutes.MAIN);
             },
           ),
           ListTile(
             title: Text("Ziele"),
             onTap: () {
-              Navigator.pushNamed(context, MAIN);
+              Navigator.pushNamed(context, NamedRoutes.MAIN);
             },
           ),
           ListTile(
             title: Text("Reflektieren"),
             onTap: () {
-              Navigator.pushNamed(context, MAIN);
+              Navigator.pushNamed(context, NamedRoutes.MAIN);
             },
           ),
           ListTile(
               title: Text("Goal Shielding"),
               onTap: () {
-                Navigator.pushNamed(context, GOAL_SHIELDING);
+                Navigator.pushNamed(context, NamedRoutes.GOAL_SHIELDING);
               }),
         ],
       ),

@@ -1,3 +1,5 @@
-const MAIN = "/main";
-const GOALS = "/goals";
-const GOAL_SHIELDING = "/goalshielding";
+class NamedRoutes {
+  static const MAIN = "/main";
+  static const GOALS = "/goals";
+  static const GOAL_SHIELDING = "/goalshielding";
+}
