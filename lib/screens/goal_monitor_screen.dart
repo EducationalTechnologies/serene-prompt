@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
+import 'package:implementation_intentions/models/goal_monitor_item_state.dart';
 import 'package:implementation_intentions/models/goal_state.dart';
+import 'package:implementation_intentions/widgets/list_items.dart';
 import 'package:provider/provider.dart';
 
 class GoalMonitorScreen extends StatefulWidget {
@@ -13,16 +15,23 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     return ListView.builder(
       itemCount: goals.length,
       itemBuilder: (context, index) {
-        return CheckboxListTile(
-            value: goals.elementAt(index).progress == 100,
-            title: Text(goals.elementAt(index).goal),
-            onChanged: (bool value) {
-              setState(() {
-                goals.elementAt(index).progress = 100;
-              });
-            },
-            controlAffinity: ListTileControlAffinity.leading,
-            );
+        return Card(
+          child: ChangeNotifierProvider<GoalMonitorItemState>(
+              builder: (_) => GoalMonitorItemState(goals.elementAt(index)),
+              child: Column(
+                children: <Widget>[ProgressListItem()],
+              )),
+        );
+        // return CheckboxListTile(
+        //     value: goals.elementAt(index).progress == 100,
+        //     title: Text(goals.elementAt(index).goal),
+        //     onChanged: (bool value) {
+        //       setState(() {
+        //         goals.elementAt(index).progress = 100;
+        //       });
+        //     },
+        //     controlAffinity: ListTileControlAffinity.leading,
+        //     );
       },
     );
   }
@@ -54,9 +63,3 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     // ));
   }
 }
-
-// class CheckboxItem implements ListItem {
-//   final String goal;
-//   bool complete
-//   ProgressItem
-// }

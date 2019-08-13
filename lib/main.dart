@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal_state.dart';
-import 'package:implementation_intentions/models/implementation_intention.dart';
+import 'package:implementation_intentions/models/implementation_intention_state.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/goal_shielding.dart';
@@ -39,13 +39,13 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           "/": (BuildContext context) =>
-              ChangeNotifierProvider<ImplementationIntentionModel>(
-                  builder: (_) => ImplementationIntentionModel(),
+              ChangeNotifierProvider<ImplementationIntentionState>(
+                  builder: (_) => ImplementationIntentionState(),
                   child: MyHomePage(title: 'Serene')),
           NamedRoutes.GOALS: (BuildContext context) => GoalMonitorScreen(),
           NamedRoutes.GOAL_SHIELDING: (BuildContext context) =>
-              ChangeNotifierProvider<ImplementationIntentionModel>(
-                  builder: (_) => ImplementationIntentionModel(),
+              ChangeNotifierProvider<ImplementationIntentionState>(
+                  builder: (_) => ImplementationIntentionState(),
                   child: MyHomePage(title: 'Serene')),
           NamedRoutes.MAIN: (BuildContext context) =>
               ChangeNotifierProvider<GoalState>(

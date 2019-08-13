@@ -1,6 +1,6 @@
 import 'package:implementation_intentions/models/goal_state.dart';
 
-mixin ImplementationIntentionState implements GoalState {
+class ImplementationIntentionState extends GoalState {
   int id;
 
   List<String> shieldingActions = [];

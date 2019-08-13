@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/services/database_helpers.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 
 class SereneDrawer extends StatelessWidget {
@@ -34,6 +35,16 @@ class SereneDrawer extends StatelessWidget {
               title: Text("Goal Shielding"),
               onTap: () {
                 Navigator.pushNamed(context, NamedRoutes.GOAL_SHIELDING);
+              }),
+          ListTile(
+              title: Text("Clear Goals Database"),
+              onTap: () {
+                DBProvider.db.clearDatabase();
+              }),
+          ListTile(
+              title: Text("Insert Sample Goals"),
+              onTap: () {
+                DBProvider.db.insertSampleData();
               }),
         ],
       ),
