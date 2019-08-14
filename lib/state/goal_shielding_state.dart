@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/services/database_helpers.dart';
 
@@ -11,9 +14,16 @@ class GoalShieldingState with ChangeNotifier {
   // TODO: Put Goals in a service
   List<Goal> goals = List();
 
+  readHindranceJson() async {
+    // String data = await rootBundle.loadString("assets/hindrances.json");
+    // var jsonResult = jsonDecode(data);
+    // print(jsonResult);
+  }
+
   fetchData() async {
     print("FETCHING GOALS IN GOAL SHIELDING STATE");
     goals = await DBProvider.db.getGoals();
+    readHindranceJson();
     notifyListeners();
     return goals;
   }

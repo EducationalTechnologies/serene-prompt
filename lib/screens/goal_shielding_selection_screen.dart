@@ -5,14 +5,13 @@ import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
 class GoalShieldingSelectionScreen extends StatelessWidget {
-  List<String> hindrances = ["Watching TV", "Playing Games"];
-  List<String> shields = ["Turn it off", "Curl into a ball and cry"];
-  String selectedHindrance;
+  final List<String> hindrances = ["Watching TV", "Playing Games"];
+  final List<String> shields = ["Turn it off", "Curl into a ball and cry"];
 
   buildObstacleDropdown(BuildContext context) {
     final intention = Provider.of<GoalShieldingState>(context);
     return DropdownButton<String>(
-      value: selectedHindrance,
+      value: intention.hindrance,
       onChanged: (String newValue) {
         intention.hindrance = newValue;
       },
