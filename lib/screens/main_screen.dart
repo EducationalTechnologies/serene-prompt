@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal_state.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
+import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +36,6 @@ class _MainScreenState extends State<MainScreen> {
     this._controller.animateToPage(index,
         duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
   }
-
 
   @override
   Widget build(BuildContext context) {

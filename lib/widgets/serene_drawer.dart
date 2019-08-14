@@ -16,7 +16,7 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
             title: Text("Neues Ziel"),
             onTap: () {
-              Navigator.pushNamed(context, NamedRoutes.MAIN);
+              Navigator.pushNamed(context, NamedRoutes.ADD_GOAL);
             },
           ),
           ListTile(

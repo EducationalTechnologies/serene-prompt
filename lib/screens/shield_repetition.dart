@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/implementation_intention_state.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
+import 'package:implementation_intentions/state/implementation_intention_state.dart';
 import 'package:provider/provider.dart';
 
 class ShieldRepetition extends StatefulWidget {

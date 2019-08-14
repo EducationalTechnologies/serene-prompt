@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/models/goal_monitor_item_state.dart';
-import 'package:implementation_intentions/models/goal_state.dart';
+import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
+import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:implementation_intentions/widgets/list_items.dart';
 import 'package:provider/provider.dart';
 
@@ -22,16 +22,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                 children: <Widget>[ProgressListItem()],
               )),
         );
-        // return CheckboxListTile(
-        //     value: goals.elementAt(index).progress == 100,
-        //     title: Text(goals.elementAt(index).goal),
-        //     onChanged: (bool value) {
-        //       setState(() {
-        //         goals.elementAt(index).progress = 100;
-        //       });
-        //     },
-        //     controlAffinity: ListTileControlAffinity.leading,
-        //     );
       },
     );
   }
@@ -47,19 +37,5 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         child: buildListView(appState.getGoals()),
       );
     }
-
-    // return Container(
-    //     child: FutureBuilder<dynamic>(
-    //   future: DBProvider.db.getGoals(),
-    //   initialData: List(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData) {
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         return buildListView(snapshot.data as List<Goal>);
-    //       }
-    //     }
-    //     return Center(child: CircularProgressIndicator());
-    //   },
-    // ));
   }
 }

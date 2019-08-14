@@ -1,4 +1,5 @@
-import 'package:implementation_intentions/models/goal_state.dart';
+
+import 'package:implementation_intentions/state/goal_state.dart';
 
 class ImplementationIntentionState extends GoalState {
   int id;

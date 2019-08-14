@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/models/goal_state.dart';
 import 'package:implementation_intentions/services/database_helpers.dart';
 import 'package:implementation_intentions/shared/app_colors.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
+import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,6 @@ class AddGoal extends StatefulWidget {
 
 class AddGoalState extends State<AddGoal> {
   DateTime selectedDate = DateTime.now();
-  Goal _goal;
   String _goalText = "";
 
   _submitGoal() {

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal_state.dart';
-import 'package:implementation_intentions/models/implementation_intention_state.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
+import 'package:implementation_intentions/screens/add_goal_screen.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/goal_shielding.dart';
 import 'package:implementation_intentions/screens/main_screen.dart';
 import 'package:implementation_intentions/screens/shield_repetition.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
+import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:implementation_intentions/state/implementation_intention_state.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +50,10 @@ class MyApp extends StatelessWidget {
                   child: MyHomePage(title: 'Serene')),
           NamedRoutes.MAIN: (BuildContext context) =>
               ChangeNotifierProvider<GoalState>(
-                  builder: (_) => GoalState(), child: MainScreen())
+                  builder: (_) => GoalState(), child: MainScreen()),
+          NamedRoutes.ADD_GOAL: (BuildContext context) =>
+              ChangeNotifierProvider<GoalState>(
+                  builder: (_) => GoalState(), child: AddGoalScreen()),
         }
         // home: ChangeNotifierProvider<ImplementationIntentionModel>(
         //     builder: (_) => ImplementationIntentionModel(),
