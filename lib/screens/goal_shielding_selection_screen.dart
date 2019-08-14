@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
-import 'package:implementation_intentions/state/implementation_intention_state.dart';
+import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
-class GoalShielding extends StatefulWidget {
-  @override
-  _GoalShieldingState createState() => _GoalShieldingState();
-}
-
-class _GoalShieldingState extends State<GoalShielding> {
+class GoalShieldingSelectionScreen extends StatelessWidget {
   List<String> hindrances = ["Watching TV", "Playing Games"];
   List<String> shields = ["Turn it off", "Curl into a ball and cry"];
   String selectedHindrance;
 
-  buildObstacleDropdown() {
-    final intention = Provider.of<ImplementationIntentionState>(context);
+  buildObstacleDropdown(BuildContext context) {
+    final intention = Provider.of<GoalShieldingState>(context);
     return DropdownButton<String>(
       value: selectedHindrance,
       onChanged: (String newValue) {
         intention.hindrance = newValue;
-        setState(() {
-          selectedHindrance = newValue;
-        });
       },
       items: hindrances.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
@@ -30,12 +22,12 @@ class _GoalShieldingState extends State<GoalShielding> {
     );
   }
 
-  buildShieldItem(String shield) {
-    final intention = Provider.of<ImplementationIntentionState>(context);
+  buildShieldItem(BuildContext context, String shield) {
+    final intention = Provider.of<GoalShieldingState>(context);
 
     return CheckboxListTile(
       title: Text(shield),
-      value: intention.shieldingActions.contains(shield),
+      value: intention.selectedShieldingActions.contains(shield),
       onChanged: (bool value) {
         if (value)
           intention.addShieldingAction(shield);
@@ -45,9 +37,10 @@ class _GoalShieldingState extends State<GoalShielding> {
     );
   }
 
-  buildShieldSelection() {
+  buildShieldSelection(BuildContext context) {
+    final state = Provider.of<GoalShieldingState>(context);
     return Column(children: <Widget>[
-      for (var shield in shields) buildShieldItem(shield)
+      for (var shield in state.shields) buildShieldItem(context, shield)
     ]);
   }
 
@@ -63,7 +56,7 @@ class _GoalShieldingState extends State<GoalShielding> {
             style: subHeaderStyle,
           ),
           UIHelper.verticalSpaceSmall(),
-          buildObstacleDropdown(),
+          buildObstacleDropdown(context),
           UIHelper.verticalSpaceSmall(),
           Text(
             "To overcome this, I will:",
@@ -71,7 +64,7 @@ class _GoalShieldingState extends State<GoalShielding> {
             style: subHeaderStyle,
           ),
           UIHelper.verticalSpaceSmall(),
-          buildShieldSelection()
+          buildShieldSelection(context)
         ],
       ),
     );

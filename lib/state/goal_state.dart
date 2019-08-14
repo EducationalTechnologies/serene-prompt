@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/services/database_helpers.dart';
 
-
 class GoalState with ChangeNotifier {
   List<Goal> _goals = List();
   bool _isFetching = false;
   Goal _currentGoal;
+
+  GoalState() {
+    print("Constructing Goal State");
+  }
 
   Goal get currentGoal {
     if (_currentGoal == null) {

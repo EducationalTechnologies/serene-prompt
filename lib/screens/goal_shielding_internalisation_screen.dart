@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
+import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:implementation_intentions/state/implementation_intention_state.dart';
 import 'package:provider/provider.dart';
 
-class ShieldRepetition extends StatefulWidget {
+class GoalShieldingInternalisationScreen extends StatefulWidget {
   @override
-  _ShieldRepetitionState createState() => _ShieldRepetitionState();
+  _GoalShieldingInternalisationScreenState createState() =>
+      _GoalShieldingInternalisationScreenState();
 }
 
-class _ShieldRepetitionState extends State<ShieldRepetition> {
+class _GoalShieldingInternalisationScreenState
+    extends State<GoalShieldingInternalisationScreen> {
   int _longPressCounter = 0;
   bool _counterPressed = false;
   bool _loopActive = false;
@@ -35,7 +38,7 @@ class _ShieldRepetitionState extends State<ShieldRepetition> {
   }
 
   buildShieldingText() {
-    final intention = Provider.of<ImplementationIntentionState>(context);
+    final intention = Provider.of<GoalShieldingState>(context);
 
     List<String> fullText = ["When ", "I ", "start "];
 
@@ -54,7 +57,8 @@ class _ShieldRepetitionState extends State<ShieldRepetition> {
     texts.add(getRegularText("I "));
     texts.add(getRegularText("will "));
 
-    var splitShieldingActions = intention.shieldingActions.join().split(" ");
+    var splitShieldingActions =
+        intention.selectedShieldingActions.join().split(" ");
 
     for (var s in splitShieldingActions) {
       texts.add(getRegularText("$s "));
@@ -104,10 +108,6 @@ class _ShieldRepetitionState extends State<ShieldRepetition> {
           _counterPressed = true;
           _increaseCounterWhilePressed();
         },
-        // onLongPress: () {
-        //   _counterPressed = true;
-        //   _increaseCounterWhilePressed();
-        // },
         onLongPressEnd: (details) {
           _counterPressed = false;
         },

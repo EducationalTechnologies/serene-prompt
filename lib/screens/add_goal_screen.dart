@@ -17,9 +17,17 @@ class AddGoalScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        child: Column(children: <Widget>[
-          
-        ],),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              TextField(
+                decoration: new InputDecoration.collapsed(
+                    hintText: "Neues Ziel", fillColor: Colors.tealAccent),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
