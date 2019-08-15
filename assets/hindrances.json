@@ -1,17 +1,17 @@
 [
   {
     "id": 0,
-    "name": "Watch series",
+    "hindrance": "Watch series",
     "shields": ["Turn device off"]
   },
   {
     "id": 1,
-    "name": "Play games",
+    "hindrance": "Play games",
     "shields": ["Switch off my computer"]
   },
   {
     "id": 2,
-    "name": "Masturbate",
+    "hindrance": "Masturbate",
     "shields": ["Stop"]
   }
 ]

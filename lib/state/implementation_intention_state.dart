@@ -1,9 +1,7 @@
-
 import 'package:implementation_intentions/state/goal_state.dart';
 
 class ImplementationIntentionState extends GoalState {
   int id;
-
   List<String> shieldingActions = [];
   String _hindrance = "";
 

@@ -34,7 +34,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       return Center(child: CircularProgressIndicator());
     } else {
       return Container(
-        child: buildListView(appState.getGoals()),
+        child: buildListView(appState.goals),
       );
     }
   }

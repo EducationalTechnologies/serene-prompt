@@ -41,9 +41,12 @@ class MyApp extends StatelessWidget {
                   builder: (_) => GoalState(), child: MainScreen()),
           NamedRoutes.GOALS: (BuildContext context) => GoalMonitorScreen(),
           NamedRoutes.GOAL_SHIELDING: (BuildContext context) =>
-              ChangeNotifierProvider<GoalShieldingState>(
-                  builder: (_) => GoalShieldingState(),
-                  child: GoalShieldingScreen()),
+              MultiProvider(providers: [
+                ChangeNotifierProvider<GoalShieldingState>.value(
+                  value: GoalShieldingState(),
+                ),
+                ChangeNotifierProvider<GoalState>.value(value: GoalState())
+              ], child: GoalShieldingScreen()),
           NamedRoutes.ADD_GOAL: (BuildContext context) =>
               ChangeNotifierProvider<GoalState>(
                   builder: (_) => GoalState(), child: AddGoalScreen()),

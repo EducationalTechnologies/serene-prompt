@@ -55,7 +55,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
             style: subHeaderStyle,
           ),
           UIHelper.verticalSpaceSmall(),
-          buildObstacleDropdown(context),
+          // buildObstacleDropdown(context),
           UIHelper.verticalSpaceSmall(),
           Text(
             "To overcome this, I will:",

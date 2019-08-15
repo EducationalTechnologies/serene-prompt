@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
-import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -27,11 +25,6 @@ class _MainScreenState extends State<MainScreen> {
     ReflectScreen()
   ];
 
-  void _fetchData() {
-    final appState = Provider.of<GoalState>(context);
-    appState.fetchGoals();
-  }
-
   void _onItemTapped(int index) {
     this._controller.animateToPage(index,
         duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
@@ -50,7 +43,6 @@ class _MainScreenState extends State<MainScreen> {
       body: PageView(
         controller: _controller,
         onPageChanged: (newPage) {
-          this._fetchData();
           setState(() {
             _selectedPageIndex = newPage;
           });

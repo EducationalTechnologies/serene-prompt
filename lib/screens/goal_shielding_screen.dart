@@ -6,11 +6,23 @@ import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
 import 'package:provider/provider.dart';
 
-class GoalShieldingScreen extends StatelessWidget {
+class GoalShieldingScreen extends StatefulWidget {
+  @override
+  _GoalShieldingScreenState createState() => _GoalShieldingScreenState();
+}
+
+class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    // var state = Provider.of<GoalShieldingState>(context);
+    // state.fetchData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var state = Provider.of<GoalShieldingState>(context);
-    state.fetchData();
+    print("Calling Build In Goal Shielding Screen");
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -18,7 +30,7 @@ class GoalShieldingScreen extends StatelessWidget {
         title: Text("Goal Shielding"),
       ),
       drawer: SereneDrawer(),
-      backgroundColor: Colors.amber,
+      // backgroundColor: Colors.amber,
       body: Container(
         child: PageView(
           children: <Widget>[

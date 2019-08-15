@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
+import 'package:implementation_intentions/services/data_service.dart';
 import 'package:implementation_intentions/services/database_helpers.dart';
 
 class GoalState with ChangeNotifier {
-  List<Goal> _goals = List();
   bool _isFetching = false;
   Goal _currentGoal;
 
-  GoalState() {
-    print("Constructing Goal State");
+  List<Goal> get goals {
+    return DataService().goals;
   }
 
   Goal get currentGoal {
@@ -30,18 +30,5 @@ class GoalState with ChangeNotifier {
     await DBProvider.db.insertGoal(this._currentGoal);
   }
 
-  Future init() async {
-    this.fetchGoals();
-  }
-
-  fetchGoals() async {
-    print("FETCHING GOALS");
-    var goals = await DBProvider.db.getGoals();
-    this._goals = goals;
-    notifyListeners();
-  }
-
-  getGoals() {
-    return _goals;
-  }
+  Future init() async {}
 }
