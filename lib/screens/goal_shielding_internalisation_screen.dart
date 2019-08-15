@@ -124,19 +124,24 @@ class _GoalShieldingInternalisationScreenState
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: <Widget>[
-          UIHelper.verticalSpaceMedium(),
-          Text(
-            "Repeat the following text mentally three times, while pressing the button",
-            style: subHeaderStyle,
-          ),
-          UIHelper.verticalSpaceMedium(),
-          buildShieldingText(),
-          UIHelper.verticalSpaceMedium(),
-          buildRepetitionButton(),
-          // Text("Debug Stuff Counter: $_longPressCounter")
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            UIHelper.verticalSpaceMedium(),
+            Text(
+              "Wiederhole den nächsten Satz mindestens drei mal",
+              style: subHeaderStyle,
+            ),
+            UIHelper.verticalSpaceMedium(),
+            buildShieldingText(),
+            UIHelper.verticalSpaceMedium(),
+            buildRepetitionButton(),
+            UIHelper.verticalSpaceMedium(),
+            Text("Halte den Button gedrückt während du den Satz wiederholst")
+            // Text("Debug Stuff Counter: $_longPressCounter")
+          ],
+        ),
       ),
     );
   }

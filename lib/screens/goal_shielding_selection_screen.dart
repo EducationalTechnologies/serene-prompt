@@ -5,17 +5,15 @@ import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
 class GoalShieldingSelectionScreen extends StatelessWidget {
-  final List<String> hindrances = ["Watching TV", "Playing Games"];
-  final List<String> shields = ["Turn it off", "Curl into a ball and cry"];
-
   buildObstacleDropdown(BuildContext context) {
-    final intention = Provider.of<GoalShieldingState>(context);
+    final goalShieldingState = Provider.of<GoalShieldingState>(context);
     return DropdownButton<String>(
-      value: intention.hindrance,
+      value: goalShieldingState.hindrance,
       onChanged: (String newValue) {
-        intention.hindrance = newValue;
+        goalShieldingState.hindrance = newValue;
       },
-      items: hindrances.map<DropdownMenuItem<String>>((String value) {
+      items: goalShieldingState.hindrances
+          .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
       }).toList(),
     );
@@ -50,15 +48,15 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
         children: <Widget>[
           UIHelper.verticalSpaceMedium(),
           Text(
-            "My biggest obstacle is:",
+            "Mein größtes Hindernis ist...",
             textAlign: TextAlign.left,
             style: subHeaderStyle,
           ),
           UIHelper.verticalSpaceSmall(),
-          // buildObstacleDropdown(context),
+          buildObstacleDropdown(context),
           UIHelper.verticalSpaceSmall(),
           Text(
-            "To overcome this, I will:",
+            "Wenn das auftritt, werde ich...",
             textAlign: TextAlign.left,
             style: subHeaderStyle,
           ),

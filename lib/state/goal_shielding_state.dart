@@ -3,10 +3,10 @@ import 'package:implementation_intentions/models/goal.dart';
 
 class GoalShieldingState with ChangeNotifier {
   int id;
-  List<String> hindrances = ["A", "B", "C"];
-  List<String> shields = ["A", "B", "C"];
+  List<String> hindrances = ["Serien anschauen", "Videospiele spielen"];
+  List<String> shields = ["diese wieder abschalten"];
   List<String> selectedShieldingActions = [];
-  String _hindrance = "A";
+  String _hindrance = "Serien anschauen";
   Goal _selectedGoal;
 
   Goal get selectedGoal => _selectedGoal;
