@@ -38,20 +38,20 @@ class AddGoalState extends State<AddGoal> {
     if (picked != null && picked != selectedDate)
       appState.currentGoal.deadline = picked;
 
-    final TimeOfDay pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(appState.currentGoal.deadline),
-    );
+    // final TimeOfDay pickedTime = await showTimePicker(
+    //   context: context,
+    //   initialTime: TimeOfDay.fromDateTime(appState.currentGoal.deadline),
+    // );
 
-    if (pickedTime != null) {
-      var newDeadline = new DateTime(
-          appState.currentGoal.deadline.year,
-          appState.currentGoal.deadline.month,
-          appState.currentGoal.deadline.day,
-          pickedTime.hour,
-          pickedTime.minute);
-      appState.currentGoal.deadline = newDeadline;
-    }
+    // if (pickedTime != null) {
+    //   var newDeadline = new DateTime(
+    //       appState.currentGoal.deadline.year,
+    //       appState.currentGoal.deadline.month,
+    //       appState.currentGoal.deadline.day,
+    //       pickedTime.hour,
+    //       pickedTime.minute);
+    //   appState.currentGoal.deadline = newDeadline;
+    // }
   }
 
   Widget buildTextEntry() {
@@ -94,7 +94,7 @@ class AddGoalState extends State<AddGoal> {
           textAlign: TextAlign.left,
           style: subHeaderStyle,
         ),
-        SizedBox(height: 20),
+        UIHelper.verticalSpaceMedium(),
         InkWell(
             onTap: () {
               _selectDate(context);
@@ -108,12 +108,12 @@ class AddGoalState extends State<AddGoal> {
                   style: pickerStyle,
                 ),
                 UIHelper.horizontalSpaceMedium(),
-                Icon(Icons.timer, color: Colors.black),
-                UIHelper.horizontalSpaceSmall(),
-                Text(
-                  "$timeText",
-                  style: pickerStyle,
-                ),
+                // Icon(Icons.timer, color: Colors.black),
+                // UIHelper.horizontalSpaceSmall(),
+                // Text(
+                //   "$timeText",
+                //   style: pickerStyle,
+                // ),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ))
