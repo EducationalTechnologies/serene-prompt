@@ -11,31 +11,44 @@ class GoalMonitorScreen extends StatefulWidget {
 }
 
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
-  buildListView(List<Goal> goals) {
-    return ListView.builder(
-      itemCount: goals.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: ChangeNotifierProvider<GoalMonitorItemState>(
-              builder: (_) => GoalMonitorItemState(goals.elementAt(index)),
-              child: Column(
-                children: <Widget>[ProgressListItem()],
-              )),
-        );
-      },
-    );
-  }
+  @override
+  void initState() async {}
+
+  // buildListView(List<Goal> goals) {
+  //   return ListView.builder(
+  //     itemCount: goals.length,
+  //     itemBuilder: (context, index) {
+  //       return Card(
+  //         child: ChangeNotifierProvider<GoalMonitorItemState>(
+  //             builder: (_) => GoalMonitorItemState(goals.elementAt(index)),
+  //             child: Column(
+  //               children: <Widget>[ProgressListItem()],
+  //             )),
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<GoalState>(context);
-
-    if (appState.isFetching) {
-      return Center(child: CircularProgressIndicator());
-    } else {
-      return Container(
-        child: buildListView(appState.goals),
-      );
-    }
+    // final appState = Provider.of<GoalState>(context);
+    return Container(child: Column(
+      children: <Widget>[
+        Text("Hier"),
+      ],
+    ));
+    // return FutureBuilder(
+    //   future: appState.goals,
+    //   builder: (BuildContext context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         return Container(
+    //           child: buildListView(snapshot.data),
+    //         );
+    //       }
+    //     }
+    //     return Center(child: CircularProgressIndicator());
+    //   },
+    // );
   }
 }

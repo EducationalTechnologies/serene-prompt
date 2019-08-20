@@ -1,5 +1,3 @@
-import 'package:implementation_intentions/models/goal.dart';
-
 class GoalShield {
   int id;
   String hindrance;
@@ -8,6 +6,6 @@ class GoalShield {
   GoalShield.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     hindrance = json["hindrance"];
-    shields = json["shields"].cast<List<String>>();
+    shields = ["1", "2"]; //(json["shields"] as List<dynamic>).cast<String>();
   }
 }

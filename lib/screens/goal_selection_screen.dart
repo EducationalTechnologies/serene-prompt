@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
-import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
-import 'package:implementation_intentions/state/implementation_intention_state.dart';
 import 'package:provider/provider.dart';
 
 class GoalSelectionScreen extends StatefulWidget {
@@ -15,6 +14,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
   int _selectedIndex;
 
   bool _showText = false;
+  Goal _newGoal = new Goal();
 
   _onSelected(int index) {
     setState(() {
@@ -28,17 +28,29 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
       onSubmitted: (term) {
+        finishGoalInput();
+      },
+      onChanged: (value) {
         setState(() {
-          _showText = false;
+          _newGoal.goal = value;
         });
       },
-      onEditingComplete: () {
-        setState(() {
-          _showText = false;
-        });
-      },
+      // onEditingComplete: () {
+      //   finishGoalInput();
+      // },
       decoration: InputDecoration(icon: Icon(Icons.pages)),
     );
+  }
+
+  finishGoalInput() {
+    setState(() {
+      _showText = false;
+    });
+
+    _newGoal.deadline = null;
+    _newGoal.progress = 0;
+
+    Provider.of<GoalState>(context).saveNewGoal(_newGoal);
   }
 
   buildAddGoalButton() {
@@ -56,60 +68,48 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
         ));
   }
 
+  buildGoalList(List<Goal> goals) {
+    return ListView.builder(
+        itemCount: goals.length,
+        itemBuilder: (context, index) {
+          return Container(
+              // TODO: Change color to something more pretty
+              color: _selectedIndex == index
+                  ? Colors.orange[200]
+                  : Colors.transparent,
+              child: ListTile(
+                title: Text(goals[index].goal),
+                onTap: () {
+                  _onSelected(index);
+                },
+              ));
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var shieldingState = Provider.of<GoalShieldingState>(context);
-
+    var goalState = Provider.of<GoalState>(context);
     // if (MediaQuery.of(context).viewInsets.bottom == 0) {
     //   setState(() {
     //     _showText = false;
     //   });
     // }
-
     return Container(
-        child: Column(
-      children: <Widget>[
-        // UIHelper.verticalSpaceMedium(),
-        Text("Ziel auswählen", style: subHeaderStyle),
-        Flexible(
-          // fit: FlexFit.tight,
-          child: ListView.builder(
-              itemCount: Provider.of<GoalState>(context).goals.length,
-              itemBuilder: (context, index) => Container(
-                  // TODO: Change color to something more pretty
-                  color: _selectedIndex == index
-                      ? Colors.orange[200]
-                      : Colors.transparent,
-                  child: ListTile(
-                    title:
-                        Text(Provider.of<GoalState>(context).goals[index].goal),
-                    onTap: () {
-                      _onSelected(index);
-                    },
-                  ))),
-        ),
-        // buildNewGoalRow()
-        Expanded(
-          child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(children: [
-                // buildAddGoalButton()
-                buildNewGoalRow()
-                // this._showText ? buildNewGoalRow() : buildAddGoalButton()
-              ])),
-        ),
-        // Flexible(
-        //   child: Row(
-        //     children: <Widget>[
-        //       TextField(
-        //           keyboardType: TextInputType.text,
-        //           decoration:
-        //               InputDecoration(fillColor: Colors.grey, filled: true),
-        //           textInputAction: TextInputAction.done),
-        //     ],
-        //   ),
-        // )
-      ],
+        child: FutureBuilder<List<Goal>>(
+      future: goalState.goals,
+      builder: (context, snapshot) {
+        if (snapshot.hasData &&
+            snapshot.connectionState == ConnectionState.done) {
+          return Column(children: <Widget>[
+            // UIHelper.verticalSpaceMedium(),
+            // Text("Ziel auswählen", style: subHeaderStyle),
+            buildGoalList(snapshot.data),
+            // this._showText ? buildNewGoalRow() : buildAddGoalButton()
+          ]);
+        }
+        return Center(child: CircularProgressIndicator());
+      },
     ));
   }
 }

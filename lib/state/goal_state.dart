@@ -6,9 +6,17 @@ import 'package:implementation_intentions/services/database_helpers.dart';
 class GoalState with ChangeNotifier {
   bool _isFetching = false;
   Goal _currentGoal;
+  List<Goal> _goals;
 
-  List<Goal> get goals {
-    return DataService().goals;
+  Future<List<Goal>> get goals async {
+    // if (_goals == null) {
+    //   _goals = await DataService().getGoals();
+    // }
+    _goals = [
+      Goal(deadline: DateTime.now(), goal: "Goal", id: 2, progress: 20)
+    ];
+
+    return _goals;
   }
 
   Goal get currentGoal {
@@ -28,6 +36,12 @@ class GoalState with ChangeNotifier {
 
   Future saveCurrentGoal() async {
     await DBProvider.db.insertGoal(this._currentGoal);
+    notifyListeners();
+  }
+
+  Future saveNewGoal(Goal goal) async {
+    await DBProvider.db.insertGoal(goal);
+    notifyListeners();
   }
 
   Future init() async {}

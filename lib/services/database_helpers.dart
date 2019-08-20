@@ -47,13 +47,18 @@ class DBProvider {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  getGoals() async {
+  Future<List<Goal>> getGoals() async {
     final db = await database;
     var maps = await db.query("goals");
 
     return List.generate(maps.length, (i) {
+      var deadline;
+      if (maps[i]["deadline"] != "") {
+        deadline = DateTime.parse(maps[i]["deadline"]);
+      }
+
       return Goal(
-          deadline: DateTime.parse(maps[i]["deadline"]),
+          deadline: deadline,
           id: maps[i]["id"],
           goal: maps[i]["goal"],
           progress: maps[i]["progress"]);

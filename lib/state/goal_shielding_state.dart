@@ -13,8 +13,9 @@ class GoalShieldingState with ChangeNotifier {
 
   set selectedGoal(Goal selectedGoal) {
     _selectedGoal = selectedGoal;
+    notifyListeners();
   }
-  
+
   int _selectedGoalIndex;
 
   int get selectedGoalIndex => _selectedGoalIndex;

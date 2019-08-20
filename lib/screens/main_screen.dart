@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
+import 'package:implementation_intentions/services/data_service.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,13 +17,17 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     _controller = new PageController(initialPage: _selectedPageIndex);
+    // DataService().fetchData();
     super.initState();
   }
 
   static List<Widget> _widgetOptions = [
-    AddGoal(),
-    GoalMonitorScreen(),
-    ReflectScreen()
+    // AddGoal(),
+    // GoalMonitorScreen(),
+    // ReflectScreen()
+    Text("Eins"),
+    Text("Zwei"),
+    Text("Drei")
   ];
 
   void _onItemTapped(int index) {
