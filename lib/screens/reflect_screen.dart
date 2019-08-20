@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
+import 'package:implementation_intentions/widgets/serene_drawer.dart';
 
 List<Goal> goalList = [
   new Goal(
@@ -45,7 +46,16 @@ class ReflectScreen extends StatefulWidget {
 class _ReflectScreenState extends State<ReflectScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("Reflect!!!!"));
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("Goal Shielding"),
+      ),
+      drawer: SereneDrawer(),
+      // backgroundColor: Colors.amber,
+      body: Container(child: Text("this is the reflect screen")),
+    );
   }
 }
 
@@ -57,6 +67,15 @@ class ProgressBarListItem extends StatefulWidget {
 class _ProgressBarListItemState extends State<ProgressBarListItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("Reflect!!!!"));
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("Goal Shielding"),
+      ),
+      drawer: SereneDrawer(),
+      // backgroundColor: Colors.amber,
+      body: Container(child: Text("this is the reflect screen")),
+    );
   }
 }

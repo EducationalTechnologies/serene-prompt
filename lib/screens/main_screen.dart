@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     _controller = new PageController(initialPage: _selectedPageIndex);
-    // DataService().fetchData();
+    DataService().fetchData();
     super.initState();
   }
 

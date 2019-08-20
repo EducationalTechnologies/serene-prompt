@@ -19,7 +19,10 @@ class DataService {
   }
 
   getGoals() async {
-    _goals = await DBProvider.db.getGoals();
+    if (_goals == null) {
+      _goals = await DBProvider.db.getGoals();
+    }
+
     return _goals;
   }
 

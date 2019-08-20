@@ -47,7 +47,7 @@ class DBProvider {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<List<Goal>> getGoals() async {
+   getGoals() async {
     final db = await database;
     var maps = await db.query("goals");
 

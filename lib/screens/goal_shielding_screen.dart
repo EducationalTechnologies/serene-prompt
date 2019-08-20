@@ -33,8 +33,8 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
         child: PageView(
           children: <Widget>[
             GoalSelectionScreen(),
-            GoalShieldingSelectionScreen(),
-            GoalShieldingInternalisationScreen()
+            // GoalShieldingSelectionScreen(),
+            // GoalShieldingInternalisationScreen()
           ],
         ),
       ),

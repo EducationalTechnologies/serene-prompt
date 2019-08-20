@@ -3,6 +3,7 @@ import 'package:implementation_intentions/screens/add_goal_screen.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/goal_shielding_screen.dart';
 import 'package:implementation_intentions/screens/main_screen.dart';
+import 'package:implementation_intentions/screens/reflect_screen.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
@@ -50,6 +51,20 @@ class MyApp extends StatelessWidget {
           NamedRoutes.ADD_GOAL: (BuildContext context) =>
               ChangeNotifierProvider<GoalState>(
                   builder: (_) => GoalState(), child: AddGoalScreen()),
+          // NamedRoutes.MAIN: (BuildContext context) =>
+          //     ChangeNotifierProvider<GoalState>(
+          //         builder: (_) => GoalState(), child: ReflectScreen()),
+          // NamedRoutes.GOALS: (BuildContext context) => ReflectScreen(),
+          // NamedRoutes.GOAL_SHIELDING: (BuildContext context) =>
+          //     MultiProvider(providers: [
+          //       ChangeNotifierProvider<GoalShieldingState>.value(
+          //         value: GoalShieldingState(),
+          //       ),
+          //       ChangeNotifierProvider<GoalState>.value(value: GoalState())
+          //     ], child: ReflectScreen()),
+          // NamedRoutes.ADD_GOAL: (BuildContext context) =>
+          //     ChangeNotifierProvider<GoalState>(
+          //         builder: (_) => GoalState(), child: ReflectScreen()),
         }
         // home: ChangeNotifierProvider<ImplementationIntentionModel>(
         //     builder: (_) => ImplementationIntentionModel(),
