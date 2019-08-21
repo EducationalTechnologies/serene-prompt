@@ -57,18 +57,18 @@ class AddGoalState extends State<AddGoal> {
   Widget buildTextEntry() {
     return Column(
       children: <Widget>[
-        Text(
-          "Ziel",
-          textAlign: TextAlign.left,
-          style: subHeaderStyle,
-        ),
+        // Text(
+        //   "Ziel",
+        //   textAlign: TextAlign.left,
+        //   style: subHeaderStyle,
+        // ),
         SizedBox(height: 10),
         Container(
           padding: EdgeInsets.all(15.0),
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.circular(15)),
+              color: Colors.grey[100], borderRadius: BorderRadius.circular(5)),
           child: TextField(
+            decoration: InputDecoration(labelText: "Gib dein Lernziel ein"),
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
             onChanged: (text) {
@@ -99,23 +99,29 @@ class AddGoalState extends State<AddGoal> {
             onTap: () {
               _selectDate(context);
             },
-            child: Row(
-              children: [
-                Icon(Icons.calendar_today, color: Colors.black),
-                UIHelper.horizontalSpaceSmall(),
-                Text(
-                  "$dateText",
-                  style: pickerStyle,
-                ),
-                UIHelper.horizontalSpaceMedium(),
-                // Icon(Icons.timer, color: Colors.black),
-                // UIHelper.horizontalSpaceSmall(),
-                // Text(
-                //   "$timeText",
-                //   style: pickerStyle,
-                // ),
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Container(
+              padding: EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(5)),
+              child: Row(
+                children: [
+                  Icon(Icons.calendar_today, color: Colors.black),
+                  UIHelper.horizontalSpaceSmall(),
+                  Text(
+                    "$dateText",
+                    style: pickerStyle,
+                  ),
+                  UIHelper.horizontalSpaceMedium(),
+                  // Icon(Icons.timer, color: Colors.black),
+                  // UIHelper.horizontalSpaceSmall(),
+                  // Text(
+                  //   "$timeText",
+                  //   style: pickerStyle,
+                  // ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
             ))
       ],
     );
@@ -137,12 +143,12 @@ class AddGoalState extends State<AddGoal> {
                 width: double.infinity,
                 height: 80,
                 child: RaisedButton(
-                  color: Colors.white,
+                  color: accentColor,
                   onPressed: () {
                     _submitGoal();
                   },
                   shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(15.0)),
+                      borderRadius: new BorderRadius.circular(55.0)),
                   child: Text("Speichern", style: TextStyle(fontSize: 20)),
                 ))
           ],

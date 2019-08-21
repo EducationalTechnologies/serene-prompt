@@ -83,35 +83,19 @@ class DBProvider {
     List<Goal> _goals = [
       Goal(
           id: 0,
-          goal: "My Learning Goal Number one",
+          goal: "Zwei Seiten für mein Essay schreiben",
           deadline: DateTime.now(),
           progress: 40),
       Goal(
           id: 1,
-          goal: "Second Thing that I have to do",
+          goal: "Aufgabe 2 b) fertgig stellen",
           deadline: DateTime.now(),
           progress: 5),
-      Goal(id: 0, goal: "Number three", deadline: DateTime.now(), progress: 10),
       Goal(
-          id: 3,
+          id: 2,
           goal: "At position four I have to do this kind of thing",
           deadline: DateTime.now(),
           progress: 20),
-      Goal(
-          id: 0,
-          goal: "The fifth item in this list is this",
-          deadline: DateTime.now(),
-          progress: 30),
-      Goal(
-          id: 5,
-          goal: "And the sixth one then is this",
-          deadline: DateTime.now(),
-          progress: 10),
-      Goal(
-          id: 0,
-          goal: "My Learning Goal Number one",
-          deadline: DateTime.now(),
-          progress: 0),
     ];
 
     for (var goal in _goals) {

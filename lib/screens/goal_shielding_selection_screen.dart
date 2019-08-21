@@ -10,7 +10,8 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
     return DropdownButton<String>(
       value: goalShieldingState.hindrance,
       onChanged: (String newValue) {
-        goalShieldingState.hindrance = newValue;
+        // goalShieldingState.hindrance = newValue;
+        goalShieldingState.selectHindrance(newValue);
       },
       items: goalShieldingState.hindrances
           .map<DropdownMenuItem<String>>((String value) {
@@ -54,14 +55,14 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
           ),
           UIHelper.verticalSpaceSmall(),
           buildObstacleDropdown(context),
-          UIHelper.verticalSpaceSmall(),
-          Text(
-            "Wenn das auftritt, werde ich...",
-            textAlign: TextAlign.left,
-            style: subHeaderStyle,
-          ),
-          UIHelper.verticalSpaceSmall(),
-          buildShieldSelection(context)
+          // UIHelper.verticalSpaceSmall(),
+          // Text(
+          //   "Wenn das auftritt, werde ich...",
+          //   textAlign: TextAlign.left,
+          //   style: subHeaderStyle,
+          // ),
+          // UIHelper.verticalSpaceSmall(),
+          // buildShieldSelection(context)
         ],
       ),
     );

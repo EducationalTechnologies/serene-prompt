@@ -27,37 +27,40 @@ class _GoalShieldingInternalisationScreenState
   getRegularText(String text) {
     return TextSpan(
         text: text,
-        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20));
+        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 25));
   }
 
   getHighlightedText(String text) {
     return TextSpan(
         text: text,
-        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20));
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 27));
   }
 
   buildShieldingText() {
     final intention = Provider.of<GoalShieldingState>(context);
 
-    List<String> fullText = ["When ", "I ", "start "];
+    // List<String> fullText = ["When ", "I ", "start "];
 
     List<TextSpan> texts = [];
 
-    for (var i = 0; i < fullText.length; i++) {
-      texts.add(getRegularText(fullText[i]));
+    // for (var i = 0; i < fullText.length; i++) {
+    //   texts.add(getRegularText(fullText[i]));
+    // }
+
+    // var split = intention.hindrance.split(" ");
+
+    // for (var s in split) {
+    //   texts.add(getRegularText("$s "));
+    // }
+
+    // texts.add(getRegularText("I "));
+    // texts.add(getRegularText("will "));
+
+    if (intention.shieldingSentence == "") {
+      return Text("Bitte wähle zunächst ein Lernhindernis aus");
     }
 
-    var split = intention.hindrance.split(" ");
-
-    for (var s in split) {
-      texts.add(getRegularText("$s "));
-    }
-
-    texts.add(getRegularText("I "));
-    texts.add(getRegularText("will "));
-
-    var splitShieldingActions =
-        intention.selectedShieldingActions.join().split(" ");
+    var splitShieldingActions = intention.shieldingSentence.split(" ");
 
     for (var s in splitShieldingActions) {
       texts.add(getRegularText("$s "));
@@ -74,7 +77,7 @@ class _GoalShieldingInternalisationScreenState
   }
 
   void _increaseCounterWhilePressed() async {
-    final int _textHighlightDelay = 200;
+    final int _textHighlightDelay = 500;
 
     // make sure that only one loop is active
     if (_loopActive) return;
@@ -130,7 +133,7 @@ class _GoalShieldingInternalisationScreenState
           children: <Widget>[
             UIHelper.verticalSpaceMedium(),
             Text(
-              "Wiederhole den nächsten Satz mindestens drei mal",
+              "Wiederhole den nächsten Satz mindestens drei mal:",
               style: subHeaderStyle,
             ),
             UIHelper.verticalSpaceMedium(),
@@ -138,7 +141,6 @@ class _GoalShieldingInternalisationScreenState
             UIHelper.verticalSpaceMedium(),
             buildRepetitionButton(),
             UIHelper.verticalSpaceMedium(),
-            Text("Halte den Button gedrückt während du den Satz wiederholst")
             // Text("Debug Stuff Counter: $_longPressCounter")
           ],
         ),
