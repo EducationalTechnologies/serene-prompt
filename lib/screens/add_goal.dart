@@ -123,30 +123,31 @@ class AddGoalState extends State<AddGoal> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("One"));
-    // return Container(
-    //   margin: EdgeInsets.only(left: 20.0, right: 20.0),
-    //   child: Column(
-    //     children: <Widget>[
-    //       UIHelper.verticalSpaceMedium(),
-    //       buildTextEntry(),
-    //       UIHelper.verticalSpaceLarge(),
-    //       buildDatePicker(),
-    //       UIHelper.verticalSpaceLarge(),
-    //       SizedBox(
-    //           width: 250,
-    //           height: 80,
-    //           child: RaisedButton(
-    //             color: primaryColor,
-    //             onPressed: () {
-    //               _submitGoal();
-    //             },
-    //             shape: RoundedRectangleBorder(
-    //                 borderRadius: new BorderRadius.circular(15.0)),
-    //             child: Text("Speichern", style: TextStyle(fontSize: 20)),
-    //           ))
-    //     ],
-    //   ),
-    // );
+    return Container(
+      margin: EdgeInsets.only(left: 20.0, right: 20.0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            UIHelper.verticalSpaceMedium(),
+            buildTextEntry(),
+            UIHelper.verticalSpaceLarge(),
+            buildDatePicker(),
+            UIHelper.verticalSpaceLarge(),
+            SizedBox(
+                width: double.infinity,
+                height: 80,
+                child: RaisedButton(
+                  color: Colors.white,
+                  onPressed: () {
+                    _submitGoal();
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(15.0)),
+                  child: Text("Speichern", style: TextStyle(fontSize: 20)),
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }

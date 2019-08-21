@@ -11,17 +11,8 @@ class DataService {
   List<Goal> _goals;
   List<GoalShield> _goalShields;
 
-  get goals async {
-    if (_goals == null) {
-      _goals = getGoals();
-    }
-    return _goals;
-  }
-
   getGoals() async {
-    if (_goals == null) {
-      _goals = await DBProvider.db.getGoals();
-    }
+    _goals = await DBProvider.db.getGoals();
 
     return _goals;
   }
@@ -36,10 +27,23 @@ class DataService {
     return _goalShields;
   }
 
+  fetchGoals() async {
+    _goals = await DBProvider.db.getGoals();
+  }
+
+  fetchGoalShields() async {
+    String data = await rootBundle.loadString("assets/hindrances.json");
+    _goalShields = [];
+    var decoded = jsonDecode(data);
+    for (var s in decoded) {
+      _goalShields.add(GoalShield.fromJson(s));
+    }
+  }
+
   // TODO: This is currently a very temporary solution
   fetchData() async {
-    getGoals();
-    getGoalShields();
+    fetchGoals();
+    fetchGoalShields();
     return _goalShields;
   }
 

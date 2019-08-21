@@ -8,14 +8,18 @@ class GoalState with ChangeNotifier {
   Goal _currentGoal;
   List<Goal> _goals;
 
-  Future<List<Goal>> get goals async {
+  List<Goal> get goals {
+    return _goals;
+  }
+
+  Future<List<Goal>> getGoalsAsync() async {
     if (_goals == null) {
       _goals = await DataService().getGoals();
     }
     // _goals = [
     //   Goal(deadline: DateTime.now(), goal: "Goal", id: 2, progress: 20)
     // ];
-
+    // notifyListeners();
     return _goals;
   }
 

@@ -72,7 +72,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
     // }
     return Container(
         child: FutureBuilder<List<Goal>>(
-      future: goalState.goals,
+      future: goalState.getGoalsAsync(),
       builder: (context, snapshot) {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
@@ -113,7 +113,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
     return Container(
       // TOOD: Lift FutureBuilder up
         child: FutureBuilder<List<Goal>>(
-            future: goalState.goals,
+            future: goalState.getGoalsAsync(),
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {

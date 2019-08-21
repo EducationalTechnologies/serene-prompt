@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/widgets/serene_drawer.dart';
+import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:provider/provider.dart';
 
 List<Goal> goalList = [
   new Goal(
@@ -44,38 +45,41 @@ class ReflectScreen extends StatefulWidget {
 }
 
 class _ReflectScreenState extends State<ReflectScreen> {
+  List<Goal> _testGoals = [];
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("Goal Shielding"),
-      ),
-      drawer: SereneDrawer(),
-      // backgroundColor: Colors.amber,
-      body: Container(child: Text("this is the reflect screen")),
-    );
+  void initState() {
+    var appstate = Provider.of<GoalState>(context, listen: false);
+    appstate.getGoalsAsync();
+    _testGoals = appstate.goals;
   }
-}
 
-class ProgressBarListItem extends StatefulWidget {
-  @override
-  _ProgressBarListItemState createState() => _ProgressBarListItemState();
-}
-
-class _ProgressBarListItemState extends State<ProgressBarListItem> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("Goal Shielding"),
-      ),
-      drawer: SereneDrawer(),
-      // backgroundColor: Colors.amber,
-      body: Container(child: Text("this is the reflect screen")),
-    );
+    var appstate = Provider.of<GoalState>(context);
+    return Container(
+        child: Column(
+      children: <Widget>[
+        Text("this is the reflect screen"),
+        RaisedButton(
+            child: Text("Fetch Goals"),
+            onPressed: () {
+              var goals = appstate.goals;
+              setState(() {
+                _testGoals = goals;
+              });
+            }),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _testGoals.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(_testGoals[index].goal),
+              );
+            },
+          ),
+        )
+      ],
+    ));
   }
 }

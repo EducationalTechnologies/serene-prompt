@@ -22,12 +22,10 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   static List<Widget> _widgetOptions = [
-    // AddGoal(),
-    // GoalMonitorScreen(),
-    // ReflectScreen()
-    Text("Eins"),
-    Text("Zwei"),
-    Text("Drei")
+    AddGoal(),
+    // Text("Zwei"),
+    GoalMonitorScreen(),
+    ReflectScreen()
   ];
 
   void _onItemTapped(int index) {

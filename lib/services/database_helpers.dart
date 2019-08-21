@@ -47,7 +47,8 @@ class DBProvider {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-   getGoals() async {
+  getGoals() async {
+    print("OBTAINING GOALS FROM DATABASE");
     final db = await database;
     var maps = await db.query("goals");
 
