@@ -26,25 +26,19 @@ class SereneDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text("Reflektieren"),
-            onTap: () {
-              Navigator.pushNamed(context, NamedRoutes.MAIN);
-            },
-          ),
-          ListTile(
               title: Text("Goal Shielding"),
               onTap: () {
                 Navigator.pushNamed(context, NamedRoutes.GOAL_SHIELDING);
               }),
           ListTile(
               title: Text("Clear Goals Database"),
-              onTap: () {
-                DBProvider.db.clearDatabase();
+              onTap: () async {
+                await DBProvider.db.clearDatabase();
               }),
           ListTile(
               title: Text("Insert Sample Goals"),
-              onTap: () {
-                DBProvider.db.insertSampleData();
+              onTap: () async {
+                await DBProvider.db.insertSampleData();
               }),
         ],
       ),

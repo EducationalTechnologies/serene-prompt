@@ -146,6 +146,7 @@ class AddGoalState extends State<AddGoal> {
                   color: accentColor,
                   onPressed: () {
                     _submitGoal();
+                    Navigator.pop(context);
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(55.0)),

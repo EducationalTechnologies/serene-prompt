@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/screens/add_goal.dart';
 
 class AddGoalScreen extends StatelessWidget {
   @override
@@ -13,21 +14,12 @@ class AddGoalScreen extends StatelessWidget {
               label: Text("Speichern"),
               onPressed: () {
                 //TODO: SAve
+                Navigator.pop(context);
               }),
         ],
       ),
       body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              TextField(
-                decoration: new InputDecoration.collapsed(
-                    hintText: "Neues Ziel", fillColor: Colors.tealAccent),
-              ),
-            ],
-          ),
-        ),
+        child: Padding(padding: const EdgeInsets.all(8.0), child: AddGoal()),
       ),
     );
   }

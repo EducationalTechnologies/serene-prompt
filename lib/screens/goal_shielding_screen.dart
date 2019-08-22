@@ -20,6 +20,15 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _goalShieldingPages = [
+      GoalSelectionScreen(),
+      GoalShieldingSelectionScreen(),
+      GoalShieldingInternalisationScreen()
+    ];
+    final _controller = new PageController();
+    const _kDuration = const Duration(milliseconds: 300);
+    const _kCurve = Curves.ease;
+
     print("Calling Build In Goal Shielding Screen");
     return Scaffold(
       appBar: AppBar(
@@ -29,14 +38,40 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
       ),
       drawer: SereneDrawer(),
       // backgroundColor: Colors.amber,
-      body: Container(
-        child: PageView(
-          children: <Widget>[
-            GoalSelectionScreen(),
-            GoalShieldingSelectionScreen(),
-            GoalShieldingInternalisationScreen()
-          ],
-        ),
+      body: Column(
+        children: [
+          Flexible(
+            child: PageView.builder(
+              controller: _controller,
+              itemCount: _goalShieldingPages.length,
+              itemBuilder: (context, index) {
+                return _goalShieldingPages[index];
+              },
+            ),
+          ),
+          Container(
+            color: Colors.lightBlue[50],
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                FlatButton(
+                  child: Text("Prev"),
+                  onPressed: () {
+                    _controller.previousPage(
+                        duration: _kDuration, curve: _kCurve);
+                  },
+                ),
+                FlatButton(
+                  child: Text("Next"),
+                  onPressed: () {
+                    _controller.nextPage(duration: _kDuration, curve: _kCurve);
+                  },
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

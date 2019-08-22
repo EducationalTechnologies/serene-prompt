@@ -3,6 +3,7 @@ import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
 import 'package:implementation_intentions/services/data_service.dart';
+import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
 
 class MainScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   static List<Widget> _widgetOptions = [
-    AddGoal(),
+    // AddGoal(),
     // Text("Zwei"),
     GoalMonitorScreen(),
     ReflectScreen()
@@ -33,15 +34,24 @@ class _MainScreenState extends State<MainScreen> {
         duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
   }
 
+  buildAddGoalButton() {
+    return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () {
+        Navigator.pushNamed(context, NamedRoutes.ADD_GOAL);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text("Serene"),
       ),
       drawer: SereneDrawer(),
+      floatingActionButton: buildAddGoalButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: Colors.white,
       body: PageView(
         controller: _controller,
@@ -52,10 +62,13 @@ class _MainScreenState extends State<MainScreen> {
         },
         children: _widgetOptions,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home), title: Text("Neues Ziel")),
+      // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        clipBehavior: Clip.antiAlias,
+        child: BottomNavigationBar(items: [
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.home), title: Text("Neues Ziel")),
           BottomNavigationBarItem(
               icon: Icon(Icons.view_list), title: Text("Ziele")),
           BottomNavigationBarItem(
@@ -66,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (index) {
           _onItemTapped(index);
         },
-      ),
+      )),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {},
       //   tooltip: 'Increment',
