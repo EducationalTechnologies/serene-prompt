@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/shared/app_colors.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:implementation_intentions/state/goal_shielding_state.dart';
@@ -77,7 +78,7 @@ class _GoalShieldingInternalisationScreenState
   }
 
   void _increaseCounterWhilePressed() async {
-    final int _textHighlightDelay = 500;
+    final int _textHighlightDelay = 400;
 
     // make sure that only one loop is active
     if (_loopActive) return;
@@ -114,12 +115,13 @@ class _GoalShieldingInternalisationScreenState
           _counterPressed = false;
         },
         child: SizedBox(
-            width: 250,
+            width: double.infinity,
             height: 80,
             child: RaisedButton(
+              color: accentColor,
               onPressed: () {},
               shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(15.0)),
+                  borderRadius: new BorderRadius.circular(55.0)),
               child: Text("$_repeatCounter", style: TextStyle(fontSize: 20)),
             )));
   }

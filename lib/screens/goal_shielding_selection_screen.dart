@@ -7,16 +7,24 @@ import 'package:provider/provider.dart';
 class GoalShieldingSelectionScreen extends StatelessWidget {
   buildObstacleDropdown(BuildContext context) {
     final goalShieldingState = Provider.of<GoalShieldingState>(context);
-    return DropdownButton<String>(
-      value: goalShieldingState.hindrance,
-      onChanged: (String newValue) {
-        // goalShieldingState.hindrance = newValue;
-        goalShieldingState.selectHindrance(newValue);
-      },
-      items: goalShieldingState.hindrances
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(value: value, child: Text(value));
-      }).toList(),
+    return Theme(
+      data: ThemeData(),
+      child: DropdownButton<String>(
+        value: goalShieldingState.hindrance,
+        onChanged: (String newValue) {
+          // goalShieldingState.hindrance = newValue;
+          goalShieldingState.selectHindrance(newValue);
+        },
+        items: goalShieldingState.hindrances
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+                style: TextStyle(fontSize: 25),
+              ));
+        }).toList(),
+      ),
     );
   }
 

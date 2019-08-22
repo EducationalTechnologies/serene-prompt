@@ -9,43 +9,43 @@ class ProgressListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Lahme");
-    // var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
+    // return Text("Lahme");
+    var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
 
-    // return Container(
-    //   child: Padding(
-    //     padding: const EdgeInsets.all(8.0),
-    //     child: Column(
-    //       children: <Widget>[
-    //         Row(children: <Widget>[
-    //           Expanded(
-    //               child: Padding(
-    //             padding: const EdgeInsets.all(10.0),
-    //             child: Text(goalMonitorItemState.goal),
-    //           )),
-    //           PopupMenuButton<ListItemMenu>(
-    //             onSelected: (ListItemMenu result) {},
-    //             itemBuilder: (BuildContext context) =>
-    //                 <PopupMenuEntry<ListItemMenu>>[
-    //               PopupMenuItem(value: ListItemMenu.edit, child: Text("Edit")),
-    //               PopupMenuItem(
-    //                 value: ListItemMenu.delete,
-    //                 child: Text("Delete"),
-    //               )
-    //             ],
-    //           ),
-    //         ]),
-    //         Slider(
-    //           value: goalMonitorItemState.progress.toDouble(),
-    //           min: 0,
-    //           max: 100,
-    //           onChanged: (double value) {
-    //             goalMonitorItemState.progress = value.toInt();
-    //           },
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    // );
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Row(children: <Widget>[
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(goalMonitorItemState.goal),
+              )),
+              PopupMenuButton<ListItemMenu>(
+                onSelected: (ListItemMenu result) {},
+                itemBuilder: (BuildContext context) =>
+                    <PopupMenuEntry<ListItemMenu>>[
+                  PopupMenuItem(value: ListItemMenu.edit, child: Text("Edit")),
+                  PopupMenuItem(
+                    value: ListItemMenu.delete,
+                    child: Text("Delete"),
+                  )
+                ],
+              ),
+            ]),
+            Slider(
+              value: goalMonitorItemState.progress.toDouble(),
+              min: 0,
+              max: 100,
+              onChanged: (double value) {
+                goalMonitorItemState.progress = value.toInt();
+              },
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
