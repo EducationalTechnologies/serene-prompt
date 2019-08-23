@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,18 +36,21 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: {
-          NamedRoutes.MAIN: (BuildContext context) =>
+          RouteNames.MAIN: (BuildContext context) =>
               ChangeNotifierProvider<GoalState>(
                   builder: (_) => GoalState(), child: MainScreen()),
-          NamedRoutes.GOALS: (BuildContext context) => GoalMonitorScreen(),
-          NamedRoutes.GOAL_SHIELDING: (BuildContext context) =>
+          RouteNames.GOALS: (BuildContext context) => GoalMonitorScreen(),
+          RouteNames.GOAL_SHIELDING: (BuildContext context) =>
               MultiProvider(providers: [
                 ChangeNotifierProvider<GoalShieldingState>.value(
                   value: GoalShieldingState(),
                 ),
                 ChangeNotifierProvider<GoalState>.value(value: GoalState())
               ], child: GoalShieldingScreen()),
-          NamedRoutes.ADD_GOAL: (BuildContext context) =>
+          RouteNames.ADD_GOAL: (BuildContext context) =>
+              ChangeNotifierProvider<GoalState>(
+                  builder: (_) => GoalState(), child: AddGoalScreen()),
+          RouteNames.EDIT_GOAL: (BuildContext context) =>
               ChangeNotifierProvider<GoalState>(
                   builder: (_) => GoalState(), child: AddGoalScreen()),
           // NamedRoutes.MAIN: (BuildContext context) =>

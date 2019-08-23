@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
-import 'package:implementation_intentions/widgets/list_items.dart';
+import 'package:implementation_intentions/widgets/list_item_progress.dart';
 import 'package:provider/provider.dart';
 
 class GoalMonitorScreen extends StatefulWidget {
@@ -11,7 +11,6 @@ class GoalMonitorScreen extends StatefulWidget {
 }
 
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
-
   buildListView(List<Goal> goals) {
     return ListView.builder(
       itemCount: goals.length,

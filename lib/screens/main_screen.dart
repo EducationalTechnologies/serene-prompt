@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
     return FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: () {
-        Navigator.pushNamed(context, NamedRoutes.ADD_GOAL);
+        Navigator.pushNamed(context, RouteNames.ADD_GOAL);
       },
     );
   }

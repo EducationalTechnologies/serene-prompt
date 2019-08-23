@@ -83,17 +83,17 @@ class DBProvider {
     List<Goal> _goals = [
       Goal(
           id: 0,
-          goal: "Zwei Seiten für mein Essay schreiben",
+          goal: "Word Bank implementieren",
           deadline: DateTime.now(),
           progress: 40),
       Goal(
           id: 1,
-          goal: "Aufgabe 2 b) fertgig stellen",
+          goal: "Aufgabe 2 b) fertig stellen",
           deadline: DateTime.now(),
           progress: 5),
       Goal(
           id: 2,
-          goal: "At position four I have to do this kind of thing",
+          goal: "Ethikantrag ausfüllen",
           deadline: DateTime.now(),
           progress: 20),
     ];
