@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:implementation_intentions/widgets/list_item_progress.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +28,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<GoalState>(context);
+    final appState = Provider.of<GoalMonitoringState>(context);
     return Container(
       child: FutureBuilder(
         future: appState.getGoalsAsync(),

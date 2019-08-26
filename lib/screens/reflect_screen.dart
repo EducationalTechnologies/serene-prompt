@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:provider/provider.dart';
 
 List<Goal> goalList = [
@@ -48,15 +48,15 @@ class _ReflectScreenState extends State<ReflectScreen> {
   List<Goal> _testGoals = [];
 
   @override
-  void initState() {
-    var appstate = Provider.of<GoalState>(context, listen: false);
+  Future initState() async {
+    var appstate = Provider.of<GoalMonitoringState>(context, listen: false);
     appstate.getGoalsAsync();
     _testGoals = appstate.goals;
   }
 
   @override
   Widget build(BuildContext context) {
-    var appstate = Provider.of<GoalState>(context);
+    var appstate = Provider.of<GoalMonitoringState>(context);
     return Container(
         child: Column(
       children: <Widget>[

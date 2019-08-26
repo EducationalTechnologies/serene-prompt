@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/screens/add_goal_screen.dart';
-import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:provider/provider.dart';
 
 enum ListItemMenu { delete, edit }
@@ -27,18 +24,7 @@ class ProgressListItem extends StatelessWidget {
                 child: Text(goalMonitorItemState.goalText),
               )),
               PopupMenuButton<ListItemMenu>(
-                onSelected: (ListItemMenu result) {
-                  switch (result) {
-                    case ListItemMenu.delete:
-                      // TODO: Handle this case.
-
-                      break;
-                    case ListItemMenu.edit:
-                      Navigator.pushNamed(context, RouteNames.EDIT_GOAL);
-                      // TODO: Handle this case.
-                      break;
-                  }
-                },
+                onSelected: (ListItemMenu result) {},
                 itemBuilder: (BuildContext context) =>
                     <PopupMenuEntry<ListItemMenu>>[
                   PopupMenuItem(value: ListItemMenu.edit, child: Text("Edit")),

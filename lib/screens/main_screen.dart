@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/screens/add_goal.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
 import 'package:implementation_intentions/services/data_service.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
+import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -22,12 +23,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
   }
 
-  static List<Widget> _widgetOptions = [
-    // AddGoal(),
-    // Text("Zwei"),
-    GoalMonitorScreen(),
-    ReflectScreen()
-  ];
+  static List<Widget> _widgetOptions = [GoalMonitorScreen(), ReflectScreen()];
 
   void _onItemTapped(int index) {
     this._controller.animateToPage(index,
@@ -53,38 +49,35 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: buildAddGoalButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: Colors.white,
-      body: PageView(
-        controller: _controller,
-        onPageChanged: (newPage) {
-          setState(() {
-            _selectedPageIndex = newPage;
-          });
-        },
-        children: _widgetOptions,
+      body: ChangeNotifierProvider<GoalMonitoringState>(
+        builder: (_) => GoalMonitoringState(),
+        child: PageView(
+          controller: _controller,
+          onPageChanged: (newPage) {
+            setState(() {
+              _selectedPageIndex = newPage;
+            });
+          },
+          children: _widgetOptions,
+        ),
       ),
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        clipBehavior: Clip.antiAlias,
-        child: BottomNavigationBar(items: [
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.home), title: Text("Neues Ziel")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.view_list), title: Text("Ziele")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.wallpaper), title: Text("Statistiken"))
-        ],
-        currentIndex: _selectedPageIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: (index) {
-          _onItemTapped(index);
-        },
-      )),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
+          shape: CircularNotchedRectangle(),
+          clipBehavior: Clip.antiAlias,
+          child: BottomNavigationBar(
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.view_list), title: Text("Ziele")),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.wallpaper), title: Text("Statistiken"))
+            ],
+            currentIndex: _selectedPageIndex,
+            selectedItemColor: Colors.amber[800],
+            onTap: (index) {
+              _onItemTapped(index);
+            },
+          )),
     );
   }
 }
