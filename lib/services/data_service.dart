@@ -17,6 +17,10 @@ class DataService {
     return _goals;
   }
 
+  deleteGoal(Goal goal) async {
+    await DBProvider.db.deleteGoal(goal);
+  }
+
   getGoalShields() async {
     String data = await rootBundle.loadString("assets/hindrances.json");
     _goalShields = [];

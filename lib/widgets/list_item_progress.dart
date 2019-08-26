@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/screens/add_goal_screen.dart';
+import 'package:implementation_intentions/services/data_service.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
@@ -12,7 +13,6 @@ class ProgressListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Text("Lahme");
     var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
 
     return Container(
@@ -27,14 +27,14 @@ class ProgressListItem extends StatelessWidget {
                 child: Text(goalMonitorItemState.goalText),
               )),
               PopupMenuButton<ListItemMenu>(
-                onSelected: (ListItemMenu result) {
+                onSelected: (ListItemMenu result) async {
                   switch (result) {
                     case ListItemMenu.delete:
                       // TODO: Handle this case.
-
+                      await DataService().deleteGoal(goalMonitorItemState.goal);
                       break;
                     case ListItemMenu.edit:
-                      Navigator.pushNamed(context, RouteNames.EDIT_GOAL);
+                      Navigator.pushNamed(context, RouteNames.ADD_GOAL);
                       // TODO: Handle this case.
                       break;
                   }

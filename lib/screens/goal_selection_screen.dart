@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
+import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:implementation_intentions/state/goal_shielding_state.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +65,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     var shieldingState = Provider.of<GoalShieldingState>(context);
-    var goalState = Provider.of<GoalState>(context);
+    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
     // if (MediaQuery.of(context).viewInsets.bottom == 0) {
     //   setState(() {
     //     _showText = false;
@@ -72,7 +73,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
     // }
     return Container(
         child: FutureBuilder<List<Goal>>(
-      future: goalState.getGoalsAsync(),
+      future: goalMonitoringState.getGoalsAsync(),
       builder: (context, snapshot) {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
@@ -108,12 +109,12 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   @override
   Widget build(BuildContext context) {
-    var goalState = Provider.of<GoalState>(context);
+    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
     print("Calling Build Goal List");
     return Container(
-      // TOOD: Lift FutureBuilder up
+        // TOOD: Lift FutureBuilder up
         child: FutureBuilder<List<Goal>>(
-            future: goalState.getGoalsAsync(),
+            future: goalMonitoringState.getGoalsAsync(),
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done) {

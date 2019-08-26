@@ -17,15 +17,10 @@ class AddGoal extends StatefulWidget {
 
 class AddGoalState extends State<AddGoal> {
   DateTime selectedDate = DateTime.now();
-  String _goalText = "";
-
-  _submitGoal() {
-    var goal = new Goal();
-    goal.deadline = selectedDate;
-    goal.goal = _goalText;
-    goal.progress = 0;
-
-    DBProvider.db.insertGoal(goal);
+  
+  _submitGoal() async {
+    final appState = Provider.of<GoalState>(context);
+    await appState.saveCurrentGoal();
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -37,31 +32,12 @@ class AddGoalState extends State<AddGoal> {
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
       appState.currentGoal.deadline = picked;
-
-    // final TimeOfDay pickedTime = await showTimePicker(
-    //   context: context,
-    //   initialTime: TimeOfDay.fromDateTime(appState.currentGoal.deadline),
-    // );
-
-    // if (pickedTime != null) {
-    //   var newDeadline = new DateTime(
-    //       appState.currentGoal.deadline.year,
-    //       appState.currentGoal.deadline.month,
-    //       appState.currentGoal.deadline.day,
-    //       pickedTime.hour,
-    //       pickedTime.minute);
-    //   appState.currentGoal.deadline = newDeadline;
-    // }
   }
 
   Widget buildTextEntry() {
+    final appState = Provider.of<GoalState>(context);
     return Column(
       children: <Widget>[
-        // Text(
-        //   "Ziel",
-        //   textAlign: TextAlign.left,
-        //   style: subHeaderStyle,
-        // ),
         SizedBox(height: 10),
         Container(
           padding: EdgeInsets.all(15.0),
@@ -73,7 +49,7 @@ class AddGoalState extends State<AddGoal> {
             textInputAction: TextInputAction.done,
             onChanged: (text) {
               setState(() {
-                _goalText = text;
+                appState.currentGoal.goal = text;
               });
             },
           ),

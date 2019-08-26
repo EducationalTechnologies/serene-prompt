@@ -16,8 +16,9 @@ class AddGoalScreen extends StatelessWidget {
                 textColor: Colors.white,
                 icon: const Icon(Icons.save),
                 label: Text("Speichern"),
-                onPressed: () {
-                  //TODO: SAve
+                onPressed: () async {
+                  final appState = Provider.of<GoalState>(context);
+                  await appState.saveCurrentGoal();
                   Navigator.pop(context);
                 }),
           ],

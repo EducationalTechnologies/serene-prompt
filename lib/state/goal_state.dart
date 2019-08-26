@@ -16,17 +16,13 @@ class GoalState with ChangeNotifier {
     if (_goals == null) {
       _goals = await DataService().getGoals();
     }
-    // _goals = [
-    //   Goal(deadline: DateTime.now(), goal: "Goal", id: 2, progress: 20)
-    // ];
-    // notifyListeners();
     return _goals;
   }
 
   Goal get currentGoal {
+    // TODO: Do not always use a deadline
     if (_currentGoal == null) {
-      _currentGoal =
-          new Goal(id: 0, goal: "", deadline: DateTime.now(), progress: 0);
+      _currentGoal = new Goal(goal: "", deadline: DateTime.now(), progress: 0);
     }
     return _currentGoal;
   }

@@ -11,6 +11,8 @@ final String columnId = '_id';
 final String columnGoal = 'goal';
 final String columnHindrance = 'hindrance';
 
+const String TABLE_GOALS = "goals";
+
 //TODO: Continue here https://pusher.com/tutorials/local-data-flutter
 
 class DBProvider {
@@ -43,14 +45,14 @@ class DBProvider {
   insertGoal(Goal goal) async {
     final Database db = await database;
 
-    await db.insert("goals", goal.toMap(),
+    await db.insert(TABLE_GOALS, goal.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   getGoals() async {
     print("OBTAINING GOALS FROM DATABASE");
     final db = await database;
-    var maps = await db.query("goals");
+    var maps = await db.query(TABLE_GOALS);
 
     return List.generate(maps.length, (i) {
       var deadline;
@@ -69,14 +71,20 @@ class DBProvider {
   updateGoal(Goal goal) async {
     final db = await database;
 
-    await db
-        .update("goals", goal.toMap(), where: "id = ?", whereArgs: [goal.id]);
+    await db.update(TABLE_GOALS, goal.toMap(),
+        where: "id = ?", whereArgs: [goal.id]);
+  }
+
+  deleteGoal(Goal goal) async {
+    final Database db = await database;
+
+    await db.delete(TABLE_GOALS, where: "id = ?", whereArgs: [goal.id]);
   }
 
   clearDatabase() async {
     final Database db = await database;
 
-    await db.delete("goals");
+    await db.delete(TABLE_GOALS);
   }
 
   insertSampleData() async {
