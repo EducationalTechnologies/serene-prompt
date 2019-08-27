@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/services/database_helpers.dart';
 import 'package:implementation_intentions/shared/app_colors.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
@@ -17,6 +15,18 @@ class AddGoal extends StatefulWidget {
 
 class AddGoalState extends State<AddGoal> {
   DateTime selectedDate = DateTime.now();
+  TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = new TextEditingController(text: "");
+
+    Future.delayed(Duration.zero, () {
+      final appState = Provider.of<GoalState>(context);
+      _textController.text = appState.currentGoal.goal;
+    });
+  }
 
   _submitGoal() async {
     final appState = Provider.of<GoalState>(context);
@@ -36,6 +46,7 @@ class AddGoalState extends State<AddGoal> {
 
   Widget buildTextEntry() {
     final appState = Provider.of<GoalState>(context);
+
     return Column(
       children: <Widget>[
         SizedBox(height: 10),
@@ -44,6 +55,7 @@ class AddGoalState extends State<AddGoal> {
           decoration: BoxDecoration(
               color: Colors.grey[100], borderRadius: BorderRadius.circular(5)),
           child: TextField(
+            controller: _textController,
             decoration: InputDecoration(labelText: "Gib dein Lernziel ein"),
             keyboardType: TextInputType.text,
             maxLines: null,
@@ -61,9 +73,10 @@ class AddGoalState extends State<AddGoal> {
 
   Widget buildDatePicker() {
     final appState = Provider.of<GoalState>(context);
-    var dateText =
-        DateFormat('dd.MM.yyy').format(appState.currentGoal.deadline);
-    var timeText = DateFormat('kk:mm').format(appState.currentGoal.deadline);
+
+    var date = appState.currentGoal.deadline ?? DateTime.now();
+    var dateText = DateFormat('dd.MM.yyy').format(date);
+    var timeText = DateFormat('kk:mm').format(date);
     return Column(
       children: <Widget>[
         Text(

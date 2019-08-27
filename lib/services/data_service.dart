@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/models/goal_shield.dart';

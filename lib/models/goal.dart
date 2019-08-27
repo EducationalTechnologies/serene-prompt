@@ -10,7 +10,7 @@ class Goal {
     return {
       "id": id,
       "goal": goal,
-      "deadline": deadline.toIso8601String(),
+      "deadline": deadline?.toIso8601String() ?? "",
       "progress": progress
     };
   }
