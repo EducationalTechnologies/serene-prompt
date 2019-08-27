@@ -52,6 +52,7 @@ class _ReflectScreenState extends State<ReflectScreen> {
     var appstate = Provider.of<GoalMonitoringState>(context, listen: false);
     await appstate.getGoalsAsync();
     _testGoals = appstate.goals;
+    super.initState();
   }
 
   @override

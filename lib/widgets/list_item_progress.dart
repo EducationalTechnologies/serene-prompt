@@ -37,7 +37,6 @@ class ProgressListItem extends StatelessWidget {
                       Navigator.pushNamed(context, RouteNames.ADD_GOAL,
                           arguments:
                               GoalScreenArguments(goalMonitorItemState.goal));
-                      // TODO: Handle this case.
                       break;
                   }
                 },

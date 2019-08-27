@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/screens/add_goal.dart';
-import 'package:implementation_intentions/shared/screen_args.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:provider/provider.dart';
 

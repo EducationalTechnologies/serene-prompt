@@ -14,14 +14,6 @@ class GoalShieldingScreen extends StatefulWidget {
 
 class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
   @override
-  void initState() {
-    // TODO: implement initState
-    // var state = Provider.of<GoalShieldingState>(context);
-    // state.fetchData();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     List<Widget> _goalShieldingPages = [
       GoalSelectionScreen(),
