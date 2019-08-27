@@ -8,6 +8,14 @@ class GoalState with ChangeNotifier {
   Goal _currentGoal;
   List<Goal> _goals;
 
+  GoalState() {
+    _currentGoal = new Goal(goal: "", deadline: DateTime.now(), progress: 0);
+  }
+
+  GoalState.fromGoal(Goal goal) {
+    this._currentGoal = goal;
+  }
+
   List<Goal> get goals {
     return _goals;
   }

@@ -23,6 +23,12 @@ class GoalMonitoringState with ChangeNotifier {
     return _goals;
   }
 
+  deleteGoal(Goal goal) async {
+    DataService().deleteGoal(goal);
+    this._goals.removeWhere((g) => g.id == goal.id);
+    notifyListeners();
+  }
+
   Goal get currentGoal {
     if (_currentGoal == null) {
       _currentGoal =

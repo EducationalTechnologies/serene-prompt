@@ -17,7 +17,7 @@ class AddGoal extends StatefulWidget {
 
 class AddGoalState extends State<AddGoal> {
   DateTime selectedDate = DateTime.now();
-  
+
   _submitGoal() async {
     final appState = Provider.of<GoalState>(context);
     await appState.saveCurrentGoal();
@@ -46,6 +46,7 @@ class AddGoalState extends State<AddGoal> {
           child: TextField(
             decoration: InputDecoration(labelText: "Gib dein Lernziel ein"),
             keyboardType: TextInputType.text,
+            maxLines: null,
             textInputAction: TextInputAction.done,
             onChanged: (text) {
               setState(() {

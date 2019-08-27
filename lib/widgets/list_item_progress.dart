@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/screens/add_goal_screen.dart';
-import 'package:implementation_intentions/services/data_service.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
+import 'package:implementation_intentions/shared/screen_args.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:provider/provider.dart';
 
 enum ListItemMenu { delete, edit }
@@ -14,7 +13,7 @@ class ProgressListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
-
+    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -30,11 +29,14 @@ class ProgressListItem extends StatelessWidget {
                 onSelected: (ListItemMenu result) async {
                   switch (result) {
                     case ListItemMenu.delete:
-                      // TODO: Handle this case.
-                      await DataService().deleteGoal(goalMonitorItemState.goal);
+                      // TODO: Add confirmation dialog
+                      await goalMonitoringState
+                          .deleteGoal(goalMonitorItemState.goal);
                       break;
                     case ListItemMenu.edit:
-                      Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+                      Navigator.pushNamed(context, RouteNames.ADD_GOAL,
+                          arguments:
+                              GoalScreenArguments(goalMonitorItemState.goal));
                       // TODO: Handle this case.
                       break;
                   }
