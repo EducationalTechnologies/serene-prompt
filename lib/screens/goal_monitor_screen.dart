@@ -11,6 +11,18 @@ class GoalMonitorScreen extends StatefulWidget {
 }
 
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
+  @override
+  initState() {
+    print("Calling Init State");
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(Widget oldWidget) {
+    print("Calling Did Update Widget");
+    super.didUpdateWidget(oldWidget);
+  }
+
   buildListView(List<Goal> goals) {
     return ListView.builder(
       itemCount: goals.length,

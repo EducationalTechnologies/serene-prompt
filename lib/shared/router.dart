@@ -6,6 +6,8 @@ import 'package:implementation_intentions/screens/goal_shielding_screen.dart';
 import 'package:implementation_intentions/screens/main_screen.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/shared/screen_args.dart';
+import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:provider/provider.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -18,9 +20,13 @@ class Router {
         final GoalScreenArguments goalArgs = settings.arguments;
         if (goalArgs?.goal != null) {
           return MaterialPageRoute(
-              builder: (_) => AddGoalScreen.fromGoal(goalArgs.goal));
+              builder: (_) => ChangeNotifierProvider<GoalState>(
+                  builder: (_) => GoalState.fromGoal(goalArgs.goal),
+                  child: AddGoalScreen()));
         }
-        return MaterialPageRoute(builder: (_) => AddGoalScreen());
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<GoalState>(
+                builder: (_) => GoalState(), child: AddGoalScreen()));
       case RouteNames.AMBULATORY_ASSESSMENT:
         return MaterialPageRoute(builder: (_) => AmbulatoryAssessmentScreen());
       default:

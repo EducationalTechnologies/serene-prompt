@@ -31,7 +31,7 @@ class GoalState with ChangeNotifier {
 
   Future saveCurrentGoal() async {
     var goal = this._currentGoal;
-    await DBProvider.db.insertGoal(goal);
+    await this.saveNewGoal(goal);
     notifyListeners();
   }
 
