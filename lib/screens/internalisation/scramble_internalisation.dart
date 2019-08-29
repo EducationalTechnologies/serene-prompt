@@ -1,6 +1,13 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+
+class ScrambleText {
+  int originalPosition;
+  bool isSelected;
+  String text;
+
+  ScrambleText({this.originalPosition, this.isSelected, this.text});
+}
 
 class ScrambleInternalisation extends StatefulWidget {
   @override
@@ -9,20 +16,37 @@ class ScrambleInternalisation extends StatefulWidget {
 }
 
 class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
-  List<String> _sentence = ["This", "Is", "Scrambled", "Text"];
+  List<ScrambleText> _sentence = [
+    ScrambleText(originalPosition: 0, isSelected: false, text: "This"),
+    ScrambleText(originalPosition: 1, isSelected: false, text: "Is"),
+    ScrambleText(originalPosition: 2, isSelected: false, text: "Scrambled"),
+    ScrambleText(originalPosition: 3, isSelected: false, text: "Text"),
+  ];
 
   List<String> _builtSentence = [];
 
-  buildWordBox(String text) {
+  @override
+  initState() {
+    super.initState();
+    this._sentence = scrambleSentence(_sentence);
+  }
+
+  buildWordBox(ScrambleText scramble) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _builtSentence.add(text);
+          scramble.isSelected = !scramble.isSelected;
         });
       },
       child: Container(
-        child: Text(text),
-        color: Colors.yellowAccent[700],
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.yellowAccent[700],
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black, offset: Offset(1, 1), blurRadius: 1.0)
+            ]),
+        child: Text(scramble.text),
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(8.0),
       ),
@@ -37,15 +61,18 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         });
       },
       child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[600],
+        ),
         child: Opacity(opacity: 0, child: Text(text)),
-        color: Colors.grey[600],
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(9.0),
       ),
     );
   }
 
-  scrambleSentence(List<String> sentence) {
+  scrambleSentence(List sentence) {
     var random = new Random();
 
     for (var i = sentence.length - 1; i > 0; i--) {
@@ -59,21 +86,28 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     return sentence;
   }
 
+  buildSelectStack() {}
+
   @override
   Widget build(BuildContext context) {
-    this._sentence = scrambleSentence(_sentence);
     return Container(
       child: Column(
         children: <Widget>[
-          Wrap(
-            children: <Widget>[
-              for (var s in _builtSentence) buildWordBox(s),
-            ],
+          Container(
+            height: 100,
+            child: Wrap(
+              children: <Widget>[
+                for (var s in _sentence) if (s.isSelected) buildWordBox(s),
+              ],
+            ),
           ),
           Wrap(
             children: <Widget>[
               for (var s in _sentence)
-                Stack(children: [buildEmptyWord(s), buildWordBox(s)])
+                if (!s.isSelected)
+                  Stack(children: [buildEmptyWord(s.text), buildWordBox(s)])
+                else
+                  buildEmptyWord(s.text)
             ],
           ),
         ],
