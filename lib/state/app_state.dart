@@ -6,4 +6,8 @@ class AppState with ChangeNotifier {
   reloadData() {
     DataService().fetchData();
   }
+
+  reloadGoals() {
+    DataService().fetchData();
+  }
 }

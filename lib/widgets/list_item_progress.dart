@@ -10,6 +10,35 @@ enum ListItemMenu { delete, edit }
 class ProgressListItem extends StatelessWidget {
   const ProgressListItem({Key key}) : super(key: key);
 
+  buildConfirmationDialog(BuildContext context) {
+    var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
+    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Löschen bestätigen"),
+            content: Text("Möchtest du dieses Ziel wirklich löschen?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Abbrechen"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text("Löschen"),
+                onPressed: () async {
+                  await goalMonitoringState
+                      .deleteGoal(goalMonitorItemState.goal);
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
@@ -29,16 +58,15 @@ class ProgressListItem extends StatelessWidget {
                 onSelected: (ListItemMenu result) async {
                   switch (result) {
                     case ListItemMenu.delete:
-                      // TODO: Add confirmation dialog
-                      await goalMonitoringState
-                          .deleteGoal(goalMonitorItemState.goal);
+                      buildConfirmationDialog(context);
                       break;
                     case ListItemMenu.edit:
                       Navigator.pushNamed(context, RouteNames.ADD_GOAL,
-                          arguments:
-                              GoalScreenArguments(goalMonitorItemState.goal)).then((value) {
-                                goalMonitoringState.init();
-                              });
+                              arguments: GoalScreenArguments(
+                                  goalMonitorItemState.goal))
+                          .then((value) {
+                        goalMonitoringState.init();
+                      });
                       break;
                   }
                 },

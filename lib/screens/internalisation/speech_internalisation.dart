@@ -8,7 +8,7 @@ class SpeechInternalisation extends StatefulWidget {
 }
 
 class _SpeechInternalisationState extends State<SpeechInternalisation> {
-  SpeechRecognition _speechRecognition;
+  // SpeechRecognition _speechRecognition;
   bool _isAvailable = false;
   bool _isListening = false;
   String locale = "en_US";
@@ -18,27 +18,29 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
   void initState() {
     super.initState();
     initSpeechRecognizer();
+    
+    // Speechrecognition spch = Speechrecognition();
   }
 
   void initSpeechRecognizer() {
-    _speechRecognition = SpeechRecognition();
+    // _speechRecognition = SpeechRecognition();
 
-    _speechRecognition.setAvailabilityHandler(
-        (bool result) => setState(() => _isAvailable = result));
+    // _speechRecognition.setAvailabilityHandler(
+    //     (bool result) => setState(() => _isAvailable = result));
 
-    _speechRecognition.setRecognitionStartedHandler(
-        () => setState(() => _isListening = true));
+    // _speechRecognition.setRecognitionStartedHandler(
+    //     () => setState(() => _isListening = true));
 
-    _speechRecognition.setRecognitionResultHandler(
-        (String speech) => setState(() => resultText = speech));
+    // _speechRecognition.setRecognitionResultHandler(
+    //     (String speech) => setState(() => resultText = speech));
 
-    _speechRecognition.setRecognitionCompleteHandler(recognitionComplete);
+    // _speechRecognition.setRecognitionCompleteHandler(recognitionComplete);
 
-    _speechRecognition.setErrorHandler(speechRecognitionError);
+    // _speechRecognition.setErrorHandler(speechRecognitionError);
 
-    _speechRecognition
-        .activate()
-        .then((result) => setState(() => {_isAvailable = result}));
+    // _speechRecognition
+    //     .activate()
+    //     .then((result) => setState(() => {_isAvailable = result}));
   }
 
   void speechRecognitionError(SpeechErrorEnum error) {
@@ -51,9 +53,9 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
   }
 
   void startListening() {
-    _speechRecognition
-        .listen(locale: locale)
-        .then((result) => print("Start Listening, Result is $result"));
+    // _speechRecognition
+    //     .listen(locale: locale)
+    //     .then((result) => print("Start Listening, Result is $result"));
   }
 
   @override
@@ -69,11 +71,11 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
               mini: true,
               backgroundColor: Colors.deepOrange,
               onPressed: () {
-                if (_isListening)
-                  _speechRecognition.cancel().then((result) => setState(() {
-                        _isListening = result;
-                        resultText = "";
-                      }));
+                // if (_isListening) var
+                  // _speechRecognition.cancel().then((result) => setState(() {
+                  //       _isListening = result;
+                  //       resultText = "";
+                  //     }));
               },
             ),
             FloatingActionButton(
@@ -90,10 +92,10 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
               mini: true,
               backgroundColor: Colors.deepPurple,
               onPressed: () {
-                if (_isListening)
-                  _speechRecognition
-                      .stop()
-                      .then((result) => setState(() => _isListening = result));
+                // if (_isListening)
+                  // _speechRecognition
+                  //     .stop()
+                  //     .then((result) => setState(() => _isListening = result));
               },
             )
           ],

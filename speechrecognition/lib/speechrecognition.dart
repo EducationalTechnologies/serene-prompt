@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class Speechrecognition {
+
+  static String TEST_STRING = "TEST STRING";
+
   static const MethodChannel _channel =
       const MethodChannel('speechrecognition');
 
