@@ -40,10 +40,10 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<GoalMonitoringState>(context);
+    final goalMonitoringState = Provider.of<GoalMonitoringState>(context);
     return Container(
       child: FutureBuilder(
-        future: appState.getGoalsAsync(),
+        future: goalMonitoringState.getGoalsAsync(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.done) {

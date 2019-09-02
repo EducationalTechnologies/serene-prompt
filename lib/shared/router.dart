@@ -6,6 +6,7 @@ import 'package:implementation_intentions/screens/goal_shielding_screen.dart';
 import 'package:implementation_intentions/screens/main_screen.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/shared/screen_args.dart';
+import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,11 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteNames.MAIN:
-        return MaterialPageRoute(builder: (_) => MainScreen());
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<GoalMonitoringState>(
+                  builder: (_) => GoalMonitoringState(),
+                  child: MainScreen(),
+                ));
       case RouteNames.GOAL_SHIELDING:
         return MaterialPageRoute(builder: (_) => GoalShieldingScreen());
       case RouteNames.ADD_GOAL:

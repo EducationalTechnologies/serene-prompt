@@ -33,8 +33,9 @@ class _MainScreenState extends State<MainScreen> {
   buildAddGoalButton() {
     return FloatingActionButton(
       child: Icon(Icons.add),
-      onPressed: () {
-        Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+      onPressed: () async {
+        var res = await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+        Provider.of<GoalMonitoringState>(context).fetchData();
       },
     );
   }
@@ -49,17 +50,14 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: buildAddGoalButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: Colors.white,
-      body: ChangeNotifierProvider<GoalMonitoringState>(
-        builder: (_) => GoalMonitoringState(),
-        child: PageView(
-          controller: _controller,
-          onPageChanged: (newPage) {
-            setState(() {
-              _selectedPageIndex = newPage;
-            });
-          },
-          children: _widgetOptions,
-        ),
+      body: PageView(
+        controller: _controller,
+        onPageChanged: (newPage) {
+          setState(() {
+            _selectedPageIndex = newPage;
+          });
+        },
+        children: _widgetOptions,
       ),
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(

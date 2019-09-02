@@ -3,6 +3,7 @@ import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/shared/screen_args.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
 import 'package:implementation_intentions/state/goal_monitoring_state.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 enum ListItemMenu { delete, edit }
@@ -39,6 +40,13 @@ class ProgressListItem extends StatelessWidget {
         });
   }
 
+  buildDeadline(DateTime date) {
+    return Row(children: <Widget>[
+      Icon(Icons.calendar_today),
+      Text(DateFormat('dd.MM.yyy').format(date))
+    ],);
+  }
+
   @override
   Widget build(BuildContext context) {
     var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
@@ -52,7 +60,7 @@ class ProgressListItem extends StatelessWidget {
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(goalMonitorItemState.goalText),
+                child: Text(goalMonitorItemState.goal.goal),
               )),
               PopupMenuButton<ListItemMenu>(
                 onSelected: (ListItemMenu result) async {
@@ -87,7 +95,8 @@ class ProgressListItem extends StatelessWidget {
               onChanged: (double value) {
                 goalMonitorItemState.progress = value.toInt();
               },
-            )
+            ),
+            if(goalMonitorItemState.goal.deadline != null) buildDeadline(goalMonitorItemState.goal.deadline),
           ],
         ),
       ),

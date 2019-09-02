@@ -13,14 +13,19 @@ class GoalMonitoringState with ChangeNotifier {
   }
 
   Future<List<Goal>> getGoalsAsync() async {
-    if (_goals == null) {
-      _goals = await DataService().getGoals();
-    }
+    _goals = await DataService().getGoals();
     // _goals = [
     //   Goal(deadline: DateTime.now(), goal: "Goal", id: 2, progress: 20)
     // ];
     // notifyListeners();
     return _goals;
+  }
+
+  fetchData() async {
+    _isFetching = true;
+    await DataService().fetchGoals();
+    _isFetching = false;
+    notifyListeners();
   }
 
   deleteGoal(Goal goal) async {
