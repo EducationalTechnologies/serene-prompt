@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/shared/app_colors.dart' as prefix0;
 import 'package:implementation_intentions/shared/router.dart';
 import 'package:implementation_intentions/state/app_state.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +16,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Serene',
         theme: ThemeData(
-          primaryColor: Color(0xff003c7e),
-          backgroundColor: Color(0xff344865),
+          primaryColor: prefix0.primaryColor,
+          backgroundColor: prefix0.backgroundColor,
           textTheme: TextTheme(
               body1: TextStyle(fontSize: 16.0, color: Colors.black),
               body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
