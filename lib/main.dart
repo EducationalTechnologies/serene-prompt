@@ -16,12 +16,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Serene',
         theme: ThemeData(
-          primaryColor: prefix0.primaryColor,
-          backgroundColor: prefix0.backgroundColor,
-          textTheme: TextTheme(
-              body1: TextStyle(fontSize: 16.0, color: Colors.black),
-              body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
-          primarySwatch: Colors.blue,
+
+          // textTheme: TextTheme(
+          //     body1: TextStyle(fontSize: 16.0, color: Colors.black),
+          //     body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
+          primarySwatch: Colors.amber,
         ),
         onGenerateRoute: Router.generateRoute,
         // routes: {

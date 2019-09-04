@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
 import 'package:implementation_intentions/services/data_service.dart';
+import 'package:implementation_intentions/shared/app_colors.dart' as prefix0;
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
@@ -44,12 +45,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: prefix0.primaryColor,
         title: Text("Serene"),
       ),
       drawer: SereneDrawer(),
       floatingActionButton: buildAddGoalButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      backgroundColor: Colors.white,
       body: PageView(
         controller: _controller,
         onPageChanged: (newPage) {
@@ -61,17 +62,24 @@ class _MainScreenState extends State<MainScreen> {
       ),
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(
+          color: prefix0.primaryColor,
           shape: CircularNotchedRectangle(),
           clipBehavior: Clip.antiAlias,
           child: BottomNavigationBar(
+            selectedItemColor: Colors.white,
+            selectedIconTheme: IconThemeData(color: Colors.white, size: 30),
+            selectedLabelStyle:
+                TextStyle(color: Colors.white, decorationColor: Colors.white),
+            backgroundColor: prefix0.primaryColor,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.view_list), title: Text("Ziele")),
+                icon: Icon(Icons.view_list),
+                title: Text("Ziele"),
+              ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.wallpaper), title: Text("Statistiken"))
             ],
             currentIndex: _selectedPageIndex,
-            selectedItemColor: Colors.amber[800],
             onTap: (index) {
               _onItemTapped(index);
             },
