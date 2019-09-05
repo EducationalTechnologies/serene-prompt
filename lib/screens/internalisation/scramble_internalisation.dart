@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/state/goal_shielding_state.dart';
+import 'package:provider/provider.dart';
 
 class ScrambleText {
   int originalPosition;
@@ -29,6 +31,19 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   initState() {
     super.initState();
     this._sentence = scrambleSentence(_sentence);
+    Future.delayed(Duration.zero, () {
+      var shieldState = Provider.of<GoalShieldingState>(context);
+      print("ShieldState");
+      _sentence = [];
+      var shieldSentence = shieldState.shieldingSentence.split(" ");
+      for (var i = 0; i < shieldSentence.length; i++) {
+        _sentence.add(ScrambleText(
+            isSelected: false, text: shieldSentence[i], originalPosition: i));
+      }
+      setState(() {
+        _sentence;
+      });
+    });
   }
 
   buildWordBox(ScrambleText scramble) {

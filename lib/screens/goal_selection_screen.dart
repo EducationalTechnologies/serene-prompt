@@ -64,13 +64,8 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var shieldingState = Provider.of<GoalShieldingState>(context);
     var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    // if (MediaQuery.of(context).viewInsets.bottom == 0) {
-    //   setState(() {
-    //     _showText = false;
-    //   });
-    // }
+
     return Container(
         child: FutureBuilder<List<Goal>>(
       future: goalMonitoringState.getGoalsAsync(),
@@ -102,15 +97,22 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
   int _selectedIndex;
 
   _onSelected(int index) {
+    var goalShieldingState = Provider.of<GoalShieldingState>(context);
+    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
+    goalShieldingState.selectedGoal = goalMonitoringState.goals[index];
     setState(() {
       _selectedIndex = index;
     });
+    print(goalShieldingState.selectedGoal);
   }
 
   @override
   Widget build(BuildContext context) {
     var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    print("Calling Build Goal List");
+    var goalShieldingState = Provider.of<GoalShieldingState>(context);
+    _selectedIndex =
+        goalMonitoringState.goals.indexOf(goalShieldingState.selectedGoal);
+    print("Selected Index: $_selectedIndex");
     return Container(
         // TOOD: Lift FutureBuilder up
         child: FutureBuilder<List<Goal>>(
