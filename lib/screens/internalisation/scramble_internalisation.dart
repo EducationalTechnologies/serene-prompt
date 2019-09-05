@@ -25,7 +25,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     ScrambleText(originalPosition: 3, isSelected: false, text: "Text"),
   ];
 
-  List<String> _builtSentence = [];
+  List<ScrambleText> _builtSentence = [];
 
   @override
   initState() {
@@ -41,7 +41,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
             isSelected: false, text: shieldSentence[i], originalPosition: i));
       }
       setState(() {
-        _sentence;
+        _sentence = scrambleSentence(_sentence);
       });
     });
   }
@@ -49,6 +49,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   buildWordBox(ScrambleText scramble) {
     return GestureDetector(
       onTap: () {
+        _builtSentence.add(scramble);
         setState(() {
           scramble.isSelected = !scramble.isSelected;
         });
