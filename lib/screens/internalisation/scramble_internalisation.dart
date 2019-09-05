@@ -72,9 +72,9 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   buildEmptyWord(String text) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _builtSentence.add(text);
-        });
+        // setState(() {
+        //   _builtSentence.add(text);
+        // });
       },
       child: Container(
         decoration: BoxDecoration(
