@@ -10,6 +10,10 @@ class DataService {
   List<Goal> _goals;
   List<GoalShield> _goalShields;
 
+  get goals {
+    return _goals;
+  }
+
   getGoals() async {
     if (_goals == null) _goals = await DBProvider.db.getGoals();
 

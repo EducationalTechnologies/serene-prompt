@@ -64,7 +64,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
+    GoalMonitoringState goalMonitoringState = Provider.of<GoalMonitoringState>(context);
 
     return Container(
         child: FutureBuilder<List<Goal>>(
@@ -108,40 +108,31 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   @override
   Widget build(BuildContext context) {
-    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    var goalShieldingState = Provider.of<GoalShieldingState>(context);
+    GoalMonitoringState goalMonitoringState =
+        Provider.of<GoalMonitoringState>(context);
+    GoalShieldingState goalShieldingState =
+        Provider.of<GoalShieldingState>(context);
     _selectedIndex =
         goalMonitoringState.goals.indexOf(goalShieldingState.selectedGoal);
     print("Selected Index: $_selectedIndex");
     return Container(
-        // TOOD: Lift FutureBuilder up
-        child: FutureBuilder<List<Goal>>(
-            future: goalMonitoringState.getGoalsAsync(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData &&
-                  snapshot.connectionState == ConnectionState.done) {
-                List<Goal> goals = snapshot.data;
-                return ListView.builder(
-                  itemCount: goals.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        // TODO: Change color to something more pretty
-                        color: _selectedIndex == index
-                            ? Colors.orange[200]
-                            : Colors.transparent,
-                        child: ListTile(
-                          title: Text(goals[index].goal),
-                          onTap: () {
-                            _onSelected(index);
-                          },
-                        ));
-                  },
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }));
+        child: ListView.builder(
+      itemCount: goalMonitoringState.goals.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: Container(
+              // TODO: Change color to something more pretty
+              color: _selectedIndex == index
+                  ? Colors.orange[200]
+                  : Colors.transparent,
+              child: ListTile(
+                title: Text(goalMonitoringState.goals[index].goal),
+                onTap: () {
+                  _onSelected(index);
+                },
+              )),
+        );
+      },
+    ));
   }
 }

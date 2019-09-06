@@ -30,7 +30,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   @override
   initState() {
     super.initState();
-    this._sentence = scrambleSentence(_sentence);
+    // this._sentence = scrambleSentence(_sentence);
     Future.delayed(Duration.zero, () {
       var shieldState = Provider.of<GoalShieldingState>(context);
       print("ShieldState");

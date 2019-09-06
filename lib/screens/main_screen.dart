@@ -45,7 +45,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: prefix0.primaryColor,
         title: Text("Serene"),
       ),
       drawer: SereneDrawer(),
@@ -62,7 +61,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(
-          color: prefix0.primaryColor,
           shape: CircularNotchedRectangle(),
           clipBehavior: Clip.antiAlias,
           child: BottomNavigationBar(

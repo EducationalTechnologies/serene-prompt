@@ -9,7 +9,7 @@ class GoalMonitoringState with ChangeNotifier {
   List<Goal> _goals;
 
   List<Goal> get goals {
-    return _goals;
+    return DataService().goals;
   }
 
   Future<List<Goal>> getGoalsAsync() async {
