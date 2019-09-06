@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:implementation_intentions/screens/add_goal_screen.dart';
 import 'package:implementation_intentions/screens/ambulatory_assessment_screen.dart';
+import 'package:implementation_intentions/screens/consent_screen.dart';
 import 'package:implementation_intentions/screens/goal_shielding_screen.dart';
 import 'package:implementation_intentions/screens/main_screen.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
@@ -41,6 +42,8 @@ class Router {
                 builder: (_) => GoalState(), child: AddGoalScreen()));
       case RouteNames.AMBULATORY_ASSESSMENT:
         return MaterialPageRoute(builder: (_) => AmbulatoryAssessmentScreen());
+      case RouteNames.CONSENT:
+        return MaterialPageRoute(builder: (_) => ConsentScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

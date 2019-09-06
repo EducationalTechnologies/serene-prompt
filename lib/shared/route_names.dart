@@ -4,4 +4,5 @@ class RouteNames {
   static const GOAL_SHIELDING = "/goalshielding";
   static const ADD_GOAL = "/addgoal";
   static const AMBULATORY_ASSESSMENT = "/ambulatoryassessment";
+  static const CONSENT = "/consent";
 }
