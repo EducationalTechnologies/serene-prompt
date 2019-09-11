@@ -3,7 +3,7 @@ import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/services/database_helpers.dart';
 
 class GoalMonitorItemState with ChangeNotifier {
-  String get goalText => _goal.goal;
+  String get goalText => _goal.goalText;
   int get progress => _goal.progress;
   Goal get goal => _goal;
 
@@ -14,7 +14,7 @@ class GoalMonitorItemState with ChangeNotifier {
   }
 
   set goalText(String goalText) {
-    _goal.goal = goalText;
+    _goal.goalText = goalText;
     DBProvider.db.updateGoal(_goal);
     notifyListeners();
   }

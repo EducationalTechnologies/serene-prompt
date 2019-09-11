@@ -37,7 +37,7 @@ class GoalMonitoringState with ChangeNotifier {
   Goal get currentGoal {
     if (_currentGoal == null) {
       _currentGoal =
-          new Goal(id: 0, goal: "", deadline: DateTime.now(), progress: 0);
+          new Goal(id: 0, goalText: "", deadline: DateTime.now(), progress: 0);
     }
     return _currentGoal;
   }

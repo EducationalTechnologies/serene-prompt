@@ -41,16 +41,19 @@ class ProgressListItem extends StatelessWidget {
   }
 
   buildDeadline(DateTime date) {
-    return Row(children: <Widget>[
-      Icon(Icons.calendar_today),
-      Text(DateFormat('dd.MM.yyy').format(date))
-    ],);
+    return Row(
+      children: <Widget>[
+        Icon(Icons.calendar_today),
+        Text(DateFormat('dd.MM.yyy').format(date))
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
     var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
+    var goal = goalMonitorItemState.goal;
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -58,10 +61,8 @@ class ProgressListItem extends StatelessWidget {
           children: <Widget>[
             Row(children: <Widget>[
               Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(goalMonitorItemState.goal.goal),
-              )),
+                child: Text(goal.goalText),
+              ),
               PopupMenuButton<ListItemMenu>(
                 onSelected: (ListItemMenu result) async {
                   switch (result) {
@@ -96,7 +97,8 @@ class ProgressListItem extends StatelessWidget {
                 goalMonitorItemState.progress = value.toInt();
               },
             ),
-            if(goalMonitorItemState.goal.deadline != null) buildDeadline(goalMonitorItemState.goal.deadline),
+            if (goalMonitorItemState.goal.deadline != null)
+              buildDeadline(goal.deadline),
           ],
         ),
       ),

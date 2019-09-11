@@ -35,8 +35,9 @@ class DBProvider {
         onCreate: (Database db, int version) async {
       await db
           .execute("CREATE TABLE goals(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-              "goal STRING, " +
+              "goalText STRING, " +
               "deadline STRING, " +
+              "usesProgress INTEGER, " +
               "progress INTEGER"
                   ")");
     });
@@ -55,15 +56,20 @@ class DBProvider {
     var maps = await db.query(TABLE_GOALS);
 
     return List.generate(maps.length, (i) {
-      var deadline;
+      DateTime deadline;
+      bool usesProgress = false;
       if (maps[i]["deadline"] != "") {
         deadline = DateTime.parse(maps[i]["deadline"]);
+      }
+      if (maps[i].containsKey("usesProgress")) {
+        usesProgress = (maps[i]["usesProgress"] == 1);
       }
 
       return Goal(
           deadline: deadline,
           id: maps[i]["id"],
-          goal: maps[i]["goal"],
+          goalText: maps[i]["goalText"],
+          usesProgress: usesProgress,
           progress: maps[i]["progress"]);
     });
   }
@@ -91,17 +97,20 @@ class DBProvider {
     List<Goal> _goals = [
       Goal(
           id: 0,
-          goal: "Word Bank implementieren",
+          goalText: "Fix the audio recording issue",
+          usesProgress: false,
           deadline: DateTime.now(),
           progress: 40),
       Goal(
           id: 1,
-          goal: "Aufgabe 2 b) fertig stellen",
+          goalText: "Create the informed consent screen",
+          usesProgress: true,
           deadline: DateTime.now(),
           progress: 5),
       Goal(
           id: 2,
-          goal: "Ethikantrag ausfüllen",
+          goalText: "Ethikantrag ausfüllen",
+          usesProgress: false,
           deadline: DateTime.now(),
           progress: 20),
     ];

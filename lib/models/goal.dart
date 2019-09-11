@@ -1,17 +1,24 @@
 class Goal {
   int id;
-  String goal;
+  String goalText;
   DateTime deadline;
   int progress;
+  bool usesProgress;
 
-  Goal({this.id, this.goal, this.deadline, this.progress});
+  Goal(
+      {this.id,
+      this.goalText = "",
+      this.deadline,
+      this.progress = 0,
+      this.usesProgress = false});
 
   Map<String, dynamic> toMap() {
     return {
-      "id": id,
-      "goal": goal,
-      "deadline": deadline?.toIso8601String() ?? "",
-      "progress": progress
+      "id": this.id,
+      "goalText": this.goalText,
+      "deadline": this.deadline?.toIso8601String() ?? "",
+      "progress": this.progress,
+      "usesProgress": this.usesProgress ? 1 : 0
     };
   }
 }

@@ -26,7 +26,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
       },
       onChanged: (value) {
         setState(() {
-          _newGoal.goal = value;
+          _newGoal.goalText = value;
         });
       },
       // onEditingComplete: () {
@@ -126,7 +126,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
                   ? Colors.orange[200]
                   : Colors.transparent,
               child: ListTile(
-                title: Text(goalMonitoringState.goals[index].goal),
+                title: Text(goalMonitoringState.goals[index].goalText),
                 onTap: () {
                   _onSelected(index);
                 },

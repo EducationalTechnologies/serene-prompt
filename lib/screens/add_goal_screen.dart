@@ -21,13 +21,13 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
 
     Future.delayed(Duration.zero, () {
       final appState = Provider.of<GoalState>(context);
-      _textController.text = appState.currentGoal.goal;
+      _textController.text = appState.currentGoal.goalText;
     });
   }
 
   _canSubmit() {
     final appState = Provider.of<GoalState>(context);
-    if (appState.currentGoal.goal != "") {
+    if (appState.currentGoal.goalText != "") {
       return true;
     }
     return false;
@@ -72,7 +72,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
             textInputAction: TextInputAction.done,
             onChanged: (text) {
               setState(() {
-                appState.currentGoal.goal = text;
+                appState.currentGoal.goalText = text;
               });
             },
           ),

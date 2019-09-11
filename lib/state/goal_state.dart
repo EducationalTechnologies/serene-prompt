@@ -7,7 +7,7 @@ class GoalState with ChangeNotifier {
   Goal _currentGoal;
 
   GoalState() {
-    _currentGoal = new Goal(goal: "", progress: 0);
+    _currentGoal = new Goal(goalText: "", progress: 0);
   }
 
   GoalState.fromGoal(Goal goal) {
@@ -15,9 +15,8 @@ class GoalState with ChangeNotifier {
   }
 
   Goal get currentGoal {
-    // TODO: Do not always use a deadline
     if (_currentGoal == null) {
-      _currentGoal = new Goal(goal: "", progress: 0);
+      _currentGoal = new Goal(goalText: "", progress: 0);
     }
     return _currentGoal;
   }

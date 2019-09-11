@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
     return FloatingActionButton(
       child: Icon(Icons.add),
       onPressed: () async {
-        var res = await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+        await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
         Provider.of<GoalMonitoringState>(context).fetchData();
       },
     );
