@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:implementation_intentions/models/goal.dart';
+import 'package:implementation_intentions/shared/enums.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,7 +38,7 @@ class DBProvider {
           .execute("CREATE TABLE goals(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
               "goalText STRING, " +
               "deadline STRING, " +
-              "usesProgress INTEGER, " +
+              "progressIndicator STRING, " +
               "progress INTEGER"
                   ")");
     });
@@ -57,19 +58,19 @@ class DBProvider {
 
     return List.generate(maps.length, (i) {
       DateTime deadline;
-      bool usesProgress = false;
+      var progressIndicator = GoalProgressIndicator.checkbox;
       if (maps[i]["deadline"] != "") {
         deadline = DateTime.parse(maps[i]["deadline"]);
       }
-      if (maps[i].containsKey("usesProgress")) {
-        usesProgress = (maps[i]["usesProgress"] == 1);
+      if (maps[i].containsKey("progressIndicator")) {
+        progressIndicator = maps[i]["progressIndicator"];
       }
 
       return Goal(
           deadline: deadline,
           id: maps[i]["id"],
           goalText: maps[i]["goalText"],
-          usesProgress: usesProgress,
+          progressIndicator: progressIndicator,
           progress: maps[i]["progress"]);
     });
   }
@@ -98,19 +99,19 @@ class DBProvider {
       Goal(
           id: 0,
           goalText: "Fix the audio recording issue",
-          usesProgress: false,
+          progressIndicator: GoalProgressIndicator.checkbox,
           deadline: DateTime.now(),
           progress: 40),
       Goal(
           id: 1,
           goalText: "Create the informed consent screen",
-          usesProgress: true,
+          progressIndicator: GoalProgressIndicator.slider,
           deadline: DateTime.now(),
           progress: 5),
       Goal(
           id: 2,
           goalText: "Ethikantrag ausfüllen",
-          usesProgress: false,
+          progressIndicator: GoalProgressIndicator.checkbox,
           deadline: DateTime.now(),
           progress: 20),
     ];

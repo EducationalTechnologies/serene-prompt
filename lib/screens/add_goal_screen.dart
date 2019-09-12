@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal.dart';
+import 'package:implementation_intentions/shared/enums.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';
 import 'package:implementation_intentions/state/goal_state.dart';
@@ -25,8 +27,11 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
       final appState = Provider.of<GoalState>(context);
       _textController.text = appState.currentGoal.goalText;
 
-      inputModeSelected =
-          appState.currentGoal.usesProgress ? [false, true] : [true, false];
+      inputModeSelected = [
+        appState.currentGoal.progressIndicator ==
+            GoalProgressIndicator.checkbox,
+        appState.currentGoal.progressIndicator == GoalProgressIndicator.slider
+      ];
     });
   }
 
@@ -157,8 +162,15 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                 ],
                 onPressed: (int index) {
                   setState(() {
-                    Provider.of<GoalState>(context).currentGoal.usesProgress =
-                        index != 0;
+                    if (index == 0) {
+                      Provider.of<GoalState>(context)
+                          .currentGoal
+                          .progressIndicator = GoalProgressIndicator.checkbox;
+                    } else if (index == 1) {
+                      Provider.of<GoalState>(context)
+                          .currentGoal
+                          .progressIndicator = GoalProgressIndicator.slider;
+                    }
 
                     for (int buttonIndex = 0;
                         buttonIndex < inputModeSelected.length;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal.dart';
+import 'package:implementation_intentions/shared/enums.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/shared/screen_args.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
@@ -72,7 +72,7 @@ class ProgressListItem extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Row(children: <Widget>[
-              if (!goal.usesProgress)
+              if (goal.progressIndicator == GoalProgressIndicator.checkbox)
                 Checkbox(
                   onChanged: (value) {
                     goalMonitorItemState.progress = value ? 100 : 0;
@@ -108,7 +108,7 @@ class ProgressListItem extends StatelessWidget {
                 ],
               ),
             ]),
-            if (goal.usesProgress) buildProgressInput(goalMonitorItemState),
+            if (goal.progressIndicator == GoalProgressIndicator.slider) buildProgressInput(goalMonitorItemState),
             if (goalMonitorItemState.goal.deadline != null)
               buildDeadline(goal.deadline),
           ],
