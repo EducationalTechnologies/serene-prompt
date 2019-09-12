@@ -51,23 +51,14 @@ class ProgressListItem extends StatelessWidget {
   }
 
   buildProgressInput(GoalMonitorItemState goalMonitorItemState) {
-    if (goalMonitorItemState.goal.usesProgress) {
-      return Slider(
-        value: goalMonitorItemState.progress.toDouble(),
-        min: 0,
-        max: 100,
-        onChanged: (double value) {
-          goalMonitorItemState.progress = value.toInt();
-        },
-      );
-    } else {
-      return Checkbox(
-        onChanged: (value) {
-          goalMonitorItemState.progress = value ? 100 : 0;
-        },
-        value: goalMonitorItemState.progress == 100,
-      );
-    }
+    return Slider(
+      value: goalMonitorItemState.progress.toDouble(),
+      min: 0,
+      max: 100,
+      onChanged: (double value) {
+        goalMonitorItemState.progress = value.toInt();
+      },
+    );
   }
 
   @override
@@ -81,6 +72,13 @@ class ProgressListItem extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Row(children: <Widget>[
+              if (!goal.usesProgress)
+                Checkbox(
+                  onChanged: (value) {
+                    goalMonitorItemState.progress = value ? 100 : 0;
+                  },
+                  value: goalMonitorItemState.progress == 100,
+                ),
               Expanded(
                 child: Text(goal.goalText),
               ),
@@ -110,7 +108,7 @@ class ProgressListItem extends StatelessWidget {
                 ],
               ),
             ]),
-            buildProgressInput(goalMonitorItemState),
+            if (goal.usesProgress) buildProgressInput(goalMonitorItemState),
             if (goalMonitorItemState.goal.deadline != null)
               buildDeadline(goal.deadline),
           ],

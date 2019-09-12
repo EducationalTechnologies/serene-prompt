@@ -33,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
 
   buildAddGoalButton() {
     return FloatingActionButton(
+      backgroundColor: Theme.of(context).accentColor,
       child: Icon(Icons.add),
       onPressed: () async {
         await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
@@ -69,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
             selectedIconTheme: IconThemeData(color: Colors.white, size: 30),
             selectedLabelStyle:
                 TextStyle(color: Colors.white, decorationColor: Colors.white),
-            backgroundColor: prefix0.primaryColor,
+            backgroundColor: Theme.of(context).primaryColor,
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.view_list),

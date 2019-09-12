@@ -27,7 +27,7 @@ class SereneDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             child: Text("Serene"),
-            decoration: BoxDecoration(color: Colors.orange),
+            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
           ),
           _buildDrawerItem(
               icon: Icons.add_box,

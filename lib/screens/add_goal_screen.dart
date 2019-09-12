@@ -14,6 +14,8 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   DateTime selectedDate = DateTime.now();
   TextEditingController _textController;
 
+  var inputModeSelected = [true, false];
+
   @override
   void initState() {
     super.initState();
@@ -22,6 +24,9 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     Future.delayed(Duration.zero, () {
       final appState = Provider.of<GoalState>(context);
       _textController.text = appState.currentGoal.goalText;
+
+      inputModeSelected =
+          appState.currentGoal.usesProgress ? [false, true] : [true, false];
     });
   }
 
@@ -38,9 +43,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     if (_canSubmit()) {
       await appState.saveCurrentGoal();
       Navigator.pop(context);
-    } else {
-
-    }
+    } else {}
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -113,12 +116,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                     style: pickerStyle,
                   ),
                   UIHelper.horizontalSpaceMedium(),
-                  // Icon(Icons.timer, color: Colors.black),
-                  // UIHelper.horizontalSpaceSmall(),
-                  // Text(
-                  //   "$timeText",
-                  //   style: pickerStyle,
-                  // ),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
@@ -153,9 +150,33 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               UIHelper.verticalSpaceLarge(),
               buildDatePicker(),
               UIHelper.verticalSpaceLarge(),
+              ToggleButtons(
+                children: <Widget>[
+                  Icon(Icons.check_box),
+                  Icon(Icons.settings_ethernet),
+                ],
+                onPressed: (int index) {
+                  setState(() {
+                    Provider.of<GoalState>(context).currentGoal.usesProgress =
+                        index != 0;
+
+                    for (int buttonIndex = 0;
+                        buttonIndex < inputModeSelected.length;
+                        buttonIndex++) {
+                      if (buttonIndex == index) {
+                        inputModeSelected[buttonIndex] = true;
+                      } else {
+                        inputModeSelected[buttonIndex] = false;
+                      }
+                    }
+                  });
+                },
+                isSelected: inputModeSelected,
+              ),
+              UIHelper.verticalSpaceLarge(),
               SizedBox(
                   width: double.infinity,
-                  height: 80,
+                  height: 60,
                   child: RaisedButton(
                     onPressed: () {
                       _submitGoal();

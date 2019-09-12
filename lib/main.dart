@@ -15,12 +15,12 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Serene',
         theme: ThemeData(
-
-          // textTheme: TextTheme(
-          //     body1: TextStyle(fontSize: 16.0, color: Colors.black),
-          //     body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
-          primarySwatch: Colors.blueGrey,
-        ),
+            // textTheme: TextTheme(
+            //     body1: TextStyle(fontSize: 16.0, color: Colors.black),
+            //     body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
+            primarySwatch: Colors.lightBlue,
+            accentColor: Colors.orange,
+            buttonColor: Colors.orange[300]),
         onGenerateRoute: Router.generateRoute,
       ),
     );
