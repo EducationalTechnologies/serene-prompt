@@ -46,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Serene"),
+        elevation: 0.0,
       ),
       drawer: SereneDrawer(),
       floatingActionButton: buildAddGoalButton(),

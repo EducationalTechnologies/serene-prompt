@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           // textTheme: TextTheme(
           //     body1: TextStyle(fontSize: 16.0, color: Colors.black),
           //     body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
-          primarySwatch: Colors.amber,
+          primarySwatch: Colors.blueGrey,
         ),
         onGenerateRoute: Router.generateRoute,
       ),

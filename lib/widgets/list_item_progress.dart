@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/shared/screen_args.dart';
 import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
@@ -49,6 +50,26 @@ class ProgressListItem extends StatelessWidget {
     );
   }
 
+  buildProgressInput(GoalMonitorItemState goalMonitorItemState) {
+    if (goalMonitorItemState.goal.usesProgress) {
+      return Slider(
+        value: goalMonitorItemState.progress.toDouble(),
+        min: 0,
+        max: 100,
+        onChanged: (double value) {
+          goalMonitorItemState.progress = value.toInt();
+        },
+      );
+    } else {
+      return Checkbox(
+        onChanged: (value) {
+          goalMonitorItemState.progress = value ? 100 : 0;
+        },
+        value: goalMonitorItemState.progress == 100,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
@@ -89,14 +110,7 @@ class ProgressListItem extends StatelessWidget {
                 ],
               ),
             ]),
-            Slider(
-              value: goalMonitorItemState.progress.toDouble(),
-              min: 0,
-              max: 100,
-              onChanged: (double value) {
-                goalMonitorItemState.progress = value.toInt();
-              },
-            ),
+            buildProgressInput(goalMonitorItemState),
             if (goalMonitorItemState.goal.deadline != null)
               buildDeadline(goal.deadline),
           ],
