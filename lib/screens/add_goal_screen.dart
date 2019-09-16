@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal.dart';
 import 'package:implementation_intentions/shared/enums.dart';
 import 'package:implementation_intentions/shared/text_styles.dart';
 import 'package:implementation_intentions/shared/ui_helpers.dart';

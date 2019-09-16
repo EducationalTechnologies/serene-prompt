@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
 import 'package:implementation_intentions/screens/reflect_screen.dart';
+import 'package:implementation_intentions/screens/resource_links_screen.dart';
 import 'package:implementation_intentions/services/data_service.dart';
 import 'package:implementation_intentions/shared/app_colors.dart' as prefix0;
 import 'package:implementation_intentions/shared/route_names.dart';
@@ -24,7 +25,11 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
   }
 
-  static List<Widget> _widgetOptions = [GoalMonitorScreen(), ReflectScreen()];
+  static List<Widget> _widgetOptions = [
+    GoalMonitorScreen(),
+    ResourceLinksScreen(),
+    ResourceLinksScreen()
+  ];
 
   void _onItemTapped(int index) {
     this._controller.animateToPage(index,
@@ -77,7 +82,9 @@ class _MainScreenState extends State<MainScreen> {
                 title: Text("Ziele"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.wallpaper), title: Text("Statistiken"))
+                  icon: Icon(Icons.wallpaper), title: Text("Statistiken")),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.wallpaper), title: Text("Resourcen"))
             ],
             currentIndex: _selectedPageIndex,
             onTap: (index) {
