@@ -13,6 +13,7 @@ final String columnGoal = 'goal';
 final String columnHindrance = 'hindrance';
 
 const String TABLE_GOALS = "goals";
+const int DB_VERSION = 1;
 
 //TODO: Continue here https://pusher.com/tutorials/local-data-flutter
 
@@ -32,10 +33,10 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "TestDB.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {},
+    return await openDatabase(path, version: DB_VERSION, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-      await db
-          .execute("CREATE TABLE goals(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+      await db.execute(
+          "CREATE TABLE $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
               "goalText STRING, " +
               "deadline STRING, " +
               "progressIndicator STRING, " +

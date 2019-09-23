@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
-import 'package:implementation_intentions/screens/reflect_screen.dart';
 import 'package:implementation_intentions/screens/resource_links_screen.dart';
 import 'package:implementation_intentions/services/data_service.dart';
-import 'package:implementation_intentions/shared/app_colors.dart' as prefix0;
 import 'package:implementation_intentions/shared/route_names.dart';
 import 'package:implementation_intentions/state/goal_monitoring_state.dart';
 import 'package:implementation_intentions/widgets/serene_drawer.dart';
@@ -56,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       drawer: SereneDrawer(),
       floatingActionButton: buildAddGoalButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: PageView(
         controller: _controller,
         onPageChanged: (newPage) {
@@ -69,7 +67,6 @@ class _MainScreenState extends State<MainScreen> {
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(
           shape: CircularNotchedRectangle(),
-          clipBehavior: Clip.antiAlias,
           child: BottomNavigationBar(
             selectedItemColor: Colors.white,
             selectedIconTheme: IconThemeData(color: Colors.white, size: 30),
