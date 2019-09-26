@@ -18,7 +18,7 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
   void initState() {
     super.initState();
     initSpeechRecognizer();
-    
+
     // Speechrecognition spch = Speechrecognition();
   }
 
@@ -72,10 +72,10 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
               backgroundColor: Colors.deepOrange,
               onPressed: () {
                 // if (_isListening) var
-                  // _speechRecognition.cancel().then((result) => setState(() {
-                  //       _isListening = result;
-                  //       resultText = "";
-                  //     }));
+                // _speechRecognition.cancel().then((result) => setState(() {
+                //       _isListening = result;
+                //       resultText = "";
+                //     }));
               },
             ),
             FloatingActionButton(
@@ -93,9 +93,9 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
               backgroundColor: Colors.deepPurple,
               onPressed: () {
                 // if (_isListening)
-                  // _speechRecognition
-                  //     .stop()
-                  //     .then((result) => setState(() => _isListening = result));
+                // _speechRecognition
+                //     .stop()
+                //     .then((result) => setState(() => _isListening = result));
               },
             )
           ],
@@ -118,7 +118,6 @@ class _SpeechInternalisationState extends State<SpeechInternalisation> {
                 width: double.infinity,
                 height: 80,
                 child: RaisedButton(
-                  color: accentColor,
                   onPressed: () {},
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(55.0)),

@@ -59,6 +59,8 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
       appState.currentGoal.deadline = picked;
+
+    setState(() {});
   }
 
   Widget buildTextEntry() {
@@ -94,36 +96,48 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     var date = appState.currentGoal.deadline ?? DateTime.now();
     var dateText = DateFormat('dd.MM.yyy').format(date);
     var timeText = DateFormat('kk:mm').format(date);
+
+    bool hasDate = appState.currentGoal.deadline != null;
     return Column(
       children: <Widget>[
-        Text(
-          "Deadline",
-          textAlign: TextAlign.left,
-          style: subHeaderStyle,
-        ),
-        UIHelper.verticalSpaceMedium(),
         InkWell(
             onTap: () {
               _selectDate(context);
             },
-            child: Container(
-              padding: EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                children: [
-                  Icon(Icons.calendar_today, color: Colors.black),
-                  UIHelper.horizontalSpaceSmall(),
-                  Text(
-                    "$dateText",
-                    style: pickerStyle,
+            child: Stack(
+              children: <Widget>[
+                if (hasDate)
+                  Container(
+                    padding: EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      children: [
+                        Icon(Icons.calendar_today, color: Colors.black),
+                        UIHelper.horizontalSpaceSmall(),
+                        Text(
+                          "$dateText",
+                          style: pickerStyle,
+                        ),
+                        UIHelper.horizontalSpaceMedium(),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
                   ),
-                  UIHelper.horizontalSpaceMedium(),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
-            ))
+                if (!hasDate)
+                  Container(
+                    height: 50,
+                    alignment: Alignment.center,
+                    color: Color(0x11000000),
+                    child: Text(
+                      "Deadline hinzufügen",
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.body1,
+                    ),
+                  ),
+              ],
+            )),
       ],
     );
   }
@@ -154,35 +168,53 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               UIHelper.verticalSpaceLarge(),
               buildDatePicker(),
               UIHelper.verticalSpaceLarge(),
-              ToggleButtons(
-                children: <Widget>[
-                  Icon(Icons.check_box),
-                  Icon(Icons.settings_ethernet),
-                ],
-                onPressed: (int index) {
-                  setState(() {
-                    if (index == 0) {
-                      Provider.of<GoalState>(context)
-                          .currentGoal
-                          .progressIndicator = GoalProgressIndicator.checkbox;
-                    } else if (index == 1) {
-                      Provider.of<GoalState>(context)
-                          .currentGoal
-                          .progressIndicator = GoalProgressIndicator.slider;
-                    }
-
-                    for (int buttonIndex = 0;
-                        buttonIndex < inputModeSelected.length;
-                        buttonIndex++) {
-                      if (buttonIndex == index) {
-                        inputModeSelected[buttonIndex] = true;
-                      } else {
-                        inputModeSelected[buttonIndex] = false;
+              Container(
+                child: ToggleButtons(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Icon(Icons.check_box),
+                        Container(
+                            width: 150.0,
+                            alignment: Alignment.center,
+                            child: Text("Checkbox"))
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Icon(Icons.settings_ethernet),
+                        Container(
+                            width: 150.0,
+                            alignment: Alignment.center,
+                            child: Text("Slider"))
+                      ],
+                    ),
+                  ],
+                  onPressed: (int index) {
+                    setState(() {
+                      if (index == 0) {
+                        Provider.of<GoalState>(context)
+                            .currentGoal
+                            .progressIndicator = GoalProgressIndicator.checkbox;
+                      } else if (index == 1) {
+                        Provider.of<GoalState>(context)
+                            .currentGoal
+                            .progressIndicator = GoalProgressIndicator.slider;
                       }
-                    }
-                  });
-                },
-                isSelected: inputModeSelected,
+
+                      for (int buttonIndex = 0;
+                          buttonIndex < inputModeSelected.length;
+                          buttonIndex++) {
+                        if (buttonIndex == index) {
+                          inputModeSelected[buttonIndex] = true;
+                        } else {
+                          inputModeSelected[buttonIndex] = false;
+                        }
+                      }
+                    });
+                  },
+                  isSelected: inputModeSelected,
+                ),
               ),
               UIHelper.verticalSpaceLarge(),
               SizedBox(

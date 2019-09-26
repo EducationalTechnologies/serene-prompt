@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:implementation_intentions/shared/app_colors.dart';
 import 'package:implementation_intentions/shared/router.dart';
 import 'package:implementation_intentions/state/app_state.dart';
 import 'package:provider/provider.dart';
-
-// Currently following https://medium.com/flutter-community/flutter-architecture-provider-implementation-guide-d33133a9a4e8
 
 void main() => runApp(MyApp());
 
@@ -15,12 +14,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Serene',
         theme: ThemeData(
-            // textTheme: TextTheme(
-            //     body1: TextStyle(fontSize: 16.0, color: Colors.black),
-            //     body2: TextStyle(fontSize: 14.0, color: Colors.blue)),
-            primarySwatch: Colors.lightBlue,
-            accentColor: Colors.orange,
-            buttonColor: Colors.orange[300]),
+            canvasColor: AppColors.backgroundColor,
+            primarySwatch: Colors.teal,
+            accentColor: Color(0xfff96d15),
+            buttonColor: Colors.orange[300],
+            iconTheme: IconThemeData(color: Colors.black)),
         onGenerateRoute: Router.generateRoute,
       ),
     );

@@ -118,7 +118,6 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
             width: double.infinity,
             height: 80,
             child: RaisedButton(
-              color: accentColor,
               onPressed: () {},
               shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(55.0)),
