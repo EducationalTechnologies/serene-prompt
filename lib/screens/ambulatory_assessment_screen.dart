@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:implementation_intentions/state/ambulatory_assessment_state.dart';
-import 'package:implementation_intentions/widgets/interval_scale.dart';
+import 'package:serene/state/ambulatory_assessment_state.dart';
+import 'package:serene/widgets/interval_scale.dart';
 import 'package:provider/provider.dart';
 
 class AmbulatoryAssessmentScreen extends StatelessWidget {

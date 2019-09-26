@@ -1,4 +1,4 @@
-package com.example.implementation_intentions;
+package guru.edutec.serene;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

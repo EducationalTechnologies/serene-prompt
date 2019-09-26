@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/shared/app_colors.dart';
-import 'package:implementation_intentions/speech/speech_recognition.dart';
+import 'package:serene/speech/speech_recognition.dart';
 
 class SpeechInternalisation extends StatefulWidget {
   @override

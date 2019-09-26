@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal.dart';
+import 'package:serene/models/goal.dart';
 
 class GoalShieldingState with ChangeNotifier {
   int id;

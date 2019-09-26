@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/shared/enums.dart';
-import 'package:implementation_intentions/shared/text_styles.dart';
-import 'package:implementation_intentions/shared/ui_helpers.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/text_styles.dart';
+import 'package:serene/shared/ui_helpers.dart';
+import 'package:serene/state/app_state.dart';
+import 'package:serene/state/goal_state.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -43,9 +44,11 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   _submitGoal() async {
-    final appState = Provider.of<GoalState>(context);
+    final goalState = Provider.of<GoalState>(context);
+    final appState = Provider.of<AppState>(context);
     if (_canSubmit()) {
-      await appState.saveCurrentGoal();
+      await goalState.saveCurrentGoal();
+      await appState.reloadGoals();
       Navigator.pop(context);
     } else {}
   }

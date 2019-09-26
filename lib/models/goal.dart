@@ -1,4 +1,4 @@
-import 'package:implementation_intentions/shared/enums.dart';
+import 'package:serene/shared/enums.dart';
 
 class Goal {
   int id;

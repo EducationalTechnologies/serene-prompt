@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/screens/goal_selection_screen.dart';
-import 'package:implementation_intentions/screens/goal_shielding_internalisation_screen.dart';
-import 'package:implementation_intentions/screens/goal_shielding_selection_screen.dart';
-import 'package:implementation_intentions/widgets/serene_drawer.dart';
+import 'package:serene/screens/goal_selection_screen.dart';
+import 'package:serene/screens/goal_shielding_internalisation_screen.dart';
+import 'package:serene/screens/goal_shielding_selection_screen.dart';
+import 'package:serene/widgets/serene_drawer.dart';
 
 class GoalShieldingScreen extends StatefulWidget {
   @override

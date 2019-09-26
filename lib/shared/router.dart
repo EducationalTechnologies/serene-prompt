@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:implementation_intentions/screens/add_goal_screen.dart';
-import 'package:implementation_intentions/screens/ambulatory_assessment_screen.dart';
-import 'package:implementation_intentions/screens/consent_screen.dart';
-import 'package:implementation_intentions/screens/goal_shielding_screen.dart';
-import 'package:implementation_intentions/screens/main_screen.dart';
-import 'package:implementation_intentions/screens/timer_screen.dart';
-import 'package:implementation_intentions/shared/route_names.dart';
-import 'package:implementation_intentions/shared/screen_args.dart';
-import 'package:implementation_intentions/state/goal_monitoring_state.dart';
-import 'package:implementation_intentions/state/goal_shielding_state.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
-import 'package:implementation_intentions/state/timer_state.dart';
+import 'package:serene/screens/add_goal_screen.dart';
+import 'package:serene/screens/ambulatory_assessment_screen.dart';
+import 'package:serene/screens/consent_screen.dart';
+import 'package:serene/screens/goal_shielding_screen.dart';
+import 'package:serene/screens/main_screen.dart';
+import 'package:serene/screens/timer_screen.dart';
+import 'package:serene/shared/route_names.dart';
+import 'package:serene/shared/screen_args.dart';
+import 'package:serene/state/goal_monitoring_state.dart';
+import 'package:serene/state/goal_shielding_state.dart';
+import 'package:serene/state/goal_state.dart';
+import 'package:serene/state/timer_state.dart';
 import 'package:provider/provider.dart';
 
 class Router {

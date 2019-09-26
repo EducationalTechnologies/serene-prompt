@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/services/database_helpers.dart';
+import 'package:serene/models/goal.dart';
+import 'package:serene/services/database_helpers.dart';
 
 class GoalMonitorItemState with ChangeNotifier {
   String get goalText => _goal.goalText;

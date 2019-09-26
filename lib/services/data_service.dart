@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/models/goal_shield.dart';
-import 'package:implementation_intentions/services/database_helpers.dart';
+import 'package:serene/models/goal.dart';
+import 'package:serene/models/goal_shield.dart';
+import 'package:serene/services/database_helpers.dart';
 
 class DataService {
   static final DataService _instance = DataService._internal();
@@ -18,6 +18,10 @@ class DataService {
     if (_goals == null) _goals = await DBProvider.db.getGoals();
 
     return _goals;
+  }
+
+  fetchOpenGoals() async {
+    
   }
 
   deleteGoal(Goal goal) async {

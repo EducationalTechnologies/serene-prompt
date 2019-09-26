@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/shared/text_styles.dart';
-import 'package:implementation_intentions/shared/ui_helpers.dart';
-import 'package:implementation_intentions/state/goal_monitoring_state.dart';
-import 'package:implementation_intentions/state/goal_shielding_state.dart';
-import 'package:implementation_intentions/state/goal_state.dart';
+import 'package:serene/models/goal.dart';
+import 'package:serene/shared/text_styles.dart';
+import 'package:serene/shared/ui_helpers.dart';
+import 'package:serene/state/goal_monitoring_state.dart';
+import 'package:serene/state/goal_shielding_state.dart';
+import 'package:serene/state/goal_state.dart';
 import 'package:provider/provider.dart';
 
 class GoalSelectionScreen extends StatefulWidget {

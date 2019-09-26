@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/screens/internalisation/long_press_internalisation.dart';
-import 'package:implementation_intentions/screens/internalisation/scramble_internalisation.dart';
-import 'package:implementation_intentions/screens/internalisation/speech_internalisation.dart';
+import 'package:serene/screens/internalisation/long_press_internalisation.dart';
+import 'package:serene/screens/internalisation/scramble_internalisation.dart';
+import 'package:serene/screens/internalisation/speech_internalisation.dart';
 
 class GoalShieldingInternalisationScreen extends StatefulWidget {
   @override

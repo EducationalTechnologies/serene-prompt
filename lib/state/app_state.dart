@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:implementation_intentions/services/data_service.dart';
+import 'package:serene/services/data_service.dart';
 
 class AppState with ChangeNotifier {
-  reloadData() {
+  reloadData() async {
+    await DataService().fetchData();
+  }
+
+  reloadGoals() async {
     DataService().fetchData();
   }
 
-  reloadGoals() {
-    DataService().fetchData();
-  }
+  reloadOpenGoals() {}
 }

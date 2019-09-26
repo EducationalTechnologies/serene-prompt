@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/shared/app_colors.dart';
-import 'package:implementation_intentions/shared/router.dart';
-import 'package:implementation_intentions/state/app_state.dart';
+import 'package:serene/shared/router.dart';
+import 'package:serene/shared/app_colors.dart';
+import 'package:serene/state/app_state.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());

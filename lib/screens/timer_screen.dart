@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/widgets/serene_drawer.dart';
+import 'package:serene/widgets/serene_drawer.dart';
 
 class TimerScreen extends StatefulWidget {
   TimerScreen({Key key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/shared/enums.dart';
+import 'package:serene/models/goal.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -50,6 +50,13 @@ class DBProvider {
 
     await db.insert(TABLE_GOALS, goal.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  getOpenGoals() async {
+    print("Fetching OPEN goals from database");
+    final db = await database;
+
+    var maps = await db.query(TABLE_GOALS);
   }
 
   getGoals() async {

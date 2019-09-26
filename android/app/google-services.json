@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "118595731509",
+    "firebase_url": "https://serene-8256d.firebaseio.com",
+    "project_id": "serene-8256d",
+    "storage_bucket": "serene-8256d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118595731509:android:a072bfe0ae13ec97",
+        "android_client_info": {
+          "package_name": "guru.edutec.serene"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118595731509-h5v2gplvmgc19487rbqsgdj39jfhgb8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGdqnIuXNoxjECVGoitTY1AS9GOiNd63I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118595731509-h5v2gplvmgc19487rbqsgdj39jfhgb8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

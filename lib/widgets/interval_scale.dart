@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:implementation_intentions/shared/text_styles.dart';
+import 'package:serene/shared/text_styles.dart';
 
 class IntervalScale extends StatefulWidget {
   @override

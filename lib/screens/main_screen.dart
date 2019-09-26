@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/screens/goal_monitor_screen.dart';
-import 'package:implementation_intentions/screens/resource_links_screen.dart';
-import 'package:implementation_intentions/services/data_service.dart';
-import 'package:implementation_intentions/shared/route_names.dart';
-import 'package:implementation_intentions/state/goal_monitoring_state.dart';
-import 'package:implementation_intentions/widgets/serene_drawer.dart';
+import 'package:serene/screens/goal_monitor_screen.dart';
+import 'package:serene/screens/resource_links_screen.dart';
+import 'package:serene/services/data_service.dart';
+import 'package:serene/shared/route_names.dart';
+import 'package:serene/state/goal_monitoring_state.dart';
+import 'package:serene/widgets/serene_drawer.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {

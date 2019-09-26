@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/state/goal_monitor_item_state.dart';
-import 'package:implementation_intentions/state/goal_monitoring_state.dart';
-import 'package:implementation_intentions/widgets/list_item_progress.dart';
+import 'package:serene/models/goal.dart';
+import 'package:serene/state/goal_monitor_item_state.dart';
+import 'package:serene/state/goal_monitoring_state.dart';
+import 'package:serene/widgets/list_item_progress.dart';
 import 'package:provider/provider.dart';
 
 class GoalMonitorScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/shared/ui_helpers.dart';
+import 'package:serene/shared/ui_helpers.dart';
 
 class ConsentScreen extends StatelessWidget {
   String _textParagraph1 =

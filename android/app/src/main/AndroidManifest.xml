@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.implementation_intentions">
+    package="guru.edutec.serene">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
@@ -9,7 +9,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="implementation_intentions"
+        android:label="serene"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

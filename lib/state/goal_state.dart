@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/models/goal.dart';
-import 'package:implementation_intentions/services/database_helpers.dart';
+import 'package:serene/models/goal.dart';
+import 'package:serene/services/database_helpers.dart';
 
 class GoalState with ChangeNotifier {
   bool _isFetching = false;

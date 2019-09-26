@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/state/goal_monitoring_state.dart';
+import 'package:serene/state/goal_monitoring_state.dart';
 import 'package:provider/provider.dart';
 
 class ReflectScreen extends StatefulWidget {

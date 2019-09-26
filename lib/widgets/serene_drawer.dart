@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:implementation_intentions/services/database_helpers.dart';
-import 'package:implementation_intentions/shared/route_names.dart';
-import 'package:implementation_intentions/shared/text_styles.dart';
+import 'package:serene/services/database_helpers.dart';
+import 'package:serene/shared/route_names.dart';
+import 'package:serene/shared/text_styles.dart';
 
 class SereneDrawer extends StatelessWidget {
   _buildDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
