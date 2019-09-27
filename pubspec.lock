@@ -163,13 +163,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.5"
-  speechrecognition:
-    dependency: "direct main"
-    description:
-      path: speechrecognition
-      relative: true
-    source: path
-    version: "0.0.1"
   sqflite:
     dependency: "direct main"
     description:

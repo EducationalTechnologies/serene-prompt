@@ -8,6 +8,7 @@ class DataService {
   static final DataService _instance = DataService._internal();
   factory DataService() => _instance;
   List<Goal> _goals;
+  List<Goal> _openGoals;
   List<GoalShield> _goalShields;
 
   get goals {
@@ -20,8 +21,10 @@ class DataService {
     return _goals;
   }
 
-  fetchOpenGoals() async {
-    
+  getOpenGoals() async {
+    if (_openGoals == null) _openGoals = await DBProvider.db.getOpenGoals();
+
+    return _openGoals;
   }
 
   deleteGoal(Goal goal) async {
@@ -55,6 +58,7 @@ class DataService {
   fetchData() async {
     fetchGoals();
     fetchGoalShields();
+    getOpenGoals();
     return _goalShields;
   }
 
