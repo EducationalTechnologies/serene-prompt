@@ -7,15 +7,20 @@ class GoalMonitorItemState with ChangeNotifier {
   int get progress => _goal.progress;
   Goal get goal => _goal;
 
-  set progress(int progress) {
+  setProgress(int progress) async {
     _goal.progress = progress;
-    DBProvider.db.updateGoal(_goal);
+    await DBProvider.db.updateGoal(_goal);
     notifyListeners();
   }
 
-  set goalText(String goalText) {
+  setGoalText(String goalText) async {
     _goal.goalText = goalText;
-    DBProvider.db.updateGoal(_goal);
+    await DBProvider.db.updateGoal(_goal);
+    notifyListeners();
+  }
+
+  commitChanges() async {
+    await DBProvider.db.updateGoal(_goal);
     notifyListeners();
   }
 

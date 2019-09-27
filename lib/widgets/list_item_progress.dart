@@ -56,7 +56,10 @@ class ProgressListItem extends StatelessWidget {
       min: 0,
       max: 100,
       onChanged: (double value) {
-        goalMonitorItemState.progress = value.toInt();
+        goalMonitorItemState.setProgress(value.toInt());
+      },
+      onChangeEnd: (double value) {
+        goalMonitorItemState.commitChanges();
       },
     );
   }
@@ -75,7 +78,7 @@ class ProgressListItem extends StatelessWidget {
               if (goal.progressIndicator == GoalProgressIndicator.checkbox)
                 Checkbox(
                   onChanged: (value) {
-                    goalMonitorItemState.progress = value ? 100 : 0;
+                    goalMonitorItemState.setProgress(value ? 100 : 0);
                   },
                   value: goalMonitorItemState.progress == 100,
                 ),
@@ -108,7 +111,8 @@ class ProgressListItem extends StatelessWidget {
                 ],
               ),
             ]),
-            if (goal.progressIndicator == GoalProgressIndicator.slider) buildProgressInput(goalMonitorItemState),
+            if (goal.progressIndicator == GoalProgressIndicator.slider)
+              buildProgressInput(goalMonitorItemState),
             if (goalMonitorItemState.goal.deadline != null)
               buildDeadline(goal.deadline),
           ],

@@ -40,7 +40,7 @@ class ProgressListItem extends StatelessWidget {
               min: 0,
               max: 100,
               onChanged: (double value) {
-                goalMonitorItemState.progress = value.toInt();
+                goalMonitorItemState.setProgress(value.toInt());
               },
             )
           ],

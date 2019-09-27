@@ -21,6 +21,10 @@ class GoalMonitoringState with ChangeNotifier {
     return _goals;
   }
 
+  update() async {
+    fetchData();
+  }
+
   fetchData() async {
     _isFetching = true;
     await DataService().fetchGoals();
