@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:serene/state/consent_state.dart';
 import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/consent_screen.dart';
@@ -42,10 +43,19 @@ class Router {
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<GoalState>(
                 builder: (_) => GoalState(), child: AddGoalScreen()));
+      
       case RouteNames.AMBULATORY_ASSESSMENT:
-        return MaterialPageRoute(builder: (_) => AmbulatoryAssessmentScreen());
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<ConsentState>(
+                builder: (_) => ConsentState(),
+                child: AmbulatoryAssessmentScreen()));
+      
       case RouteNames.CONSENT:
-        return MaterialPageRoute(builder: (_) => ConsentScreen());
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<ConsentState>(
+                builder: (_) => ConsentState(),
+                child: ConsentScreen()));
+      
       case RouteNames.TIMER:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<TimerState>(
