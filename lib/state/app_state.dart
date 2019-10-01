@@ -8,7 +8,7 @@ class AppState with ChangeNotifier {
   }
 
   reloadGoals() async {
-    DataService().fetchData();
+    await DataService().fetchData();
   }
 
   reloadOpenGoals() {}

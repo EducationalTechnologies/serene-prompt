@@ -15,14 +15,18 @@ class DataService {
     return _goals;
   }
 
+  get openGoals {
+    return _openGoals;
+  }
+
   getGoals() async {
-    if (_goals == null) _goals = await DBProvider.db.getGoals();
+    _goals = await DBProvider.db.getGoals();
 
     return _goals;
   }
 
   getOpenGoals() async {
-    if (_openGoals == null) _openGoals = await DBProvider.db.getOpenGoals();
+    _openGoals = await DBProvider.db.getOpenGoals();
 
     return _openGoals;
   }
@@ -45,6 +49,10 @@ class DataService {
     _goals = await DBProvider.db.getGoals();
   }
 
+  fetchOpenGoals() async {
+    _openGoals = await DBProvider.db.getOpenGoals();
+  }
+
   fetchGoalShields() async {
     String data = await rootBundle.loadString("assets/hindrances.json");
     _goalShields = [];
@@ -64,7 +72,5 @@ class DataService {
 
   DataService._internal() {
     fetchData();
-    // getGoals();
-    // getGoalShields();
   }
 }

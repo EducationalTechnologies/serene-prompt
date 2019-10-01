@@ -52,15 +52,38 @@ class DBProvider {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
+  getGoalListFromMap(List<Map<String, dynamic>> map) {
+    return List.generate(map.length, (i) {
+      DateTime deadline;
+      var progressIndicator = GoalProgressIndicator.checkbox;
+      if (map[i]["deadline"] != "") {
+        deadline = DateTime.parse(map[i]["deadline"]);
+      }
+      if (map[i].containsKey("progressIndicator")) {
+        progressIndicator = map[i]["progressIndicator"];
+      }
+
+      return Goal(
+          deadline: deadline,
+          id: map[i]["id"],
+          goalText: (map[i]["goalText"]).toString(),
+          progressIndicator: progressIndicator,
+          progress: map[i]["progress"]);
+    });
+  }
+
   getOpenGoals() async {
     print("Fetching OPEN goals from database");
     final db = await database;
 
     var whereString = 'progress < 100';
 
-    var result = await db.query(TABLE_GOALS, where: whereString);
+    // var result = await db.query(TABLE_GOALS, where: whereString);
 
-    result.forEach((row) => print(row));
+    var result =
+        await db.rawQuery("select * from $TABLE_GOALS where progress < 100");
+
+    return getGoalListFromMap(result);
   }
 
   getGoals() async {
@@ -81,7 +104,7 @@ class DBProvider {
       return Goal(
           deadline: deadline,
           id: maps[i]["id"],
-          goalText: maps[i]["goalText"],
+          goalText: maps[i]["goalText"].toString(),
           progressIndicator: progressIndicator,
           progress: maps[i]["progress"]);
     });

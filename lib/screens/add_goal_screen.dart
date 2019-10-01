@@ -84,7 +84,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
             textInputAction: TextInputAction.done,
             onChanged: (text) {
               setState(() {
-                appState.currentGoal.goalText = text;
+                appState.currentGoal.goalText = text.toString();
               });
             },
           ),

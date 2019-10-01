@@ -50,7 +50,13 @@ class ProgressListItem extends StatelessWidget {
     );
   }
 
-  buildProgressInput(GoalMonitorItemState goalMonitorItemState) {
+  update(BuildContext context) {
+    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
+    goalMonitoringState.update();
+  }
+
+  buildProgressInput(BuildContext context) {
+    var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
     return Slider(
       value: goalMonitorItemState.progress.toDouble(),
       min: 0,
@@ -60,6 +66,7 @@ class ProgressListItem extends StatelessWidget {
       },
       onChangeEnd: (double value) {
         goalMonitorItemState.commitChanges();
+        update(context);
       },
     );
   }
@@ -67,7 +74,6 @@ class ProgressListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var goalMonitorItemState = Provider.of<GoalMonitorItemState>(context);
-    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
     var goal = goalMonitorItemState.goal;
     return Container(
       child: Padding(
@@ -79,6 +85,7 @@ class ProgressListItem extends StatelessWidget {
                 Checkbox(
                   onChanged: (value) {
                     goalMonitorItemState.setProgress(value ? 100 : 0);
+                    update(context);
                   },
                   value: goalMonitorItemState.progress == 100,
                 ),
@@ -95,9 +102,7 @@ class ProgressListItem extends StatelessWidget {
                       Navigator.pushNamed(context, RouteNames.ADD_GOAL,
                               arguments: GoalScreenArguments(
                                   goalMonitorItemState.goal))
-                          .then((value) {
-                        goalMonitoringState.init();
-                      });
+                          .then((value) {});
                       break;
                   }
                 },
@@ -112,7 +117,7 @@ class ProgressListItem extends StatelessWidget {
               ),
             ]),
             if (goal.progressIndicator == GoalProgressIndicator.slider)
-              buildProgressInput(goalMonitorItemState),
+              buildProgressInput(context),
             if (goalMonitorItemState.goal.deadline != null)
               buildDeadline(goal.deadline),
           ],

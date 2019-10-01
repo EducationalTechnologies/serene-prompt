@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Icon(Icons.add),
       onPressed: () async {
         await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
-        Provider.of<GoalMonitoringState>(context).fetchData();
+        // Provider.of<GoalMonitoringState>(context).fetchData();
       },
     );
   }
