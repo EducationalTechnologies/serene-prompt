@@ -22,7 +22,7 @@ class ConsentScreen extends StatelessWidget {
 
   String _subheaderWhichData = "Welche Daten werden gesammelt?";
   String _textParagraph5 =
-      "Serene ist eine Applikation mit der Lernziele erstellt und verfolgt werden können. Sie können die Anwendung unter Nutzung eines selbstgewählten Pesudonyms nutzen, sodass ausschließlich **pseudonymisierte ** Daten anfallen. Von Ihrer Nutzung der Serene-Applikation verwenden : ";
+      "Serene ist eine Applikation mit der Lernziele erstellt und verfolgt werden können. Sie können die Anwendung unter Nutzung eines selbstgewählten Pesudonyms nutzen, sodass ausschließlich **pseudonymisierte** Daten anfallen. Von Ihrer Nutzung der Serene-Applikation verwenden : ";
   List<String> _dataCollectionAggregated = [
     "* Text der Lernziele",
     "* Datum der Lernziele",
@@ -76,7 +76,7 @@ class ConsentScreen extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: Column(
-          children: <Widget>[for (var text in paragraphs) Text(text)],
+          children: <Widget>[for (var text in paragraphs) MarkdownBody(data: text)],
         ),
       ),
     );
