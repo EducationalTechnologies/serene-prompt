@@ -15,7 +15,15 @@ class GoalShieldingState with ChangeNotifier {
     "Wenn ich gar keine Lust mehr auf das Lernen habe, dann sage ich mir, dass ich es aus gutem Grund tue.",
     "Wenn ich mich krank und müde fühle, höre ich auf mich krank und müde zu fühlen!"
   ];
-  List<String> selectedShieldingActions = [];
+  String _selectedShieldingAction;
+
+  String get selectedShieldingAction => _selectedShieldingAction;
+
+  set selectedShieldingAction(String selectedShieldingAction) {
+    _selectedShieldingAction = selectedShieldingAction;
+    notifyListeners();
+  }
+
   String _hindrance;
   Goal _selectedGoal;
   String _shieldingSentence = "";
@@ -29,6 +37,7 @@ class GoalShieldingState with ChangeNotifier {
 
   GoalShieldingState() {
     this._hindrance = hindrances[0];
+    this._shieldingSentence = shields[0];
   }
 
   Goal get selectedGoal => _selectedGoal;
@@ -47,18 +56,6 @@ class GoalShieldingState with ChangeNotifier {
 
   set hindrance(String hindrance) {
     _hindrance = hindrance;
-    notifyListeners();
-  }
-
-  addShieldingAction(String action) {
-    print("Adding Shielding Action $action");
-    selectedShieldingActions.add(action);
-    notifyListeners();
-  }
-
-  removeShieldingAction(String action) {
-    print("Removing Shielding Action $action");
-    selectedShieldingActions.removeWhere((a) => a == action);
     notifyListeners();
   }
 }

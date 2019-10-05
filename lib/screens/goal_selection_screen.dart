@@ -74,7 +74,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
             snapshot.connectionState == ConnectionState.done) {
           return Column(children: <Widget>[
             UIHelper.verticalSpaceMedium(),
-            Text("Ziel auswählen", style: subHeaderStyle),
+            Text("Ziel auswählen"),
             UIHelper.verticalSpaceMedium(),
             Expanded(
               child: GoalSelectionList(),
@@ -117,7 +117,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
     print("Selected Index: $_selectedIndex");
     return Container(
         child: ListView.builder(
-      itemCount: goalMonitoringState.goals.length,
+      itemCount: goalMonitoringState.openGoals.length,
       itemBuilder: (context, index) {
         return Card(
           child: Container(
@@ -126,7 +126,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
                   ? Colors.orange[200]
                   : Colors.transparent,
               child: ListTile(
-                title: Text(goalMonitoringState.goals[index].goalText),
+                title: Text(goalMonitoringState.openGoals[index].goalText),
                 onTap: () {
                   _onSelected(index);
                 },

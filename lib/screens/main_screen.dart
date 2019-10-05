@@ -79,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
                 title: Text("Ziele"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.wallpaper), title: Text("Statistiken")),
+                  icon: Icon(Icons.terrain), title: Text("Statistiken")),
               BottomNavigationBarItem(
                   icon: Icon(Icons.wallpaper), title: Text("Resourcen"))
             ],

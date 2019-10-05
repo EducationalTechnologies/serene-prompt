@@ -19,6 +19,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.teal,
             accentColor: Color(0xfff96d15),
             buttonColor: Colors.orange[300],
+            buttonTheme: ButtonThemeData(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+            ),
             iconTheme: IconThemeData(color: Colors.black)),
         onGenerateRoute: Router.generateRoute,
       ),

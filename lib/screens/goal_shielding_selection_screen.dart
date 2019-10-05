@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:serene/shared/text_styles.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/state/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
 class GoalShieldingSelectionScreen extends StatelessWidget {
+  TextStyle _style;
+
   buildObstacleDropdown(BuildContext context) {
     final goalShieldingState = Provider.of<GoalShieldingState>(context);
     return Theme(
@@ -12,7 +13,6 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
       child: DropdownButton<String>(
         value: goalShieldingState.hindrance,
         onChanged: (String newValue) {
-          // goalShieldingState.hindrance = newValue;
           goalShieldingState.selectHindrance(newValue);
         },
         items: goalShieldingState.hindrances
@@ -21,56 +21,81 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
               value: value,
               child: Text(
                 value,
-                style: TextStyle(fontSize: 25),
+                style: _style,
               ));
         }).toList(),
       ),
     );
   }
 
-  buildShieldItem(BuildContext context, String shield) {
-    final intention = Provider.of<GoalShieldingState>(context);
+  _onSelected(BuildContext context, String shield) {
+    var goalShieldingState = Provider.of<GoalShieldingState>(context);
+    goalShieldingState.selectedShieldingAction = shield;
+  }
 
-    return CheckboxListTile(
-      title: Text(shield),
-      value: intention.selectedShieldingActions.contains(shield),
-      onChanged: (bool value) {
-        if (value)
-          intention.addShieldingAction(shield);
-        else
-          intention.removeShieldingAction(shield);
-      },
+  buildObstacleCard(
+      BuildContext context, IconData icon, String title, String description) {
+    final goalShieldingState = Provider.of<GoalShieldingState>(context);
+
+    return Card(
+      color: goalShieldingState.selectedShieldingAction == title
+          ? Colors.orange
+          : Colors.white,
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title),
+        subtitle: Text(description),
+        isThreeLine: true,
+        trailing: Icon(Icons.help_outline),
+        onTap: () async {
+          _onSelected(context, title);
+        },
+      ),
     );
   }
 
-  buildShieldSelection(BuildContext context) {
-    final state = Provider.of<GoalShieldingState>(context);
-    return Column(children: <Widget>[
-      for (var shield in state.shields) buildShieldItem(context, shield)
-    ]);
+  buildObstacleList(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        buildObstacleCard(context, Icons.announcement, "Überforderung",
+            "Ist dir deine Aufgabe zu schwer?"),
+        buildObstacleCard(context, Icons.chat_bubble, "Ablenkung",
+            "Kannst du dich nicht ausreichend konzentrieren, oder lenkst dich ständig ab?"),
+        buildObstacleCard(context, Icons.child_care, "Lustlosigkeit",
+            "Bist du nicht ausreichend motiviert um dich der Aufgabe zu widmen?"),
+        buildObstacleCard(context, Icons.cloud_upload, "Körperliche Verfassung",
+            "Fühlst du dich körperlich nicht in der Lage, mit dem Lernen zu beginnen?"),
+        // buildObstacleCard(context, "Überforderung", "Ist dir deine Aufgabe zu schwer?"),
+        // buildObstacleCard(context, "Überforderung", "Ist dir deine Aufgabe zu schwer?"),
+        // buildObstacleCard(context, "Überforderung", "Ist dir deine Aufgabe zu schwer?")
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final goalShieldingState = Provider.of<GoalShieldingState>(context);
+
+    _style = Theme.of(context).textTheme.body1;
+
     return Container(
+      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          UIHelper.verticalSpaceMedium(),
+          // Text("Dein Ziel:", style: _style),
+          // UIHelper.verticalSpaceMedium(),
+          if (goalShieldingState.selectedGoal != null)
+            Text(goalShieldingState.selectedGoal.goalText, style: _style),
           Text(
-            "Mein größtes Hindernis ist...",
+            "Was könnte dich vom Erreichen deines Zieles abhalten?",
             textAlign: TextAlign.left,
-            style: subHeaderStyle,
           ),
           UIHelper.verticalSpaceSmall(),
-          buildObstacleDropdown(context),
-          // UIHelper.verticalSpaceSmall(),
-          // Text(
-          //   "Wenn das auftritt, werde ich...",
-          //   textAlign: TextAlign.left,
-          //   style: subHeaderStyle,
-          // ),
-          // UIHelper.verticalSpaceSmall(),
-          // buildShieldSelection(context)
+          // buildObstacleDropdown(context),
+          Expanded(
+            child: buildObstacleList(context),
+          ),
         ],
       ),
     );

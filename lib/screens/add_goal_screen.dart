@@ -15,6 +15,7 @@ class AddGoalScreen extends StatefulWidget {
 class _AddGoalScreenState extends State<AddGoalScreen> {
   DateTime selectedDate = DateTime.now();
   TextEditingController _textController;
+  TextEditingController _dateFieldController;
 
   var inputModeSelected = [true, false];
 
@@ -22,6 +23,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   void initState() {
     super.initState();
     _textController = new TextEditingController(text: "");
+    _dateFieldController = new TextEditingController(text: "");
 
     Future.delayed(Duration.zero, () {
       final appState = Provider.of<GoalState>(context);
@@ -112,6 +114,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                 if (hasDate)
                   Container(
                     padding: EdgeInsets.all(15.0),
+                    alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(
                         color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(5)),
@@ -125,17 +128,20 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                         ),
                         UIHelper.horizontalSpaceMedium(),
                       ],
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                     ),
                   ),
                 if (!hasDate)
                   Container(
                     height: 50,
+                    padding: EdgeInsets.all(15.0),
                     alignment: Alignment.center,
                     color: Color(0x11000000),
-                    child: Text(
-                      "Deadline hinzufügen",
+                    child: TextField(
+                      decoration:
+                          InputDecoration(labelText: "Deadline hinzufügen"),
                       textAlign: TextAlign.left,
+                      enabled: false,
                       style: Theme.of(context).textTheme.body1,
                     ),
                   ),
@@ -162,7 +168,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(left: 20.0, right: 20.0),
+        // margin: EdgeInsets.only(left: 10.0, right: 10.0),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -178,7 +184,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                       children: <Widget>[
                         Icon(Icons.check_box),
                         Container(
-                            width: 150.0,
+                            width: MediaQuery.of(context).size.width * 0.47,
                             alignment: Alignment.center,
                             child: Text("Checkbox"))
                       ],
@@ -187,7 +193,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                       children: <Widget>[
                         Icon(Icons.settings_ethernet),
                         Container(
-                            width: 150.0,
+                            width: MediaQuery.of(context).size.width * 0.47,
                             alignment: Alignment.center,
                             child: Text("Slider"))
                       ],

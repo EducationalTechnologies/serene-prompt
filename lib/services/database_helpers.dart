@@ -76,8 +76,6 @@ class DBProvider {
     print("Fetching OPEN goals from database");
     final db = await database;
 
-    var whereString = 'progress < 100';
-
     // var result = await db.query(TABLE_GOALS, where: whereString);
 
     var result =

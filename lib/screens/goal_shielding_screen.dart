@@ -24,9 +24,15 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
     print("Calling Build In Goal Shielding Screen");
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        textTheme: TextTheme(title: TextStyle(color: Colors.black, fontSize: 22)),
+        iconTheme: IconThemeData(color: Colors.teal),
+        centerTitle: true,
+
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text("Goal Shielding"),
+        title: Text(""),
       ),
       drawer: SereneDrawer(),
       // backgroundColor: Colors.amber,
