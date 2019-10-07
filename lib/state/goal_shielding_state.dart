@@ -44,6 +44,7 @@ class GoalShieldingState with ChangeNotifier {
 
   set selectedGoal(Goal selectedGoal) {
     _selectedGoal = selectedGoal;
+    notifyListeners();
   }
 
   selectHindrance(String hindrance) {

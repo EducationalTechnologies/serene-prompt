@@ -99,7 +99,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
   _onSelected(int index) {
     var goalShieldingState = Provider.of<GoalShieldingState>(context);
     var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    goalShieldingState.selectedGoal = goalMonitoringState.goals[index];
+    goalShieldingState.selectedGoal = goalMonitoringState.openGoals[index];
     setState(() {
       _selectedIndex = index;
     });
@@ -113,7 +113,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
     GoalShieldingState goalShieldingState =
         Provider.of<GoalShieldingState>(context);
     _selectedIndex =
-        goalMonitoringState.goals.indexOf(goalShieldingState.selectedGoal);
+        goalMonitoringState.openGoals.indexOf(goalShieldingState.selectedGoal);
     print("Selected Index: $_selectedIndex");
     return Container(
         child: ListView.builder(
