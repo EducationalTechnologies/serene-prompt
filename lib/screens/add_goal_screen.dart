@@ -18,6 +18,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   TextEditingController _dateFieldController;
 
   var inputModeSelected = [true, false];
+  var _difficultySelected = [false, true, false, false];
 
   @override
   void initState() {
@@ -71,27 +72,22 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   Widget buildTextEntry() {
     final appState = Provider.of<GoalState>(context);
 
-    return Column(
-      children: <Widget>[
-        SizedBox(height: 10),
-        Container(
-          padding: EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-              color: Colors.grey[100], borderRadius: BorderRadius.circular(5)),
-          child: TextField(
-            controller: _textController,
-            decoration: InputDecoration(labelText: "Gib dein Lernziel ein"),
-            keyboardType: TextInputType.text,
-            maxLines: null,
-            textInputAction: TextInputAction.done,
-            onChanged: (text) {
-              setState(() {
-                appState.currentGoal.goalText = text.toString();
-              });
-            },
-          ),
-        )
-      ],
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+          color: Colors.grey[100], borderRadius: BorderRadius.circular(5)),
+      child: TextField(
+        controller: _textController,
+        decoration: InputDecoration(labelText: "Gib dein Lernziel ein"),
+        keyboardType: TextInputType.text,
+        maxLines: null,
+        textInputAction: TextInputAction.done,
+        onChanged: (text) {
+          setState(() {
+            appState.currentGoal.goalText = text.toString();
+          });
+        },
+      ),
     );
   }
 
@@ -151,6 +147,126 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     );
   }
 
+  _buildInputSelector() {
+    return Container(
+      child: ToggleButtons(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Icon(Icons.check_box),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.5 - 12,
+                  alignment: Alignment.center,
+                  child: Text("Checkbox"))
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Icon(Icons.settings_ethernet),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.5 - 12,
+                  alignment: Alignment.center,
+                  child: Text("Slider"))
+            ],
+          ),
+        ],
+        onPressed: (int index) {
+          setState(() {
+            if (index == 0) {
+              Provider.of<GoalState>(context).currentGoal.progressIndicator =
+                  GoalProgressIndicator.checkbox;
+            } else if (index == 1) {
+              Provider.of<GoalState>(context).currentGoal.progressIndicator =
+                  GoalProgressIndicator.slider;
+            }
+
+            for (int buttonIndex = 0;
+                buttonIndex < inputModeSelected.length;
+                buttonIndex++) {
+              if (buttonIndex == index) {
+                inputModeSelected[buttonIndex] = true;
+              } else {
+                inputModeSelected[buttonIndex] = false;
+              }
+            }
+          });
+        },
+        isSelected: inputModeSelected,
+      ),
+    );
+  }
+
+  _buildDifficultySelector() {
+    return Container(
+      child: ToggleButtons(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("💡"),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.25 - 7,
+                  alignment: Alignment.center,
+                  child: Text("Trivial"))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("💡💡"),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.25 - 7,
+                  alignment: Alignment.center,
+                  child: Text("Einfach"))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("💡💡💡"),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.25 - 7,
+                  alignment: Alignment.center,
+                  child: Text("Mittel"))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("💡💡💡💡"),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.25 - 7,
+                  alignment: Alignment.center,
+                  child: Text("Schwer"))
+            ],
+          ),
+        ],
+        onPressed: (int index) {
+          setState(() {
+            if (index == 0) {
+              Provider.of<GoalState>(context).currentGoal.progressIndicator =
+                  GoalProgressIndicator.checkbox;
+            } else if (index == 1) {
+              Provider.of<GoalState>(context).currentGoal.progressIndicator =
+                  GoalProgressIndicator.slider;
+            }
+
+            for (int buttonIndex = 0;
+                buttonIndex < _difficultySelected.length;
+                buttonIndex++) {
+              if (buttonIndex == index) {
+                _difficultySelected[buttonIndex] = true;
+              } else {
+                _difficultySelected[buttonIndex] = false;
+              }
+            }
+          });
+        },
+        isSelected: _difficultySelected,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,57 +290,29 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
             children: <Widget>[
               UIHelper.verticalSpaceMedium(),
               buildTextEntry(),
-              UIHelper.verticalSpaceLarge(),
-              buildDatePicker(),
-              UIHelper.verticalSpaceLarge(),
-              Container(
-                child: ToggleButtons(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Icon(Icons.check_box),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.47,
-                            alignment: Alignment.center,
-                            child: Text("Checkbox"))
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Icon(Icons.settings_ethernet),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.47,
-                            alignment: Alignment.center,
-                            child: Text("Slider"))
-                      ],
-                    ),
-                  ],
-                  onPressed: (int index) {
-                    setState(() {
-                      if (index == 0) {
-                        Provider.of<GoalState>(context)
-                            .currentGoal
-                            .progressIndicator = GoalProgressIndicator.checkbox;
-                      } else if (index == 1) {
-                        Provider.of<GoalState>(context)
-                            .currentGoal
-                            .progressIndicator = GoalProgressIndicator.slider;
-                      }
-
-                      for (int buttonIndex = 0;
-                          buttonIndex < inputModeSelected.length;
-                          buttonIndex++) {
-                        if (buttonIndex == index) {
-                          inputModeSelected[buttonIndex] = true;
-                        } else {
-                          inputModeSelected[buttonIndex] = false;
-                        }
-                      }
-                    });
-                  },
-                  isSelected: inputModeSelected,
-                ),
+              UIHelper.verticalSpaceMedium(),
+              Text(
+                "Zeitplan",
+                style: Theme.of(context).textTheme.subhead,
+                textAlign: TextAlign.left,
               ),
+              buildDatePicker(),
+              UIHelper.verticalSpaceMedium(),
+              Text(
+                "Schwierigkeit",
+                style: Theme.of(context).textTheme.subhead,
+                textAlign: TextAlign.left,
+              ),
+              UIHelper.verticalSpaceSmall(),
+              _buildDifficultySelector(),
+              UIHelper.verticalSpaceMedium(),
+              Text(
+                "Eingabe",
+                style: Theme.of(context).textTheme.subhead,
+                textAlign: TextAlign.left,
+              ),
+              UIHelper.verticalSpaceSmall(),
+              _buildInputSelector(),
               UIHelper.verticalSpaceLarge(),
               SizedBox(
                   width: double.infinity,

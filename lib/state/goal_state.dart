@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/database_helpers.dart';
 
@@ -35,7 +36,8 @@ class GoalState with ChangeNotifier {
   }
 
   Future saveNewGoal(Goal goal) async {
-    await DBProvider.db.insertGoal(goal);
+    await DataService().saveGoal(goal);
+    DBProvider.db.insertGoal(goal);
     notifyListeners();
   }
 

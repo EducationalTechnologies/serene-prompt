@@ -6,12 +6,14 @@ class Goal {
   DateTime deadline;
   int progress;
   String progressIndicator;
+  String difficulty;
 
   Goal(
       {this.id,
       this.goalText = "",
       this.deadline,
       this.progress = 0,
+      this.difficulty = GoalDifficulty.medium,
       this.progressIndicator = GoalProgressIndicator.checkbox});
 
   Map<String, dynamic> toMap() {
@@ -20,7 +22,8 @@ class Goal {
       "goalText": this.goalText,
       "deadline": this.deadline?.toIso8601String() ?? "",
       "progress": this.progress,
-      "progressIndicator": this.progressIndicator
+      "progressIndicator": this.progressIndicator,
+      "difficulty": this.difficulty
     };
   }
 }

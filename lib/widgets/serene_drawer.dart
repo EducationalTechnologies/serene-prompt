@@ -67,9 +67,9 @@ class SereneDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, RouteNames.TIMER);
               }),
           ListTile(
-              title: Text("Test Ambulatory Assessment"),
+              title: Text("Test"),
               onTap: () async {
-                Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT);
+                Navigator.pushNamed(context, RouteNames.TEST);
               }),
           ListTile(
               title: Text("Clear Goals Database"),

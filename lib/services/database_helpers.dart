@@ -39,6 +39,7 @@ class DBProvider {
           "CREATE TABLE $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
               "goalText STRING, " +
               "deadline STRING, " +
+              "difficulty STRING, " +
               "progressIndicator STRING, " +
               "progress INTEGER"
                   ")");
@@ -92,11 +93,15 @@ class DBProvider {
     return List.generate(maps.length, (i) {
       DateTime deadline;
       var progressIndicator = GoalProgressIndicator.checkbox;
+      var goalDifficulty = GoalDifficulty.medium;
       if (maps[i]["deadline"] != "") {
         deadline = DateTime.parse(maps[i]["deadline"]);
       }
       if (maps[i].containsKey("progressIndicator")) {
         progressIndicator = maps[i]["progressIndicator"];
+      }
+      if (maps[i].containsKey("difficulty")) {
+        goalDifficulty = maps[i]["difficulty"];
       }
 
       return Goal(
@@ -104,6 +109,7 @@ class DBProvider {
           id: maps[i]["id"],
           goalText: maps[i]["goalText"].toString(),
           progressIndicator: progressIndicator,
+          difficulty: goalDifficulty,
           progress: maps[i]["progress"]);
     });
   }

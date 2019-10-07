@@ -42,7 +42,7 @@ class ConsentScreen extends StatelessWidget {
 
   String _subheaderWhichRights = "Welche Rechte habe ich?";
   String _textRights1 =
-      "Im Bezug auf pSie haben jederzeit die Möglichkeit folgende Rechte geltend zu machen: ";
+      "Sie haben jederzeit die Möglichkeit folgende Rechte geltend zu machen: ";
   List<String> _rights = [""];
 
   buildSubheader(String text) {
@@ -71,12 +71,79 @@ class ConsentScreen extends StatelessWidget {
     );
   }
 
+  buildRightsCard() {
+    return Card(
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text("Welche Rechte habe ich?"),
+            ),
+            MarkdownBody(
+                data:
+                    "Sie haben jederzeit die Möglichkeit folgende Rechte geltend zu machen: "),
+            MarkdownBody(
+                data:
+                    "* **Art. 7 Abs. 3 DSGVO: Recht auf Widerruf der Einwilligung** \n Sie haben das Recht, Ihre Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen"),
+            MarkdownBody(
+                data:
+                    "* **Art. 15 DSGVO: Auskunftsrecht** \n Sie haben uns gegenüber das Recht, Auskunft darüber zu erhalten, welche Daten wir zu Ihrer Person verarbeiten"),
+            MarkdownBody(
+                data:
+                    "* **Art. 16 DSGVO: Recht auf Berichtigung** \n Sollten die Sie betreffenden Daten nicht richtig oder unvollständig sein, so können Sie die Berichtigung unrichtiger oder die Vervollständigung unvollständiger Angaben verlangen"),
+            MarkdownBody(
+                data:
+                    "* **Art. 17 DSGVO: Recht auf Löschung** \n Sie können jederzeit die Löschung ihrer Daten verlangen"),
+            MarkdownBody(
+                data:
+                    "* **Art. 18 DSGVO: Recht auf Einschränkung der Verarbeitung** \n Sie können die Einschränkung der Verarbeitung der Sie betreffenden personenbezogenen Daten verlangen"),
+            MarkdownBody(
+                data:
+                    "* **Art. 21 DSGVO: Widerspruchsrecht** \n Sie können jederzeit gegen die Verarbeitung der Sie betreffenden Daten Widerspruch einlegen"),
+            MarkdownBody(
+                data:
+                    "* **Art. 21 DSGVO: Recht auf BEschwerde bei einer Aufsichtsbehörde** \n Wenn Sie der Auffassung sind, dass wir bei der Verarbeitung Ihrer Daten datenschutzrechtliche Vorschriften nicht beachtet haben, können Sie sich  mit einer Beschwerde an die zuständige Aufsichtsbehörde wendne, die Ihre Beschwerde prüfen wird"),
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildContactCard() {
+    return Card(
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text("Kontakt"),
+            ),
+            MarkdownBody(
+                data:
+                    "Um Ihre Rechte in Anspruch zu nehmen oder für generelle Rückfragen können Sie jederzeit Kontakt mit uns aufnehmen"),
+            UIHelper.verticalSpaceSmall(),
+            MarkdownBody(
+                data:
+                    "**Hauptverantwortlicher** : \n Daniel Biedermann \n DIPF | Leibniz-Institut für Bildungschforschung und Bildungsinformation \n Rostocker Straß 6 \n 60323 Frankfurt am Main \n 0049-69-24708-173 \n biedermann@dipf.de"),
+            UIHelper.verticalSpaceSmall(),
+            MarkdownBody(
+                data:
+                    "**Weitere Projektbeteiligte** \n Hendrik Drachsler, Jasmin Breitwieser, Leonard Tetzlaff, Garvin Brod \n DIPF | Leibniz-Institut für Bildungschforschung und Bildungsinformation "),
+          ],
+        ),
+      ),
+    );
+  }
+
   buildConsentCard(List<String> paragraphs) {
     return Card(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: Column(
-          children: <Widget>[for (var text in paragraphs) MarkdownBody(data: text)],
+          children: <Widget>[
+            for (var text in paragraphs) MarkdownBody(data: text)
+          ],
         ),
       ),
     );
@@ -110,6 +177,9 @@ class ConsentScreen extends StatelessWidget {
             // UIHelper.verticalSpaceSmall(),
             // buildSubheader(_subheaderWhichRights),
             // buildConsentCard([_textParagraph8]),
+            buildRightsCard(),
+            UIHelper.verticalSpaceMedium(),
+            buildContactCard(),
             UIHelper.verticalSpaceMedium(),
             Row(
               children: <Widget>[
@@ -121,7 +191,7 @@ class ConsentScreen extends StatelessWidget {
                     value: consentState.consented),
                 Flexible(
                   child: Text(
-                      "Ich bin damit einverstanden, an der Studie teilzunehmen und stimme der Erhebung von pseudonymisierten Daten im Kontext der Studie zu"),
+                      "Ich bin damit einverstanden, an der Studie teilzunehmen und stimme der Erhebung und Auswertung von pseudonymisierten Daten im Kontext der Studie zu"),
                 ),
               ],
             ),

@@ -172,7 +172,7 @@ class _TextHighlightState extends State<TextHighlight>
   Animation<int> _animation;
   AnimationController _controller;
   Duration _duration;
-  int _wpm = 60;
+  int _wpm = 150;
   int _longPressCounter = 0;
   bool _counterPressed = false;
   bool _loopActive = false;

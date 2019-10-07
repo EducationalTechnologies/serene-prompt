@@ -6,4 +6,5 @@ class RouteNames {
   static const AMBULATORY_ASSESSMENT = "/ambulatoryassessment";
   static const CONSENT = "/consent";
   static const TIMER = "/timer";
+  static const TEST = "/test";
 }

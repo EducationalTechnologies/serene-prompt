@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/database_helpers.dart';
+import 'package:serene/services/firebase_service.dart';
 
 class DataService {
   static final DataService _instance = DataService._internal();
@@ -17,6 +18,10 @@ class DataService {
 
   get openGoals {
     return _openGoals;
+  }
+
+  saveGoal(Goal goal) async {
+    await FirebaseService().addGoal(goal);
   }
 
   getGoals() async {
