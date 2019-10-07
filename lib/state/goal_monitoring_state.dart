@@ -8,12 +8,16 @@ class GoalMonitoringState with ChangeNotifier {
   List<Goal> _goals;
   List<Goal> _openGoals;
 
+  GoalMonitoringState() {
+    getOpenGoalsAsync();
+  }
+
   List<Goal> get goals {
     return DataService().goals;
   }
 
   List<Goal> get openGoals {
-    return DataService().openGoals;
+    return _openGoals;
   }
 
   Future<List<Goal>> getGoalsAsync() async {
@@ -23,7 +27,7 @@ class GoalMonitoringState with ChangeNotifier {
 
   Future<List<Goal>> getOpenGoalsAsync() async {
     _openGoals = await DataService().getOpenGoals();
-    return _openGoals;
+    notifyListeners();
   }
 
   Future<bool> update() async {

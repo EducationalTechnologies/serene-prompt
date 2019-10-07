@@ -31,8 +31,8 @@ class DataService {
   }
 
   getOpenGoals() async {
-    _openGoals = await DBProvider.db.getOpenGoals();
-
+    //_openGoals = await DBProvider.db.getOpenGoals();
+    _openGoals = await FirebaseService().getOpenGoals();
     return _openGoals;
   }
 

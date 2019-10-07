@@ -7,4 +7,5 @@ class RouteNames {
   static const CONSENT = "/consent";
   static const TIMER = "/timer";
   static const TEST = "/test";
+  static const OPEN_GOALS = "/opengoals";
 }

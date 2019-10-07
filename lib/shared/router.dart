@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/test_screen.dart';
 import 'package:serene/state/consent_state.dart';
 import 'package:serene/screens/add_goal_screen.dart';
@@ -62,6 +63,13 @@ class Router {
                   builder: (_) => TimerState(),
                   child: TimerScreen(),
                 ));
+
+      case RouteNames.OPEN_GOALS:
+        return MaterialPageRoute(
+            builder: (_) => MultiProvider(providers: [
+                  ChangeNotifierProvider<GoalMonitoringState>.value(
+                      value: GoalMonitoringState()),
+                ], child: GoalMonitorScreen()));
 
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());

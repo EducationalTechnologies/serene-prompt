@@ -3,6 +3,7 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
+import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/state/goal_monitor_item_state.dart';
 import 'package:serene/state/goal_monitoring_state.dart';
 import 'package:serene/widgets/list_item_progress.dart';
@@ -19,27 +20,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
 
   List<Goal> _goals = [];
   Future<List<Goal>> _openGoals;
-
-  @override
-  initState() {
-    super.initState();
-
-    // new Future.delayed(Duration.zero, () {
-    //   goalMonitoringState.getOpenGoalsAsync().then((val) {
-    //     setState(() {
-    //       _goals = val;
-    //     });
-    //   });
-    // });
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    // final goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    // _openGoals = goalMonitoringState.getOpenGoalsAsync();
-  }
 
   _finishGoal(BuildContext context, int index, Goal goal) async {
     // await Future.delayed(Duration(milliseconds: 500));
@@ -86,11 +66,15 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   }
 
   buildDeadline(DateTime date) {
-    return Row(
-      children: <Widget>[
-        Icon(Icons.calendar_today),
-        Text(DateFormat('dd.MM.yyy').format(date))
-      ],
+    return Container(
+      margin: EdgeInsets.only(left: 50),
+      child: Row(
+        children: <Widget>[
+          Icon(Icons.date_range),
+          UIHelper.horizontalSpaceSmall(),
+          Text(DateFormat('dd.MM.yyy').format(date))
+        ],
+      ),
     );
   }
 
@@ -209,31 +193,28 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   @override
   Widget build(BuildContext context) {
     final goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    // print("BUILD in monitoring screen");
 
-    // if (_goals != null) {
-    //   if (_goals.length > 0)
-    //     return buildListView(goalMonitoringState.openGoals);
-    //   else {
-    //     return Center(child: Text("Lege ein paar Lernziele an"));
-    //   }
-    // } else {
-    //   return Center(child: CircularProgressIndicator());
-    // }
+    if (goalMonitoringState.openGoals != null) {
+      return Container(
+        child: buildListView(goalMonitoringState.openGoals),
+      );
+    } else {
+      return Center(child: CircularProgressIndicator());
+    }
 
-    return FutureBuilder(
-      future: goalMonitoringState.getOpenGoalsAsync(),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            _goals = snapshot.data;
-            return Container(
-              child: buildListView(_goals),
-            );
-          }
-        }
-        return Center(child: CircularProgressIndicator());
-      },
-    );
+    // return FutureBuilder(
+    //   future: goalMonitoringState.getOpenGoalsAsync(),
+    //   builder: (BuildContext context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       if (snapshot.connectionState == ConnectionState.done) {
+    //         _goals = snapshot.data;
+    //         return Container(
+    //           child: buildListView(_goals),
+    //         );
+    //       }
+    //     }
+    //     return Center(child: CircularProgressIndicator());
+    //   },
+    // );
   }
 }
