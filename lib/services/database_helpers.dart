@@ -40,6 +40,7 @@ class DBProvider {
               "goalText STRING, " +
               "deadline STRING, " +
               "difficulty STRING, " +
+              "userId STRING, " +
               "progressIndicator STRING, " +
               "progress INTEGER"
                   ")");
@@ -69,6 +70,8 @@ class DBProvider {
           id: map[i]["id"],
           goalText: (map[i]["goalText"]).toString(),
           progressIndicator: progressIndicator,
+          difficulty: map[i]["difficulty"],
+          userId: map[i]["userId"],
           progress: map[i]["progress"]);
     });
   }
