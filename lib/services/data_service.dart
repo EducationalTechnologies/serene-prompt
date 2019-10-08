@@ -69,9 +69,9 @@ class DataService {
 
   // TODO: This is currently a very temporary solution
   fetchData() async {
-    fetchGoals();
-    fetchGoalShields();
-    getOpenGoals();
+    // fetchGoals();
+    // fetchGoalShields();
+    // getOpenGoals();
     return _goalShields;
   }
 

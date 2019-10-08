@@ -7,12 +7,26 @@ class IntervalScale extends StatefulWidget {
   _IntervalScaleState createState() => _IntervalScaleState();
 
   final String title;
+  final int itemCount;
 
-  const IntervalScale({Key key, this.title}) : super(key: key);
+  const IntervalScale({Key key, this.title, this.itemCount = 5})
+      : super(key: key);
 }
 
 class _IntervalScaleState extends State<IntervalScale> {
   int _groupValue;
+
+  buildItem(int value) {
+    return Radio(
+      groupValue: _groupValue,
+      value: value,
+      onChanged: (val) {
+        setState(() {
+          _groupValue = val;
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +38,7 @@ class _IntervalScaleState extends State<IntervalScale> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          for (var i = 1; i <= widget.itemCount; i++) buildItem(),
           Radio(
             groupValue: _groupValue,
             value: 1,
@@ -53,7 +68,9 @@ class _IntervalScaleState extends State<IntervalScale> {
                   });
                 },
               ),
-              Text("Super",)
+              Text(
+                "Super",
+              )
             ],
           ),
           Radio(
