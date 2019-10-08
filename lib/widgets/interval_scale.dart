@@ -8,15 +8,19 @@ class IntervalScale extends StatefulWidget {
 
   final String title;
   final int itemCount;
+  final Map<int, String> labels;
 
-  const IntervalScale({Key key, this.title, this.itemCount = 5})
+  const IntervalScale({Key key, this.title, this.itemCount = 5, this.labels})
       : super(key: key);
 }
 
 class _IntervalScaleState extends State<IntervalScale> {
   int _groupValue;
 
-  buildItem(int value) {
+  buildItem(int value, String text) {
+    if (text == null) {
+      text = value.toString();
+    }
     return Column(
       children: <Widget>[
         Radio(
@@ -29,10 +33,19 @@ class _IntervalScaleState extends State<IntervalScale> {
           },
         ),
         Text(
-          "Super",
+          text,
         )
       ],
     );
+  }
+
+  getLabel(int index) {
+    if (widget.labels != null) {
+      if (widget.labels.containsKey(index)) {
+        return widget.labels[index];
+      }
+    }
+    return index.toString();
   }
 
   @override
@@ -45,7 +58,7 @@ class _IntervalScaleState extends State<IntervalScale> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          for (var i = 1; i <= widget.itemCount; i++) buildItem(i),
+          for (var i = 1; i <= widget.itemCount; i++) buildItem(i, getLabel(i)),
         ],
       )
     ]);
