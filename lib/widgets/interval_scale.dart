@@ -17,14 +17,21 @@ class _IntervalScaleState extends State<IntervalScale> {
   int _groupValue;
 
   buildItem(int value) {
-    return Radio(
-      groupValue: _groupValue,
-      value: value,
-      onChanged: (val) {
-        setState(() {
-          _groupValue = val;
-        });
-      },
+    return Column(
+      children: <Widget>[
+        Radio(
+          groupValue: _groupValue,
+          value: value,
+          onChanged: (val) {
+            setState(() {
+              _groupValue = val;
+            });
+          },
+        ),
+        Text(
+          "Super",
+        )
+      ],
     );
   }
 
@@ -38,77 +45,7 @@ class _IntervalScaleState extends State<IntervalScale> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          for (var i = 1; i <= widget.itemCount; i++) buildItem(),
-          Radio(
-            groupValue: _groupValue,
-            value: 1,
-            onChanged: (val) {
-              setState(() {
-                _groupValue = val;
-              });
-            },
-          ),
-          Radio(
-            groupValue: _groupValue,
-            value: 2,
-            onChanged: (val) {
-              setState(() {
-                _groupValue = val;
-              });
-            },
-          ),
-          Column(
-            children: <Widget>[
-              Radio(
-                groupValue: _groupValue,
-                value: 3,
-                onChanged: (val) {
-                  setState(() {
-                    _groupValue = val;
-                  });
-                },
-              ),
-              Text(
-                "Super",
-              )
-            ],
-          ),
-          Radio(
-            groupValue: _groupValue,
-            value: 4,
-            onChanged: (val) {
-              setState(() {
-                _groupValue = val;
-              });
-            },
-          ),
-          Radio(
-            groupValue: _groupValue,
-            value: 5,
-            onChanged: (val) {
-              setState(() {
-                _groupValue = val;
-              });
-            },
-          ),
-          Radio(
-            groupValue: _groupValue,
-            value: 6,
-            onChanged: (val) {
-              setState(() {
-                _groupValue = val;
-              });
-            },
-          ),
-          Radio(
-            groupValue: _groupValue,
-            value: 7,
-            onChanged: (val) {
-              setState(() {
-                _groupValue = val;
-              });
-            },
-          )
+          for (var i = 1; i <= widget.itemCount; i++) buildItem(i),
         ],
       )
     ]);
