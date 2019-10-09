@@ -27,6 +27,11 @@ class GoalState with ChangeNotifier {
     notifyListeners();
   }
 
+  clearDeadline() {
+    _currentGoal.deadline = null;
+    notifyListeners();
+  }
+
   bool get isFetching => _isFetching;
 
   Future saveCurrentGoal() async {

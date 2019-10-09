@@ -17,17 +17,20 @@ class ConsentScreen extends StatelessWidget {
   List<String> _textPurposes = [
     "Das Sammeln von Daten im Rahmen des Serene Projektes verfolgt die folgenden Ziele: ",
     "Den individuellen Lernfortschritt zu untersuchen und zu unterstützen. Wir geben Ihnen die Möglichkeit, Ihr persönliches Lernverhalten mit Ihren Zielen zu vergleichen und somit vielleicht auch Ihren Lernfortschritt zu steigern.",
-    "Um die Auswirkungen der Verwendung von Technologien auf Lernumgebungen zu untersuchen. Wir möchten herausfinden, welche Vor- und Nachteile Technologien und deren Verwendung mit sich bringt. Wir wollen diese Erkenntnisse nutzen um die angebotenen Technologien stetig zu vebressern"
+    "Um die Auswirkungen der Verwendung von Technologien auf Lernumgebungen zu untersuchen. Wir möchten herausfinden, welche Möglichkeiten durch die Verwendung von digitalen Lerntechnologien entstehen. Wir wollen diese Erkenntnisse nutzen um die angebotenen Technologien stetig zu verbessern",
+    "Wir bieten in dieser Applikation eine Methode an, die sich 'Goal Shielding' nennt. Mit dieser Methode verbindet sich die Hoffnung, dass Sie Ablenkungen beim Lerner leichter widerstehen können. Wir möchten untersuchen, ob eine häufigere Anwendung dieser Methode zu größerer Zufriedenheit mit dem eigenen Lernfortschritt führt."
   ];
 
   String _subheaderWhichData = "Welche Daten werden gesammelt?";
   String _textParagraph5 =
-      "Serene ist eine Applikation mit der Lernziele erstellt und verfolgt werden können. Sie können die Anwendung unter Nutzung eines selbstgewählten Pesudonyms nutzen, sodass ausschließlich **pseudonymisierte** Daten anfallen. Von Ihrer Nutzung der Serene-Applikation verwenden : ";
+      "Serene ist eine Applikation mit der Lernziele erstellt und verfolgt werden können. Sie können die Anwendung unter Nutzung eines selbstgewählten Pesudonyms nutzen, sodass ausschließlich **pseudonymisierte** Daten anfallen. Wir verwenden für unsere Forschung die folgenden in Serene anfallenden Daten: ";
   List<String> _dataCollectionAggregated = [
     "* Text der Lernziele",
     "* Datum der Lernziele",
     "* Zeitpläne für die Lernziele",
-    "* Der angegebene Fortschritt beim Erreichen der Lernziele"
+    "* Der angegebene Fortschritt beim Erreichen der Lernziele",
+    "* Antworten auf die Fragebögen",
+    "* Clickstream Daten"
   ];
   String _textParagraph6 =
       "In der Serene Applikation erheben und verwerten wir die folgenden Daten:";
@@ -36,7 +39,7 @@ class ConsentScreen extends StatelessWidget {
       "Was passiert mit den Daten die über mich gesammelt werden?";
   List<String> _textWhatHappensWithData = [
     "Die Daten werden während des Semesters gesammelt und anschließend vollständig anonym für die wissenschaftliche Forschung verwendet. Insbesondere erhält das Lehrpersonal keinen Zugriff auf die Daten",
-    "Für die Analyse der Daten werden die Daten in aggregierter Form gehandhabt und die Forscher/innen werden diese statistisch untersuchen. Dabei wird untersucht wie die gesetzten Lernziele und Lernzeiten in Verbindung zu einzelnen Funktionalitäten der Applikation stehen.",
+    "Für die Analyse der Daten werden diese in aggregierter Form aufbereitet, und die Forscher/innen werden diese statistisch untersuchen. Dabei wird untersucht, wie die gesetzten Lernziele und Lernzeiten in Verbindung zu einzelnen Funktionalitäten der Applikation stehen.",
     ""
   ];
 
@@ -103,7 +106,7 @@ class ConsentScreen extends StatelessWidget {
                     "* **Art. 21 DSGVO: Widerspruchsrecht** \n Sie können jederzeit gegen die Verarbeitung der Sie betreffenden Daten Widerspruch einlegen"),
             MarkdownBody(
                 data:
-                    "* **Art. 21 DSGVO: Recht auf BEschwerde bei einer Aufsichtsbehörde** \n Wenn Sie der Auffassung sind, dass wir bei der Verarbeitung Ihrer Daten datenschutzrechtliche Vorschriften nicht beachtet haben, können Sie sich  mit einer Beschwerde an die zuständige Aufsichtsbehörde wendne, die Ihre Beschwerde prüfen wird"),
+                    "* **Art. 21 DSGVO: Recht auf Beschwerde bei einer Aufsichtsbehörde** \n Wenn Sie der Auffassung sind, dass wir bei der Verarbeitung Ihrer Daten datenschutzrechtliche Vorschriften nicht beachtet haben, können Sie sich  mit einer Beschwerde an die zuständige Aufsichtsbehörde wenden, die Ihre Beschwerde prüfen wird"),
           ],
         ),
       ),

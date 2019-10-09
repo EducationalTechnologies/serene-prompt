@@ -91,6 +91,42 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     );
   }
 
+  buildDateInput() {
+    var dateText = "";
+    final addGoalState = Provider.of<GoalState>(context);
+    var date = addGoalState.currentGoal.deadline ?? DateTime.now();
+    dateText = addGoalState.currentGoal.deadline != null
+        ? DateFormat('dd.MM.yyy').format(date)
+        : "";
+    _dateFieldController.text = dateText;
+
+    return Row(
+      children: <Widget>[
+        Icon(Icons.calendar_today),
+        SizedBox(width: 10.0),
+        Expanded(
+          child: Stack(
+            alignment: Alignment(1.0, 1.0),
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(hintText: "Deadline hinzufügen"),
+                enabled: false,
+                controller: _dateFieldController,
+              ),
+              IconButton(
+                onPressed: () {
+                  _dateFieldController.clear();
+                  addGoalState.clearDeadline();
+                },
+                icon: Icon(Icons.clear),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget buildDatePicker() {
     final appState = Provider.of<GoalState>(context);
 
@@ -99,34 +135,36 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     var timeText = DateFormat('kk:mm').format(date);
 
     bool hasDate = appState.currentGoal.deadline != null;
+
     return Column(
       children: <Widget>[
         InkWell(
             onTap: () {
               _selectDate(context);
+              print("Clear");
             },
             child: Stack(
               children: <Widget>[
-                if (hasDate)
-                  Container(
-                    padding: EdgeInsets.all(15.0),
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Row(
-                      children: [
-                        Icon(Icons.calendar_today, color: Colors.black),
-                        UIHelper.horizontalSpaceSmall(),
-                        Text(
-                          "$dateText",
-                          style: pickerStyle,
-                        ),
-                        UIHelper.horizontalSpaceMedium(),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.start,
-                    ),
-                  ),
+                if (hasDate) buildDateInput(),
+                // Container(
+                //     padding: EdgeInsets.all(15.0),
+                //     alignment: Alignment.centerLeft,
+                //     decoration: BoxDecoration(
+                //         color: Colors.grey[100],
+                //         borderRadius: BorderRadius.circular(5)),
+                //     child: Row(
+                //       children: [
+                //         Icon(Icons.calendar_today, color: Colors.black),
+                //         UIHelper.horizontalSpaceSmall(),
+                //         Text(
+                //           "$dateText",
+                //           style: pickerStyle,
+                //         ),
+                //         UIHelper.horizontalSpaceMedium(),
+                //       ],
+                //       mainAxisAlignment: MainAxisAlignment.start,
+                //     ),
+                //     ),
                 if (!hasDate)
                   Container(
                     height: 50,
@@ -307,7 +345,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               _buildDifficultySelector(),
               UIHelper.verticalSpaceMedium(),
               Text(
-                "Eingabe",
+                "Eingabe des Zielfortschritts",
                 style: Theme.of(context).textTheme.subhead,
                 textAlign: TextAlign.left,
               ),

@@ -108,7 +108,7 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
         body: Container(
           child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: _buildAssessmentListAfterGoal()),
+              child: _buildAssessmentListPostTest()),
         ),
       ),
     );

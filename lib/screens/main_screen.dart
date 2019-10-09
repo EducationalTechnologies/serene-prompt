@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/resource_links_screen.dart';
-import 'package:serene/services/data_service.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/state/goal_monitoring_state.dart';
 import 'package:serene/widgets/serene_drawer.dart';
-import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -19,7 +16,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     _controller = new PageController(initialPage: _selectedPageIndex);
-    DataService().fetchData();
     super.initState();
   }
 
