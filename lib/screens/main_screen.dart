@@ -46,6 +46,8 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Serene"),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
       drawer: SereneDrawer(),
@@ -62,8 +64,10 @@ class _MainScreenState extends State<MainScreen> {
       ),
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(
+          elevation: 15.0,
           shape: CircularNotchedRectangle(),
           child: BottomNavigationBar(
+            elevation: 15.0,
             selectedItemColor: Colors.white,
             selectedIconTheme: IconThemeData(color: Colors.white, size: 30),
             selectedLabelStyle:

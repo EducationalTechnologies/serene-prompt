@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/text_styles.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/state/app_state.dart';
 import 'package:serene/state/goal_state.dart';
@@ -44,6 +43,14 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
       return true;
     }
     return false;
+  }
+
+  buildSubHeader(String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child:
+          Text(title, style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+    );
   }
 
   _submitGoal() async {
@@ -188,23 +195,42 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   _buildInputSelector() {
     return Container(
       child: ToggleButtons(
+        borderRadius: BorderRadius.circular(10),
         children: <Widget>[
           Column(
             children: <Widget>[
+              SizedBox(
+                height: 5,
+              ),
               Icon(Icons.check_box),
+              SizedBox(
+                height: 5,
+              ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.5 - 12,
                   alignment: Alignment.center,
-                  child: Text("Checkbox"))
+                  child: Text("Checkbox")),
+              SizedBox(
+                height: 5,
+              ),
             ],
           ),
           Column(
             children: <Widget>[
+              SizedBox(
+                height: 5,
+              ),
               Icon(Icons.settings_ethernet),
+              SizedBox(
+                height: 5,
+              ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.5 - 12,
                   alignment: Alignment.center,
-                  child: Text("Slider"))
+                  child: Text("Slider")),
+              SizedBox(
+                height: 5,
+              ),
             ],
           ),
         ],
@@ -237,21 +263,31 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   _buildDifficultySelector() {
     return Container(
       child: ToggleButtons(
+        borderRadius: BorderRadius.circular(10),
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("💡"),
+              SizedBox(
+                height: 5,
+              ),
+              Text("⚙"),
+              SizedBox(
+                height: 5,
+              ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.25 - 7,
                   alignment: Alignment.center,
-                  child: Text("Trivial"))
+                  child: Text("Trivial")),
+              SizedBox(
+                height: 5,
+              ),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("💡💡"),
+              Text("⚙⚙"),
               Container(
                   width: MediaQuery.of(context).size.width * 0.25 - 7,
                   alignment: Alignment.center,
@@ -261,7 +297,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("💡💡💡"),
+              Text("⚙⚙⚙"),
               Container(
                   width: MediaQuery.of(context).size.width * 0.25 - 7,
                   alignment: Alignment.center,
@@ -271,7 +307,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("💡💡💡💡"),
+              Text("⚙⚙⚙⚙"),
               Container(
                   width: MediaQuery.of(context).size.width * 0.25 - 7,
                   alignment: Alignment.center,
@@ -310,9 +346,12 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Neues Ziel'),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
-              textColor: Colors.white,
+              // textColor: Colors.white,
               icon: const Icon(Icons.save),
               label: Text("Speichern"),
               onPressed: () async {
@@ -329,26 +368,15 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               UIHelper.verticalSpaceMedium(),
               buildTextEntry(),
               UIHelper.verticalSpaceMedium(),
-              Text(
-                "Zeitplan",
-                style: Theme.of(context).textTheme.subhead,
-                textAlign: TextAlign.left,
-              ),
+              buildSubHeader("Zeitplan"),
+              UIHelper.verticalSpaceSmall(),
               buildDatePicker(),
               UIHelper.verticalSpaceMedium(),
-              Text(
-                "Schwierigkeit",
-                style: Theme.of(context).textTheme.subhead,
-                textAlign: TextAlign.left,
-              ),
+              buildSubHeader("Schwierigkeit"),
               UIHelper.verticalSpaceSmall(),
               _buildDifficultySelector(),
               UIHelper.verticalSpaceMedium(),
-              Text(
-                "Eingabe des Zielfortschritts",
-                style: Theme.of(context).textTheme.subhead,
-                textAlign: TextAlign.left,
-              ),
+              buildSubHeader("Eingabe des Zielfortschritts"),
               UIHelper.verticalSpaceSmall(),
               _buildInputSelector(),
               UIHelper.verticalSpaceLarge(),

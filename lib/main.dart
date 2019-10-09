@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         title: 'Serene',
         theme: ThemeData(
             canvasColor: AppColors.backgroundColor,
-            primarySwatch: Colors.teal,
+            primarySwatch: Colors.orange,
             accentColor: Color(0xfff96d15),
             buttonColor: Colors.orange[300],
             buttonTheme: ButtonThemeData(

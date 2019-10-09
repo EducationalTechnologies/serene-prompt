@@ -88,9 +88,9 @@ class SereneDrawer extends StatelessWidget {
           //       await DBProvider.db.insertSampleData();
           //     }),
           ListTile(
-              title: Text("Test Open Goals"),
+              title: Text("Log In"),
               onTap: () async {
-                DataService().getOpenGoals();
+                Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
         ],
       ),

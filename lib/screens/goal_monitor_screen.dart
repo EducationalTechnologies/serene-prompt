@@ -179,15 +179,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       itemBuilder: (context, index, animation) =>
           buildAnimatedListItem(context, index, goals[index], animation),
     );
-
-    return ListView.builder(
-      itemCount: goals.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: ProgressListItem(),
-        );
-      },
-    );
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
+import 'package:serene/screens/login_screen.dart';
 import 'package:serene/screens/test_screen.dart';
 import 'package:serene/state/consent_state.dart';
 import 'package:serene/screens/add_goal_screen.dart';
@@ -14,6 +15,7 @@ import 'package:serene/shared/screen_args.dart';
 import 'package:serene/state/goal_monitoring_state.dart';
 import 'package:serene/state/goal_shielding_state.dart';
 import 'package:serene/state/goal_state.dart';
+import 'package:serene/state/login_state.dart';
 import 'package:serene/state/timer_state.dart';
 import 'package:provider/provider.dart';
 
@@ -70,6 +72,20 @@ class Router {
                   ChangeNotifierProvider<GoalMonitoringState>.value(
                       value: GoalMonitoringState()),
                 ], child: GoalMonitorScreen()));
+
+      case RouteNames.LOG_IN:
+        return MaterialPageRoute(
+            builder: (_) => MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider<LoginState>.value(
+                          value: LoginState()),
+                    ],
+                    child: LoginScreen(
+                      backgroundColor1: Colors.orange[50],
+                      backgroundColor2: Colors.orange[100],
+                      highlightColor: Colors.blue,
+                      foregroundColor: Colors.blue[300],
+                    )));
 
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());

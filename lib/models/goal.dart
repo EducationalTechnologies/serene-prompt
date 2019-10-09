@@ -26,8 +26,7 @@ class Goal {
       "progress": this.progress,
       "progressIndicator": this.progressIndicator,
       "difficulty": this.difficulty,
-      // TODO: Use actual user ID
-      "userId": "Daniel"
+      "userId": ""
     };
   }
 }

@@ -4,7 +4,6 @@ import 'package:serene/state/consent_state.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
 
-// TODO: Use markdown
 class ConsentScreen extends StatelessWidget {
   bool consented = false;
 

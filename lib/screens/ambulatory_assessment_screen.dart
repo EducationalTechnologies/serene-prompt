@@ -99,8 +99,6 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
                 icon: const Icon(Icons.save),
                 label: Text("Speichern"),
                 onPressed: () async {
-                  final appState =
-                      Provider.of<AmbulatoryAssessmentState>(context);
                   Navigator.pop(context);
                 }),
           ],
