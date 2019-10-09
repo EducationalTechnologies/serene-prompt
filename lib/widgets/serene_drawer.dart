@@ -26,10 +26,25 @@ class SereneDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            child: Text("Serene"),
-            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+          // DrawerHeader(
+          //   child: Text("Serene"),
+          //   decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+          // ),
+          ListTile(
+            title: Container(
+              padding: EdgeInsets.only(top: 20, bottom: 10.0),
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.schedule),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Text("Serene"),
+                  ),
+                ],
+              ),
+            ),
           ),
+          Divider(),
           _buildDrawerItem(
               icon: Icons.add_box,
               text: "Neues Ziel",
