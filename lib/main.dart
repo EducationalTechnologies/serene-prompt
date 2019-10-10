@@ -12,19 +12,30 @@ class MyApp extends StatelessWidget {
     print("REBUILD APP");
     return ChangeNotifierProvider<AppState>(
       builder: (_) => AppState(),
-      child: MaterialApp(
-        title: 'Serene',
-        theme: ThemeData(
-            canvasColor: AppColors.backgroundColor,
-            primarySwatch: Colors.orange,
-            accentColor: Color(0xfff96d15),
-            buttonColor: Colors.orange[300],
-            buttonTheme: ButtonThemeData(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-            ),
-            iconTheme: IconThemeData(color: Colors.black)),
-        onGenerateRoute: Router.generateRoute,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: new LinearGradient(
+            begin: Alignment.topLeft,
+            end: new Alignment(
+                1.0, 0.0), // 10% of the width, so there are ten blinds.
+            colors: [Colors.orange[50], Colors.orange[50]], // whitish to gray
+            // tileMode: TileMode.repeated, // repeats the gradient over the canvas
+          ),
+        ),
+        child: MaterialApp(
+          title: 'Serene',
+          theme: ThemeData(
+              canvasColor: AppColors.backgroundColor,
+              primarySwatch: Colors.orange,
+              accentColor: Color(0xfff96d15),
+              buttonColor: Colors.orange[300],
+              buttonTheme: ButtonThemeData(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+              iconTheme: IconThemeData(color: Colors.black)),
+          onGenerateRoute: Router.generateRoute,
+        ),
       ),
     );
   }

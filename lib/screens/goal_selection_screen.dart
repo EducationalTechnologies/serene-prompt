@@ -14,38 +14,6 @@ class GoalSelectionScreen extends StatefulWidget {
 
 class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
   bool _showText = false;
-  Goal _newGoal = new Goal();
-
-  buildNewGoalRow() {
-    return TextField(
-      autofocus: true,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.done,
-      onSubmitted: (term) {
-        finishGoalInput();
-      },
-      onChanged: (value) {
-        setState(() {
-          _newGoal.goalText = value;
-        });
-      },
-      // onEditingComplete: () {
-      //   finishGoalInput();
-      // },
-      decoration: InputDecoration(icon: Icon(Icons.pages)),
-    );
-  }
-
-  finishGoalInput() {
-    setState(() {
-      _showText = false;
-    });
-
-    _newGoal.deadline = null;
-    _newGoal.progress = 0;
-
-    Provider.of<GoalState>(context).saveNewGoal(_newGoal);
-  }
 
   buildAddGoalButton() {
     return SizedBox(

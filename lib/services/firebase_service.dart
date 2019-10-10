@@ -41,4 +41,8 @@ class FirebaseService {
   addGoal(Goal goal) async {
     await databaseReference.collection(COLLECTION_GOALS).add(goal.toMap());
   }
+
+  updateGoal(Goal goal) async {
+    // await databaseReference.collection(COLLECTION_GOALS).document(goal.id);
+  }
 }

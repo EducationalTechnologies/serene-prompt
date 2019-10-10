@@ -43,12 +43,13 @@ class GoalMonitoringState with ChangeNotifier {
 
   deleteGoal(Goal goal) async {
     DataService().deleteGoal(goal);
-    await update();
+    // await update();
     // notifyListeners();
   }
 
   updateGoal(Goal goal) async {
-    await DBProvider.db.updateGoal(goal);
+    // await DBProvider.db.updateGoal(goal);
+    DataService().updateGoal(goal);
     // notifyListeners();
   }
 

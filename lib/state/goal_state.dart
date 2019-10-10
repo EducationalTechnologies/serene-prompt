@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/database_helpers.dart';
+import 'package:serene/services/user_service.dart';
 
 class GoalState with ChangeNotifier {
   bool _isFetching = false;
   Goal _currentGoal;
 
   GoalState() {
-    _currentGoal = new Goal(goalText: "", progress: 0);
+    final userService = UserService();
+    // userService.getUsername();
+    _currentGoal =
+        new Goal(goalText: "", progress: 0, userId: userService.getUsername());
   }
 
   GoalState.fromGoal(Goal goal) {
@@ -35,15 +39,12 @@ class GoalState with ChangeNotifier {
   bool get isFetching => _isFetching;
 
   Future saveCurrentGoal() async {
-    var goal = this._currentGoal;
-    await this.saveNewGoal(goal);
+    await this._saveNewGoal(this._currentGoal);
     notifyListeners();
   }
 
-  Future saveNewGoal(Goal goal) async {
+  Future _saveNewGoal(Goal goal) async {
     await DataService().saveGoal(goal);
-    DBProvider.db.insertGoal(goal);
-    notifyListeners();
   }
 
   Future init() async {}

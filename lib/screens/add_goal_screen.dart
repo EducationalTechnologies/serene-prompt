@@ -345,7 +345,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Neues Ziel'),
+        // title: Text('Neues Ziel'),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0.0,

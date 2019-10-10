@@ -29,12 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    // _userIdTextController = TextEditingController();
+    _userIdTextController = TextEditingController();
   }
 
   _loginClick(BuildContext context) async {
-    // final appState = Provider.of<AppState>(context);
-    // final loginState = Provider.of<LoginState>(context);
+    final appState = Provider.of<AppState>(context);
+    final loginState = Provider.of<LoginState>(context);
+    await appState.userService.saveUsername(_userIdTextController.text);
     // await appState.userService.saveUsername(_userIdTextController.text);
   }
 
@@ -131,9 +132,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 new Expanded(
-                  child: TextField(
+                  child: TextFormField(
                     controller: _userIdTextController,
                     textAlign: TextAlign.center,
+                    validator: (String arg) {
+                      if (arg.length < 3) {
+                        return "Please use 3 or more characters";
+                      } else {
+                        return null;
+                      }
+                    },
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Username wählen',
@@ -193,8 +201,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 20.0, horizontal: 20.0),
                     onPressed: () async {
-                      // await _loginClick(context);
-                      // Navigator.pushNamed(context, RouteNames.MAIN);
+                      await _loginClick(context);
+                      Navigator.pushNamed(context, RouteNames.MAIN);
                     },
                     child: Text(
                       "Log In",

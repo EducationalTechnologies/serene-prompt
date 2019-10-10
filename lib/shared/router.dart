@@ -82,7 +82,7 @@ class Router {
                     ],
                     child: LoginScreen(
                       backgroundColor1: Colors.orange[50],
-                      backgroundColor2: Colors.orange[100],
+                      backgroundColor2: Colors.orange[50],
                       highlightColor: Colors.blue,
                       foregroundColor: Colors.blue[300],
                     )));

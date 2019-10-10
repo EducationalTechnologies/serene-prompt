@@ -8,12 +8,14 @@ class Goal {
   String progressIndicator;
   String difficulty;
   String userId;
+  String documentId;
 
   Goal(
       {this.id,
       this.goalText = "",
       this.deadline,
       this.progress = 0,
+      this.documentId = "",
       this.userId = "",
       this.difficulty = GoalDifficulty.medium,
       this.progressIndicator = GoalProgressIndicator.checkbox});
@@ -26,7 +28,8 @@ class Goal {
       "progress": this.progress,
       "progressIndicator": this.progressIndicator,
       "difficulty": this.difficulty,
-      "userId": ""
+      "userId": this.userId,
+      "documentId": this.documentId
     };
   }
 }

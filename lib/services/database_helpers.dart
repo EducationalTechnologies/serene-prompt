@@ -39,6 +39,7 @@ class DBProvider {
           "CREATE TABLE $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
               "goalText STRING, " +
               "deadline STRING, " +
+              "documentId STRING, " +
               "difficulty STRING, " +
               "userId STRING, " +
               "progressIndicator STRING, " +

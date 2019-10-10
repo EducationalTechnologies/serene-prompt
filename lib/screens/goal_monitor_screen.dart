@@ -19,16 +19,16 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
   List<Goal> _goals = [];
-  Future<List<Goal>> _openGoals;
 
   _finishGoal(BuildContext context, int index, Goal goal) async {
     // await Future.delayed(Duration(milliseconds: 500));
-    _removeItem(index, goal);
+    _removeItem(goal);
   }
 
-  _removeItem(int index, Goal goal) {
+  _removeItem(Goal goal) async {
     final goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    goalMonitoringState.deleteGoal(goal);
+    await goalMonitoringState.deleteGoal(goal);
+    var index = _goals.indexOf(goal);
     Goal removed = _goals.removeAt(index);
     _listKey.currentState.removeItem(
         index,
@@ -56,8 +56,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
               FlatButton(
                 child: Text("Löschen"),
                 onPressed: () async {
-                  await goalMonitoringState.deleteGoal(goal);
-                  Navigator.of(context).pop();
+                  await _removeItem(goal);
                 },
               )
             ],
@@ -78,7 +77,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     );
   }
 
-  updateGoal(BuildContext context, Goal goal) {
+  updateGoal(Goal goal) {
     var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
     goalMonitoringState.updateGoal(goal);
   }
@@ -97,9 +96,9 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         goal.progress = value.toInt();
       },
       onChangeEnd: (double value) {
-        update(context);
+        updateGoal(goal);
         if (value >= 100) {
-          _finishGoal(context, index, goal);
+          _removeItem(goal);
         }
       },
     );
@@ -150,6 +149,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                     Checkbox(
                       onChanged: (value) {
                         goal.progress = value ? 100 : 0;
+                        updateGoal(goal);
                         if (value) {
                           _finishGoal(context, index, goal);
                         }
@@ -186,8 +186,11 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     final goalMonitoringState = Provider.of<GoalMonitoringState>(context);
 
     if (goalMonitoringState.openGoals != null) {
+      _goals = [];
+      goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
+
       return Container(
-        child: buildListView(goalMonitoringState.openGoals),
+        child: buildListView(_goals),
       );
     } else {
       return Center(child: CircularProgressIndicator());

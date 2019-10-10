@@ -38,7 +38,9 @@ class DataService {
   }
 
   deleteGoal(Goal goal) async {
-    await DBProvider.db.deleteGoal(goal);
+    // await DBProvider.db.deleteGoal(goal);
+    // TODO DELETE FROM FIREBASE
+    
   }
 
   getGoalShields() async {
@@ -66,6 +68,10 @@ class DataService {
     for (var s in decoded) {
       _goalShields.add(GoalShield.fromJson(s));
     }
+  }
+
+  updateGoal(Goal goal) async {
+    await FirebaseService().updateGoal(goal);
   }
 
   // TODO: This is currently a very temporary solution

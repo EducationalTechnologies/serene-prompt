@@ -5,11 +5,13 @@ import 'package:serene/services/user_service.dart';
 
 class AppState with ChangeNotifier {
   DataService dataService;
-  // UserService userService;
+  UserService _userService;
+
+  UserService get userService => _userService;
 
   AppState() {
     dataService = DataService();
-    // userService = UserService();
+    _userService = UserService();
     reloadData();
   }
 
