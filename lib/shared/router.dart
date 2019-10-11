@@ -20,6 +20,13 @@ import 'package:serene/state/timer_state.dart';
 import 'package:provider/provider.dart';
 
 class Router {
+  static getRoutes() {
+    return {
+      RouteNames.ADD_GOAL: (context) => ChangeNotifierProvider<GoalState>(
+          builder: (_) => GoalState.fromGoal(null), child: AddGoalScreen())
+    };
+  }
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteNames.MAIN:

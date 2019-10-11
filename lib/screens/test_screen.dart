@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/database_helpers.dart';
 import 'package:serene/services/firebase_service.dart';
+import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/widgets/serene_drawer.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -28,6 +30,7 @@ class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: SereneDrawer(),
       body: Container(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -54,9 +57,9 @@ class _TestScreenState extends State<TestScreen> {
                   await DBProvider.db.clearDatabase();
                 }),
             ListTile(
-                title: Text("Test Open Goals"),
+                title: Text("Test Notifications"),
                 onTap: () async {
-                  DataService().getOpenGoals();
+                  await NotificationService().showNotification();
                 }),
             ListTile(
                 title: Text("Test Firebase"),

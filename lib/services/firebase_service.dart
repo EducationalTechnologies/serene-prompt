@@ -11,6 +11,7 @@ class FirebaseService {
 
   static final String COLLECTION_GOALS = "goals";
   static final String COLLECTION_GOALS_DELETED = "deletedGoals";
+  static final String COLLECTION_USERS = "users";
 
   getGoals() async {
     var goals =
@@ -67,5 +68,15 @@ class FirebaseService {
 
   updateGoal(Goal goal) async {
     // await databaseReference.collection(COLLECTION_GOALS).document(goal.id);
+  }
+
+  saveFcmToken(String uid, String token) async {
+    var tokens = databaseReference
+        .collection(COLLECTION_USERS)
+        .document(uid)
+        .collection('tokens')
+        .document(token);
+
+    await tokens.setData({'token': token});
   }
 }

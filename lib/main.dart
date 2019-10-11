@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/screens/main_screen.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/router.dart';
 import 'package:serene/shared/app_colors.dart';
 import 'package:serene/state/app_state.dart';
@@ -21,8 +22,10 @@ class MyApp extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           ),
           iconTheme: IconThemeData(color: Colors.black)),
-      // onGenerateRoute: Router.generateRoute,
-      home: MainScreen(),
+      onGenerateRoute: Router.generateRoute,
+      // home: MainScreen(),
+      initialRoute: RouteNames.MAIN,
+      // routes: Router.getRoutes(),
     );
   }
 
