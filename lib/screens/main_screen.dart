@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/resource_links_screen.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/state/goal_monitoring_state.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class MainScreen extends StatefulWidget {
@@ -12,18 +14,30 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedPageIndex = 0;
   PageController _controller;
+  static GoalMonitoringState _goalMonitoringState;
 
   @override
   void initState() {
     _controller = new PageController(initialPage: _selectedPageIndex);
+    _goalMonitoringState = GoalMonitoringState();
     super.initState();
   }
 
-  static List<Widget> _widgetOptions = [
-    GoalMonitorScreen(),
-    ResourceLinksScreen(),
-    ResourceLinksScreen()
-  ];
+  buildMonitoringScreen() {
+    return ChangeNotifierProvider<GoalMonitoringState>(
+      builder: (_) => GoalMonitoringState(),
+      child: GoalMonitorScreen(),
+    );
+  }
+
+  // static List<Widget> _widgetOptions = [
+  //   ChangeNotifierProvider<GoalMonitoringState>(
+  //     builder: (_) => _goalMonitoringState,
+  //     child: GoalMonitorScreen(),
+  //   ),
+  //   ResourceLinksScreen(),
+  //   ResourceLinksScreen()
+  // ];
 
   void _onItemTapped(int index) {
     this._controller.animateToPage(index,
@@ -43,6 +57,17 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("Build MAIN Screen");
+
+    // return Scaffold(
+    //     appBar: AppBar(
+    //       title: Text("Serene"),
+    //       centerTitle: true,
+    //       backgroundColor: Colors.transparent,
+    //       elevation: 0.0,
+    //     ),
+    //     drawer: SereneDrawer(),
+    //     body: buildMonitoringScreen());
     return Scaffold(
       appBar: AppBar(
         title: Text("Serene"),
@@ -60,7 +85,11 @@ class _MainScreenState extends State<MainScreen> {
             _selectedPageIndex = newPage;
           });
         },
-        children: _widgetOptions,
+        children: [
+          buildMonitoringScreen(),
+          ResourceLinksScreen(),
+          ResourceLinksScreen()
+        ],
       ),
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(

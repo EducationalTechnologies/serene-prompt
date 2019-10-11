@@ -4,6 +4,7 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/database_helpers.dart';
 import 'package:serene/services/firebase_service.dart';
+import 'package:serene/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataService {
@@ -12,6 +13,10 @@ class DataService {
   List<Goal> _goals;
   List<Goal> _openGoals;
   List<GoalShield> _goalShields;
+
+  DataService._internal() {
+    fetchOpenGoals();
+  }
 
   get goals {
     return _goals;
@@ -27,20 +32,18 @@ class DataService {
 
   getGoals() async {
     _goals = await DBProvider.db.getGoals();
-
     return _goals;
   }
 
-  getOpenGoals() async {
+  Future<List<Goal>> getOpenGoals() async {
     //_openGoals = await DBProvider.db.getOpenGoals();
-    _openGoals = await FirebaseService().getOpenGoals();
+    var userId = UserService().getUsername();
+    _openGoals = await FirebaseService().getOpenGoals(userId);
     return _openGoals;
   }
 
   deleteGoal(Goal goal) async {
-    // await DBProvider.db.deleteGoal(goal);
-    // TODO DELETE FROM FIREBASE
-    
+    await FirebaseService().deleteGoal(goal);
   }
 
   getGoalShields() async {
@@ -72,17 +75,5 @@ class DataService {
 
   updateGoal(Goal goal) async {
     await FirebaseService().updateGoal(goal);
-  }
-
-  // TODO: This is currently a very temporary solution
-  fetchData() async {
-    // fetchGoals();
-    // fetchGoalShields();
-    // getOpenGoals();
-    return _goalShields;
-  }
-
-  DataService._internal() {
-    fetchData();
   }
 }

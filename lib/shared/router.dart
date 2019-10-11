@@ -23,11 +23,8 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteNames.MAIN:
-        return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<GoalMonitoringState>(
-                  builder: (_) => GoalMonitoringState(),
-                  child: MainScreen(),
-                ));
+        return MaterialPageRoute(builder: (_) => MainScreen());
+
       case RouteNames.GOAL_SHIELDING:
         return MaterialPageRoute(
             builder: (_) => MultiProvider(providers: [
@@ -38,15 +35,10 @@ class Router {
                 ], child: GoalShieldingScreen()));
       case RouteNames.ADD_GOAL:
         final GoalScreenArguments goalArgs = settings.arguments;
-        if (goalArgs?.goal != null) {
-          return MaterialPageRoute(
-              builder: (_) => ChangeNotifierProvider<GoalState>(
-                  builder: (_) => GoalState.fromGoal(goalArgs.goal),
-                  child: AddGoalScreen()));
-        }
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<GoalState>(
-                builder: (_) => GoalState(), child: AddGoalScreen()));
+                builder: (_) => GoalState.fromGoal(goalArgs?.goal),
+                child: AddGoalScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT:
         return MaterialPageRoute(

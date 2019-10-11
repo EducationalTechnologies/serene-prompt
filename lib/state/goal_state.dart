@@ -8,15 +8,14 @@ class GoalState with ChangeNotifier {
   bool _isFetching = false;
   Goal _currentGoal;
 
-  GoalState() {
-    final userService = UserService();
-    // userService.getUsername();
-    _currentGoal =
-        new Goal(goalText: "", progress: 0, userId: userService.getUsername());
-  }
-
   GoalState.fromGoal(Goal goal) {
-    this._currentGoal = goal;
+    if (goal == null) {
+      final userService = UserService();
+      var userId = userService.getUsername();
+      _currentGoal = new Goal(goalText: "", progress: 0, userId: userId);
+    } else {
+      this._currentGoal = goal;
+    }
   }
 
   Goal get currentGoal {
@@ -26,10 +25,10 @@ class GoalState with ChangeNotifier {
     return _currentGoal;
   }
 
-  set currentGoal(Goal currentGoal) {
-    _currentGoal = currentGoal;
-    notifyListeners();
-  }
+  // set currentGoal(Goal currentGoal) {
+  //   _currentGoal = currentGoal;
+  //   notifyListeners();
+  // }
 
   clearDeadline() {
     _currentGoal.deadline = null;

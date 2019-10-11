@@ -6,12 +6,7 @@ class UserService {
 
   String userId = "";
 
-  SharedPreferences prefs;
-
-  fetchData() async {
-    prefs = await SharedPreferences.getInstance();
-    userId = prefs.getString("userId");
-  }
+  SharedPreferences _prefs;
 
   saveUsername(String username) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,11 +14,16 @@ class UserService {
     await prefs.setString("userId", username);
   }
 
-  getUsername() {
-    return prefs.getString("userId");
+  String getUsername() {
+    if (_prefs != null) {
+      return _prefs.getString("userId");
+    }
+    return "UserPrefs Not Instantiated!";
   }
 
   UserService._internal() {
-    fetchData();
+    SharedPreferences.getInstance().then((prefs) {
+      _prefs = prefs;
+    });
   }
 }

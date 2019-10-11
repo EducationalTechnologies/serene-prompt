@@ -9,6 +9,8 @@ class Goal {
   String difficulty;
   String userId;
   String documentId;
+  DateTime creationDate;
+  DateTime completionDate;
 
   Goal(
       {this.id,
@@ -18,6 +20,8 @@ class Goal {
       this.documentId = "",
       this.userId = "",
       this.difficulty = GoalDifficulty.medium,
+      this.creationDate,
+      this.completionDate,
       this.progressIndicator = GoalProgressIndicator.checkbox});
 
   Map<String, dynamic> toMap() {
@@ -25,11 +29,13 @@ class Goal {
       "id": this.id,
       "goalText": this.goalText,
       "deadline": this.deadline?.toIso8601String() ?? "",
+      "creationDate": this.creationDate?.toIso8601String() ?? "",
+      "completionDate": this.completionDate?.toIso8601String() ?? "",
       "progress": this.progress,
       "progressIndicator": this.progressIndicator,
       "difficulty": this.difficulty,
       "userId": this.userId,
-      "documentId": this.documentId
+      "documentId": this.documentId,
     };
   }
 }

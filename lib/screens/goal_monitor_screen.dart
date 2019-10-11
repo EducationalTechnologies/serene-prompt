@@ -4,7 +4,6 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/state/goal_monitor_item_state.dart';
 import 'package:serene/state/goal_monitoring_state.dart';
 import 'package:serene/widgets/list_item_progress.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +19,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
 
   List<Goal> _goals = [];
 
-  _finishGoal(BuildContext context, int index, Goal goal) async {
+  _finishGoal(Goal goal) async {
     // await Future.delayed(Duration(milliseconds: 500));
     _removeItem(goal);
   }
@@ -57,6 +56,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                 child: Text("Löschen"),
                 onPressed: () async {
                   await _removeItem(goal);
+                  Navigator.of(context).pop();
                 },
               )
             ],
@@ -98,7 +98,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       onChangeEnd: (double value) {
         updateGoal(goal);
         if (value >= 100) {
-          _removeItem(goal);
+          _finishGoal(goal);
         }
       },
     );
@@ -151,7 +151,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                         goal.progress = value ? 100 : 0;
                         updateGoal(goal);
                         if (value) {
-                          _finishGoal(context, index, goal);
+                          _finishGoal(goal);
                         }
                       },
                       value: goal.progress == 100,
@@ -188,10 +188,11 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     if (goalMonitoringState.openGoals != null) {
       _goals = [];
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
-
+      print("build monitoring");
       return Container(
         child: buildListView(_goals),
       );
+      // return Center(child: CircularProgressIndicator());
     } else {
       return Center(child: CircularProgressIndicator());
     }

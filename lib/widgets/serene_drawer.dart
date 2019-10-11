@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serene/services/data_service.dart';
 import 'package:serene/services/database_helpers.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/text_styles.dart';

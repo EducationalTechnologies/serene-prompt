@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/state/app_state.dart';
 import 'package:serene/state/goal_state.dart';
@@ -59,7 +60,8 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     if (_canSubmit()) {
       await goalState.saveCurrentGoal();
       await appState.reloadGoals();
-      Navigator.pop(context);
+      // Navigator.pop(context);
+      Navigator.pushNamed(context, RouteNames.MAIN);
     } else {}
   }
 
