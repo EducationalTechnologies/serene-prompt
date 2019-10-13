@@ -5,7 +5,6 @@ import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/database_helpers.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/user_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DataService {
   static final DataService _instance = DataService._internal();

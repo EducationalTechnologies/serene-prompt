@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
-import 'package:serene/services/database_helpers.dart';
 
 class GoalMonitoringState with ChangeNotifier {
   bool _isFetching = false;
   List<Goal> _goals;
   List<Goal> _openGoals;
 
-  GoalMonitoringState() {
+  DataService _dataService;
+  // DataService _dataService;
+
+  GoalMonitoringState(this._dataService) {
     // _getOpenGoalsAsync();
-    DataService().getOpenGoals().then((goalList) {
+    _dataService.getOpenGoals().then((goalList) {
       _openGoals = goalList;
       notifyListeners();
     });
   }
 
   List<Goal> get goals {
-    return DataService().goals;
+    return _dataService.goals;
   }
 
   List<Goal> get openGoals {
@@ -29,11 +31,6 @@ class GoalMonitoringState with ChangeNotifier {
     return _goals;
   }
 
-  _getOpenGoalsAsync() async {
-    _openGoals = await DataService().getOpenGoals();
-    notifyListeners();
-  }
-
   Future<bool> update() async {
     await fetchData();
     return true;
@@ -41,20 +38,16 @@ class GoalMonitoringState with ChangeNotifier {
 
   fetchData() async {
     _isFetching = true;
-    await DataService().fetchGoals();
+    await _dataService.fetchGoals();
     _isFetching = false;
   }
 
   deleteGoal(Goal goal) async {
-    DataService().deleteGoal(goal);
-    // await update();
-    // notifyListeners();
+    _dataService.deleteGoal(goal);
   }
 
   updateGoal(Goal goal) async {
-    // await DBProvider.db.updateGoal(goal);
-    DataService().updateGoal(goal);
-    // notifyListeners();
+    _dataService.updateGoal(goal);
   }
 
   bool get isFetching => _isFetching;

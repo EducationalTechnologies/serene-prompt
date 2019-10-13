@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/login_screen.dart';
 import 'package:serene/screens/test_screen.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/state/consent_state.dart';
 import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
@@ -14,17 +16,17 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/state/goal_monitoring_state.dart';
 import 'package:serene/state/goal_shielding_state.dart';
-import 'package:serene/state/goal_state.dart';
+import 'package:serene/state/add_goal_state.dart';
 import 'package:serene/state/login_state.dart';
 import 'package:serene/state/timer_state.dart';
 import 'package:provider/provider.dart';
 
 class Router {
   static getRoutes() {
-    return {
-      RouteNames.ADD_GOAL: (context) => ChangeNotifierProvider<GoalState>(
-          builder: (_) => GoalState.fromGoal(null), child: AddGoalScreen())
-    };
+    // return {
+    //   RouteNames.ADD_GOAL: (context) => ChangeNotifierProvider<GoalState>(
+    //       builder: (_) => AddGoalState(null), child: AddGoalScreen())
+    // };
   }
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -34,17 +36,18 @@ class Router {
 
       case RouteNames.GOAL_SHIELDING:
         return MaterialPageRoute(
-            builder: (_) => MultiProvider(providers: [
-                  ChangeNotifierProvider<GoalShieldingState>.value(
-                      value: GoalShieldingState()),
-                  ChangeNotifierProvider<GoalMonitoringState>.value(
-                      value: GoalMonitoringState()),
-                ], child: GoalShieldingScreen()));
+            builder: (context) =>
+                ChangeNotifierProvider<GoalShieldingState>.value(
+                    value: GoalShieldingState(services.get<DataService>()),
+                    child: GoalShieldingScreen()));
+
       case RouteNames.ADD_GOAL:
         final GoalScreenArguments goalArgs = settings.arguments;
         return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<GoalState>(
-                builder: (_) => GoalState.fromGoal(goalArgs?.goal),
+            builder: (context) => ChangeNotifierProvider<AddGoalState>.value(
+                value: AddGoalState(
+                    goal: goalArgs?.goal,
+                    dataService: services.get<DataService>()),
                 child: AddGoalScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT:
@@ -67,9 +70,9 @@ class Router {
 
       case RouteNames.OPEN_GOALS:
         return MaterialPageRoute(
-            builder: (_) => MultiProvider(providers: [
+            builder: (context) => MultiProvider(providers: [
                   ChangeNotifierProvider<GoalMonitoringState>.value(
-                      value: GoalMonitoringState()),
+                      value: GoalMonitoringState(Provider.of(context))),
                 ], child: GoalMonitorScreen()));
 
       case RouteNames.LOG_IN:

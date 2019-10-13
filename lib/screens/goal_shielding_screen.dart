@@ -26,8 +26,8 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        textTheme: TextTheme(title: TextStyle(color: Colors.black, fontSize: 22)),
-        iconTheme: IconThemeData(color: Colors.teal),
+        textTheme:
+            TextTheme(title: TextStyle(color: Colors.black, fontSize: 22)),
         centerTitle: true,
 
         // Here we take the value from the MyHomePage object that was created by

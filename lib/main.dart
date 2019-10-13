@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:serene/screens/main_screen.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/router.dart';
 import 'package:serene/shared/app_colors.dart';
-import 'package:serene/state/app_state.dart';
-import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setupLocator();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   buildMaterialApp() {
@@ -31,19 +32,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppState>(
-      builder: (_) => AppState(),
-      child: Container(
-          decoration: BoxDecoration(
-            gradient: new LinearGradient(
-              begin: Alignment.topLeft,
-              end: new Alignment(
-                  1.0, 0.0), // 10% of the width, so there are ten blinds.
-              colors: [Colors.orange[50], Colors.orange[50]], // whitish to gray
-              // tileMode: TileMode.repeated, // repeats the gradient over the canvas
-            ),
-          ),
-          child: buildMaterialApp()),
-    );
+    return buildMaterialApp();
   }
 }

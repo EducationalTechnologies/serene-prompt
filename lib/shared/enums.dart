@@ -11,3 +11,8 @@ class GoalDifficulty {
   static const String medium = "medium";
   static const String hard = "hard";
 }
+
+class GoalScreenMode {
+  static const String create = "create";
+  static const String edit = "edit";
+}

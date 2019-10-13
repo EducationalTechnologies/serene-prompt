@@ -30,15 +30,14 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    GoalMonitoringState goalMonitoringState = Provider.of<GoalMonitoringState>(context);
+    GoalShieldingState goalShieldingState =
+        Provider.of<GoalShieldingState>(context);
 
-    return Container(
-        child: FutureBuilder<List<Goal>>(
-      future: goalMonitoringState.getGoalsAsync(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData &&
-            snapshot.connectionState == ConnectionState.done) {
-          return Column(children: <Widget>[
+    if (goalShieldingState.openGoals != null) {
+      print("build SHIELDING LIST");
+      if (goalShieldingState.openGoals.length > 0) {
+        return Container(
+          child: Column(children: <Widget>[
             UIHelper.verticalSpaceMedium(),
             Text("Ziel auswählen"),
             UIHelper.verticalSpaceMedium(),
@@ -46,11 +45,43 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
               child: GoalSelectionList(),
             ),
             // this._showText ? buildNewGoalRow() : buildAddGoalButton()
-          ]);
-        }
-        return Center(child: CircularProgressIndicator());
-      },
-    ));
+          ]),
+        );
+      } else {
+        return Container(
+          child: Center(
+            child: Text(
+              "Du hast derzeit keine offenen Ziele",
+              style: Theme.of(context).textTheme.display1,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+
+      // return Center(child: CircularProgressIndicator());
+    } else {
+      return Center(child: CircularProgressIndicator());
+    }
+    // return Container(
+    //     child: FutureBuilder<List<Goal>>(
+    //   future: goalShieldingState.getGoalsAsync(),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasData &&
+    //         snapshot.connectionState == ConnectionState.done) {
+    //       return Column(children: <Widget>[
+    //         UIHelper.verticalSpaceMedium(),
+    //         Text("Ziel auswählen"),
+    //         UIHelper.verticalSpaceMedium(),
+    //         Expanded(
+    //           child: GoalSelectionList(),
+    //         ),
+    //         // this._showText ? buildNewGoalRow() : buildAddGoalButton()
+    //       ]);
+    //     }
+    //     return Center(child: CircularProgressIndicator());
+    //   },
+    // ));
   }
 }
 
@@ -64,8 +95,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   _onSelected(int index) {
     var goalShieldingState = Provider.of<GoalShieldingState>(context);
-    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    goalShieldingState.selectedGoal = goalMonitoringState.openGoals[index];
+    goalShieldingState.selectedGoal = goalShieldingState.openGoals[index];
     setState(() {
       _selectedIndex = index;
     });
@@ -74,16 +104,14 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   @override
   Widget build(BuildContext context) {
-    GoalMonitoringState goalMonitoringState =
-        Provider.of<GoalMonitoringState>(context);
     GoalShieldingState goalShieldingState =
         Provider.of<GoalShieldingState>(context);
     _selectedIndex =
-        goalMonitoringState.openGoals.indexOf(goalShieldingState.selectedGoal);
+        goalShieldingState.openGoals.indexOf(goalShieldingState.selectedGoal);
     print("Selected Index: $_selectedIndex");
     return Container(
         child: ListView.builder(
-      itemCount: goalMonitoringState.openGoals.length,
+      itemCount: goalShieldingState.openGoals.length,
       itemBuilder: (context, index) {
         return Card(
           child: Container(
@@ -92,7 +120,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
                   ? Colors.orange[200]
                   : Colors.transparent,
               child: ListTile(
-                title: Text(goalMonitoringState.openGoals[index].goalText),
+                title: Text(goalShieldingState.openGoals[index].goalText),
                 onTap: () {
                   _onSelected(index);
                 },

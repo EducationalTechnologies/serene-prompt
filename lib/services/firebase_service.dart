@@ -67,7 +67,10 @@ class FirebaseService {
   }
 
   updateGoal(Goal goal) async {
-    // await databaseReference.collection(COLLECTION_GOALS).document(goal.id);
+    await databaseReference
+        .collection(COLLECTION_GOALS)
+        .document(goal.documentId)
+        .updateData(goal.toMap());
   }
 
   saveFcmToken(String uid, String token) async {

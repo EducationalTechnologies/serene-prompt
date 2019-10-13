@@ -13,8 +13,8 @@ class AppState with ChangeNotifier {
   DataService get dataService => _dataService;
 
   AppState() {
-    _dataService = DataService();
     _userService = UserService();
+    _dataService = DataService();
     _notificationService = NotificationService();
     // reloadData();
   }

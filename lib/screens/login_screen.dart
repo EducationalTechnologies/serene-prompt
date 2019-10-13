@@ -34,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _loginClick(BuildContext context) async {
     final appState = Provider.of<AppState>(context);
-    final loginState = Provider.of<LoginState>(context);
     await appState.userService.saveUsername(_userIdTextController.text);
     // await appState.userService.saveUsername(_userIdTextController.text);
   }
@@ -47,9 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buildControls(BuildContext context) {
-    final appState = Provider.of<AppState>(context);
-    final loginState = Provider.of<AppState>(context);
-
     return Container(
       decoration: new BoxDecoration(
         gradient: new LinearGradient(

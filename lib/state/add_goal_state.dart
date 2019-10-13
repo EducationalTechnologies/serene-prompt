@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
-import 'package:serene/services/database_helpers.dart';
 import 'package:serene/services/user_service.dart';
+import 'package:serene/shared/enums.dart';
 
-class GoalState with ChangeNotifier {
+class AddGoalState with ChangeNotifier {
   bool _isFetching = false;
   Goal _currentGoal;
+  DataService _dataService;
+  String _mode = GoalScreenMode.create;
+  String get mode => _mode;
 
-  GoalState.fromGoal(Goal goal) {
+  AddGoalState({Goal goal, @required DataService dataService}) {
+    _dataService = dataService;
     if (goal == null) {
       final userService = UserService();
       var userId = userService.getUsername();
       _currentGoal = new Goal(goalText: "", progress: 0, userId: userId);
+      _mode = GoalScreenMode.create;
     } else {
       this._currentGoal = goal;
+      _mode = GoalScreenMode.edit;
     }
   }
 
@@ -38,12 +44,17 @@ class GoalState with ChangeNotifier {
   bool get isFetching => _isFetching;
 
   Future saveCurrentGoal() async {
-    await this._saveNewGoal(this._currentGoal);
+    if (this.mode == GoalScreenMode.create) {
+      await this._saveNewGoal(this._currentGoal);
+    } else {
+      await this._dataService.updateGoal(this._currentGoal);
+    }
+
     notifyListeners();
   }
 
   Future _saveNewGoal(Goal goal) async {
-    await DataService().saveGoal(goal);
+    await _dataService.saveGoal(goal);
   }
 
   Future init() async {}

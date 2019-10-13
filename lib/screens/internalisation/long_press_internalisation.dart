@@ -1,7 +1,5 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:serene/shared/text_styles.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/state/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
@@ -210,7 +208,6 @@ class _TextHighlightState extends State<TextHighlight>
     _controller = AnimationController(vsync: this, duration: _duration);
 
     // animation = Tween<double>(begin: -100.0, end: 100.0).animate(_controller);
-    var length = widget.text.split(" ").length;
     var tween = StepTween(begin: 0, end: widget.text.length);
     _animation = tween
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));

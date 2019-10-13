@@ -19,14 +19,21 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
 
   List<Goal> _goals = [];
 
+  _updateGoal(Goal goal) async {
+    await Provider.of<GoalMonitoringState>(context).updateGoal(goal);
+  }
+
   _finishGoal(Goal goal) async {
-    // await Future.delayed(Duration(milliseconds: 500));
+    await Provider.of<GoalMonitoringState>(context).updateGoal(goal);
+    _removeItem(goal);
+  }
+
+  _deleteGoal(Goal goal) async {
+    await Provider.of<GoalMonitoringState>(context).deleteGoal(goal);
     _removeItem(goal);
   }
 
   _removeItem(Goal goal) async {
-    final goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    await goalMonitoringState.deleteGoal(goal);
     var index = _goals.indexOf(goal);
     Goal removed = _goals.removeAt(index);
     _listKey.currentState.removeItem(
@@ -34,11 +41,9 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         (context, animation) =>
             buildAnimatedListItem(context, index, goal, animation),
         duration: const Duration(milliseconds: 350));
-    // update(context);
   }
 
   buildConfirmationDialog(BuildContext context, Goal goal) {
-    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
     showDialog(
         context: context,
         builder: (context) {
@@ -55,7 +60,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
               FlatButton(
                 child: Text("Löschen"),
                 onPressed: () async {
-                  await _removeItem(goal);
+                  _deleteGoal(goal);
                   Navigator.of(context).pop();
                 },
               )
@@ -77,16 +82,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     );
   }
 
-  updateGoal(Goal goal) {
-    var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    goalMonitoringState.updateGoal(goal);
-  }
-
-  update(BuildContext context) {
-    // var goalMonitoringState = Provider.of<GoalMonitoringState>(context);
-    // goalMonitoringState.update();
-  }
-
   buildProgressInput(BuildContext context, int index, Goal goal) {
     return Slider(
       value: goal.progress.toDouble(),
@@ -96,9 +91,10 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         goal.progress = value.toInt();
       },
       onChangeEnd: (double value) {
-        updateGoal(goal);
         if (value >= 100) {
           _finishGoal(goal);
+        } else {
+          _updateGoal(goal);
         }
       },
     );
@@ -149,7 +145,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                     Checkbox(
                       onChanged: (value) {
                         goal.progress = value ? 100 : 0;
-                        updateGoal(goal);
                         if (value) {
                           _finishGoal(goal);
                         }
@@ -189,9 +184,22 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       _goals = [];
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
       print("build monitoring");
-      return Container(
-        child: buildListView(_goals),
-      );
+      if (_goals.length > 0) {
+        return Container(
+          child: buildListView(_goals),
+        );
+      } else {
+        return Container(
+          child: Center(
+            child: Text(
+              "Du hast derzeit keine offenen Ziele",
+              style: Theme.of(context).textTheme.display1,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+
       // return Center(child: CircularProgressIndicator());
     } else {
       return Center(child: CircularProgressIndicator());

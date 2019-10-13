@@ -4,8 +4,6 @@ import 'package:serene/state/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
 class GoalShieldingSelectionScreen extends StatelessWidget {
-  TextStyle _style;
-
   buildObstacleDropdown(BuildContext context) {
     final goalShieldingState = Provider.of<GoalShieldingState>(context);
     return Theme(
@@ -21,7 +19,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
               value: value,
               child: Text(
                 value,
-                style: _style,
+                style: Theme.of(context).textTheme.body1,
               ));
         }).toList(),
       ),
@@ -76,8 +74,6 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final goalShieldingState = Provider.of<GoalShieldingState>(context);
 
-    _style = Theme.of(context).textTheme.body1;
-
     return Container(
       padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Column(
@@ -86,7 +82,8 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
           // Text("Dein Ziel:", style: _style),
           // UIHelper.verticalSpaceMedium(),
           if (goalShieldingState.selectedGoal != null)
-            Text(goalShieldingState.selectedGoal.goalText, style: _style),
+            Text(goalShieldingState.selectedGoal.goalText,
+                style: Theme.of(context).textTheme.body1),
           Text(
             "Was könnte dich vom Erreichen deines Zieles abhalten?",
             textAlign: TextAlign.left,
