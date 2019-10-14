@@ -10,6 +10,13 @@ class NotificationService {
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
+  static const String CHANNEL_ID_ASSESSMENT = "serene assessment";
+  static const String CHANNEL_NAME_ASSESSMENT = "Assessment Erinnerung";
+  static const String CHANNEL_DESCRIPTION_ASSESSMENT = "Erinnerung Fragebogen";
+
+  static const String CHANNEL_ID_DEADLINE = "serene deadline";
+  static const String CHANNEL_NAME_DEADLINE = "Deadline Erinnerung";
+
   NotificationService._internal() {
     localNotifications = FlutterLocalNotificationsPlugin();
 
@@ -64,5 +71,19 @@ class NotificationService {
     await localNotifications.show(
         0, 'plain title', 'plain body', platformChannelSpecifics,
         payload: 'item x');
+  }
+
+  scheduleNotifications() async {
+    var scheduledNotificationDateTime =
+        new DateTime.now().add(new Duration(seconds: 5));
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        CHANNEL_ID_ASSESSMENT,
+        CHANNEL_NAME_ASSESSMENT,
+        'Erinnerung an den Fragebogen');
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    NotificationDetails platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await localNotifications.schedule(0, 'scheduled title', 'scheduled body',
+        scheduledNotificationDateTime, platformChannelSpecifics);
   }
 }

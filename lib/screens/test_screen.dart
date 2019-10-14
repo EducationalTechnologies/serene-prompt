@@ -62,7 +62,7 @@ class _TestScreenState extends State<TestScreen> {
                   await NotificationService().showNotification();
                 }),
             ListTile(
-                title: Text("Test Firebase"),
+                title: Text("Test Firebase Messages"),
                 onTap: () async {
                   FirebaseService().getGoals();
                 }),

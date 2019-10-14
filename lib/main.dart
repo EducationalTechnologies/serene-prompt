@@ -4,6 +4,8 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/router.dart';
 import 'package:serene/shared/app_colors.dart';
 
+// TOOD: Wrap whole app in futurbuilder to perform initialization logic
+// https://stackoverflow.com/questions/50437687/flutter-initialising-variables-on-startup
 void main() {
   setupLocator();
   runApp(MyApp());

@@ -6,6 +6,10 @@ import 'package:serene/widgets/interval_scale.dart';
 import 'package:provider/provider.dart';
 
 class AmbulatoryAssessmentScreen extends StatelessWidget {
+  _submit(BuildContext context) {
+    var assessmentState = Provider.of<AmbulatoryAssessmentState>(context);
+  }
+
   _buildAssessmentListForGoal() {
     return Column(
       children: <Widget>[
@@ -45,7 +49,7 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
     );
   }
 
-  _buildAssessmentListPostTest() {
+  _buildAssessmentListPostTest(BuildContext context) {
     final labels = {
       1: "Nie",
       2: "Selten",
@@ -56,6 +60,7 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
 
     return Column(
       children: <Widget>[
+        UIHelper.verticalSpaceMedium(),
         IntervalScale(
           title:
               "Ich habe mir Mühe gegeben, meinen Plan für den Tag zu verinnerlichen",
@@ -82,6 +87,15 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
           itemCount: 5,
           labels: labels,
         ),
+        UIHelper.verticalSpaceMedium(),
+        RaisedButton(
+          onPressed: () {
+            _submit(context);
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
+          child: Text("Speichern", style: TextStyle(fontSize: 20)),
+        )
       ],
     );
   }
@@ -106,7 +120,7 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
         body: Container(
           child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: _buildAssessmentListPostTest()),
+              child: _buildAssessmentListPostTest(context)),
         ),
       ),
     );
