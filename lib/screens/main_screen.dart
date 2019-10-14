@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
 
   buildMonitoringScreen() {
     return ChangeNotifierProvider<GoalMonitoringState>(
-      builder: (_) => GoalMonitoringState(services.get<DataService>()),
+      builder: (_) => GoalMonitoringState(locator.get<DataService>()),
       child: GoalMonitorScreen(),
     );
   }

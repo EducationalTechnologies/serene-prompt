@@ -22,6 +22,9 @@ class _GoalShieldingInternalisationScreenState
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+        child: LongPressInternalisation());
     return Scaffold(
         bottomNavigationBar: Material(
           child: TabBar(

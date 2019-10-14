@@ -11,6 +11,7 @@ class AppState with ChangeNotifier {
 
   UserService get userService => _userService;
   DataService get dataService => _dataService;
+  NotificationService get notificationService => _notificationService;
 
   AppState() {
     _userService = UserService();

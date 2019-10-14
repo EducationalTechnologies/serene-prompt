@@ -4,11 +4,11 @@ import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/user_service.dart';
 
-GetIt services = GetIt.instance;
+GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  services.registerSingleton<UserService>(UserService());
-  services.registerSingleton<DataService>(DataService());
-  services.registerSingleton<FirebaseService>(FirebaseService());
-  services.registerSingleton<NotificationService>(NotificationService());
+  locator.registerSingleton<UserService>(UserService());
+  locator.registerSingleton<DataService>(DataService());
+  locator.registerSingleton<FirebaseService>(FirebaseService());
+  locator.registerSingleton<NotificationService>(NotificationService());
 }

@@ -64,11 +64,13 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           ListTile(
-            title: Text(
-              "DEBUG STUFF",
-              style: subHeaderStyle,
-            ),
-          ),
+              title: Text(
+                "TEST STUFF",
+                style: subHeaderStyle,
+              ),
+              onTap: () async {
+                Navigator.pushNamed(context, RouteNames.TEST);
+              }),
           Divider(),
           ListTile(
               title: Text("Consent"),
@@ -86,7 +88,7 @@ class SereneDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, RouteNames.TEST);
               }),
           ListTile(
-              title: Text("Clear Goals Database"),
+              title: Text("Pre Learning Assessment"),
               onTap: () async {
                 await DBProvider.db.clearDatabase();
               }),

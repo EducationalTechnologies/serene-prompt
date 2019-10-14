@@ -109,8 +109,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
             break;
           case ListItemMenu.edit:
             Navigator.pushNamed(context, RouteNames.ADD_GOAL,
-                    arguments: GoalScreenArguments(goal))
-                .then((value) {});
+                arguments: GoalScreenArguments(goal));
             break;
         }
       },

@@ -4,14 +4,14 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 
-class AddGoalState with ChangeNotifier {
+class AddGoalViewModel with ChangeNotifier {
   bool _isFetching = false;
   Goal _currentGoal;
   DataService _dataService;
   String _mode = GoalScreenMode.create;
   String get mode => _mode;
 
-  AddGoalState({Goal goal, @required DataService dataService}) {
+  AddGoalViewModel({Goal goal, @required DataService dataService}) {
     _dataService = dataService;
     if (goal == null) {
       final userService = UserService();

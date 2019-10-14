@@ -16,3 +16,9 @@ class GoalScreenMode {
   static const String create = "create";
   static const String edit = "edit";
 }
+
+class AssessmentType {
+  static const String postTest = "postTest";
+  static const String preLearning = "preLearning";
+  static const String postLearning = "postLearning";
+}

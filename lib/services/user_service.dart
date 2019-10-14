@@ -8,6 +8,15 @@ class UserService {
 
   SharedPreferences _prefs;
 
+  Future<bool> initialize() {
+    return SharedPreferences.getInstance().then((prefs) {
+      _prefs = prefs;
+      return true;
+    }).catchError((error) {
+      return false;
+    });
+  }
+
   saveUsername(String username) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print('Saving username $username');

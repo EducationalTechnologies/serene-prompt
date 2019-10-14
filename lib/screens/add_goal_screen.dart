@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/state/add_goal_state.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/state/add_goal_view_model.dart';
 
 class AddGoalScreen extends StatefulWidget {
   @override
@@ -26,7 +26,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     _dateFieldController = new TextEditingController(text: "");
 
     Future.delayed(Duration.zero, () {
-      final appState = Provider.of<AddGoalState>(context);
+      final appState = Provider.of<AddGoalViewModel>(context);
       _textController.text = appState.currentGoal.goalText;
 
       inputModeSelected = [
@@ -53,7 +53,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   _submitGoal() async {
-    final goalState = Provider.of<AddGoalState>(context);
+    final goalState = Provider.of<AddGoalViewModel>(context);
     goalState.currentGoal.goalText = _textController.text.toString();
     if (_canSubmit()) {
       await goalState.saveCurrentGoal();
@@ -62,7 +62,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final appState = Provider.of<AddGoalState>(context);
+    final appState = Provider.of<AddGoalViewModel>(context);
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -75,7 +75,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   Widget buildTextEntry() {
-    final appState = Provider.of<AddGoalState>(context);
+    final appState = Provider.of<AddGoalViewModel>(context);
 
     return Container(
       padding: EdgeInsets.all(10.0),
@@ -98,7 +98,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
 
   buildDateInput() {
     var dateText = "";
-    final addGoalState = Provider.of<AddGoalState>(context);
+    final addGoalState = Provider.of<AddGoalViewModel>(context);
     var date = addGoalState.currentGoal.deadline ?? DateTime.now();
     dateText = addGoalState.currentGoal.deadline != null
         ? DateFormat('dd.MM.yyy').format(date)
@@ -133,7 +133,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   Widget buildDatePicker() {
-    final appState = Provider.of<AddGoalState>(context);
+    final appState = Provider.of<AddGoalViewModel>(context);
 
     var date = appState.currentGoal.deadline ?? DateTime.now();
     var dateText = DateFormat('dd.MM.yyy').format(date);
@@ -235,10 +235,10 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         onPressed: (int index) {
           setState(() {
             if (index == 0) {
-              Provider.of<AddGoalState>(context).currentGoal.progressIndicator =
+              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
                   GoalProgressIndicator.checkbox;
             } else if (index == 1) {
-              Provider.of<AddGoalState>(context).currentGoal.progressIndicator =
+              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
                   GoalProgressIndicator.slider;
             }
 
@@ -316,10 +316,10 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         onPressed: (int index) {
           setState(() {
             if (index == 0) {
-              Provider.of<AddGoalState>(context).currentGoal.progressIndicator =
+              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
                   GoalProgressIndicator.checkbox;
             } else if (index == 1) {
-              Provider.of<AddGoalState>(context).currentGoal.progressIndicator =
+              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
                   GoalProgressIndicator.slider;
             }
 

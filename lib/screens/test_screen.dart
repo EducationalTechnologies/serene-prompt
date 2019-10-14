@@ -3,7 +3,9 @@ import 'package:serene/services/data_service.dart';
 import 'package:serene/services/database_helpers.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/notification_service.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/shared/screen_args.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class TestScreen extends StatefulWidget {
@@ -46,10 +48,14 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.pushNamed(context, RouteNames.TIMER);
                 }),
             ListTile(
-                title: Text("Test Ambulatory Assessment"),
+                title: Text("Ambulatory Assessment Pre Test"),
                 onTap: () async {
-                  Navigator.pushNamed(
-                      context, RouteNames.AMBULATORY_ASSESSMENT);
+                  // Navigator.pushNamed(
+                  //     context, RouteNames.AMBULATORY_ASSESSMENT);
+
+                  Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT,
+                      arguments: AssessmentScreenArguments(
+                          AssessmentType.preLearning));
                 }),
             ListTile(
                 title: Text("Clear Goals Database"),

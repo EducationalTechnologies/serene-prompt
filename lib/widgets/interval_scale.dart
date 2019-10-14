@@ -53,7 +53,7 @@ class _IntervalScaleState extends State<IntervalScale> {
     return Column(children: <Widget>[
       Text(
         widget.title,
-        style: subHeaderStyle,
+        style: Theme.of(context).textTheme.subhead,
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
