@@ -14,13 +14,15 @@ class AmbulatoryAssessmentState with ChangeNotifier {
       AssessmentItemModel(
           "Wie verpflichtet fühlst du dich, dieses Ziel heute zu erreichen?",
           itemCount,
-          null),
+          null,
+          "preLearning1"),
       AssessmentItemModel(
           "Wie schwierig wird es heute, dieses Ziel zu erreichen?",
           itemCount,
-          null),
-      AssessmentItemModel(
-          "Wie sehr freust du dich auf diese Aufgabe?", itemCount, null),
+          null,
+          "preLearning2"),
+      AssessmentItemModel("Wie sehr freust du dich auf diese Aufgabe?",
+          itemCount, null, "preLearning3"),
     ];
     return _preGoal;
   }
@@ -28,13 +30,14 @@ class AmbulatoryAssessmentState with ChangeNotifier {
   getAfterLearningList() {
     List<AssessmentItemModel> _afterLearning = [
       AssessmentItemModel("Warst du heute während des Lernens überfordert?", 2,
-          {1: "Ja", 2: "Nein"}),
+          {1: "Ja", 2: "Nein"}, "postLearning1"),
       AssessmentItemModel(
           "Hast du es dann geschafft, dir zu sagen, dass du es trotzdem schaffen kannst?",
           2,
-          {1: "Ja", 2: "Nein"}),
+          {1: "Ja", 2: "Nein"},
+          "postLearning2"),
       AssessmentItemModel("Wie zufrieden bist du mit dem heutigen Lerntag?", 5,
-          {1: "1: Gar nicht", 2: "", 3: "", 4: "", 5: "Sehr"}),
+          {1: "1: Gar nicht", 2: "", 3: "", 4: "", 5: "Sehr"}, "postLearning3"),
     ];
     return _afterLearning;
   }
@@ -51,17 +54,18 @@ class AmbulatoryAssessmentState with ChangeNotifier {
       AssessmentItemModel(
           "Ich habe mir Mühe gegeben, meinen Plan für den Tag zu verinnerlichen",
           5,
-          labels),
+          labels,
+          "postTest1"),
       AssessmentItemModel(
-          "Ich habe gedacht: 'So ein Plan bringt doch gar nichts!'", 5, labels),
+          "Ich habe gedacht: 'So ein Plan bringt doch gar nichts!'", 5, labels, "postTest2"),
       AssessmentItemModel(
           "Ich habe während des Lernens immer wieder bewusst an meinen Plan gedacht.",
           5,
-          labels),
+          labels, "postTest3"),
       AssessmentItemModel(
           "Der Plan hat mir geholfen, meine Lernziele besser zu erreichen",
           5,
-          labels)
+          labels, "postTest4")
     ];
     return _postTest;
   }

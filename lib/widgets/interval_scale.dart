@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:serene/shared/text_styles.dart';
+
+typedef void IntervalScaleCallback(String val);
 
 class IntervalScale extends StatefulWidget {
   @override
@@ -9,8 +10,16 @@ class IntervalScale extends StatefulWidget {
   final String title;
   final int itemCount;
   final Map<int, String> labels;
+  final String id;
+  final IntervalScaleCallback callback;
 
-  const IntervalScale({Key key, this.title, this.itemCount = 5, this.labels})
+  const IntervalScale(
+      {Key key,
+      this.title,
+      this.itemCount = 5,
+      this.labels,
+      this.id,
+      this.callback})
       : super(key: key);
 }
 
@@ -30,6 +39,7 @@ class _IntervalScaleState extends State<IntervalScale> {
             setState(() {
               _groupValue = val;
             });
+            widget.callback(val.toString());
           },
         ),
         Text(

@@ -64,20 +64,6 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
   _buildAssessmentList(BuildContext context) {
     var assessment =
         Provider.of<AmbulatoryAssessmentState>(context).currentAssessment;
-    // return ListView.builder(
-    //   itemCount: assessment.length,
-    //   itemBuilder: (context, index) {
-    //     return Card(
-    //         child: Padding(
-    //       padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-    //       child: IntervalScale(
-    //         title: assessment[index].title,
-    //         itemCount: assessment[index].itemCount,
-    //         labels: assessment[index].labels,
-    //       ),
-    //     ));
-    //   },
-    // );
     return ListView(
       children: <Widget>[
         for (var index = 0; index < assessment.length; index++)
@@ -88,6 +74,10 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
               title: assessment[index].title,
               itemCount: assessment[index].itemCount,
               labels: assessment[index].labels,
+              id: assessment[index].id,
+              callback: (val) {
+                print("Changed Assessment value to: $val");
+              },
             ),
           )),
         SizedBox(
