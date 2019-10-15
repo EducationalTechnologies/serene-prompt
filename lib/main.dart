@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/services/user_service.dart';
@@ -50,27 +51,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildMaterialApp(RouteNames.MAIN);
-    return FutureBuilder<bool>(
-        future: initialize(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-              return buildWaitingIndicator();
-              break;
-            case ConnectionState.done:
-              if (snapshot.hasData) {
-                if (snapshot.data) {
-                  return buildMaterialApp(RouteNames.MAIN);
-                } else {
-                  return buildMaterialApp(RouteNames.LOG_IN);
+    if (kReleaseMode) {
+      return buildMaterialApp(RouteNames.MAIN);
+    } else {
+      return FutureBuilder<bool>(
+          future: initialize(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+              case ConnectionState.active:
+                return buildWaitingIndicator();
+                break;
+              case ConnectionState.done:
+                if (snapshot.hasData) {
+                  if (snapshot.data) {
+                    return buildMaterialApp(RouteNames.MAIN);
+                  } else {
+                    return buildMaterialApp(RouteNames.LOG_IN);
+                  }
                 }
-              }
-              return buildWaitingIndicator();
-              break;
-          }
-        });
+                return buildWaitingIndicator();
+                break;
+            }
+          });
+    }
   }
 }

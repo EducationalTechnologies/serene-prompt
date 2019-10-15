@@ -44,7 +44,11 @@ dev_dependencies:
   
 flutter_icons:
   android: true
+  ios: true
   image_path: "assets/launcher/Serene_Logo.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/launcher/Serene_Logo.png"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
