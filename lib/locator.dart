@@ -8,7 +8,7 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerSingleton<UserService>(UserService());
-  locator.registerSingleton<DataService>(DataService());
   locator.registerSingleton<FirebaseService>(FirebaseService());
+  locator.registerSingleton<DataService>(DataService());
   locator.registerSingleton<NotificationService>(NotificationService());
 }

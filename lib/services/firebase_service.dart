@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 
 class FirebaseService {
@@ -9,9 +10,10 @@ class FirebaseService {
     databaseReference = Firestore.instance;
   }
 
-  static final String COLLECTION_GOALS = "goals";
-  static final String COLLECTION_GOALS_DELETED = "deletedGoals";
-  static final String COLLECTION_USERS = "users";
+  static const String COLLECTION_GOALS = "goals";
+  static const String COLLECTION_GOALS_DELETED = "deletedGoals";
+  static const String COLLECTION_USERS = "users";
+  static const String COLLECTION_ASSESSMENTS = "assessments";
 
   getGoals() async {
     var goals =
@@ -73,13 +75,19 @@ class FirebaseService {
         .updateData(goal.toMap());
   }
 
-  saveFcmToken(String uid, String token) async {
+  saveFcmToken(String userId, String token) async {
     var tokens = databaseReference
         .collection(COLLECTION_USERS)
-        .document(uid)
+        .document(userId)
         .collection('tokens')
         .document(token);
 
     await tokens.setData({'token': token});
+  }
+
+  saveAssessment(AssessmentModel assessment) async {
+    await databaseReference
+        .collection(COLLECTION_ASSESSMENTS)
+        .add(assessment.toMap());
   }
 }

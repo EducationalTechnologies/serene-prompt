@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serene/services/data_service.dart';
-import 'package:serene/services/database_helpers.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -14,21 +12,6 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  _buildDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
-    return ListTile(
-      title: Row(
-        children: <Widget>[
-          Icon(icon),
-          Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: Text(text),
-          ),
-        ],
-      ),
-      onTap: onTap,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,19 +31,25 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.pushNamed(context, RouteNames.TIMER);
                 }),
             ListTile(
-                title: Text("Ambulatory Assessment Pre Test"),
+                title: Text("Assessment Pre Learning"),
                 onTap: () async {
-                  // Navigator.pushNamed(
-                  //     context, RouteNames.AMBULATORY_ASSESSMENT);
-
                   Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT,
                       arguments: AssessmentScreenArguments(
                           AssessmentType.preLearning));
                 }),
             ListTile(
-                title: Text("Clear Goals Database"),
+                title: Text("Assessment Post Learning"),
                 onTap: () async {
-                  await DBProvider.db.clearDatabase();
+                  Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT,
+                      arguments: AssessmentScreenArguments(
+                          AssessmentType.postLearning));
+                }),
+            ListTile(
+                title: Text("Assessment Post Test"),
+                onTap: () async {
+                  Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT,
+                      arguments:
+                          AssessmentScreenArguments(AssessmentType.postTest));
                 }),
             ListTile(
                 title: Text("Test Notifications"),
@@ -72,6 +61,11 @@ class _TestScreenState extends State<TestScreen> {
                 onTap: () async {
                   FirebaseService().getGoals();
                 }),
+            RaisedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RouteNames.MAIN);
+              },
+            )
           ],
         ),
       ),

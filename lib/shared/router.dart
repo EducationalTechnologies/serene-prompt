@@ -7,7 +7,7 @@ import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/state/add_goal_view_model.dart';
-import 'package:serene/state/ambulatory_assessment_state.dart';
+import 'package:serene/state/ambulatory_assessment_view_model.dart';
 import 'package:serene/state/consent_state.dart';
 import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
@@ -46,19 +46,23 @@ class Router {
       case RouteNames.ADD_GOAL:
         final GoalScreenArguments goalArgs = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider<AddGoalViewModel>.value(
-                value: AddGoalViewModel(
-                    goal: goalArgs?.goal,
-                    dataService: locator.get<DataService>()),
-                child: AddGoalScreen()));
+            builder: (context) =>
+                ChangeNotifierProvider<AddGoalViewModel>.value(
+                    value: AddGoalViewModel(
+                        goal: goalArgs?.goal,
+                        dataService: locator.get<DataService>()),
+                    child: AddGoalScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT:
         final AssessmentScreenArguments assessmentArgs = settings.arguments;
         return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<AmbulatoryAssessmentState>(
-                builder: (_) =>
-                    AmbulatoryAssessmentState(assessmentArgs.assessmentType),
-                child: AmbulatoryAssessmentScreen()));
+            builder: (_) =>
+                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
+                    builder: (_) => AmbulatoryAssessmentViewModel(
+                        assessmentArgs.assessmentType,
+                        locator.get<UserService>(),
+                        locator.get<DataService>()),
+                    child: AmbulatoryAssessmentScreen()));
 
       case RouteNames.CONSENT:
         return MaterialPageRoute(

@@ -1,69 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/state/ambulatory_assessment_state.dart';
+import 'package:serene/shared/route_names.dart';
+import 'package:serene/state/ambulatory_assessment_view_model.dart';
 import 'package:serene/widgets/interval_scale.dart';
 import 'package:provider/provider.dart';
 
 class AmbulatoryAssessmentScreen extends StatelessWidget {
-  _submit(BuildContext context) {
-    var assessmentState = Provider.of<AmbulatoryAssessmentState>(context);
-  }
-
-  _buildAssessmentListPostTest(BuildContext context) {
-    final labels = {
-      1: "Nie",
-      2: "Selten",
-      3: "Gelegentlich",
-      4: "Oft",
-      5: "Sehr oft"
-    };
-
-    return Column(
-      children: <Widget>[
-        UIHelper.verticalSpaceMedium(),
-        IntervalScale(
-          title:
-              "Ich habe mir Mühe gegeben, meinen Plan für den Tag zu verinnerlichen",
-          itemCount: 5,
-          labels: labels,
-        ),
-        UIHelper.verticalSpaceMedium(),
-        IntervalScale(
-          title: "Ich habe gedacht: 'So ein Plan bringt doch gar nichts!'",
-          itemCount: 5,
-          labels: labels,
-        ),
-        UIHelper.verticalSpaceMedium(),
-        IntervalScale(
-          title:
-              "Ich habe während des Lernens immer wieder bewusst an meinen Plan gedacht",
-          itemCount: 5,
-          labels: labels,
-        ),
-        UIHelper.verticalSpaceMedium(),
-        IntervalScale(
-          title:
-              "Der Plan hat mir geholfen, meine Lernziele besser zu erreichen",
-          itemCount: 5,
-          labels: labels,
-        ),
-        UIHelper.verticalSpaceMedium(),
-        RaisedButton(
-          onPressed: () {
-            _submit(context);
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10.0)),
-          child: Text("Speichern", style: TextStyle(fontSize: 20)),
-        )
-      ],
-    );
+  _submit(BuildContext context) async {
+    await Provider.of<AmbulatoryAssessmentViewModel>(context).submit();
+    Navigator.pushNamed(context, RouteNames.MAIN);
   }
 
   _buildAssessmentList(BuildContext context) {
-    var assessment =
-        Provider.of<AmbulatoryAssessmentState>(context).currentAssessment;
+    var vm = Provider.of<AmbulatoryAssessmentViewModel>(context);
+    var assessment = vm.currentAssessment;
+    var canSubmit = vm.canSubmit();
     return ListView(
       children: <Widget>[
         for (var index = 0; index < assessment.length; index++)
@@ -77,6 +28,7 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
               id: assessment[index].id,
               callback: (val) {
                 print("Changed Assessment value to: $val");
+                vm.setResult(assessment[index].id, val);
               },
             ),
           )),
@@ -84,9 +36,7 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
             width: double.infinity,
             height: 60,
             child: RaisedButton(
-              onPressed: () {
-                _submit(context);
-              },
+              onPressed: canSubmit ? () async => _submit(context) : null,
               shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(10.0)),
               child: Text("Speichern", style: TextStyle(fontSize: 20)),
@@ -99,16 +49,8 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Fragen zur Zielsetzung'),
-        actions: <Widget>[
-          FlatButton.icon(
-              textColor: Colors.white,
-              icon: const Icon(Icons.save),
-              label: Text("Speichern"),
-              onPressed: () async {
-                Navigator.pop(context);
-              }),
-        ],
       ),
       body: Container(
         child: Padding(

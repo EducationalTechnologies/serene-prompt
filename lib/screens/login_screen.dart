@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/state/app_state.dart';
 import 'package:serene/state/login_state.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,14 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
     _userIdTextController = TextEditingController();
 
     Future.delayed(Duration.zero).then((val) {
-    _userIdTextController.text = Provider.of<LoginState>(context).userId ?? "";
+      _userIdTextController.text =
+          Provider.of<LoginState>(context).userId ?? "";
     });
   }
 
   _loginClick(BuildContext context) async {
-    final loginState = Provider.of<LoginState>(context);
-    await loginState.saveUsername(_userIdTextController.text);
-    // await appState.userService.saveUsername(_userIdTextController.text);
+    await Provider.of<LoginState>(context)
+        .saveUsername(_userIdTextController.text);
   }
 
   @override
@@ -77,8 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buildControls(BuildContext context) {
-
-
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -142,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _userIdTextController,
                     textAlign: TextAlign.center,
                     onChanged: (text) {
-                      // Provider.of<LoginState>(context).userId = 
+                      // Provider.of<LoginState>(context).userId =
                     },
                     validator: (String arg) {
                       if (arg.length < 3) {

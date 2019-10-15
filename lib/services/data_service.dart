@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/database_helpers.dart';
@@ -74,5 +75,9 @@ class DataService {
 
   updateGoal(Goal goal) async {
     await FirebaseService().updateGoal(goal);
+  }
+
+  saveAssessment(AssessmentModel assessment) async {
+    await FirebaseService().saveAssessment(assessment);
   }
 }

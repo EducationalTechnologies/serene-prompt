@@ -1,12 +1,19 @@
 import 'package:flutter/widgets.dart';
+import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_item.dart';
+import 'package:serene/services/data_service.dart';
+import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 
-class AmbulatoryAssessmentState with ChangeNotifier {
+class AmbulatoryAssessmentViewModel with ChangeNotifier {
   String _type;
 
+  UserService _userService;
+  DataService _dataService;
   List<AssessmentItemModel> _currentAssessment;
   get currentAssessment => _currentAssessment;
+
+  Map<String, String> results;
 
   getPreLearningList() {
     var itemCount = 5;
@@ -57,20 +64,26 @@ class AmbulatoryAssessmentState with ChangeNotifier {
           labels,
           "postTest1"),
       AssessmentItemModel(
-          "Ich habe gedacht: 'So ein Plan bringt doch gar nichts!'", 5, labels, "postTest2"),
+          "Ich habe gedacht: 'So ein Plan bringt doch gar nichts!'",
+          5,
+          labels,
+          "postTest2"),
       AssessmentItemModel(
           "Ich habe während des Lernens immer wieder bewusst an meinen Plan gedacht.",
           5,
-          labels, "postTest3"),
+          labels,
+          "postTest3"),
       AssessmentItemModel(
           "Der Plan hat mir geholfen, meine Lernziele besser zu erreichen",
           5,
-          labels, "postTest4")
+          labels,
+          "postTest4")
     ];
     return _postTest;
   }
 
-  AmbulatoryAssessmentState(this._type) {
+  AmbulatoryAssessmentViewModel(
+      this._type, this._userService, this._dataService) {
     if (this._type == AssessmentType.preLearning) {
       this._currentAssessment = getPreLearningList();
     } else if (this._type == AssessmentType.postLearning) {
@@ -78,5 +91,27 @@ class AmbulatoryAssessmentState with ChangeNotifier {
     } else if (this._type == AssessmentType.postTest) {
       this._currentAssessment = getPostTest();
     }
+
+    results = {};
+  }
+
+  setResult(String id, String value) {
+    results[id] = value;
+    notifyListeners();
+  }
+
+  canSubmit() {
+    bool canSubmit = true;
+    for (var assessmentItem in currentAssessment) {
+      if (!results.containsKey(assessmentItem.id)) canSubmit = false;
+    }
+    return canSubmit;
+  }
+
+  submit() async {
+    var assessmentModel = AssessmentModel(
+        _userService.getUsername(), results, _type, DateTime.now());
+
+    await this._dataService.saveAssessment(assessmentModel);
   }
 }

@@ -137,7 +137,7 @@ class _TimerScreenState extends State<TimerScreen>
 }
 
 class TimerPainter extends CustomPainter {
-  final STROKE_WIDTH = 10.0;
+  static const STROKE_WIDTH = 10.0;
 
   TimerPainter({
     this.animation,

@@ -15,8 +15,6 @@ final String columnHindrance = 'hindrance';
 const String TABLE_GOALS = "goals";
 const int DB_VERSION = 1;
 
-//TODO: Continue here https://pusher.com/tutorials/local-data-flutter
-
 class DBProvider {
   DBProvider._();
   static final DBProvider db = DBProvider._();

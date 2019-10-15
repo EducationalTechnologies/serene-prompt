@@ -15,8 +15,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   Future<bool> initialize() {
-    // services
-    bool initialized = false;
     return Future.delayed(Duration(seconds: 2)).then((val) async {
       await locator.get<UserService>().initialize();
       bool userInitialized =
@@ -73,6 +71,8 @@ class MyApp extends StatelessWidget {
                 }
                 return buildWaitingIndicator();
                 break;
+              default:
+                return buildWaitingIndicator();
             }
           });
     }
