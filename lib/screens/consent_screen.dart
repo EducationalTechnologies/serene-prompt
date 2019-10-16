@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/state/consent_state.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
@@ -151,9 +152,11 @@ class ConsentScreen extends StatelessWidget {
     );
   }
 
-  buildSubmitButton() {
+  buildSubmitButton(BuildContext context) {
     return RaisedButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, RouteNames.LOG_IN);
+      },
       child: Text("Abschicken"),
     );
   }
@@ -197,7 +200,7 @@ class ConsentScreen extends StatelessWidget {
                 ),
               ],
             ),
-            buildSubmitButton()
+            buildSubmitButton(context)
           ],
         )),
       ),
