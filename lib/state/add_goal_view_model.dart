@@ -57,5 +57,9 @@ class AddGoalViewModel with ChangeNotifier {
     await _dataService.saveGoal(goal);
   }
 
+  canSubmit() {
+    return _currentGoal.goalText.length > 3;
+  }
+
   Future init() async {}
 }

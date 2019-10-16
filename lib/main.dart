@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
 
   buildMaterialApp(String initialRoute) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Serene',
       theme: ThemeData(
           canvasColor: AppColors.backgroundColor,
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kReleaseMode) {
+    if (kDebugMode) {
       return buildMaterialApp(RouteNames.MAIN);
     } else {
       return FutureBuilder<bool>(

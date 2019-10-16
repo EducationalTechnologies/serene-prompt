@@ -51,7 +51,14 @@ class FirebaseService {
   }
 
   addGoal(Goal goal) async {
-    await databaseReference.collection(COLLECTION_GOALS).add(goal.toMap());
+    await databaseReference
+        .collection(COLLECTION_GOALS)
+        .add(goal.toMap())
+        .then((val) {
+      return true;
+    }).catchError((error) {
+      print("Error trying to submit a new goal: $error");
+    });
   }
 
   deleteGoal(Goal goal) async {

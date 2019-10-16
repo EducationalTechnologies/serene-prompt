@@ -37,13 +37,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     });
   }
 
-  _canSubmit() {
-    if (_textController.text != "") {
-      return true;
-    }
-    return false;
-  }
-
   buildSubHeader(String title) {
     return Align(
       alignment: Alignment.centerLeft,
@@ -53,10 +46,10 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   _submitGoal() async {
-    final goalState = Provider.of<AddGoalViewModel>(context);
-    goalState.currentGoal.goalText = _textController.text.toString();
-    if (_canSubmit()) {
-      await goalState.saveCurrentGoal();
+    final vm = Provider.of<AddGoalViewModel>(context);
+    vm.currentGoal.goalText = _textController.text.toString();
+    if (vm.canSubmit()) {
+      await vm.saveCurrentGoal();
       Navigator.pushNamed(context, RouteNames.MAIN);
     } else {}
   }
@@ -80,7 +73,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     return Container(
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-          color: Colors.grey[100], borderRadius: BorderRadius.circular(5)),
+          color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
       child: TextField(
         controller: _textController,
         decoration: InputDecoration(labelText: "Gib dein Lernziel ein"),
@@ -175,7 +168,9 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                     height: 50,
                     padding: EdgeInsets.all(15.0),
                     alignment: Alignment.center,
-                    color: Color(0x11000000),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(10)),
                     child: TextField(
                       decoration:
                           InputDecoration(labelText: "Deadline hinzufügen"),
@@ -235,11 +230,13 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         onPressed: (int index) {
           setState(() {
             if (index == 0) {
-              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
-                  GoalProgressIndicator.checkbox;
+              Provider.of<AddGoalViewModel>(context)
+                  .currentGoal
+                  .progressIndicator = GoalProgressIndicator.checkbox;
             } else if (index == 1) {
-              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
-                  GoalProgressIndicator.slider;
+              Provider.of<AddGoalViewModel>(context)
+                  .currentGoal
+                  .progressIndicator = GoalProgressIndicator.slider;
             }
 
             for (int buttonIndex = 0;
@@ -316,11 +313,13 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         onPressed: (int index) {
           setState(() {
             if (index == 0) {
-              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
-                  GoalProgressIndicator.checkbox;
+              Provider.of<AddGoalViewModel>(context)
+                  .currentGoal
+                  .progressIndicator = GoalProgressIndicator.checkbox;
             } else if (index == 1) {
-              Provider.of<AddGoalViewModel>(context).currentGoal.progressIndicator =
-                  GoalProgressIndicator.slider;
+              Provider.of<AddGoalViewModel>(context)
+                  .currentGoal
+                  .progressIndicator = GoalProgressIndicator.slider;
             }
 
             for (int buttonIndex = 0;
@@ -352,9 +351,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               // textColor: Colors.white,
               icon: const Icon(Icons.save),
               label: Text("Speichern"),
-              onPressed: () async {
-                _submitGoal();
-              }),
+              onPressed: () async => _submitGoal())
         ],
       ),
       body: Container(
@@ -382,9 +379,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                   width: double.infinity,
                   height: 60,
                   child: RaisedButton(
-                    onPressed: () {
-                      _submitGoal();
-                    },
+                    onPressed: () => _submitGoal(),
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(10.0)),
                     child: Text("Speichern", style: TextStyle(fontSize: 20)),
