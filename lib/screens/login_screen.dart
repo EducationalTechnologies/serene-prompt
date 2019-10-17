@@ -25,21 +25,34 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _userIdTextController;
+  TextEditingController _passwordTextController;
 
   @override
   void initState() {
     super.initState();
     _userIdTextController = TextEditingController();
+    _passwordTextController = TextEditingController();
 
     Future.delayed(Duration.zero).then((val) {
       _userIdTextController.text =
-          Provider.of<LoginViewModel>(context).userId ?? "";
+          Provider.of<LoginViewModel>(context).userEmail ?? "";
     });
   }
 
   _loginClick(BuildContext context) async {
-    await Provider.of<LoginViewModel>(context)
-        .saveUsername(_userIdTextController.text);
+    var signedIn = await Provider.of<LoginViewModel>(context)
+        .signIn(_userIdTextController.text, _passwordTextController.text);
+    if (signedIn) {
+      Navigator.pushNamed(context, RouteNames.MAIN);
+    }
+  }
+
+  _registerClick(BuildContext context) async {
+    var registered = await Provider.of<LoginViewModel>(context)
+        .register(_userIdTextController.text, _passwordTextController.text);
+    if (registered) {
+      Navigator.pushNamed(context, RouteNames.MAIN);
+    }
   }
 
   @override
@@ -57,19 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.transparent,
         foregroundColor: this.widget.foregroundColor,
         radius: 100.0,
-        child: new Text(
-          "S",
-          style: TextStyle(
-            fontSize: 50.0,
-            fontWeight: FontWeight.w100,
-          ),
-        ),
+        backgroundImage: AssetImage('assets/icons/icon_256.png'),
       ),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: this.widget.foregroundColor,
-          width: 1.0,
-        ),
         shape: BoxShape.circle,
         //image: DecorationImage(image: this.logo)
       ),
@@ -153,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           new Expanded(
             child: TextFormField(
+              controller: _passwordTextController,
               obscureText: true,
               maxLines: 1,
               textAlign: TextAlign.center,
@@ -173,8 +177,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return new RaisedButton(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       onPressed: () async {
-        await _loginClick(context);
-        Navigator.pushNamed(context, RouteNames.MAIN);
+        if (vm.userEmail.isEmpty) {
+          await _registerClick(context);
+        } else {
+          await _loginClick(context);
+        }
       },
       child: vm.state == ViewState.idle
           ? Text(

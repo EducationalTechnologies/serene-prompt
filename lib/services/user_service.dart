@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:serene/services/firebase_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +19,7 @@ class UserService {
     });
   }
 
-  isNameAvailable(String userId) async {
+  Future<bool> isNameAvailable(String userId) async {
     return await FirebaseService().isNameAvailable(userId);
   }
 
@@ -31,9 +29,27 @@ class UserService {
     await prefs.setString("userId", username);
   }
 
-  saveRandomUsername() async {
+  saveUserEmail(String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('Saving email $email');
+    await prefs.setString("email", email);
+  }
+
+  registerUser(String email, String password) async {
+    var userData = await FirebaseService().registerUser(email, password);
+    await saveUsername(userData.userId);
+    await saveUserEmail(userData.email);
+  }
+
+  signInUser(String email, String password) async {
+    var userData = await FirebaseService().signInUser(email, password);
+    return userData;
+  }
+
+  saveRandomUser() async {
     var uid = _getRandomUsername();
     await saveUsername("$uid@edutec.guru");
+    await saveUserEmail("$uid@edutec.guru");
   }
 
   _getRandomUsername() {
@@ -47,10 +63,11 @@ class UserService {
   }
 
   String getUsername() {
-    if (_prefs != null) {
-      return _prefs.getString("userId");
-    }
-    return "UserPrefs Not Instantiated!";
+    return _prefs.getString("userId");
+  }
+
+  String getUserEmail() {
+    return _prefs.getString("email");
   }
 
   UserService._internal() {

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
+import 'package:serene/models/user_data.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -60,9 +61,27 @@ class FirebaseService {
     return mappedGoals;
   }
 
-  isNameAvailable(String userId) async {
-    var availableMethods = await _firebaseAuth.fetchSignInMethodsForEmail(email: userId);
-    return true;
+  Future<bool> isNameAvailable(String userId) async {
+    try {
+      var availableMethods =
+          await _firebaseAuth.fetchSignInMethodsForEmail(email: userId);
+      return availableMethods.length == 0;
+    } catch (e) {
+      print("Error trying to get the email availabiltiyeeee: $e");
+      return false;
+    }
+  }
+
+  Future<UserData> registerUser(String userId, String password) async {
+    var result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: userId, password: password);
+    return UserData(userId: result.user.uid, email: result.user.email);
+  }
+
+  Future<UserData> signInUser(String userId, String password) async {
+    var result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: userId, password: password);
+    return UserData(userId: result.user.uid, email: result.user.email);
   }
 
   addGoal(Goal goal) async {

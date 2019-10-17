@@ -102,9 +102,9 @@ class _MainScreenState extends State<MainScreen> {
                 title: Text("Ziele"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.terrain), title: Text("Timer")),
+                  icon: Icon(Icons.timer), title: Text("Timer")),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.wallpaper), title: Text("Resourcen")),
+                  icon: Icon(Icons.bookmark), title: Text("Resourcen")),
               BottomNavigationBarItem(
                   icon: Icon(Icons.expand_less), title: Text(""))
             ],

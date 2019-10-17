@@ -80,10 +80,12 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
           // UIHelper.verticalSpaceMedium(),
           if (goalShieldingState.selectedGoal != null)
             Text(goalShieldingState.selectedGoal.goalText,
-                style: Theme.of(context).textTheme.body1),
+                style: Theme.of(context).textTheme.headline),
+          UIHelper.verticalSpaceSmall(),
           Text(
             "Was könnte dich vom Erreichen deines Zieles abhalten?",
             textAlign: TextAlign.left,
+            style: Theme.of(context).textTheme.subhead
           ),
           UIHelper.verticalSpaceSmall(),
           // buildObstacleDropdown(context),
