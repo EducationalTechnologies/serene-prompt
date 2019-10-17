@@ -10,6 +10,14 @@ class GoalShieldingScreen extends StatefulWidget {
 }
 
 class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
+  int _index;
+
+  @override
+  void initState() {
+    super.initState();
+    _index = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> _goalShieldingPages = [
@@ -48,23 +56,46 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
             ),
           ),
           Container(
-            color: Colors.lightBlue[50],
+            // color: Colors.lightBlue[50],
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                FlatButton(
-                  child: Text("Prev"),
-                  onPressed: () {
-                    _controller.previousPage(
-                        duration: _kDuration, curve: _kCurve);
-                  },
+                Visibility(
+                  visible: _index > 0,
+                  child: FlatButton(
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.navigate_before),
+                        Text("Zurück"),
+                      ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _index--;
+                      });
+                      _controller.previousPage(
+                          duration: _kDuration, curve: _kCurve);
+                    },
+                  ),
                 ),
-                FlatButton(
-                  child: Text("Next"),
-                  onPressed: () {
-                    _controller.nextPage(duration: _kDuration, curve: _kCurve);
-                  },
+                Visibility(
+                  visible: _index <= _goalShieldingPages.length,
+                  child: FlatButton(
+                    child: Row(
+                      children: <Widget>[
+                        Text("Weiter"),
+                        Icon(Icons.navigate_next)
+                      ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _index++;
+                      });
+                      _controller.nextPage(
+                          duration: _kDuration, curve: _kCurve);
+                    },
+                  ),
                 ),
               ],
             ),
