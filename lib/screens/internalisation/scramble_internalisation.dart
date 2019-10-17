@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:serene/state/goal_shielding_state.dart';
+import 'package:serene/viewmodels/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
 class ScrambleText {

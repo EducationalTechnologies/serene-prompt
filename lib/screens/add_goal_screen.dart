@@ -4,7 +4,7 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/state/add_goal_view_model.dart';
+import 'package:serene/viewmodels/add_goal_view_model.dart';
 
 class AddGoalScreen extends StatefulWidget {
   @override
@@ -71,12 +71,12 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     final appState = Provider.of<AddGoalViewModel>(context);
 
     return Container(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
       decoration: BoxDecoration(
           color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
       child: TextField(
         controller: _textController,
-        decoration: InputDecoration(labelText: "Gib dein Lernziel ein"),
+        decoration: InputDecoration(labelText: "Gib dein Lernziel ein", alignLabelWithHint: true),
         keyboardType: TextInputType.text,
         maxLines: null,
         textInputAction: TextInputAction.done,
@@ -144,29 +144,10 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
             child: Stack(
               children: <Widget>[
                 if (hasDate) buildDateInput(),
-                // Container(
-                //     padding: EdgeInsets.all(15.0),
-                //     alignment: Alignment.centerLeft,
-                //     decoration: BoxDecoration(
-                //         color: Colors.grey[100],
-                //         borderRadius: BorderRadius.circular(5)),
-                //     child: Row(
-                //       children: [
-                //         Icon(Icons.calendar_today, color: Colors.black),
-                //         UIHelper.horizontalSpaceSmall(),
-                //         Text(
-                //           "$dateText",
-                //           style: pickerStyle,
-                //         ),
-                //         UIHelper.horizontalSpaceMedium(),
-                //       ],
-                //       mainAxisAlignment: MainAxisAlignment.start,
-                //     ),
-                //     ),
                 if (!hasDate)
                   Container(
                     height: 50,
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(10.0),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.grey[100],
@@ -193,25 +174,25 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
           Column(
             children: <Widget>[
               SizedBox(
-                height: 5,
+                height: 3,
               ),
               Icon(Icons.check_box),
               SizedBox(
-                height: 5,
+                height: 4,
               ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.5 - 12,
                   alignment: Alignment.center,
                   child: Text("Checkbox")),
               SizedBox(
-                height: 5,
+                height: 3,
               ),
             ],
           ),
           Column(
             children: <Widget>[
               SizedBox(
-                height: 5,
+                height: 3,
               ),
               Icon(Icons.settings_ethernet),
               SizedBox(
@@ -222,7 +203,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                   alignment: Alignment.center,
                   child: Text("Slider")),
               SizedBox(
-                height: 5,
+                height: 3,
               ),
             ],
           ),
@@ -347,10 +328,10 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         actions: <Widget>[
-          FlatButton.icon(
+          FlatButton(
               // textColor: Colors.white,
-              icon: const Icon(Icons.save),
-              label: Text("Speichern"),
+              // icon: const Icon(Icons.save),
+              child: Text("Speichern"),
               onPressed: () async => _submitGoal())
         ],
       ),

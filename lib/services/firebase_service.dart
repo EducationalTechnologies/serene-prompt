@@ -8,6 +8,14 @@ class FirebaseService {
   Firestore databaseReference;
   FirebaseService._internal() {
     databaseReference = Firestore.instance;
+
+    Firestore.instance
+        .settings(
+      persistenceEnabled: true,
+    )
+        .then((val) {
+      print("Set Firebase Instance Settings");
+    });
   }
 
   static const String COLLECTION_GOALS = "goals";

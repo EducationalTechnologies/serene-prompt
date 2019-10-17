@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/state/goal_monitoring_state.dart';
-import 'package:serene/state/goal_shielding_state.dart';
+import 'package:serene/viewmodels/goal_monitoring_state.dart';
+import 'package:serene/viewmodels/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
 class GoalSelectionScreen extends StatefulWidget {

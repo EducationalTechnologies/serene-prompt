@@ -29,25 +29,17 @@ class SereneDrawer extends StatelessWidget {
           //   child: Text("Serene"),
           //   decoration: BoxDecoration(color: Theme.of(context).primaryColor),
           // ),
-          // Container(
-          //   height: 140,
-          //   decoration: BoxDecoration(
-          //       image: DecorationImage(
-          //           image: AssetImage('.assets/icons/icon_256.png'),
-          //           fit: BoxFit.cover)),
-          // ),
+
           ListTile(
             title: Container(
               padding: EdgeInsets.only(top: 20, bottom: 10.0),
-              child: Row(
-                children: <Widget>[
-                  // Icon(Icons.schedule),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Text("Serene"),
-                  ),
-                ],
-              ),
+              child: Container(
+                  height: 140,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/icons/icon_256.png'),
+                          fit: BoxFit.cover)),
+                  child: Text("Serene")),
             ),
           ),
           Divider(),

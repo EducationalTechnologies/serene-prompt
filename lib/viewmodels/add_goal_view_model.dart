@@ -49,7 +49,6 @@ class AddGoalViewModel with ChangeNotifier {
     } else {
       await this._dataService.updateGoal(this._currentGoal);
     }
-
     notifyListeners();
   }
 

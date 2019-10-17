@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/state/login_state.dart';
+import 'package:serene/viewmodels/login_state.dart';
 
 class LoginScreen extends StatefulWidget {
   final Color backgroundColor1;

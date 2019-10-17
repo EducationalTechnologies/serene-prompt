@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
-import 'package:serene/state/goal_monitor_item_state.dart';
-import 'package:serene/state/goal_monitoring_state.dart';
+import 'package:serene/viewmodels/goal_monitor_item_state.dart';
+import 'package:serene/viewmodels/goal_monitoring_state.dart';
 
 enum ListItemMenu { delete, edit }
 

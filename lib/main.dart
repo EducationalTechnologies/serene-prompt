@@ -30,9 +30,10 @@ class MyApp extends StatelessWidget {
   buildMaterialApp(String initialRoute) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      // debugShowMaterialGrid: true,
       title: 'Serene',
       theme: ThemeData(
-          canvasColor: AppColors.backgroundColor,
+          canvasColor: Colors.white,
           primarySwatch: Colors.orange,
           accentColor: Color(0xfff96d15),
           buttonColor: Colors.orange[300],

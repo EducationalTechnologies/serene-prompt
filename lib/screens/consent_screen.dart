@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/state/consent_state.dart';
+import 'package:serene/viewmodels/consent_state.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
 

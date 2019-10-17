@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/state/goal_monitor_item_state.dart';
+import 'package:serene/viewmodels/goal_monitor_item_state.dart';
 
 enum ListItemMenu { delete, edit }
 

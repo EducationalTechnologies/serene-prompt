@@ -4,7 +4,7 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/state/goal_monitoring_state.dart';
+import 'package:serene/viewmodels/goal_monitoring_state.dart';
 import 'package:serene/widgets/list_item_progress.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -189,11 +189,20 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         );
       } else {
         return Container(
-          child: Center(
-            child: Text(
-              "Du hast derzeit keine offenen Ziele",
-              style: Theme.of(context).textTheme.display1,
-              textAlign: TextAlign.center,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/illustrations/undraw_plans_y8ru.png"),
+            fit: BoxFit.scaleDown,
+          )),
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 50),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                "Du hast derzeit keine offenen Ziele",
+                style: Theme.of(context).textTheme.display1,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         );
