@@ -73,9 +73,9 @@ class _MainScreenState extends State<MainScreen> {
         },
         children: [
           buildMonitoringScreen(),
+          TimerScreen(),
           ResourceLinksScreen(),
           ResourceLinksScreen(),
-          TimerScreen()
         ],
       ),
       // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
@@ -103,7 +103,7 @@ class _MainScreenState extends State<MainScreen> {
                 title: Text("Ziele"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.terrain), title: Text("Statistiken")),
+                  icon: Icon(Icons.terrain), title: Text("Timer")),
               BottomNavigationBarItem(
                   icon: Icon(Icons.wallpaper), title: Text("Resourcen")),
               BottomNavigationBarItem(

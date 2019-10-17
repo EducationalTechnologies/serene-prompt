@@ -67,13 +67,19 @@ class _TimerScreenState extends State<TimerScreen>
                                   "Timer",
                                   style: themeData.textTheme.subhead,
                                 ),
-                                AnimatedBuilder(
-                                    animation: controller,
-                                    builder:
-                                        (BuildContext context, Widget child) {
-                                      return Text(timerString,
-                                          style: themeData.textTheme.display4);
-                                    }),
+                                InkWell(
+                                  onTap: () {
+                                    print("Tappy Tap the timer thing");
+                                  },
+                                  child: AnimatedBuilder(
+                                      animation: controller,
+                                      builder:
+                                          (BuildContext context, Widget child) {
+                                        return Text(timerString,
+                                            style:
+                                                themeData.textTheme.display4);
+                                      }),
+                                ),
                                 InkWell(
                                   onTap: () {
                                     setState(() {
