@@ -3,8 +3,9 @@ import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/viewmodels/base_view_model.dart';
 
-class AddGoalViewModel with ChangeNotifier {
+class AddGoalViewModel extends BaseViewModel {
   bool _isFetching = false;
   Goal _currentGoal;
   DataService _dataService;
@@ -44,12 +45,13 @@ class AddGoalViewModel with ChangeNotifier {
   bool get isFetching => _isFetching;
 
   Future saveCurrentGoal() async {
+    setState(ViewState.busy);
     if (this.mode == GoalScreenMode.create) {
       await this._saveNewGoal(this._currentGoal);
     } else {
       await this._dataService.updateGoal(this._currentGoal);
     }
-    notifyListeners();
+    setState(ViewState.idle);
   }
 
   Future _saveNewGoal(Goal goal) async {

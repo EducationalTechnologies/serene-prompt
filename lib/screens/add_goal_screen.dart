@@ -48,6 +48,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   _submitGoal() async {
     final vm = Provider.of<AddGoalViewModel>(context);
     vm.currentGoal.goalText = _textController.text.toString();
+    if (vm.state != ViewState.idle) return;
     if (vm.canSubmit()) {
       await vm.saveCurrentGoal();
       Navigator.pushNamed(context, RouteNames.MAIN);
@@ -76,7 +77,8 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
           color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
       child: TextField(
         controller: _textController,
-        decoration: InputDecoration(labelText: "Gib dein Lernziel ein", alignLabelWithHint: true),
+        decoration: InputDecoration(
+            labelText: "Gib dein Lernziel ein", alignLabelWithHint: true),
         keyboardType: TextInputType.text,
         maxLines: null,
         textInputAction: TextInputAction.done,
@@ -319,6 +321,21 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     );
   }
 
+  buildSubmitButton() {
+    var vm = Provider.of<AddGoalViewModel>(context);
+    return SizedBox(
+        width: double.infinity,
+        height: 60,
+        child: RaisedButton(
+          onPressed: () => _submitGoal(),
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
+          child: vm.state == ViewState.idle
+              ? Text("Speichern", style: TextStyle(fontSize: 20))
+              : CircularProgressIndicator(),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -356,15 +373,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               UIHelper.verticalSpaceSmall(),
               _buildInputSelector(),
               UIHelper.verticalSpaceLarge(),
-              SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: RaisedButton(
-                    onPressed: () => _submitGoal(),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(10.0)),
-                    child: Text("Speichern", style: TextStyle(fontSize: 20)),
-                  )),
+              buildSubmitButton(),
               UIHelper.verticalSpaceLarge(),
             ],
           ),
