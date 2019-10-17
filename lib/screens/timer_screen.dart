@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class TimerScreen extends StatefulWidget {
@@ -15,7 +16,8 @@ class _TimerScreenState extends State<TimerScreen>
   AnimationController controller;
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration =
+        controller.duration * (controller.isAnimating ? controller.value : 1.0);
     return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
@@ -68,8 +70,15 @@ class _TimerScreenState extends State<TimerScreen>
                                   style: themeData.textTheme.subhead,
                                 ),
                                 InkWell(
-                                  onTap: () {
+                                  onTap: () async {
                                     print("Tappy Tap the timer thing");
+                                    Duration resultingDuration =
+                                        await showDurationPicker(
+                                            context: context,
+                                            initialTime:
+                                                new Duration(minutes: 30));
+                                    controller.duration = resultingDuration;
+                                    controller.reset();
                                   },
                                   child: AnimatedBuilder(
                                       animation: controller,
