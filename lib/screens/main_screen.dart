@@ -78,7 +78,6 @@ class _MainScreenState extends State<MainScreen> {
           ResourceLinksScreen(),
         ],
       ),
-      // TODO: Change the navigation bar to: https://medium.com/coding-with-flutter/flutter-bottomappbar-navigation-with-fab-8b962bb55013
       bottomNavigationBar: BottomAppBar(
           elevation: 15.0,
           color: Colors.black,

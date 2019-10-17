@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/login_state.dart';
+import 'package:serene/viewmodels/login_view_model.dart';
 
 class LoginScreen extends StatefulWidget {
   final Color backgroundColor1;
@@ -32,12 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Future.delayed(Duration.zero).then((val) {
       _userIdTextController.text =
-          Provider.of<LoginState>(context).userId ?? "";
+          Provider.of<LoginViewModel>(context).userId ?? "";
     });
   }
 
   _loginClick(BuildContext context) async {
-    await Provider.of<LoginState>(context)
+    await Provider.of<LoginViewModel>(context)
         .saveUsername(_userIdTextController.text);
   }
 
@@ -75,7 +76,116 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  buildUserIdField(BuildContext context) {
+    return new Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+              color: this.widget.foregroundColor,
+              width: 0.5,
+              style: BorderStyle.solid),
+        ),
+      ),
+      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+      child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new Padding(
+            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+            child: Icon(
+              Icons.perm_identity,
+              color: this.widget.foregroundColor,
+            ),
+          ),
+          new Expanded(
+            child: TextFormField(
+              controller: _userIdTextController,
+              textAlign: TextAlign.center,
+              onChanged: (text) {
+                // Provider.of<LoginState>(context).userId =
+              },
+              validator: (String arg) {
+                if (arg.length < 3) {
+                  return "Please use 3 or more characters";
+                } else {
+                  return null;
+                }
+              },
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Username wählen',
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  buildPasswordInput(BuildContext context) {
+    return new Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+              color: this.widget.foregroundColor,
+              width: 0.5,
+              style: BorderStyle.solid),
+        ),
+      ),
+      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+      child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new Padding(
+            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+            child: Icon(
+              Icons.lock,
+              color: this.widget.foregroundColor,
+            ),
+          ),
+          new Expanded(
+            child: TextFormField(
+              obscureText: true,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Passwort eingeben',
+                hintStyle: TextStyle(color: this.widget.foregroundColor),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  buildSubmitButton(BuildContext context) {
+    var vm = Provider.of<LoginViewModel>(context);
+    return new RaisedButton(
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      onPressed: () async {
+        await _loginClick(context);
+        Navigator.pushNamed(context, RouteNames.MAIN);
+      },
+      child: vm.state == ViewState.idle
+          ? Text(
+              "Log In",
+            )
+          : CircularProgressIndicator(),
+    );
+  }
+
   Widget buildControls(BuildContext context) {
+    var vm = Provider.of<LoginViewModel>(context);
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -109,109 +219,45 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          new Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                    color: this.widget.foregroundColor,
-                    width: 0.5,
-                    style: BorderStyle.solid),
-              ),
-            ),
-            padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                new Padding(
-                  padding:
-                      EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                  child: Icon(
-                    Icons.perm_identity,
-                    color: this.widget.foregroundColor,
-                  ),
-                ),
-                new Expanded(
-                  child: TextFormField(
-                    controller: _userIdTextController,
-                    textAlign: TextAlign.center,
-                    onChanged: (text) {
-                      // Provider.of<LoginState>(context).userId =
-                    },
-                    validator: (String arg) {
-                      if (arg.length < 3) {
-                        return "Please use 3 or more characters";
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Username wählen',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // new Container(
-          //   width: MediaQuery.of(context).size.width,
-          //   margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-          //   alignment: Alignment.center,
-          //   decoration: BoxDecoration(
-          //     border: Border(
-          //       bottom: BorderSide(
-          //           color: this.foregroundColor,
-          //           width: 0.5,
-          //           style: BorderStyle.solid),
-          //     ),
-          //   ),
-          //   padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-          //   child: new Row(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: <Widget>[
-          //       new Padding(
-          //         padding:
-          //             EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-          //         child: Icon(
-          //           Icons.lock_open,
-          //           color: this.foregroundColor,
-          //         ),
-          //       ),
-          //       new Expanded(
-          //         child: TextField(
-          //           obscureText: true,
-          //           textAlign: TextAlign.center,
-          //           decoration: InputDecoration(
-          //             border: InputBorder.none,
-          //             hintText: '*********',
-          //             hintStyle: TextStyle(color: this.foregroundColor),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          buildUserIdField(context),
+          buildPasswordInput(context),
           new Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
             alignment: Alignment.center,
             child: new Row(
               children: <Widget>[
+                new Expanded(child: buildSubmitButton(context)),
+              ],
+            ),
+          ),
+          new Container(
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsets.only(
+                left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
+            alignment: Alignment.center,
+            child: new Row(
+              children: <Widget>[
                 new Expanded(
-                  child: new RaisedButton(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20.0, horizontal: 20.0),
-                    onPressed: () async {
-                      await _loginClick(context);
+                  child: InkWell(
+                    onTap: () async {
+                      await vm.progressWithoutUsername();
                       Navigator.pushNamed(context, RouteNames.MAIN);
                     },
-                    child: Text(
-                      "Log In",
+                    child: new FlatButton(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 20.0),
+                      color: Colors.transparent,
+                      onPressed: () async {
+                        await vm.progressWithoutUsername();
+                        Navigator.pushNamed(context, RouteNames.MAIN);
+                      },
+                      child: Text(
+                        "Ohne Account verwenden",
+                        style: TextStyle(
+                            color:
+                                this.widget.foregroundColor.withOpacity(0.8)),
+                      ),
                     ),
                   ),
                 ),

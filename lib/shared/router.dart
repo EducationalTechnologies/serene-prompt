@@ -19,7 +19,7 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/goal_monitoring_state.dart';
 import 'package:serene/viewmodels/goal_shielding_state.dart';
-import 'package:serene/viewmodels/login_state.dart';
+import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:serene/viewmodels/timer_state.dart';
 import 'package:provider/provider.dart';
 
@@ -87,8 +87,8 @@ class Router {
         return MaterialPageRoute(
             builder: (_) => MultiProvider(
                     providers: [
-                      ChangeNotifierProvider<LoginState>.value(
-                          value: LoginState(locator.get<UserService>())),
+                      ChangeNotifierProvider<LoginViewModel>.value(
+                          value: LoginViewModel(locator.get<UserService>())),
                     ],
                     child: LoginScreen(
                       backgroundColor1: Colors.orange[50],

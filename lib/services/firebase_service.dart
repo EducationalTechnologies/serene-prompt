@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
   factory FirebaseService() => _instance;
-  Firestore databaseReference;
-  FirebaseService._internal() {
-    databaseReference = Firestore.instance;
 
+  final Firestore _databaseReference = Firestore.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  FirebaseService._internal() {
     Firestore.instance
         .settings(
       persistenceEnabled: true,
@@ -25,7 +27,7 @@ class FirebaseService {
 
   getGoals() async {
     var goals =
-        await databaseReference.collection(COLLECTION_GOALS).getDocuments();
+        await _databaseReference.collection(COLLECTION_GOALS).getDocuments();
 
     return goals;
   }
@@ -46,7 +48,7 @@ class FirebaseService {
   }
 
   getOpenGoals(String userId) async {
-    var goals = await databaseReference
+    var goals = await _databaseReference
         .collection(COLLECTION_GOALS)
         .where("userId", isEqualTo: userId)
         .getDocuments();
@@ -58,8 +60,13 @@ class FirebaseService {
     return mappedGoals;
   }
 
+  isNameAvailable(String userId) async {
+    var availableMethods = await _firebaseAuth.fetchSignInMethodsForEmail(email: userId);
+    return true;
+  }
+
   addGoal(Goal goal) async {
-    await databaseReference
+    await _databaseReference
         .collection(COLLECTION_GOALS)
         .add(goal.toMap())
         .then((val) {
@@ -71,10 +78,10 @@ class FirebaseService {
 
   deleteGoal(Goal goal) async {
     goal.completionDate = DateTime.now();
-    await databaseReference
+    await _databaseReference
         .collection(COLLECTION_GOALS_DELETED)
         .add(goal.toMap());
-    await databaseReference
+    await _databaseReference
         .collection(COLLECTION_GOALS)
         .document(goal.documentId)
         .delete()
@@ -84,14 +91,14 @@ class FirebaseService {
   }
 
   updateGoal(Goal goal) async {
-    await databaseReference
+    await _databaseReference
         .collection(COLLECTION_GOALS)
         .document(goal.documentId)
         .updateData(goal.toMap());
   }
 
   saveFcmToken(String userId, String token) async {
-    var tokens = databaseReference
+    var tokens = _databaseReference
         .collection(COLLECTION_USERS)
         .document(userId)
         .collection('tokens')
@@ -101,7 +108,7 @@ class FirebaseService {
   }
 
   saveAssessment(AssessmentModel assessment) async {
-    await databaseReference
+    await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
         .add(assessment.toMap());
   }

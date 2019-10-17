@@ -6,25 +6,23 @@ import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
 
 class ConsentScreen extends StatelessWidget {
-  bool consented = false;
-
-  List<String> _textIntroduction = [
+  final List<String> _textIntroduction = [
     "Einverständniserklärung für das Sammeln und die Verarbeitung von Daten im Rahmen des 'Serene' Forschungsprojektes der Educational Technologies Gruppe am DIPF | Leibniz-Institut für Bildungsforschung und Bildungsinformation"
   ];
 
-  String _subheaderPurposes = "Zweck der Datensammlung";
+  final String _subheaderPurposes = "Zweck der Datensammlung";
 
-  List<String> _textPurposes = [
+  final List<String> _textPurposes = [
     "Das Sammeln von Daten im Rahmen des Serene Projektes verfolgt die folgenden Ziele: ",
     "Den individuellen Lernfortschritt zu untersuchen und zu unterstützen. Wir geben Ihnen die Möglichkeit, Ihr persönliches Lernverhalten mit Ihren Zielen zu vergleichen und somit vielleicht auch Ihren Lernfortschritt zu steigern.",
     "Um die Auswirkungen der Verwendung von Technologien auf Lernumgebungen zu untersuchen. Wir möchten herausfinden, welche Möglichkeiten durch die Verwendung von digitalen Lerntechnologien entstehen. Wir wollen diese Erkenntnisse nutzen um die angebotenen Technologien stetig zu verbessern",
     "Wir bieten in dieser Applikation eine Methode an, die sich 'Goal Shielding' nennt. Mit dieser Methode verbindet sich die Hoffnung, dass Sie Ablenkungen beim Lerner leichter widerstehen können. Wir möchten untersuchen, ob eine häufigere Anwendung dieser Methode zu größerer Zufriedenheit mit dem eigenen Lernfortschritt führt."
   ];
 
-  String _subheaderWhichData = "Welche Daten werden gesammelt?";
-  String _textParagraph5 =
+  final String _subheaderWhichData = "Welche Daten werden gesammelt?";
+  final String _textParagraph5 =
       "Serene ist eine Applikation mit der Lernziele erstellt und verfolgt werden können. Sie können die Anwendung unter Nutzung eines selbstgewählten Pesudonyms nutzen, sodass ausschließlich **pseudonymisierte** Daten anfallen. Wir verwenden für unsere Forschung die folgenden in Serene anfallenden Daten: ";
-  List<String> _dataCollectionAggregated = [
+  final List<String> _dataCollectionAggregated = [
     "* Text der Lernziele",
     "* Datum der Lernziele",
     "* Zeitpläne für die Lernziele",
@@ -32,10 +30,10 @@ class ConsentScreen extends StatelessWidget {
     "* Antworten auf die Fragebögen",
     "* Clickstream Daten"
   ];
-  String _textParagraph6 =
+  final String _textParagraph6 =
       "In der Serene Applikation erheben und verwerten wir die folgenden Daten:";
 
-  String _subheaderWhatHappensWithData =
+  final String _subheaderWhatHappensWithData =
       "Was passiert mit den Daten die über mich gesammelt werden?";
   List<String> _textWhatHappensWithData = [
     "Die Daten werden während des Semesters gesammelt und anschließend vollständig anonym für die wissenschaftliche Forschung verwendet. Insbesondere erhält das Lehrpersonal keinen Zugriff auf die Daten",
@@ -43,12 +41,12 @@ class ConsentScreen extends StatelessWidget {
     ""
   ];
 
-  String _subheaderWhichRights = "Welche Rechte habe ich?";
-  String _textRights1 =
+  final String _subheaderWhichRights = "Welche Rechte habe ich?";
+  final String _textRights1 =
       "Sie haben jederzeit die Möglichkeit folgende Rechte geltend zu machen: ";
-  List<String> _rights = [""];
+  final List<String> _rights = [""];
 
-  buildSubheader(String text) {
+  _buildSubheader(String text) {
     return Text(
       text,
       style: TextStyle(fontSize: 20),
@@ -169,7 +167,7 @@ class ConsentScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: (ListView(
           children: <Widget>[
-            buildSubheader("Informierte Einwilligung"),
+            _buildSubheader("Informierte Einwilligung"),
             buildConsentCard(_textIntroduction),
             UIHelper.verticalSpaceSmall(),
             buildConsentCardWhichData(_subheaderPurposes, _textPurposes, []),

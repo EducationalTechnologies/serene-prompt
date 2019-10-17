@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:serene/screens/internalisation/long_press_internalisation.dart';
-import 'package:serene/screens/internalisation/scramble_internalisation.dart';
-import 'package:serene/screens/internalisation/speech_internalisation.dart';
 
 class GoalShieldingInternalisationScreen extends StatefulWidget {
   @override
@@ -25,26 +23,26 @@ class _GoalShieldingInternalisationScreenState
     return Container(
         padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
         child: LongPressInternalisation());
-    return Scaffold(
-        bottomNavigationBar: Material(
-          child: TabBar(
-            controller: _controller,
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.watch),
-              ),
-              Tab(icon: Icon(Icons.headset_mic)),
-              Tab(icon: Icon(Icons.textsms)),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          controller: _controller,
-          children: <Widget>[
-            LongPressInternalisation(),
-            SpeechInternalisation(),
-            ScrambleInternalisation()
-          ],
-        ));
+    // return Scaffold(
+    //     bottomNavigationBar: Material(
+    //       child: TabBar(
+    //         controller: _controller,
+    //         tabs: <Widget>[
+    //           Tab(
+    //             icon: Icon(Icons.watch),
+    //           ),
+    //           Tab(icon: Icon(Icons.headset_mic)),
+    //           Tab(icon: Icon(Icons.textsms)),
+    //         ],
+    //       ),
+    //     ),
+    //     body: TabBarView(
+    //       controller: _controller,
+    //       children: <Widget>[
+    //         LongPressInternalisation(),
+    //         SpeechInternalisation(),
+    //         ScrambleInternalisation()
+    //       ],
+    //     ));
   }
 }

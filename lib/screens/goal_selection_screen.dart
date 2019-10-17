@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serene/models/goal.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_monitoring_state.dart';
 import 'package:serene/viewmodels/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +15,6 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
     return SizedBox(
         width: double.infinity,
         height: 60.0,
-        // height: double.infinity,
         child: new RaisedButton(
           child: Text("Neues Ziel"),
           onPressed: () {
@@ -58,8 +55,6 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
           ),
         );
       }
-
-      // return Center(child: CircularProgressIndicator());
     } else {
       return Center(child: CircularProgressIndicator());
     }
