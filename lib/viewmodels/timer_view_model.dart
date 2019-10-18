@@ -16,7 +16,8 @@ class TimerViewModel with ChangeNotifier {
   }
 
   TimerViewModel(this._settingsService) {
-    
-    this._duration = Duration(seconds: int.parse(_settingsService.getSetting(SettingsKeys)))
+    this._duration = Duration(
+        seconds: int.parse(
+            _settingsService.getSetting(SettingsKeys.timerDurationInSeconds)));
   }
 }

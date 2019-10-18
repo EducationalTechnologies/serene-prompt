@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/router.dart';
@@ -13,13 +14,12 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Future<bool> initialize() {
-    return Future.delayed(Duration(seconds: 2)).then((val) async {
-      await locator.get<UserService>().initialize();
-      bool userInitialized =
-          locator.get<UserService>().getUsername()?.isNotEmpty ?? false;
-      return userInitialized;
-    });
+  Future<bool> initialize() async {
+    await locator.get<SettingsService>().initialize();
+    await locator.get<UserService>().initialize();
+    bool userInitialized =
+        locator.get<UserService>().getUsername()?.isNotEmpty ?? false;
+    return userInitialized;
   }
 
   buildWaitingIndicator() {
