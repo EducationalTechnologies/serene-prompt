@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,13 +36,14 @@ class UserService {
     await prefs.setString("email", email);
   }
 
-  registerUser(String email, String password) async {
+  Future<UserData> registerUser(String email, String password) async {
     var userData = await FirebaseService().registerUser(email, password);
     await saveUsername(userData.userId);
     await saveUserEmail(userData.email);
+    return userData;
   }
 
-  signInUser(String email, String password) async {
+  Future<UserData> signInUser(String email, String password) async {
     var userData = await FirebaseService().signInUser(email, password);
     return userData;
   }

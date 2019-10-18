@@ -80,7 +80,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: _index <= _goalShieldingPages.length,
+                  visible: _index < _goalShieldingPages.length,
                   child: FlatButton(
                     child: Row(
                       children: <Widget>[

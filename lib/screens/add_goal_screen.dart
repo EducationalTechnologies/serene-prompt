@@ -72,21 +72,42 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     final appState = Provider.of<AddGoalViewModel>(context);
 
     return Container(
-      padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
+      padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 30, top: 20),
       decoration: BoxDecoration(
-          color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
-      child: TextField(
-        controller: _textController,
-        decoration: InputDecoration(
-            labelText: "Gib dein Lernziel ein", alignLabelWithHint: true),
-        keyboardType: TextInputType.text,
-        maxLines: null,
-        textInputAction: TextInputAction.done,
-        onChanged: (text) {
-          setState(() {
-            appState.currentGoal.goalText = text.toString();
-          });
-        },
+        color: Theme.of(context).backgroundColor,
+        // borderRadius: BorderRadius.only(
+        //     bottomLeft: Radius.circular(10),
+        //     bottomRight: Radius.circular(10))
+      ),
+      child: Column(
+        children: <Widget>[
+          buildSubHeader("Ziel"),
+          UIHelper.verticalSpaceSmall(),
+          Container(
+            padding:
+                EdgeInsets.only(left: 10.0, right: 10, bottom: 10, top: 20),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
+            child: TextField(
+              controller: _textController,
+              // decoration:
+              //     InputDecoration(labelText: "Ziel", alignLabelWithHint: true),
+              keyboardType: TextInputType.text,
+              maxLines: null,
+              textInputAction: TextInputAction.done,
+              onChanged: (text) {
+                setState(() {
+                  appState.currentGoal.goalText = text.toString();
+                });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -179,9 +200,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                 height: 3,
               ),
               Icon(Icons.check_box),
-              SizedBox(
-                height: 4,
-              ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.5 - 12,
                   alignment: Alignment.center,
@@ -197,9 +215,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                 height: 3,
               ),
               Icon(Icons.settings_ethernet),
-              SizedBox(
-                height: 5,
-              ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.5 - 12,
                   alignment: Alignment.center,
@@ -250,9 +265,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                 height: 5,
               ),
               Text("⚙"),
-              SizedBox(
-                height: 5,
-              ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.25 - 7,
                   alignment: Alignment.center,
@@ -342,7 +354,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
       appBar: AppBar(
         // title: Text('Neues Ziel'),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0.0,
         actions: <Widget>[
           FlatButton(
@@ -353,28 +365,42 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
+        // padding: EdgeInsets.all(10),
         // margin: EdgeInsets.only(left: 10.0, right: 10.0),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              UIHelper.verticalSpaceMedium(),
               buildTextEntry(),
-              UIHelper.verticalSpaceMedium(),
-              buildSubHeader("Zeitplan"),
-              UIHelper.verticalSpaceSmall(),
-              buildDatePicker(),
-              UIHelper.verticalSpaceMedium(),
-              buildSubHeader("Schwierigkeit"),
-              UIHelper.verticalSpaceSmall(),
-              _buildDifficultySelector(),
-              UIHelper.verticalSpaceMedium(),
-              buildSubHeader("Eingabe des Zielfortschritts"),
-              UIHelper.verticalSpaceSmall(),
-              _buildInputSelector(),
-              UIHelper.verticalSpaceLarge(),
-              buildSubmitButton(),
-              UIHelper.verticalSpaceLarge(),
+              Container(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  children: <Widget>[
+                    UIHelper.verticalSpaceMedium(),
+                    buildSubHeader("Zeitplan"),
+                    UIHelper.verticalSpaceSmall(),
+                    buildDatePicker(),
+                    UIHelper.verticalSpaceMedium(),
+                    buildSubHeader("Schwierigkeit"),
+                    UIHelper.verticalSpaceSmall(),
+                    _buildDifficultySelector(),
+                    UIHelper.verticalSpaceMedium(),
+                    buildSubHeader("Eingabe des Zielfortschritts"),
+                    UIHelper.verticalSpaceSmall(),
+                    _buildInputSelector(),
+                    UIHelper.verticalSpaceLarge(),
+                    // Expanded(
+                    //   child: Container(),
+                    // ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: buildSubmitButton(),
+                    ),
+
+                    // buildSubmitButton(),
+                    // UIHelper.verticalSpaceLarge(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

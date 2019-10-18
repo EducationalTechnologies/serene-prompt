@@ -28,3 +28,9 @@ class ResourceType{
   static const String link = "link";
   static const String app = "app";
 }
+
+class SettingsKeys {
+  static const String userId = "userId";
+  static const String email = "email";
+  static const String timerDurationInSeconds = "timerDurationInSeconds";
+}

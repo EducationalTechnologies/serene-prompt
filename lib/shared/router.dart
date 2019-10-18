@@ -20,8 +20,8 @@ import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/goal_monitoring_state.dart';
 import 'package:serene/viewmodels/goal_shielding_state.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
-import 'package:serene/viewmodels/timer_state.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/timer_view_model.dart';
 
 class Router {
   static getRoutes() {
@@ -71,8 +71,8 @@ class Router {
 
       case RouteNames.TIMER:
         return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<TimerState>(
-                  builder: (_) => TimerState(),
+            builder: (_) => ChangeNotifierProvider<TimerViewModel>(
+                  builder: (_) => TimerViewModel(),
                   child: TimerScreen(),
                 ));
 

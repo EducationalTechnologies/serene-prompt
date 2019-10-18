@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return new RaisedButton(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       onPressed: () async {
-        if (vm.userEmail.isEmpty) {
+        if (vm.mode == SignInScreenMode.register) {
           await _registerClick(context);
         } else {
           await _loginClick(context);
@@ -185,7 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: vm.state == ViewState.idle
           ? Text(
-              "Log In",
+              vm.mode == SignInScreenMode.register
+                  ? "Registrieren"
+                  : "Einloggen",
             )
           : CircularProgressIndicator(),
     );

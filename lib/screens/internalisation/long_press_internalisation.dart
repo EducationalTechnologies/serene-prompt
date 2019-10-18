@@ -128,27 +128,24 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
     return Column(
       children: <Widget>[
         Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: <Widget>[
-                UIHelper.verticalSpaceMedium(),
-                // Text(
-                //   "Wiederhole den nächsten Satz mindestens drei mal:",
-                //   style: subHeaderStyle,
-                // ),
-                // UIHelper.verticalSpaceMedium(),
-                // buildShieldingText(),
-                UIHelper.verticalSpaceMedium(),
-                // buildRepetitionButton(),
-                TextHighlight(
-                  text: intention.shieldingSentence,
-                  wpm: 90,
-                ),
-                UIHelper.verticalSpaceMedium(),
-                // Text("Debug Stuff Counter: $_longPressCounter")
-              ],
-            ),
+          child: Column(
+            children: <Widget>[
+              UIHelper.verticalSpaceMedium(),
+              // Text(
+              //   "Wiederhole den nächsten Satz mindestens drei mal:",
+              //   style: subHeaderStyle,
+              // ),
+              // UIHelper.verticalSpaceMedium(),
+              // buildShieldingText(),
+              UIHelper.verticalSpaceMedium(),
+              // buildRepetitionButton(),
+              TextHighlight(
+                text: intention.shieldingSentence,
+                wpm: 90,
+              ),
+              UIHelper.verticalSpaceMedium(),
+              // Text("Debug Stuff Counter: $_longPressCounter")
+            ],
           ),
         ),
       ],
@@ -232,14 +229,10 @@ class _TextHighlightState extends State<TextHighlight>
     return GestureDetector(
         onLongPressStart: (details) {
           _counterPressed = true;
-          // _controller.forward();
-          // if (_controller.status == AnimationStatus.forward) {
-          //   _controller.forward();
           if (_controller.status == AnimationStatus.completed) {
             _controller.reset();
           }
           _controller.forward();
-          // _increaseCounterWhilePressed();
         },
         onLongPressEnd: (details) {
           _controller.stop();
@@ -272,8 +265,6 @@ class _TextHighlightState extends State<TextHighlight>
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        buildRepetitionButton(),
-        UIHelper.verticalSpaceMedium(),
         SizedBox(
           child: AnimatedBuilder(
             animation: _animation,
@@ -290,6 +281,8 @@ class _TextHighlightState extends State<TextHighlight>
             },
           ),
         ),
+        UIHelper.verticalSpaceLarge(),
+        buildRepetitionButton(),
       ],
     );
   }
