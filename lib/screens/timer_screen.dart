@@ -42,67 +42,70 @@ class _TimerScreenState extends State<TimerScreen>
             Expanded(
               child: Align(
                   alignment: FractionalOffset.center,
-                  child: AspectRatio(
-                    aspectRatio: 1.0,
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned.fill(
-                          child: AnimatedBuilder(
-                            animation: controller,
-                            builder: (BuildContext context, Widget child) {
-                              return CustomPaint(
-                                painter: TimerPainter(
-                                    animation: controller,
-                                    backgroundColor: Colors.white,
-                                    color: themeData.indicatorColor),
-                              );
-                            },
-                          ),
-                        ),
-                        Align(
-                            alignment: FractionalOffset.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "Timer",
-                                  style: themeData.textTheme.subhead,
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    print("Tappy Tap the timer thing");
-                                    Duration resultingDuration =
-                                        await showDurationPicker(
-                                            context: context,
-                                            initialTime:
-                                                new Duration(minutes: 30));
-                                    controller.duration = resultingDuration;
-                                    controller.reset();
-                                  },
-                                  child: AnimatedBuilder(
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: AspectRatio(
+                      aspectRatio: 1.0,
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned.fill(
+                            child: AnimatedBuilder(
+                              animation: controller,
+                              builder: (BuildContext context, Widget child) {
+                                return CustomPaint(
+                                  painter: TimerPainter(
                                       animation: controller,
-                                      builder:
-                                          (BuildContext context, Widget child) {
-                                        return Text(timerString,
-                                            style:
-                                                themeData.textTheme.display4);
-                                      }),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      controller.reset();
-                                    });
-                                  },
-                                  child: Text(
-                                    "Zurücksetzen",
+                                      backgroundColor: Colors.grey[400],
+                                      color: themeData.indicatorColor),
+                                );
+                              },
+                            ),
+                          ),
+                          Align(
+                              alignment: FractionalOffset.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "",
                                     style: themeData.textTheme.subhead,
                                   ),
-                                ),
-                              ],
-                            ))
-                      ],
+                                  InkWell(
+                                    onTap: () async {
+                                      print("Tappy Tap the timer thing");
+                                      Duration resultingDuration =
+                                          await showDurationPicker(
+                                              context: context,
+                                              initialTime:
+                                                  new Duration(minutes: 30));
+                                      controller.duration = resultingDuration;
+                                      controller.reset();
+                                    },
+                                    child: AnimatedBuilder(
+                                        animation: controller,
+                                        builder:
+                                            (BuildContext context, Widget child) {
+                                          return Text(timerString,
+                                              style:
+                                                  themeData.textTheme.display4);
+                                        }),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        controller.reset();
+                                      });
+                                    },
+                                    child: Text(
+                                      "Zurücksetzen",
+                                      style: themeData.textTheme.subhead,
+                                    ),
+                                  ),
+                                ],
+                              ))
+                        ],
+                      ),
                     ),
                   )),
             ),
@@ -152,7 +155,7 @@ class _TimerScreenState extends State<TimerScreen>
 }
 
 class TimerPainter extends CustomPainter {
-  static const STROKE_WIDTH = 10.0;
+  static const STROKE_WIDTH = 12.0;
 
   TimerPainter({
     this.animation,
@@ -175,7 +178,7 @@ class TimerPainter extends CustomPainter {
 
     paint.color = color;
     double progress = (1.0 - animation.value) * 2 * math.pi;
-    canvas.drawArc(Offset.zero & size, math.pi * 1.5, -progress, false, paint);
+    canvas.drawArc(Offset.zero & size, math.pi * 1.5, progress, false, paint);
   }
 
   @override
