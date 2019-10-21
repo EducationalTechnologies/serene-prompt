@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
-import 'package:serene/services/database_helpers.dart';
 import 'package:serene/services/firebase_service.dart';
+import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
 
 class DataService {
@@ -31,13 +32,13 @@ class DataService {
   }
 
   getGoals() async {
-    _goals = await DBProvider.db.getGoals();
+    _goals = await LocalDatabaseService.db.getGoals();
     return _goals;
   }
 
   Future<List<Goal>> getOpenGoals() async {
     //_openGoals = await DBProvider.db.getOpenGoals();
-    var userId = UserService().getUsername();
+    var userId = locator.get<UserService>().getUsername();
     _openGoals = await FirebaseService().getOpenGoals(userId);
     return _openGoals;
   }
@@ -57,11 +58,11 @@ class DataService {
   }
 
   fetchGoals() async {
-    _goals = await DBProvider.db.getGoals();
+    _goals = await LocalDatabaseService.db.getGoals();
   }
 
   fetchOpenGoals() async {
-    _openGoals = await DBProvider.db.getOpenGoals();
+    _openGoals = await LocalDatabaseService.db.getOpenGoals();
   }
 
   fetchGoalShields() async {

@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
+    if (false) {
       return buildMaterialApp(RouteNames.MAIN);
     } else {
       return FutureBuilder<bool>(

@@ -5,9 +5,10 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/goal_monitoring_state.dart';
-import 'package:serene/widgets/list_item_progress.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
+enum ListItemMenu { delete, edit }
 
 class GoalMonitorScreen extends StatefulWidget {
   @override

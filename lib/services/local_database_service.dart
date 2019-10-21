@@ -13,11 +13,12 @@ final String columnGoal = 'goal';
 final String columnHindrance = 'hindrance';
 
 const String TABLE_GOALS = "goals";
-const int DB_VERSION = 1;
+const String TABLE_SETTINGS = "settings";
+const int DB_VERSION = 3;
 
-class DBProvider {
-  DBProvider._();
-  static final DBProvider db = DBProvider._();
+class LocalDatabaseService {
+  LocalDatabaseService._();
+  static final LocalDatabaseService db = LocalDatabaseService._();
 
   static Database _database;
 
@@ -31,8 +32,10 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "TestDB.db");
-    return await openDatabase(path, version: DB_VERSION, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
+    return await openDatabase(path,
+        version: DB_VERSION,
+        onOpen: (db) {},
+        onUpgrade: _onUpgrade, onCreate: (Database db, int version) async {
       await db.execute(
           "CREATE TABLE $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
               "goalText STRING, " +
@@ -43,7 +46,64 @@ class DBProvider {
               "progressIndicator STRING, " +
               "progress INTEGER"
                   ")");
+
+      await db.execute("CREATE TABLE $TABLE_SETTINGS(key STRING PRIMARY KEY, " +
+          // "key STRING, " +
+          "value STRING " +
+          ")");
     });
+  }
+
+  _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    await db.execute(
+        "CREATE TABLE $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "goalText STRING, " +
+            "deadline STRING, " +
+            "documentId STRING, " +
+            "difficulty STRING, " +
+            "userId STRING, " +
+            "progressIndicator STRING, " +
+            "progress INTEGER"
+                ")");
+
+    await db.execute("CREATE TABLE $TABLE_SETTINGS(key STRING PRIMARY KEY, " +
+        // "key STRING, " +
+        "value STRING " +
+        ")");
+  }
+
+  upsertSetting(String key, String value) async {
+    final db = await database;
+    await db.insert(TABLE_SETTINGS, {"key": key, "value": value},
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    // var existing =
+    //     await db.rawQuery("select * from $TABLE_SETTINGS where key = $key");
+    // // var result = await db.query(TABLE_GOALS, where: whereString);
+
+    // if (existing.length == 0) {
+    //   await db.insert(TABLE_SETTINGS, {"key": key, "value": value},
+    //       conflictAlgorithm: ConflictAlgorithm.replace);
+    // } else {
+    //   await db.update(TABLE_SETTINGS, {"key": key, "value": value});
+    // }
+  }
+
+  Future<List<Map<String, dynamic>>> getAllSettings() async {
+    final db = await database;
+
+    var existing = await db.rawQuery("select * from $TABLE_SETTINGS");
+
+    return existing;
+  }
+
+  getSettingsValue(String key) async {
+    final db = await database;
+
+    var existing =
+        await db.rawQuery("select * from $TABLE_SETTINGS where key = $key");
+
+    if (existing == null) return null;
+    return existing[0][key];
   }
 
   insertGoal(Goal goal) async {

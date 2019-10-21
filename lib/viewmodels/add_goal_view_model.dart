@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/user_service.dart';
@@ -15,7 +16,7 @@ class AddGoalViewModel extends BaseViewModel {
   AddGoalViewModel({Goal goal, @required DataService dataService}) {
     _dataService = dataService;
     if (goal == null) {
-      final userService = UserService();
+      final userService = locator.get<UserService>();
       var userId = userService.getUsername();
       _currentGoal = new Goal(goalText: "", progress: 0, userId: userId);
       _mode = GoalScreenMode.create;

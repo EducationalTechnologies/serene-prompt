@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serene/services/database_helpers.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/text_styles.dart';
 
@@ -86,16 +85,6 @@ class SereneDrawer extends StatelessWidget {
               onTap: () async {
                 Navigator.pushNamed(context, RouteNames.TEST);
               }),
-          ListTile(
-              title: Text("Pre Learning Assessment"),
-              onTap: () async {
-                await DBProvider.db.clearDatabase();
-              }),
-          // ListTile(
-          //     title: Text("Insert Sample Goals"),
-          //     onTap: () async {
-          //       await DBProvider.db.insertSampleData();
-          //     }),
           ListTile(
               title: Text("Log In"),
               onTap: () async {

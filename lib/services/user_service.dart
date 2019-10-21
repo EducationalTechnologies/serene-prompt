@@ -1,12 +1,15 @@
 import 'dart:math';
 import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
+import 'package:serene/services/settings_service.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   static final UserService _instance = UserService._internal();
-  factory UserService() => _instance;
+  UserService(this._settings);
 
+  SettingsService _settings;
   String userId = "";
 
   SharedPreferences _prefs;
@@ -25,15 +28,11 @@ class UserService {
   }
 
   saveUsername(String username) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('Saving username $username');
-    await prefs.setString("userId", username);
+    await _settings.setSetting("userId", username);
   }
 
   saveUserEmail(String email) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('Saving email $email');
-    await prefs.setString("email", email);
+    await _settings.setSetting("email", email);
   }
 
   Future<UserData> registerUser(String email, String password) async {
@@ -65,16 +64,16 @@ class UserService {
   }
 
   String getUsername() {
-    return _prefs.getString("userId");
+    return _settings.getSetting(SettingsKeys.userId);
   }
 
   String getUserEmail() {
-    return _prefs.getString("email");
+    return _settings.getSetting(SettingsKeys.email);
   }
 
   UserService._internal() {
-    SharedPreferences.getInstance().then((prefs) {
-      _prefs = prefs;
-    });
+    // SharedPreferences.getInstance().then((prefs) {
+    //   _prefs = prefs;
+    // });
   }
 }
