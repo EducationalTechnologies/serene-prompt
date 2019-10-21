@@ -54,22 +54,28 @@ class LocalDatabaseService {
     });
   }
 
+//TODO: Write a better migration script
   _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    await db.execute(
-        "CREATE TABLE $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "goalText STRING, " +
-            "deadline STRING, " +
-            "documentId STRING, " +
-            "difficulty STRING, " +
-            "userId STRING, " +
-            "progressIndicator STRING, " +
-            "progress INTEGER"
-                ")");
+    if (oldVersion != newVersion) {
+      await db.execute("DROP TABLE IF EXISTS $TABLE_GOALS");
+      await db.execute(
+          "CREATE TABLE IF NOT EXISTS $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+              "goalText STRING, " +
+              "deadline STRING, " +
+              "documentId STRING, " +
+              "difficulty STRING, " +
+              "userId STRING, " +
+              "progressIndicator STRING, " +
+              "progress INTEGER"
+                  ")");
 
-    await db.execute("CREATE TABLE $TABLE_SETTINGS(key STRING PRIMARY KEY, " +
-        // "key STRING, " +
-        "value STRING " +
-        ")");
+      await db.execute("DROP TABLE IF EXISTS $TABLE_SETTINGS");
+      await db.execute(
+          "CREATE TABLE IF NOT EXISTS $TABLE_SETTINGS(key STRING PRIMARY KEY, " +
+              // "key STRING, " +
+              "value STRING " +
+              ")");
+    }
   }
 
   upsertSetting(String key, String value) async {

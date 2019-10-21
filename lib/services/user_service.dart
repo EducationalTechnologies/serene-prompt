@@ -44,6 +44,8 @@ class UserService {
 
   Future<UserData> signInUser(String email, String password) async {
     var userData = await FirebaseService().signInUser(email, password);
+    await saveUsername(userData.userId);
+    await saveUserEmail(userData.email);
     return userData;
   }
 
