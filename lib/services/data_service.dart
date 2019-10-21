@@ -12,11 +12,11 @@ class DataService {
   static final DataService _instance = DataService._internal();
   factory DataService() => _instance;
   List<Goal> _goals;
-  List<Goal> _openGoals;
+  List<Goal> _openGoalsCache = [];
   List<GoalShield> _goalShields;
 
   DataService._internal() {
-    fetchOpenGoals();
+    //TODO: Create initialize service
   }
 
   get goals {
@@ -24,10 +24,12 @@ class DataService {
   }
 
   get openGoals {
-    return _openGoals;
+    return _openGoalsCache;
   }
 
   saveGoal(Goal goal) async {
+    _openGoalsCache.add(goal);
+    //TODO: Handle the case that saving fails
     await FirebaseService().addGoal(goal);
   }
 
@@ -38,9 +40,11 @@ class DataService {
 
   Future<List<Goal>> getOpenGoals() async {
     //_openGoals = await DBProvider.db.getOpenGoals();
-    var userId = locator.get<UserService>().getUsername();
-    _openGoals = await FirebaseService().getOpenGoals(userId);
-    return _openGoals;
+    if (_openGoalsCache.length == 0) {
+      var userId = locator.get<UserService>().getUsername();
+      _openGoalsCache = await FirebaseService().getOpenGoals(userId);
+    }
+    return _openGoalsCache;
   }
 
   deleteGoal(Goal goal) async {
@@ -55,14 +59,6 @@ class DataService {
       _goalShields.add(GoalShield.fromJson(s));
     }
     return _goalShields;
-  }
-
-  fetchGoals() async {
-    _goals = await LocalDatabaseService.db.getGoals();
-  }
-
-  fetchOpenGoals() async {
-    _openGoals = await LocalDatabaseService.db.getOpenGoals();
   }
 
   fetchGoalShields() async {

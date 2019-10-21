@@ -20,13 +20,5 @@ class AppState with ChangeNotifier {
     // reloadData();
   }
 
-  reloadData() async {
-    await _dataService.fetchOpenGoals();
-  }
-
-  reloadGoals() async {
-    await _dataService.fetchOpenGoals();
-  }
-
   reloadOpenGoals() {}
 }

@@ -31,17 +31,6 @@ class GoalMonitoringState with ChangeNotifier {
     return _goals;
   }
 
-  Future<bool> update() async {
-    await fetchData();
-    return true;
-  }
-
-  fetchData() async {
-    _isFetching = true;
-    await _dataService.fetchGoals();
-    _isFetching = false;
-  }
-
   deleteGoal(Goal goal) async {
     _dataService.deleteGoal(goal);
   }
