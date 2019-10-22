@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 
 class GoalShieldingSelectionScreen extends StatelessWidget {
   buildObstacleDropdown(BuildContext context) {
-    final goalShieldingState = Provider.of<GoalShieldingState>(context);
+    final goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
     return DropdownButton<String>(
       value: goalShieldingState.hindrance,
       onChanged: (String newValue) {
@@ -24,13 +24,13 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
   }
 
   _onSelected(BuildContext context, String shield) {
-    var goalShieldingState = Provider.of<GoalShieldingState>(context);
+    var goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
     goalShieldingState.selectedShieldingAction = shield;
   }
 
   buildObstacleCard(
       BuildContext context, IconData icon, String title, String description) {
-    final goalShieldingState = Provider.of<GoalShieldingState>(context);
+    final goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
 
     return Card(
       color: goalShieldingState.selectedShieldingAction == title
@@ -60,16 +60,13 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
             "Bist du nicht ausreichend motiviert um dich der Aufgabe zu widmen?"),
         buildObstacleCard(context, Icons.cloud_upload, "Körperliche Verfassung",
             "Fühlst du dich körperlich nicht in der Lage, mit dem Lernen zu beginnen?"),
-        // buildObstacleCard(context, "Überforderung", "Ist dir deine Aufgabe zu schwer?"),
-        // buildObstacleCard(context, "Überforderung", "Ist dir deine Aufgabe zu schwer?"),
-        // buildObstacleCard(context, "Überforderung", "Ist dir deine Aufgabe zu schwer?")
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final goalShieldingState = Provider.of<GoalShieldingState>(context);
+    final goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
 
     return Container(
       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -82,11 +79,9 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
             Text(goalShieldingState.selectedGoal.goalText,
                 style: Theme.of(context).textTheme.headline),
           UIHelper.verticalSpaceSmall(),
-          Text(
-            "Was könnte dich vom Erreichen deines Zieles abhalten?",
-            textAlign: TextAlign.left,
-            style: Theme.of(context).textTheme.subhead
-          ),
+          Text("Was könnte dich vom Erreichen deines Zieles abhalten?",
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.subhead),
           UIHelper.verticalSpaceSmall(),
           // buildObstacleDropdown(context),
           Expanded(

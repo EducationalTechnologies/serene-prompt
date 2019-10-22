@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:serene/viewmodels/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 
 class ScrambleText {
   int originalPosition;
@@ -32,10 +32,10 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     super.initState();
     // this._sentence = scrambleSentence(_sentence);
     Future.delayed(Duration.zero, () {
-      var shieldState = Provider.of<GoalShieldingState>(context);
+      var shieldState = Provider.of<GoalShieldingViewModel>(context);
       print("ShieldState");
       _sentence = [];
-      var shieldSentence = shieldState.shieldingSentence.split(" ");
+      var shieldSentence = shieldState.selectedShieldingAction.split(" ");
       for (var i = 0; i < shieldSentence.length; i++) {
         _sentence.add(ScrambleText(
             isSelected: false, text: shieldSentence[i], originalPosition: i));

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
 
-class GoalShieldingState with ChangeNotifier {
+class GoalShieldingViewModel with ChangeNotifier {
   int id;
   List<String> hindrances = [
     "Überforderung",
@@ -19,7 +19,6 @@ class GoalShieldingState with ChangeNotifier {
   String _selectedShieldingAction;
   String _hindrance;
   Goal _selectedGoal;
-  String _shieldingSentence = "";
   DataService _dataService;
   List<Goal> _openGoals;
   List<Goal> get openGoals {
@@ -33,16 +32,9 @@ class GoalShieldingState with ChangeNotifier {
     notifyListeners();
   }
 
-  String get shieldingSentence => _shieldingSentence;
-
-  set shieldingSentence(String shieldingSentence) {
-    _shieldingSentence = shieldingSentence;
-    notifyListeners();
-  }
-
-  GoalShieldingState(this._dataService) {
+  GoalShieldingViewModel(this._dataService) {
     this._hindrance = hindrances[0];
-    this._shieldingSentence = shields[0];
+    this._selectedShieldingAction = shields[0];
 
     _dataService.getOpenGoals().then((goalList) {
       _openGoals = goalList;
@@ -60,7 +52,7 @@ class GoalShieldingState with ChangeNotifier {
   selectHindrance(String hindrance) {
     this.hindrance = hindrance;
     var hindex = this.hindrances.indexOf(hindrance);
-    this.shieldingSentence = shields[hindex];
+    this.selectedShieldingAction = shields[hindex];
   }
 
   String get hindrance => _hindrance;

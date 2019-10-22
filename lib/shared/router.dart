@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/login_screen.dart';
+import 'package:serene/screens/settings_screen.dart';
 import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/settings_service.dart';
@@ -19,9 +20,10 @@ import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/goal_monitoring_state.dart';
-import 'package:serene/viewmodels/goal_shielding_state.dart';
+import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/settings_view_model.dart';
 import 'package:serene/viewmodels/timer_view_model.dart';
 
 class Router {
@@ -40,8 +42,8 @@ class Router {
       case RouteNames.GOAL_SHIELDING:
         return MaterialPageRoute(
             builder: (context) =>
-                ChangeNotifierProvider<GoalShieldingState>.value(
-                    value: GoalShieldingState(locator.get<DataService>()),
+                ChangeNotifierProvider<GoalShieldingViewModel>.value(
+                    value: GoalShieldingViewModel(locator.get<DataService>()),
                     child: GoalShieldingScreen()));
 
       case RouteNames.ADD_GOAL:
@@ -73,7 +75,8 @@ class Router {
       case RouteNames.TIMER:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<TimerViewModel>(
-                  builder: (_) => TimerViewModel(locator.get<SettingsService>()),
+                  builder: (_) =>
+                      TimerViewModel(locator.get<SettingsService>()),
                   child: TimerScreen(),
                 ));
 
@@ -97,6 +100,11 @@ class Router {
                       highlightColor: Colors.blue,
                       foregroundColor: Colors.blue[300],
                     )));
+
+      case RouteNames.SETTINGS:
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<SettingsViewModel>(
+                builder: (_) => SettingsViewModel(), child: SettingsScreen()));
 
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());

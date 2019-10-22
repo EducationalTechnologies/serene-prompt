@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_state.dart';
+import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:provider/provider.dart';
 
 class LongPressInternalisation extends StatefulWidget {
@@ -20,7 +20,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
   int _repeatCounter = 0;
 
   buildShieldingText() {
-    final intention = Provider.of<GoalShieldingState>(context);
+    final intention = Provider.of<GoalShieldingViewModel>(context);
 
     // List<String> fullText = ["When ", "I ", "start "];
 
@@ -39,11 +39,11 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
     // texts.add(getRegularText("I "));
     // texts.add(getRegularText("will "));
 
-    if (intention.shieldingSentence == "") {
+    if (intention.selectedShieldingAction == "") {
       return Text("Bitte wähle zunächst ein Lernhindernis aus");
     }
 
-    var splitShieldingActions = intention.shieldingSentence.split(" ");
+    var splitShieldingActions = intention.selectedShieldingAction.split(" ");
 
     for (var s in splitShieldingActions) {
       texts.add(getRegularText("$s "));
@@ -123,7 +123,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
 
   @override
   Widget build(BuildContext context) {
-    final intention = Provider.of<GoalShieldingState>(context);
+    final intention = Provider.of<GoalShieldingViewModel>(context);
 
     return Column(
       children: <Widget>[
@@ -140,7 +140,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
               UIHelper.verticalSpaceMedium(),
               // buildRepetitionButton(),
               TextHighlight(
-                text: intention.shieldingSentence,
+                text: intention.selectedShieldingAction,
                 wpm: 90,
               ),
               UIHelper.verticalSpaceMedium(),

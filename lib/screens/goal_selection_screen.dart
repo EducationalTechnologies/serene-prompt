@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_state.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 
 class GoalSelectionScreen extends StatefulWidget {
   @override
@@ -27,8 +27,8 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    GoalShieldingState goalShieldingState =
-        Provider.of<GoalShieldingState>(context);
+    GoalShieldingViewModel goalShieldingState =
+        Provider.of<GoalShieldingViewModel>(context);
 
     if (goalShieldingState.openGoals != null) {
       print("build SHIELDING LIST");
@@ -89,7 +89,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
   int _selectedIndex;
 
   _onSelected(int index) {
-    var goalShieldingState = Provider.of<GoalShieldingState>(context);
+    var goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
     goalShieldingState.selectedGoal = goalShieldingState.openGoals[index];
     setState(() {
       _selectedIndex = index;
@@ -99,8 +99,8 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   @override
   Widget build(BuildContext context) {
-    GoalShieldingState goalShieldingState =
-        Provider.of<GoalShieldingState>(context);
+    GoalShieldingViewModel goalShieldingState =
+        Provider.of<GoalShieldingViewModel>(context);
     _selectedIndex =
         goalShieldingState.openGoals.indexOf(goalShieldingState.selectedGoal);
     print("Selected Index: $_selectedIndex");
