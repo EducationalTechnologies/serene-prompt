@@ -11,6 +11,7 @@ class Goal {
   String documentId;
   DateTime creationDate;
   DateTime completionDate;
+  List<String> tags;
 
   Goal(
       {this.id,
@@ -22,6 +23,7 @@ class Goal {
       this.difficulty = GoalDifficulty.medium,
       this.creationDate,
       this.completionDate,
+      this.tags = const ["A Tag"],
       this.progressIndicator = GoalProgressIndicator.checkbox});
 
   Map<String, dynamic> toMap() {
@@ -36,6 +38,7 @@ class Goal {
       "difficulty": this.difficulty,
       "userId": this.userId,
       "documentId": this.documentId,
+      "tags": this.tags
     };
   }
 }
