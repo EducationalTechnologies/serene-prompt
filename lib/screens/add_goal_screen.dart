@@ -333,6 +333,25 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     );
   }
 
+  _buildTagSelectionList() {
+    return Column(
+      children: <Widget>[
+        _buildTagSelection("Eins"),
+        _buildTagSelection("Zwei"),
+        _buildTagSelection("Drei"),
+      ],
+    );
+  }
+
+  _buildTagSelection(String tag) {
+    return CheckboxListTile(
+      controlAffinity: ListTileControlAffinity.leading,
+      title: Text(tag),
+      onChanged: (bool value) {},
+      value: true,
+    );
+  }
+
   buildSubmitButton() {
     var vm = Provider.of<AddGoalViewModel>(context);
     return SizedBox(
@@ -387,17 +406,19 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                     buildSubHeader("Eingabe des Zielfortschritts"),
                     UIHelper.verticalSpaceSmall(),
                     _buildInputSelector(),
-                    UIHelper.verticalSpaceLarge(),
+                    // buildSubHeader("Tags"),
+                    // _buildTagSelectionList(),
                     // Expanded(
                     //   child: Container(),
                     // ),
+                    UIHelper.verticalSpaceMedium(),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: buildSubmitButton(),
                     ),
 
                     // buildSubmitButton(),
-                    // UIHelper.verticalSpaceLarge(),
+                    UIHelper.verticalSpaceLarge(),
                   ],
                 ),
               ),

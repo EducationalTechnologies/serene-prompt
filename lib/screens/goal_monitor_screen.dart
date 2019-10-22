@@ -131,13 +131,15 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       end: new Offset(0.0, 0.0),
     ).animate(animation);
 
+    double inset = index * 32.0;
+
     return SlideTransition(
       position: anim,
       child: Container(
         key: Key('${goal.hashCode}'),
         child: Card(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Column(
               children: <Widget>[
                 Row(children: <Widget>[
