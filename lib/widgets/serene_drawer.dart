@@ -72,6 +72,12 @@ class SereneDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, RouteNames.GOAL_SHIELDING);
               }),
+          _buildDrawerItem(
+              icon: Icons.label,
+              text: "Tags",
+              onTap: () {
+                Navigator.pushNamed(context, RouteNames.EDIT_TAGS);
+              }),
           Divider(),
           _buildDrawerItem(
               icon: Icons.settings,

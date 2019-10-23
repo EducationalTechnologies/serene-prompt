@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/screens/edit_tags_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/login_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
@@ -19,6 +20,7 @@ import 'package:serene/screens/main_screen.dart';
 import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
+import 'package:serene/viewmodels/edit_tags_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_state.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
@@ -104,7 +106,15 @@ class Router {
       case RouteNames.SETTINGS:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<SettingsViewModel>(
-                builder: (_) => SettingsViewModel(), child: SettingsScreen()));
+                builder: (_) =>
+                    SettingsViewModel(locator.get<SettingsService>()),
+                child: SettingsScreen()));
+
+      case RouteNames.EDIT_TAGS:
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<EditTagsViewModel>(
+                builder: (_) => EditTagsViewModel(locator.get<DataService>()),
+                child: EditTagsScreen()));
 
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());

@@ -5,11 +5,11 @@ class SettingsService {
   // SharedPreferences _prefs;
   LocalDatabaseService _databaseService;
 
-  Map<String, dynamic> _settingsCache = {
+  Map<String, String> _settingsCache = {
     SettingsKeys.userId: "",
     SettingsKeys.email: "",
-    SettingsKeys.timerDurationInSeconds: 1500,
-    SettingsKeys.wordsPerMinute: 180
+    SettingsKeys.timerDurationInSeconds: "1500",
+    SettingsKeys.wordsPerMinute: "180"
   };
 
   SettingsService(this._databaseService) {}
@@ -24,7 +24,7 @@ class SettingsService {
     var settings = await _databaseService.getAllSettings();
     for (var setting in settings) {
       print("Setting from db is $setting");
-      _settingsCache[setting["key"]] = setting["value"];
+      _settingsCache[setting["key"]] = setting["value"].toString();
     }
     return true;
   }
@@ -34,6 +34,14 @@ class SettingsService {
   //     _prefs = prefs;
   //   });
   // }
+
+  getWordsPerMinute() {
+    return double.parse(_settingsCache[SettingsKeys.wordsPerMinute]);
+  }
+
+  setWordsPerMinute(double value) {
+    setSetting(SettingsKeys.wordsPerMinute, value.toString());
+  }
 
   getSetting(String setting) {
     return _settingsCache[setting];

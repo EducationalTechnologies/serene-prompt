@@ -10,4 +10,5 @@ class RouteNames {
   static const OPEN_GOALS = "/opengoals";
   static const LOG_IN = "/login";
   static const SETTINGS = "/settings";
+  static const EDIT_TAGS = "/edittags";
 }

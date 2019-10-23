@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:serene/locator.dart';
+import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:provider/provider.dart';
@@ -140,9 +142,8 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
               UIHelper.verticalSpaceMedium(),
               // buildRepetitionButton(),
               TextHighlight(
-                text: intention.selectedShieldingAction,
-                wpm: 90,
-              ),
+                  text: intention.selectedShieldingAction,
+                  wpm: locator.get<SettingsService>().getWordsPerMinute()),
               UIHelper.verticalSpaceMedium(),
               // Text("Debug Stuff Counter: $_longPressCounter")
             ],
@@ -155,7 +156,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
 
 class TextHighlight extends StatefulWidget {
   final String text;
-  final int wpm;
+  final double wpm;
 
   TextHighlight({Key key, this.text = "", this.wpm = 180}) : super(key: key);
 

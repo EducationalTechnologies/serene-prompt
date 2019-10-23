@@ -31,7 +31,21 @@ class SettingsScreen extends StatelessWidget {
         body: Container(
             child: ListView(
           children: <Widget>[
+            UIHelper.verticalSpaceLarge(),
             UIHelper.buildSubHeader("Wörter pro Minute"),
+            Slider(
+              label: vm.wordsPerMinute.toString(),
+              divisions: 20,
+              min: 100,
+              max: 400,
+              onChangeEnd: (value) async {
+                await vm.submit();
+              },
+              onChanged: (value) {
+                vm.setWordsPerMinute(value);
+              },
+              value: vm.wordsPerMinute,
+            )
           ],
         )));
   }
