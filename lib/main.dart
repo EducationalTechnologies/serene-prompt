@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/services/settings_service.dart';

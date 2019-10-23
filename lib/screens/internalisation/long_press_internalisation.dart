@@ -157,7 +157,7 @@ class TextHighlight extends StatefulWidget {
   final String text;
   final int wpm;
 
-  TextHighlight({Key key, this.text = "", this.wpm = 60}) : super(key: key);
+  TextHighlight({Key key, this.text = "", this.wpm = 180}) : super(key: key);
 
   _TextHighlightState createState() => _TextHighlightState();
 }
@@ -200,14 +200,14 @@ class _TextHighlightState extends State<TextHighlight>
 
   @override
   void initState() {
-    var durationInMS = ((widget.text.split(" ").length / _wpm) * 60000).toInt();
+    var durationInMS =
+        ((widget.text.split(" ").length / widget.wpm * 60000).toInt());
     _duration = Duration(milliseconds: durationInMS);
     _controller = AnimationController(vsync: this, duration: _duration);
 
     // animation = Tween<double>(begin: -100.0, end: 100.0).animate(_controller);
     var tween = StepTween(begin: 0, end: widget.text.length);
-    _animation = tween
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
+    _animation = tween.animate(_controller);
 
     _animation.addListener(() {
       setState(() {});

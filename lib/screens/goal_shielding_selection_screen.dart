@@ -23,27 +23,26 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
     );
   }
 
-  _onSelected(BuildContext context, String shield) {
-    var goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
-    goalShieldingState.selectedShieldingAction = shield;
+  _onSelected(BuildContext context, String hindrance) {
+    Provider.of<GoalShieldingViewModel>(context).selectHindrance(hindrance);
   }
 
-  buildObstacleCard(
-      BuildContext context, IconData icon, String title, String description) {
+  _buildHindranceItem(BuildContext context, IconData icon, String hindrance,
+      String description) {
     final goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
 
     return Card(
-      color: goalShieldingState.selectedShieldingAction == title
+      color: goalShieldingState.hindrance == hindrance
           ? Colors.orange
           : Colors.white,
       child: ListTile(
         leading: Icon(icon),
-        title: Text(title),
+        title: Text(hindrance),
         subtitle: Text(description),
         isThreeLine: true,
         trailing: Icon(Icons.help_outline),
         onTap: () async {
-          _onSelected(context, title);
+          _onSelected(context, hindrance);
         },
       ),
     );
@@ -52,13 +51,16 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
   buildObstacleList(BuildContext context) {
     return ListView(
       children: <Widget>[
-        buildObstacleCard(context, Icons.announcement, "Überforderung",
+        _buildHindranceItem(context, Icons.announcement, "Überforderung",
             "Ist dir deine Aufgabe zu schwer?"),
-        buildObstacleCard(context, Icons.chat_bubble, "Ablenkung",
+        _buildHindranceItem(context, Icons.chat_bubble, "Ablenkung",
             "Kannst du dich nicht ausreichend konzentrieren, oder lenkst dich ständig ab?"),
-        buildObstacleCard(context, Icons.child_care, "Lustlosigkeit",
+        _buildHindranceItem(context, Icons.child_care, "Lustlosigkeit",
             "Bist du nicht ausreichend motiviert um dich der Aufgabe zu widmen?"),
-        buildObstacleCard(context, Icons.cloud_upload, "Körperliche Verfassung",
+        _buildHindranceItem(
+            context,
+            Icons.cloud_upload,
+            "Körperliche Verfassung",
             "Fühlst du dich körperlich nicht in der Lage, mit dem Lernen zu beginnen?"),
       ],
     );

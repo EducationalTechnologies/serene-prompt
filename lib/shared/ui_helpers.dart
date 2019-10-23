@@ -41,4 +41,12 @@ class UIHelper {
   static Widget horizontalSpace(double width) {
     return SizedBox(width: width);
   }
+
+  static buildSubHeader(String title) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child:
+          Text(title, style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+    );
+  }
 }

@@ -8,7 +8,8 @@ class SettingsService {
   Map<String, dynamic> _settingsCache = {
     SettingsKeys.userId: "",
     SettingsKeys.email: "",
-    SettingsKeys.timerDurationInSeconds: 1500
+    SettingsKeys.timerDurationInSeconds: 1500,
+    SettingsKeys.wordsPerMinute: 180
   };
 
   SettingsService(this._databaseService) {}

@@ -3,7 +3,6 @@ import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   static final UserService _instance = UserService._internal();
@@ -12,15 +11,8 @@ class UserService {
   SettingsService _settings;
   String userId = "";
 
-  SharedPreferences _prefs;
-
   Future<bool> initialize() {
-    return SharedPreferences.getInstance().then((prefs) {
-      _prefs = prefs;
-      return true;
-    }).catchError((error) {
-      return false;
-    });
+    return Future.delayed(Duration.zero).then((res) => true);
   }
 
   Future<bool> isNameAvailable(String userId) async {

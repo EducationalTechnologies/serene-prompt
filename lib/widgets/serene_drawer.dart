@@ -3,6 +3,18 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/text_styles.dart';
 
 class SereneDrawer extends StatelessWidget {
+  // TODO: Grab correct version number
+  final String versionNumber = "0.1.0";
+
+  // SereneDrawer() {
+  //   PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+  //     String appName = packageInfo.appName;
+  //     String packageName = packageInfo.packageName;
+  //     String version = packageInfo.version;
+  //     String buildNumber = packageInfo.buildNumber;
+  //   });
+  // }
+
   _buildDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
     return ListTile(
       title: Row(
@@ -97,6 +109,7 @@ class SereneDrawer extends StatelessWidget {
               onTap: () async {
                 Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
+          Text(versionNumber)
         ],
       ),
     );
