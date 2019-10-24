@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
           new Padding(
             padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
             child: Icon(
-              Icons.perm_identity,
+              Icons.alternate_email,
               color: this.widget.foregroundColor,
             ),
           ),
@@ -119,8 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               },
               decoration: InputDecoration(
+                // labelText: "Email",
+                // alignLabelWithHint: true,
                 border: InputBorder.none,
-                hintText: 'Username wählen',
+                hintText: 'Email Adresse eingeben',
               ),
             ),
           ),

@@ -11,22 +11,47 @@ class EditTagsScreen extends StatelessWidget {
 
   _submit(EditTagsViewModel vm) {}
 
-  _buildTagWidget(String tag) {
+  _buildTagWidget(String tag, EditTagsViewModel vm) {
     return Container(
       child: Row(
-        children: <Widget>[Text(tag)],
+        children: <Widget>[
+          Text(
+            tag,
+            style: TextStyle(fontSize: 20),
+          ),
+          Expanded(child: Container()),
+          FlatButton(
+              child: Icon(Icons.edit), onPressed: () async => _submit(vm)),
+          FlatButton(
+              child: Icon(Icons.delete), onPressed: () async => _submit(vm))
+        ],
       ),
     );
   }
 
   _buildAddTagButton(EditTagsViewModel vm) {
     return RaisedButton(
-      onPressed: () => _submit(vm),
+      onPressed: () => vm.mode = EditTagsMode.edit,
       shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),
       child: vm.state == ViewState.idle
-          ? Text("Neues Tag", style: TextStyle(fontSize: 20))
+          ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Icon(Icons.add),
+              Text("Neues Tag", style: TextStyle(fontSize: 20))
+            ])
           : CircularProgressIndicator(),
+    );
+  }
+
+  _buildTagInput(EditTagsViewModel vm) {
+    return Row(
+      children: <Widget>[
+        TextFormField(
+          autofocus: true,
+          style: TextStyle(fontSize: 20),
+          onChanged: (text) {},
+        ),
+      ],
     );
   }
 
@@ -35,7 +60,7 @@ class EditTagsScreen extends StatelessWidget {
     var vm = Provider.of<EditTagsViewModel>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Einstellungen'),
+          title: Text('Tags'),
           centerTitle: true,
           backgroundColor: Theme.of(context).backgroundColor,
           elevation: 0.0,
@@ -43,7 +68,11 @@ class EditTagsScreen extends StatelessWidget {
             FlatButton(
                 // textColor: Colors.white,
                 // icon: const Icon(Icons.save),
-                child: Text("Speichern"),
+                child: Row(
+                  children: <Widget>[
+                    Text("Speichern"),
+                  ],
+                ),
                 onPressed: () async => _submit(vm))
           ],
         ),
@@ -53,8 +82,11 @@ class EditTagsScreen extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 UIHelper.verticalSpaceLarge(),
-                UIHelper.buildSubHeader("Wörter pro Minute"),
-                for (var tag in vm.tags) _buildTagWidget(tag),
+                // UIHelper.buildSubHeader("Tags"),
+                for (var tag in vm.tags) _buildTagWidget(tag, vm),
+                if (vm.mode == EditTagsMode.edit)
+                  _buildTagInput(vm),
+                UIHelper.verticalSpaceLarge(),
                 _buildAddTagButton(vm)
               ],
             )));

@@ -54,4 +54,10 @@ class LoginViewModel extends BaseViewModel {
   progressWithoutUsername() async {
     await _userService.saveRandomUser();
   }
+
+  _validateEmail(String value) {
+    // TODO: Replace once the package loads
+    return value.contains("@");
+    // return EmailValidator.validate(value);
+  }
 }

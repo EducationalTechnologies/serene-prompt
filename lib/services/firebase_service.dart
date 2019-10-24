@@ -79,9 +79,14 @@ class FirebaseService {
   }
 
   Future<UserData> signInUser(String userId, String password) async {
-    var result = await _firebaseAuth.signInWithEmailAndPassword(
-        email: userId, password: password);
-    return UserData(userId: result.user.uid, email: result.user.email);
+    try {
+      var result = await _firebaseAuth.signInWithEmailAndPassword(
+          email: userId, password: password);
+      return UserData(userId: result.user.uid, email: result.user.email);
+    } catch (e) {
+      print("Error trying to sign in the user: $e");
+      return null;
+    }
   }
 
   addGoal(Goal goal) async {

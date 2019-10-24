@@ -1,5 +1,4 @@
 import 'package:serene/services/settings_service.dart';
-import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class SettingsViewModel extends BaseViewModel {
