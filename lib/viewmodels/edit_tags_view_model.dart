@@ -19,4 +19,6 @@ class EditTagsViewModel extends BaseViewModel {
 
   DataService _dataService;
   EditTagsViewModel(this._dataService) {}
+
+  submit() {}
 }

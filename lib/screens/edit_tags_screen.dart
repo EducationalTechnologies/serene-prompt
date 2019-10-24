@@ -9,7 +9,9 @@ import 'package:serene/widgets/serene_drawer.dart';
 class EditTagsScreen extends StatelessWidget {
   const EditTagsScreen({Key key}) : super(key: key);
 
-  _submit(EditTagsViewModel vm) {}
+  _submit(EditTagsViewModel vm) {
+    vm.submit();
+  }
 
   _buildTagWidget(String tag, EditTagsViewModel vm) {
     return Container(

@@ -18,7 +18,7 @@ class ScrambleInternalisation extends StatefulWidget {
 }
 
 class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
-  List<ScrambleText> _sentence = [
+  List<ScrambleText> _scrambledSentence = [
     ScrambleText(originalPosition: 0, isSelected: false, text: "This"),
     ScrambleText(originalPosition: 1, isSelected: false, text: "Is"),
     ScrambleText(originalPosition: 2, isSelected: false, text: "Scrambled"),
@@ -34,14 +34,25 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     Future.delayed(Duration.zero, () {
       var shieldState = Provider.of<GoalShieldingViewModel>(context);
       print("ShieldState");
-      _sentence = [];
+      _scrambledSentence = [];
       var shieldSentence = shieldState.selectedShieldingAction.split(" ");
-      for (var i = 0; i < shieldSentence.length; i++) {
-        _sentence.add(ScrambleText(
-            isSelected: false, text: shieldSentence[i], originalPosition: i));
+      var step = 3;
+      var index = 0;
+      while (index < shieldSentence.length) {
+        var sentenceChunk = "";
+        for (var j = 0; j < step; j++) {
+          if ((index + j) < (shieldSentence.length)) {
+            sentenceChunk += shieldSentence[index + j] + " ";
+          }
+        }
+        index += step;
+        var st = ScrambleText(
+            isSelected: false, text: sentenceChunk, originalPosition: 0);
+        _scrambledSentence.add(st);
+        _builtSentence.add(st);
       }
       setState(() {
-        _sentence = scrambleSentence(_sentence);
+        _scrambledSentence = scrambleSentence(_scrambledSentence);
       });
     });
   }
@@ -49,7 +60,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   buildWordBox(ScrambleText scramble) {
     return GestureDetector(
       onTap: () {
-        _builtSentence.add(scramble);
+        // _builtSentence.add(scramble);
         setState(() {
           scramble.isSelected = !scramble.isSelected;
         });
@@ -113,13 +124,13 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
             height: 100,
             child: Wrap(
               children: <Widget>[
-                for (var s in _sentence) if (s.isSelected) buildWordBox(s),
+                for (var s in _builtSentence) if (s.isSelected) buildWordBox(s),
               ],
             ),
           ),
           Wrap(
             children: <Widget>[
-              for (var s in _sentence)
+              for (var s in _scrambledSentence)
                 if (!s.isSelected)
                   Stack(children: [buildEmptyWord(s.text), buildWordBox(s)])
                 else
