@@ -71,7 +71,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
     final goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
 
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

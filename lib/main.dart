@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.orange,
           accentColor: Color(0xfff96d15),
           buttonColor: Colors.orange[300],
+          selectedRowColor: Colors.orange[200],
           buttonTheme: ButtonThemeData(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (false) {
+    if (true) {
       return buildMaterialApp(RouteNames.MAIN);
     } else {
       return FutureBuilder<bool>(

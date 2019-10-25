@@ -44,63 +44,66 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
       ),
       drawer: SereneDrawer(),
       // backgroundColor: Colors.amber,
-      body: Column(
-        children: [
-          Flexible(
-            child: PageView.builder(
-              controller: _controller,
-              itemCount: _goalShieldingPages.length,
-              itemBuilder: (context, index) {
-                return _goalShieldingPages[index];
-              },
+      body: Container(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Flexible(
+              child: PageView.builder(
+                controller: _controller,
+                itemCount: _goalShieldingPages.length,
+                itemBuilder: (context, index) {
+                  return _goalShieldingPages[index];
+                },
+              ),
             ),
-          ),
-          Container(
-            // color: Colors.lightBlue[50],
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Visibility(
-                  visible: _index > 0,
-                  child: FlatButton(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.navigate_before),
-                        Text("Zurück"),
-                      ],
+            Container(
+              // color: Colors.lightBlue[50],
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Visibility(
+                    visible: _index > 0,
+                    child: FlatButton(
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.navigate_before),
+                          Text("Zurück"),
+                        ],
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _index--;
+                        });
+                        _controller.previousPage(
+                            duration: _kDuration, curve: _kCurve);
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _index--;
-                      });
-                      _controller.previousPage(
-                          duration: _kDuration, curve: _kCurve);
-                    },
                   ),
-                ),
-                Visibility(
-                  visible: _index < _goalShieldingPages.length,
-                  child: FlatButton(
-                    child: Row(
-                      children: <Widget>[
-                        Text("Weiter"),
-                        Icon(Icons.navigate_next)
-                      ],
+                  Visibility(
+                    visible: _index < _goalShieldingPages.length,
+                    child: FlatButton(
+                      child: Row(
+                        children: <Widget>[
+                          Text("Weiter"),
+                          Icon(Icons.navigate_next)
+                        ],
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _index++;
+                        });
+                        _controller.nextPage(
+                            duration: _kDuration, curve: _kCurve);
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _index++;
-                      });
-                      _controller.nextPage(
-                          duration: _kDuration, curve: _kCurve);
-                    },
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

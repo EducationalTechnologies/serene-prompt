@@ -73,9 +73,31 @@ class FirebaseService {
   }
 
   Future<UserData> registerUser(String userId, String password) async {
-    var result = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: userId, password: password);
-    return UserData(userId: result.user.uid, email: result.user.email);
+    try {
+      var result = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: userId, password: password);
+
+      var userData = UserData(email: userId, userId: result.user.uid, tags: []);
+
+      return UserData(userId: result.user.uid, email: result.user.email);
+    } catch (e) {
+      print("Error trying to register the user: $e");
+      return null;
+    }
+  }
+
+  Future<UserData> getUserData(String userId) async {
+    var resultDocuments = await _databaseReference
+        .collection(COLLECTION_USERS)
+        .where("userId", isEqualTo: userId)
+        .getDocuments();
+
+// TODO: Continue here
+    // var mappedGoals =
+    //     resultUser.documents.where((g) => g["progress"] < 100).map((g) {
+    //   return goalFromMap(g);
+    // }).toList();
+    return UserData.fromJson(resultDocuments.documents[0].data);
   }
 
   Future<UserData> signInUser(String userId, String password) async {
