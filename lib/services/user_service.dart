@@ -29,15 +29,19 @@ class UserService {
 
   Future<UserData> registerUser(String email, String password) async {
     var userData = await FirebaseService().registerUser(email, password);
-    await saveUsername(userData.userId);
-    await saveUserEmail(userData.email);
+    if (userData != null) {
+      await saveUsername(userData.userId);
+      await saveUserEmail(userData.email);
+    }
     return userData;
   }
 
   Future<UserData> signInUser(String email, String password) async {
     var userData = await FirebaseService().signInUser(email, password);
-    await saveUsername(userData.userId);
-    await saveUserEmail(userData.email);
+    if (userData != null) {
+      await saveUsername(userData.userId);
+      await saveUserEmail(userData.email);
+    }
     return userData;
   }
 

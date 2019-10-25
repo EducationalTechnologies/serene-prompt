@@ -110,9 +110,8 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
       itemBuilder: (context, index) {
         return Card(
           child: Container(
-              // TODO: Change color to something more pretty
               color: _selectedIndex == index
-                  ? Colors.orange[200]
+                  ? Theme.of(context).selectedRowColor
                   : Colors.transparent,
               child: ListTile(
                 title: Text(goalShieldingState.openGoals[index].goalText),

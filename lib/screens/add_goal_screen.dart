@@ -17,7 +17,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   TextEditingController _dateFieldController;
 
   var inputModeSelected = [true, false];
-  var _difficultySelected = [false, true, false, false];
+  var _difficultySelected = [false, true, false];
 
   @override
   void initState() {
@@ -254,42 +254,49 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   _buildDifficultySelector() {
+    var containerWidth = MediaQuery.of(context).size.width * 0.33 - 7;
     return Container(
       child: ToggleButtons(
         borderRadius: BorderRadius.circular(10),
         children: <Widget>[
+          // Column(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: <Widget>[
+          //     SizedBox(
+          //       height: 5,
+          //     ),
+          //     Text("❖"),
+          //     Container(
+          //         width: MediaQuery.of(context).size.width * 0.25 - 7,
+          //         alignment: Alignment.center,
+          //         child: Text("Trivial")),
+          //     SizedBox(
+          //       height: 5,
+          //     ),
+          //   ],
+          // ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               SizedBox(
-                height: 5,
+                height: 2,
               ),
-              Text("⚙"),
+              Text("❖"),
               Container(
-                  width: MediaQuery.of(context).size.width * 0.25 - 7,
+                  width: containerWidth,
                   alignment: Alignment.center,
-                  child: Text("Trivial")),
+                  child: Text("Einfach")),
               SizedBox(
-                height: 5,
+                height: 2,
               ),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("⚙⚙"),
+              Text("❖❖❖"),
               Container(
-                  width: MediaQuery.of(context).size.width * 0.25 - 7,
-                  alignment: Alignment.center,
-                  child: Text("Einfach"))
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text("⚙⚙⚙"),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.25 - 7,
+                  width: containerWidth,
                   alignment: Alignment.center,
                   child: Text("Mittel"))
             ],
@@ -297,9 +304,9 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("⚙⚙⚙⚙"),
+              Text("❖❖❖"),
               Container(
-                  width: MediaQuery.of(context).size.width * 0.25 - 7,
+                  width: containerWidth,
                   alignment: Alignment.center,
                   child: Text("Schwer"))
             ],

@@ -18,12 +18,7 @@ class ScrambleInternalisation extends StatefulWidget {
 }
 
 class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
-  List<ScrambleText> _scrambledSentence = [
-    ScrambleText(originalPosition: 0, isSelected: false, text: "This"),
-    ScrambleText(originalPosition: 1, isSelected: false, text: "Is"),
-    ScrambleText(originalPosition: 2, isSelected: false, text: "Scrambled"),
-    ScrambleText(originalPosition: 3, isSelected: false, text: "Text"),
-  ];
+  List<ScrambleText> _scrambledSentence = [];
 
   List<ScrambleText> _builtSentence = [];
 
@@ -121,7 +116,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       child: Column(
         children: <Widget>[
           Container(
-            height: 100,
+            height: MediaQuery.of(context).size.height / 3,
             child: Wrap(
               children: <Widget>[
                 for (var s in _builtSentence) if (s.isSelected) buildWordBox(s),

@@ -39,17 +39,48 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  _loginClick(BuildContext context) async {
-    var signedIn = await Provider.of<LoginViewModel>(context)
-        .signIn(_userIdTextController.text, _passwordTextController.text);
+  _buildCreateAccountDialog(LoginViewModel vm) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Account anlegen?"),
+            content: Text(
+                "Kein Account für ${_userIdTextController.text} gefunden. Soll dieser Account angelegt werden?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Ja"),
+                onPressed: () async {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              new FlatButton(
+                child: new Text("Nein"),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  _loginClick(LoginViewModel vm, BuildContext context) async {
+    var signedIn = await vm.signIn(
+        _userIdTextController.text, _passwordTextController.text);
     if (signedIn) {
       Navigator.pushNamed(context, RouteNames.MAIN);
+    } else {
+      var shouldCreate = await _buildCreateAccountDialog(vm);
+      if (shouldCreate) {
+        _registerClick(vm, context);
+      }
     }
   }
 
-  _registerClick(BuildContext context) async {
-    var registered = await Provider.of<LoginViewModel>(context)
-        .register(_userIdTextController.text, _passwordTextController.text);
+  _registerClick(LoginViewModel vm, BuildContext context) async {
+    var registered = await vm.register(
+        _userIdTextController.text, _passwordTextController.text);
     if (registered) {
       Navigator.pushNamed(context, RouteNames.MAIN);
     }
@@ -180,9 +211,9 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       onPressed: () async {
         if (vm.mode == SignInScreenMode.register) {
-          await _registerClick(context);
+          await _registerClick(vm, context);
         } else {
-          await _loginClick(context);
+          await _loginClick(vm, context);
         }
       },
       child: vm.state == ViewState.idle

@@ -33,7 +33,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
 
     return Card(
       color: goalShieldingState.hindrance == hindrance
-          ? Colors.orange
+          ? Theme.of(context).selectedRowColor
           : Colors.white,
       child: ListTile(
         leading: Icon(icon),

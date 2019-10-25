@@ -12,7 +12,7 @@ class SettingsService {
     SettingsKeys.wordsPerMinute: "180"
   };
 
-  SettingsService(this._databaseService) {}
+  SettingsService(this._databaseService);
 
   Future<bool> initialize() async {
     // return SharedPreferences.getInstance().then((prefs) {

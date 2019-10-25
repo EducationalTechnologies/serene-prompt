@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/text_styles.dart';
+// import 'package:package_info/package_info.dart';
 
 class SereneDrawer extends StatelessWidget {
   // TODO: Grab correct version number
-  final String versionNumber = "0.1.0";
+  final String versionNumber = "0.1.1";
 
-  // SereneDrawer() {
-  //   PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-  //     String appName = packageInfo.appName;
-  //     String packageName = packageInfo.packageName;
-  //     String version = packageInfo.version;
-  //     String buildNumber = packageInfo.buildNumber;
-  //   });
-  // }
+  SereneDrawer() {
+    // PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+    //   String appName = packageInfo.appName;
+    //   String packageName = packageInfo.packageName;
+    //   String version = packageInfo.version;
+    //   String buildNumber = packageInfo.buildNumber;
+    // });
+  }
 
   _buildDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
     return ListTile(
@@ -50,7 +51,13 @@ class SereneDrawer extends StatelessWidget {
                       image: DecorationImage(
                           image: AssetImage('assets/icons/icon_256.png'),
                           fit: BoxFit.cover)),
-                  child: Text("Serene")),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Text("Serene"),
+                    Text("Version $versionNumber")
+                  ])),
             ),
           ),
           Divider(),
