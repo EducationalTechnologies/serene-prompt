@@ -41,4 +41,18 @@ class Goal {
       "tags": this.tags
     };
   }
+
+  Goal.fromMap(dynamic map) {
+    DateTime deadline;
+    if (map["deadline"] != "") {
+      deadline = DateTime.parse(map["deadline"]);
+    }
+    this.deadline = deadline;
+    this.goalText = map["goalText"];
+    this.progress = map["progress"];
+    this.userId = map["userId"];
+    this.progressIndicator = map["progressIndicator"];
+    this.documentId = map.documentID;
+    this.difficulty = map["difficulty"];
+  }
 }

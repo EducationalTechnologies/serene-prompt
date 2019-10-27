@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
+import 'package:serene/models/tag.dart';
 import 'package:serene/models/user_data.dart';
 
 class FirebaseService {
@@ -25,38 +26,23 @@ class FirebaseService {
   static const String COLLECTION_GOALS_DELETED = "deletedGoals";
   static const String COLLECTION_USERS = "users";
   static const String COLLECTION_ASSESSMENTS = "assessments";
+  static const String COLLECTION_TAGS = "tags";
 
-  getGoals() async {
-    var goals =
-        await _databaseReference.collection(COLLECTION_GOALS).getDocuments();
-
-    return goals;
-  }
-
-  Goal goalFromMap(map) {
-    DateTime deadline;
-    if (map["deadline"] != "") {
-      deadline = DateTime.parse(map["deadline"]);
-    }
-    return Goal(
-        deadline: deadline,
-        goalText: map["goalText"],
-        progress: map["progress"],
-        userId: map["userId"],
-        progressIndicator: map["progressIndicator"],
-        documentId: map.documentID,
-        difficulty: map["difficulty"]);
-  }
-
-  getOpenGoals(String userId) async {
+  getGoals(String userId) async {
     var goals = await _databaseReference
         .collection(COLLECTION_GOALS)
         .where("userId", isEqualTo: userId)
         .getDocuments();
 
+    return goals;
+  }
+
+  getOpenGoals(String userId) async {
+    var goals = await getGoals(userId);
+
     var mappedGoals =
         goals.documents.where((g) => g["progress"] < 100).map((g) {
-      return goalFromMap(g);
+      return Goal.fromMap(g);
     }).toList();
     return mappedGoals;
   }
@@ -77,26 +63,34 @@ class FirebaseService {
       var result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: userId, password: password);
 
-      var userData = UserData(email: userId, userId: result.user.uid, tags: []);
+      var userData =
+          UserData(userId: result.user.uid, email: result.user.email);
 
-      return UserData(userId: result.user.uid, email: result.user.email);
+      await insertUserData(userData);
+
+      return userData;
     } catch (e) {
       print("Error trying to register the user: $e");
       return null;
     }
   }
 
-  Future<UserData> getUserData(String userId) async {
+  insertUserData(UserData userData) async {
     var resultDocuments = await _databaseReference
         .collection(COLLECTION_USERS)
-        .where("userId", isEqualTo: userId)
+        .document(userData.email)
+        .setData(userData.toMap());
+
+    return resultDocuments;
+  }
+
+  Future<UserData> getUserData(String email) async {
+    var resultDocuments = await _databaseReference
+        .collection(COLLECTION_USERS)
+        .where("email", isEqualTo: email)
         .getDocuments();
 
 // TODO: Continue here
-    // var mappedGoals =
-    //     resultUser.documents.where((g) => g["progress"] < 100).map((g) {
-    //   return goalFromMap(g);
-    // }).toList();
     return UserData.fromJson(resultDocuments.documents[0].data);
   }
 
@@ -104,7 +98,15 @@ class FirebaseService {
     try {
       var result = await _firebaseAuth.signInWithEmailAndPassword(
           email: userId, password: password);
-      return UserData(userId: result.user.uid, email: result.user.email);
+
+      var userData = await getUserData(result.user.email);
+
+      if (userData == null) {
+        userData = UserData(
+            userId: result.user.uid, email: result.user.email, tags: null);
+        await insertUserData(userData);
+      }
+      return userData;
     } catch (e) {
       print("Error trying to sign in the user: $e");
       return null;
@@ -141,6 +143,34 @@ class FirebaseService {
         .collection(COLLECTION_GOALS)
         .document(goal.documentId)
         .updateData(goal.toMap());
+  }
+
+  addTag(TagModel tag, String email) async {
+    await _databaseReference
+        .collection(COLLECTION_USERS)
+        .document(email)
+        .collection("tags")
+        .add(tag.toMap());
+  }
+
+  getTags(String email) async {
+    var tags = await _databaseReference
+        .collection(COLLECTION_USERS)
+        .document(email)
+        .collection(COLLECTION_TAGS)
+        .getDocuments();
+
+    var mappedTags = tags.documents.map((t) {
+      return TagModel.fromMap(t);
+    }).toList();
+    return mappedTags;
+  }
+
+  test() async {
+    await _databaseReference
+        .collection(COLLECTION_USERS)
+        .document("daniel")
+        .setData({"hans": "cool"});
   }
 
   saveFcmToken(String userId, String token) async {

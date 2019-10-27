@@ -46,17 +46,42 @@ class EditTagsScreen extends StatelessWidget {
         context: context,
         builder: (context) {
           return Dialog(
-            child: Card(
-              margin: EdgeInsets.all(20),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Container(
+              padding: EdgeInsets.all(10),
               child: Column(
                 children: <Widget>[
                   Text("Neuen Tag anlegen",
                       style: Theme.of(context).textTheme.headline),
+                  UIHelper.verticalSpaceLarge(),
                   TextFormField(
                     autofocus: true,
                     style: TextStyle(fontSize: 20),
                     onChanged: (text) {},
                   ),
+                  UIHelper.verticalSpaceLarge(),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        // FlatButton(
+                        //   child: Text("Abbrechen"),
+                        //   onPressed: () {
+                        //     Navigator.of(context).pop();
+                        //   },
+                        // ),
+                        FlatButton(
+                          child: Text("Speichern"),
+                          onPressed: () async {
+                            vm.deleteTag(tag);
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

@@ -56,11 +56,6 @@ class _TestScreenState extends State<TestScreen> {
                 onTap: () async {
                   await NotificationService().showNotification();
                 }),
-            ListTile(
-                title: Text("Test Firebase Messages"),
-                onTap: () async {
-                  FirebaseService().getGoals();
-                }),
             RaisedButton(
               onPressed: () {
                 Navigator.pushNamed(context, RouteNames.MAIN);

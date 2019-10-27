@@ -24,7 +24,9 @@ class EditTagsViewModel extends BaseViewModel {
 
   EditTagsViewModel(this._dataService) {}
 
-  submit() {}
+  submit() {
+    
+  }
 
   deleteTag(TagModel tag) {}
 }

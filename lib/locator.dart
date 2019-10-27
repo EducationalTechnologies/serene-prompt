@@ -10,11 +10,11 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerSingleton<LocalDatabaseService>(LocalDatabaseService.db);
+  locator.registerSingleton<FirebaseService>(FirebaseService());
   locator.registerSingleton<SettingsService>(
       SettingsService(locator.get<LocalDatabaseService>()));
   locator.registerSingleton<UserService>(
       UserService(locator.get<SettingsService>()));
-  locator.registerSingleton<FirebaseService>(FirebaseService());
   locator.registerSingleton<DataService>(DataService());
   locator.registerSingleton<NotificationService>(NotificationService());
 }

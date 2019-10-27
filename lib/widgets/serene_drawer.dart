@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:serene/services/firebase_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/text_styles.dart';
+import 'package:serene/widgets/version_info.dart';
 // import 'package:package_info/package_info.dart';
 
 class SereneDrawer extends StatelessWidget {
-  // TODO: Grab correct version number
-  final String versionNumber = "0.1.1";
-
-  SereneDrawer() {
-    // PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-    //   String appName = packageInfo.appName;
-    //   String packageName = packageInfo.packageName;
-    //   String version = packageInfo.version;
-    //   String buildNumber = packageInfo.buildNumber;
-    // });
-  }
+  SereneDrawer();
 
   _buildDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
     return ListTile(
@@ -52,12 +44,9 @@ class SereneDrawer extends StatelessWidget {
                           image: AssetImage('assets/icons/icon_256.png'),
                           fit: BoxFit.cover)),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    Text("Serene"),
-                    Text("Version $versionNumber")
-                  ])),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Text("Serene"), VersionInfo()])),
             ),
           ),
           Divider(),
@@ -103,11 +92,6 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           ListTile(
-              title: Text("Consent"),
-              onTap: () async {
-                Navigator.pushNamed(context, RouteNames.CONSENT);
-              }),
-          ListTile(
               title: Text("Timer"),
               onTap: () async {
                 Navigator.pushNamed(context, RouteNames.TIMER);
@@ -115,14 +99,15 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
               title: Text("Test"),
               onTap: () async {
-                Navigator.pushNamed(context, RouteNames.TEST);
+                // Navigator.pushNamed(context, RouteNames.TEST);
+                // FirebaseService().test();
               }),
           ListTile(
               title: Text("Log In"),
               onTap: () async {
                 Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
-          Text(versionNumber)
+          // VersionInfo()
         ],
       ),
     );
