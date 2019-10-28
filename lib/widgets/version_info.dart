@@ -9,13 +9,10 @@ class VersionInfo extends StatefulWidget {
 class _VersionInfoState extends State<VersionInfo> {
   String versionNumber = "";
 
-  VersionInfoState() {}
-
   @override
   void initState() {
+    super.initState();
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      String appName = packageInfo.appName;
-      String packageName = packageInfo.packageName;
       String version = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
 

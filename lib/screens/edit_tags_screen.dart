@@ -7,8 +7,21 @@ import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/edit_tags_view_model.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
-class EditTagsScreen extends StatelessWidget {
+class EditTagsScreen extends StatefulWidget {
   const EditTagsScreen({Key key}) : super(key: key);
+
+  @override
+  _EditTagsScreenState createState() => _EditTagsScreenState();
+}
+
+class _EditTagsScreenState extends State<EditTagsScreen> {
+  TextEditingController _newTagController;
+
+  @override
+  void initState() {
+    super.initState();
+    _newTagController = TextEditingController();
+  }
 
   _submit(EditTagsViewModel vm) async {
     vm.saveNewTags();
@@ -61,7 +74,7 @@ class EditTagsScreen extends StatelessWidget {
         });
   }
 
-  _buildTagDialog(BuildContext context, EditTagsViewModel vm, TagModel tag) {
+  _buildAddTagDialog(BuildContext context, EditTagsViewModel vm, TagModel tag) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -69,6 +82,7 @@ class EditTagsScreen extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Container(
+              height: 300,
               padding: EdgeInsets.all(10),
               child: Column(
                 children: <Widget>[
@@ -76,6 +90,7 @@ class EditTagsScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline),
                   UIHelper.verticalSpaceLarge(),
                   TextFormField(
+                    controller: _newTagController,
                     autofocus: true,
                     style: TextStyle(fontSize: 20),
                     onChanged: (text) {},
@@ -95,7 +110,57 @@ class EditTagsScreen extends StatelessWidget {
                         FlatButton(
                           child: Text("Speichern"),
                           onPressed: () async {
-                            vm.deleteTag(tag);
+                            vm.addTag(_newTagController.text);
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  _editTagDialog(BuildContext context, EditTagsViewModel vm, TagModel tag) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Container(
+              height: 300,
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: <Widget>[
+                  Text("Neuen Tag anlegen",
+                      style: Theme.of(context).textTheme.headline),
+                  UIHelper.verticalSpaceLarge(),
+                  TextFormField(
+                    controller: _newTagController,
+                    autofocus: true,
+                    style: TextStyle(fontSize: 20),
+                    onChanged: (text) {},
+                  ),
+                  UIHelper.verticalSpaceLarge(),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        // FlatButton(
+                        //   child: Text("Abbrechen"),
+                        //   onPressed: () {
+                        //     Navigator.of(context).pop();
+                        //   },
+                        // ),
+                        FlatButton(
+                          child: Text("Speichern"),
+                          onPressed: () async {
+                            vm.addTag(_newTagController.text);
                             Navigator.of(context).pop();
                           },
                         )
@@ -140,7 +205,7 @@ class EditTagsScreen extends StatelessWidget {
     return RaisedButton(
       onPressed: () {
         vm.mode = EditTagsMode.newTag;
-        _buildTagDialog(context, vm, null);
+        _buildAddTagDialog(context, vm, null);
       },
       shape:
           RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)),

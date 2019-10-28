@@ -28,21 +28,26 @@ class FirebaseService {
   static const String COLLECTION_ASSESSMENTS = "assessments";
   static const String COLLECTION_TAGS = "tags";
 
-  getGoals(String userId) async {
+  Future<List<DocumentSnapshot>> getGoals(String userId) async {
     var goals = await _databaseReference
         .collection(COLLECTION_GOALS)
         .where("userId", isEqualTo: userId)
         .getDocuments();
 
-    return goals;
+    return goals.documents;
   }
 
   getOpenGoals(String userId) async {
     var goals = await getGoals(userId);
+    List<Goal> mappedGoals;
 
-    var mappedGoals =
-        goals.documents.where((g) => g["progress"] < 100).map((g) {
-      return Goal.fromMap(g);
+    goals.forEach((g) {
+      print(g);
+    });
+
+    mappedGoals =
+        goals.where((goal) => (goal["progress"] < 100)).map((openGoal) {
+      return Goal.fromMap(openGoal);
     }).toList();
     return mappedGoals;
   }
@@ -113,17 +118,20 @@ class FirebaseService {
     }
   }
 
-  addGoal(Goal goal) async {
-    await _databaseReference
+  /// Adds a goal to the database and returns its id
+  Future<String> addGoal(Goal goal) async {
+    return await _databaseReference
         .collection(COLLECTION_GOALS)
         .add(goal.toMap())
         .then((val) {
-      return true;
+      return val.documentID;
     }).catchError((error) {
       print("Error trying to submit a new goal: $error");
+      return null;
     });
   }
 
+  /// Deletes a goal and at the same time adds it to the list of deleted goals
   deleteGoal(Goal goal) async {
     goal.completionDate = DateTime.now();
     await _databaseReference
@@ -145,12 +153,14 @@ class FirebaseService {
         .updateData(goal.toMap());
   }
 
-  addTag(TagModel tag, String email) async {
-    await _databaseReference
+  createTag(TagModel tag, String email) async {
+    var tagDoc = await _databaseReference
         .collection(COLLECTION_USERS)
         .document(email)
         .collection("tags")
         .add(tag.toMap());
+
+    return tagDoc.documentID;
   }
 
   getTags(String email) async {
@@ -164,6 +174,15 @@ class FirebaseService {
       return TagModel.fromMap(t);
     }).toList();
     return mappedTags;
+  }
+
+  updateTag(TagModel tag, String email) async {
+    var tagDoc = await _databaseReference
+        .collection(COLLECTION_USERS)
+        .document(email)
+        .collection("tags")
+        .document(tag.id)
+        .setData(tag.toMap());
   }
 
   test() async {

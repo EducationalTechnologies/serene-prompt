@@ -12,7 +12,7 @@ import 'package:serene/services/user_service.dart';
 class DataService {
   static final DataService _instance = DataService._internal();
   factory DataService() => _instance;
-  List<Goal> _goals;
+  List<Goal> _goalsCache;
   List<Goal> _openGoalsCache = [];
   List<TagModel> _tagCache = [];
   List<GoalShield> _goalShields;
@@ -26,7 +26,7 @@ class DataService {
   }
 
   get goals {
-    return _goals;
+    return _goalsCache;
   }
 
   get openGoals {
@@ -34,14 +34,17 @@ class DataService {
   }
 
   saveGoal(Goal goal) async {
-    _openGoalsCache.add(goal);
     //TODO: Handle the case that saving fails
-    await _databaseService.addGoal(goal);
+    var docId = await _databaseService.addGoal(goal);
+    if (docId != null) {
+      goal.documentId = docId;
+      _openGoalsCache.add(goal);
+    }
   }
 
   getGoals() async {
-    _goals = await LocalDatabaseService.db.getGoals();
-    return _goals;
+    _goalsCache = await LocalDatabaseService.db.getGoals();
+    return _goalsCache;
   }
 
   Future<List<Goal>> getOpenGoals() async {
@@ -53,6 +56,20 @@ class DataService {
     return _openGoalsCache;
   }
 
+  updateGoal(Goal goal) async {
+    var goalIndex = _openGoalsCache.indexOf(goal);
+    if (goalIndex >= 0) {
+      if (goal.progress >= 100) {
+        _openGoalsCache.removeAt(goalIndex);
+      }
+    }
+    await _databaseService.updateGoal(goal);
+  }
+
+  deleteGoal(Goal goal) async {
+    await _databaseService.deleteGoal(goal);
+  }
+
   Future<List<TagModel>> getTags() async {
     if (_tagCache.length == 0) {
       var userId = _userService.getUsername();
@@ -61,19 +78,28 @@ class DataService {
     return _tagCache;
   }
 
-  saveTag(TagModel tag) async {
-    var existingTag = _tagCache.firstWhere((t) => tag.id == t.id);
+  updateTag(TagModel tag) async {
+    await _databaseService.updateTag(tag, _userService.getUsername());
+    var existingTag =
+        _tagCache.firstWhere((t) => tag.id == t.id, orElse: () => null);
     if (existingTag != null) {
       existingTag.name = tag.name;
     } else {
       _tagCache.add(tag);
     }
-
-    await _databaseService.addTag(tag, _userService.getUsername());
   }
 
-  deleteGoal(Goal goal) async {
-    await _databaseService.deleteGoal(goal);
+  saveTag(TagModel tag) async {
+    var tagId =
+        await _databaseService.createTag(tag, _userService.getUsername());
+    tag.id = tagId;
+    var existingTag =
+        _tagCache.firstWhere((t) => tag.id == t.id, orElse: () => null);
+    if (existingTag != null) {
+      existingTag.name = tag.name;
+    } else {
+      _tagCache.add(tag);
+    }
   }
 
   getGoalShields() async {
@@ -84,10 +110,6 @@ class DataService {
       _goalShields.add(GoalShield.fromJson(s));
     }
     return _goalShields;
-  }
-
-  updateGoal(Goal goal) async {
-    await _databaseService.updateGoal(goal);
   }
 
   saveAssessment(AssessmentModel assessment) async {

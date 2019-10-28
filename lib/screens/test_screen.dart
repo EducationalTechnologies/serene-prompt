@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';

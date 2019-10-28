@@ -18,7 +18,16 @@ class GoalMonitorScreen extends StatefulWidget {
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
+  AnimationController _controller;
+
   List<Goal> _goals = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // _controller =
+    //     AnimationController(value: 0.0, duration: Duration(milliseconds: 500));
+  }
 
   _updateGoal(Goal goal) async {
     await Provider.of<GoalMonitoringState>(context).updateGoal(goal);
@@ -35,6 +44,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   }
 
   _removeItem(Goal goal) async {
+    // return null;
     var index = _goals.indexOf(goal);
     Goal removed = _goals.removeAt(index);
     _listKey.currentState.removeItem(
@@ -88,10 +98,15 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       value: goal.progress.toDouble(),
       min: 0,
       max: 100,
+      label: "${goal.progress}%",
+      divisions: 100,
       onChanged: (double value) {
-        goal.progress = value.toInt();
+        setState(() {
+          goal.progress = value.toInt();
+        });
       },
       onChangeEnd: (double value) {
+        print("Gooal end");
         if (value >= 100) {
           _finishGoal(goal);
         } else {
@@ -115,10 +130,10 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<ListItemMenu>>[
-        PopupMenuItem(value: ListItemMenu.edit, child: Text("Edit")),
+        PopupMenuItem(value: ListItemMenu.edit, child: Text("Bearbeiten")),
         PopupMenuItem(
           value: ListItemMenu.delete,
-          child: Text("Delete"),
+          child: Text("Löschen"),
         )
       ],
     );
@@ -132,6 +147,15 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     ).animate(animation);
 
     double inset = index * 32.0;
+
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        if (_goals.length == 0) {
+          setState(() {});
+        }
+      }
+    });
 
     return SlideTransition(
       position: anim,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
-import 'package:serene/services/settings_service.dart';
 
 class GoalShieldingViewModel with ChangeNotifier {
   int id;

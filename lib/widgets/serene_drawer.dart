@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serene/services/firebase_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/text_styles.dart';
 import 'package:serene/widgets/version_info.dart';
-// import 'package:package_info/package_info.dart';
 
 class SereneDrawer extends StatelessWidget {
   SereneDrawer();

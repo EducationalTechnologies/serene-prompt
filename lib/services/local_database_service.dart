@@ -14,7 +14,7 @@ final String columnHindrance = 'hindrance';
 
 const String TABLE_GOALS = "goals";
 const String TABLE_SETTINGS = "settings";
-const int DB_VERSION = 3;
+const int DB_VERSION = 4;
 
 class LocalDatabaseService {
   LocalDatabaseService._();
