@@ -10,8 +10,28 @@ import 'package:serene/widgets/serene_drawer.dart';
 class EditTagsScreen extends StatelessWidget {
   const EditTagsScreen({Key key}) : super(key: key);
 
-  _submit(EditTagsViewModel vm) {
-    vm.submit();
+  _submit(EditTagsViewModel vm) async {
+    vm.saveNewTags();
+  }
+
+  _buildAppBar(BuildContext context, EditTagsViewModel vm) {
+    return AppBar(
+      title: Text('Tags'),
+      centerTitle: true,
+      backgroundColor: Theme.of(context).backgroundColor,
+      elevation: 0.0,
+      actions: <Widget>[
+        FlatButton(
+            // textColor: Colors.white,
+            // icon: const Icon(Icons.save),
+            child: Row(
+              children: <Widget>[
+                Text("Speichern"),
+              ],
+            ),
+            onPressed: () async => _submit(vm))
+      ],
+    );
   }
 
   _buildConfirmationDialog(
@@ -154,23 +174,7 @@ class EditTagsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var vm = Provider.of<EditTagsViewModel>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Tags'),
-          centerTitle: true,
-          backgroundColor: Theme.of(context).backgroundColor,
-          elevation: 0.0,
-          actions: <Widget>[
-            FlatButton(
-                // textColor: Colors.white,
-                // icon: const Icon(Icons.save),
-                child: Row(
-                  children: <Widget>[
-                    Text("Speichern"),
-                  ],
-                ),
-                onPressed: () async => _submit(vm))
-          ],
-        ),
+        appBar: _buildAppBar(context, vm),
         drawer: SereneDrawer(),
         body: Container(
             margin: EdgeInsets.all(10),

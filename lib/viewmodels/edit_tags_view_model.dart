@@ -24,8 +24,11 @@ class EditTagsViewModel extends BaseViewModel {
 
   EditTagsViewModel(this._dataService) {}
 
-  submit() {
-    
+  saveNewTags() async {
+    //Save all the tags that are not in the cache
+    for (var tag in _tags) {
+      await this._dataService.saveTag(tag);
+    }
   }
 
   deleteTag(TagModel tag) {}

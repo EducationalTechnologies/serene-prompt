@@ -62,12 +62,14 @@ class DataService {
   }
 
   saveTag(TagModel tag) async {
-    _tagCache.add(tag);
-    if (_openGoalsCache.length == 0) {
-      var userId = _userService.getUsername();
-      _openGoalsCache = await _databaseService.getOpenGoals(userId);
+    var existingTag = _tagCache.firstWhere((t) => tag.id == t.id);
+    if (existingTag != null) {
+      existingTag.name = tag.name;
+    } else {
+      _tagCache.add(tag);
     }
-    return _openGoalsCache;
+
+    await _databaseService.addTag(tag, _userService.getUsername());
   }
 
   deleteGoal(Goal goal) async {
