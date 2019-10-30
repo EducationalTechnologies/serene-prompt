@@ -42,7 +42,7 @@ class Goal {
     };
   }
 
-  Goal.fromMap(dynamic map) {
+  Goal.fromDocument(dynamic map) {
     DateTime deadline;
     if (map["deadline"] != "") {
       deadline = DateTime.parse(map["deadline"]);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serene/models/tag.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
@@ -340,22 +341,21 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     );
   }
 
-  _buildTagSelectionList() {
+  _buildTagSelectionList(AddGoalViewModel vm) {
     return Column(
-      children: <Widget>[
-        _buildTagSelection("Eins"),
-        _buildTagSelection("Zwei"),
-        _buildTagSelection("Drei"),
-      ],
+      children: <Widget>[for (var tag in vm.tags) _buildTagSelection(vm, tag)],
     );
   }
 
-  _buildTagSelection(String tag) {
+  _buildTagSelection(AddGoalViewModel vm, TagModel tag) {
     return CheckboxListTile(
       controlAffinity: ListTileControlAffinity.leading,
-      title: Text(tag),
-      onChanged: (bool value) {},
-      value: true,
+      title: Text(tag.name),
+      onChanged: (bool value) {
+        vm.toggleTag(tag, value);
+      },
+      value: vm.currentGoal.tags.firstWhere((t) => t == tag.id, orElse: null) !=
+          null,
     );
   }
 
@@ -376,6 +376,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var vm = Provider.of<AddGoalViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         // title: Text('Neues Ziel'),
@@ -413,19 +414,17 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                     buildSubHeader("Eingabe des Zielfortschritts"),
                     UIHelper.verticalSpaceSmall(),
                     _buildInputSelector(),
-                    // buildSubHeader("Tags"),
-                    // _buildTagSelectionList(),
-                    // Expanded(
-                    //   child: Container(),
-                    // ),
+                    if (vm.tags.length > 0)
+                      buildSubHeader("Tags"),
+                    _buildTagSelectionList(vm),
                     UIHelper.verticalSpaceMedium(),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: buildSubmitButton(),
                     ),
 
-                    // buildSubmitButton(),
-                    UIHelper.verticalSpaceLarge(),
+                    // // buildSubmitButton(),
+                    // UIHelper.verticalSpaceLarge(),
                   ],
                 ),
               ),

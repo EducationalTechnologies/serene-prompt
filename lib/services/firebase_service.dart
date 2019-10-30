@@ -41,13 +41,9 @@ class FirebaseService {
     var goals = await getGoals(userId);
     List<Goal> mappedGoals;
 
-    goals.forEach((g) {
-      print(g);
-    });
-
     mappedGoals =
         goals.where((goal) => (goal["progress"] < 100)).map((openGoal) {
-      return Goal.fromMap(openGoal);
+      return Goal.fromDocument(openGoal);
     }).toList();
     return mappedGoals;
   }
@@ -170,8 +166,8 @@ class FirebaseService {
         .collection(COLLECTION_TAGS)
         .getDocuments();
 
-    var mappedTags = tags.documents.map((t) {
-      return TagModel.fromMap(t);
+    List<TagModel> mappedTags = tags.documents.map((t) {
+      return TagModel.fromDocument(t);
     }).toList();
     return mappedTags;
   }

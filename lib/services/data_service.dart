@@ -72,14 +72,14 @@ class DataService {
 
   Future<List<TagModel>> getTags() async {
     if (_tagCache.length == 0) {
-      var userId = _userService.getUsername();
-      _openGoalsCache = await _databaseService.getTags(userId);
+      var userId = _userService.getUserEmail();
+      _tagCache = await _databaseService.getTags(userId);
     }
     return _tagCache;
   }
 
   updateTag(TagModel tag) async {
-    await _databaseService.updateTag(tag, _userService.getUsername());
+    await _databaseService.updateTag(tag, _userService.getUserEmail());
     var existingTag =
         _tagCache.firstWhere((t) => tag.id == t.id, orElse: () => null);
     if (existingTag != null) {
@@ -91,7 +91,7 @@ class DataService {
 
   saveTag(TagModel tag) async {
     var tagId =
-        await _databaseService.createTag(tag, _userService.getUsername());
+        await _databaseService.createTag(tag, _userService.getUserEmail());
     tag.id = tagId;
     var existingTag =
         _tagCache.firstWhere((t) => tag.id == t.id, orElse: () => null);

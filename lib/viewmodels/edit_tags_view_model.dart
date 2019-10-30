@@ -14,15 +14,17 @@ class EditTagsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List<TagModel> _tags = [
-    TagModel(id: "1", name: "Lernen"),
-    TagModel(id: "2", name: "Arbeiten")
-  ];
+  List<TagModel> _tags = [];
   get tags => _tags;
 
   DataService _dataService;
 
-  EditTagsViewModel(this._dataService);
+  EditTagsViewModel(this._dataService) {
+    _dataService.getTags().then((value) {
+      this._tags = value;
+      notifyListeners();
+    });
+  }
 
   saveNewTags() async {
     //Save all the tags that are not in the cache

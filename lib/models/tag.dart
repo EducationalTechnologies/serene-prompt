@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TagModel {
   String name;
   String id;
@@ -11,8 +13,8 @@ class TagModel {
     };
   }
 
-  TagModel.fromMap(dynamic map) {
-    id = map["id"];
+  TagModel.fromDocument(DocumentSnapshot map) {
+    id = map.documentID;
     name = map["name"];
   }
 }

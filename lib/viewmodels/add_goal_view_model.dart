@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/models/tag.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/user_service.dart';
@@ -10,6 +11,10 @@ class AddGoalViewModel extends BaseViewModel {
   bool _isFetching = false;
   Goal _currentGoal;
   DataService _dataService;
+  List<TagModel> _tags = [];
+
+  List<TagModel> get tags => _tags;
+
   String _mode = GoalScreenMode.create;
   String get mode => _mode;
 
@@ -24,6 +29,11 @@ class AddGoalViewModel extends BaseViewModel {
       this._currentGoal = goal;
       _mode = GoalScreenMode.edit;
     }
+
+    dataService.getTags().then((tags) {
+      _tags = tags;
+      notifyListeners();
+    });
   }
 
   Goal get currentGoal {
@@ -57,6 +67,10 @@ class AddGoalViewModel extends BaseViewModel {
 
   Future _saveNewGoal(Goal goal) async {
     await _dataService.saveGoal(goal);
+  }
+
+  toggleTag(TagModel tag, bool value) {
+    
   }
 
   canSubmit() {
