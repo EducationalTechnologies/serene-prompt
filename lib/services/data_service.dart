@@ -67,6 +67,10 @@ class DataService {
   }
 
   deleteGoal(Goal goal) async {
+    var goalIndex = _openGoalsCache.indexOf(goal);
+    if (goalIndex >= 0) {
+      _openGoalsCache.removeAt(goalIndex);
+    }
     await _databaseService.deleteGoal(goal);
   }
 

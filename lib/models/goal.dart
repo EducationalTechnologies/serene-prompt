@@ -9,6 +9,8 @@ class Goal {
   String difficulty;
   String userId;
   String documentId;
+  String parentId;
+  String path;
   DateTime creationDate;
   DateTime completionDate;
   List<String> tags;
@@ -20,10 +22,12 @@ class Goal {
       this.progress = 0,
       this.documentId = "",
       this.userId = "",
+      this.parentId = "",
+      this.path = "",
       this.difficulty = GoalDifficulty.medium,
       this.creationDate,
       this.completionDate,
-      this.tags = const ["A Tag"],
+      this.tags = const [],
       this.progressIndicator = GoalProgressIndicator.checkbox});
 
   Map<String, dynamic> toMap() {
@@ -38,7 +42,9 @@ class Goal {
       "difficulty": this.difficulty,
       "userId": this.userId,
       "documentId": this.documentId,
-      "tags": this.tags
+      "tags": this.tags,
+      "parentId": this.parentId,
+      "path": this.path
     };
   }
 
@@ -47,12 +53,19 @@ class Goal {
     if (map["deadline"] != "") {
       deadline = DateTime.parse(map["deadline"]);
     }
+    DateTime creationDate;
+    if (map["creationDate"] != "") {
+      creationDate = DateTime.parse(map["creationDate"]);
+    }
     this.deadline = deadline;
+    this.creationDate = creationDate;
     this.goalText = map["goalText"];
     this.progress = map["progress"];
     this.userId = map["userId"];
     this.progressIndicator = map["progressIndicator"];
     this.documentId = map.documentID;
     this.difficulty = map["difficulty"];
+    this.parentId = map["parentId"];
+    this.path = map["path"];
   }
 }

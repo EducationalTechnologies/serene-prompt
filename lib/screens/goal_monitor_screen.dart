@@ -4,9 +4,9 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_monitoring_state.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 
 enum ListItemMenu { delete, edit }
 
@@ -30,16 +30,16 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   }
 
   _updateGoal(Goal goal) async {
-    await Provider.of<GoalMonitoringState>(context).updateGoal(goal);
+    await Provider.of<GoalMonitoringVielModel>(context).updateGoal(goal);
   }
 
   _finishGoal(Goal goal) async {
-    await Provider.of<GoalMonitoringState>(context).updateGoal(goal);
+    await Provider.of<GoalMonitoringVielModel>(context).updateGoal(goal);
     _removeItem(goal);
   }
 
   _deleteGoal(Goal goal) async {
-    await Provider.of<GoalMonitoringState>(context).deleteGoal(goal);
+    await Provider.of<GoalMonitoringVielModel>(context).deleteGoal(goal);
     _removeItem(goal);
   }
 
@@ -204,7 +204,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final goalMonitoringState = Provider.of<GoalMonitoringState>(context);
+    final goalMonitoringState = Provider.of<GoalMonitoringVielModel>(context);
 
     if (goalMonitoringState.openGoals != null) {
       _goals = [];

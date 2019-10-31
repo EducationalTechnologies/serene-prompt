@@ -6,7 +6,7 @@ import 'package:serene/screens/resource_links_screen.dart';
 import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/goal_monitoring_state.dart';
+import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class MainScreen extends StatefulWidget {
@@ -25,8 +25,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   buildMonitoringScreen() {
-    return ChangeNotifierProvider<GoalMonitoringState>(
-      builder: (_) => GoalMonitoringState(locator.get<DataService>()),
+    return ChangeNotifierProvider<GoalMonitoringVielModel>(
+      builder: (_) => GoalMonitoringVielModel(locator.get<DataService>()),
       child: GoalMonitorScreen(),
     );
   }

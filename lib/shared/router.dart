@@ -21,7 +21,7 @@ import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/edit_tags_view_model.dart';
-import 'package:serene/viewmodels/goal_monitoring_state.dart';
+import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
@@ -85,8 +85,8 @@ class Router {
       case RouteNames.OPEN_GOALS:
         return MaterialPageRoute(
             builder: (context) => MultiProvider(providers: [
-                  ChangeNotifierProvider<GoalMonitoringState>.value(
-                      value: GoalMonitoringState(Provider.of(context))),
+                  ChangeNotifierProvider<GoalMonitoringVielModel>.value(
+                      value: GoalMonitoringVielModel(Provider.of(context))),
                 ], child: GoalMonitorScreen()));
 
       case RouteNames.LOG_IN:

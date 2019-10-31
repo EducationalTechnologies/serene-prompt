@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
 
-class GoalMonitoringState with ChangeNotifier {
+class GoalMonitoringVielModel with ChangeNotifier {
   bool _isFetching = false;
   List<Goal> _goals;
   List<Goal> _openGoals;
@@ -10,7 +10,7 @@ class GoalMonitoringState with ChangeNotifier {
   DataService _dataService;
   // DataService _dataService;
 
-  GoalMonitoringState(this._dataService) {
+  GoalMonitoringVielModel(this._dataService) {
     // _getOpenGoalsAsync();
     _dataService.getOpenGoals().then((goalList) {
       _openGoals = goalList;

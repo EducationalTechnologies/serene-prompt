@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serene/models/goal.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
@@ -354,12 +355,25 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
       onChanged: (bool value) {
         vm.toggleTag(tag, value);
       },
-      value: vm.currentGoal.tags.firstWhere((t) => t == tag.id, orElse: null) !=
-          null,
+      value: false,
     );
   }
 
-  buildSubmitButton() {
+  _buildParentGoalSelection(AddGoalViewModel vm) {
+    return DropdownButton(
+        value: null,
+        onChanged: (newValue) {
+          print("Selected New Parent: $newValue");
+        },
+        items: vm.openGoals.map<DropdownMenuItem>((og) {
+          return DropdownMenuItem<Goal>(
+            child: Text(og.goalText),
+            value: og,
+          );
+        }).toList());
+  }
+
+  _buildSubmitButton() {
     var vm = Provider.of<AddGoalViewModel>(context);
     return SizedBox(
         width: double.infinity,
@@ -414,13 +428,16 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                     buildSubHeader("Eingabe des Zielfortschritts"),
                     UIHelper.verticalSpaceSmall(),
                     _buildInputSelector(),
+                    UIHelper.verticalSpaceSmall(),
                     if (vm.tags.length > 0)
                       buildSubHeader("Tags"),
                     _buildTagSelectionList(vm),
+                    buildSubHeader("Übergeordnetes Ziel"),
+                    _buildParentGoalSelection(vm),
                     UIHelper.verticalSpaceMedium(),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: buildSubmitButton(),
+                      child: _buildSubmitButton(),
                     ),
 
                     // // buildSubmitButton(),

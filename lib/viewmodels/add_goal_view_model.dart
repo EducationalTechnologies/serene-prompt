@@ -12,8 +12,10 @@ class AddGoalViewModel extends BaseViewModel {
   Goal _currentGoal;
   DataService _dataService;
   List<TagModel> _tags = [];
+  List<Goal> _openGoals = [];
 
   List<TagModel> get tags => _tags;
+  List<Goal> get openGoals => _openGoals;
 
   String _mode = GoalScreenMode.create;
   String get mode => _mode;
@@ -32,6 +34,11 @@ class AddGoalViewModel extends BaseViewModel {
 
     dataService.getTags().then((tags) {
       _tags = tags;
+      notifyListeners();
+    });
+
+    dataService.getOpenGoals().then((og) {
+      _openGoals = og;
       notifyListeners();
     });
   }
@@ -70,7 +77,7 @@ class AddGoalViewModel extends BaseViewModel {
   }
 
   toggleTag(TagModel tag, bool value) {
-    
+
   }
 
   canSubmit() {
