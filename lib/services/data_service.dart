@@ -8,6 +8,7 @@ import 'package:serene/models/tag.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
+import 'package:serene/shared/materialized_path.dart';
 
 class DataService {
   static final DataService _instance = DataService._internal();
@@ -22,7 +23,6 @@ class DataService {
   DataService._internal() {
     this._userService = locator.get<UserService>();
     this._databaseService = locator.get<FirebaseService>();
-    //TODO: Create initialize service
   }
 
   get goals {
@@ -33,11 +33,24 @@ class DataService {
     return _openGoalsCache;
   }
 
-  saveGoal(Goal goal) async {
+  Goal getGoalById(String id) {
+    try {
+      return _openGoalsCache.firstWhere((g) => g.id == id, orElse: null);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  createGoal(Goal goal) async {
     //TODO: Handle the case that saving fails
     var docId = await _databaseService.addGoal(goal);
     if (docId != null) {
-      goal.documentId = docId;
+      goal.id = docId;
+      goal.path = MaterializedPath.toPathString(goal.id);
+      if (goal.parentId.isNotEmpty) {
+        var parentPath = getGoalById(goal.parentId).path;
+        goal.path = MaterializedPath.addToPath(parentPath, goal.path);
+      }
       _openGoalsCache.add(goal);
     }
   }

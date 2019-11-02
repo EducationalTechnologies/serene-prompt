@@ -35,7 +35,7 @@ class ConsentScreen extends StatelessWidget {
 
   final String _subheaderWhatHappensWithData =
       "Was passiert mit den Daten die über mich gesammelt werden?";
-  List<String> _textWhatHappensWithData = [
+  final List<String> _textWhatHappensWithData = [
     "Die Daten werden während des Semesters gesammelt und anschließend vollständig anonym für die wissenschaftliche Forschung verwendet. Insbesondere erhält das Lehrpersonal keinen Zugriff auf die Daten",
     "Für die Analyse der Daten werden diese in aggregierter Form aufbereitet, und die Forscher/innen werden diese statistisch untersuchen. Dabei wird untersucht, wie die gesetzten Lernziele und Lernzeiten in Verbindung zu einzelnen Funktionalitäten der Applikation stehen.",
     ""

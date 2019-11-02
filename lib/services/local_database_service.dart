@@ -59,7 +59,7 @@ class LocalDatabaseService {
     if (oldVersion != newVersion) {
       await db.execute("DROP TABLE IF EXISTS $TABLE_GOALS");
       await db.execute(
-          "CREATE TABLE IF NOT EXISTS $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+          "CREATE TABLE IF NOT EXISTS $TABLE_GOALS(id STRING PRIMARY KEY, " +
               "goalText STRING, " +
               "deadline STRING, " +
               "documentId STRING, " +
@@ -204,19 +204,19 @@ class LocalDatabaseService {
   insertSampleData() async {
     List<Goal> _goals = [
       Goal(
-          id: 0,
+          id: "0",
           goalText: "Fix the audio recording issue",
           progressIndicator: GoalProgressIndicator.checkbox,
           deadline: DateTime.now(),
           progress: 40),
       Goal(
-          id: 1,
+          id: "1",
           goalText: "Create the informed consent screen",
           progressIndicator: GoalProgressIndicator.slider,
           deadline: DateTime.now(),
           progress: 5),
       Goal(
-          id: 2,
+          id: "2",
           goalText: "Ethikantrag ausfüllen",
           progressIndicator: GoalProgressIndicator.checkbox,
           deadline: DateTime.now(),

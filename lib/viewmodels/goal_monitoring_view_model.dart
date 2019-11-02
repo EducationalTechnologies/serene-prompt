@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/shared/materialized_path.dart';
 
 class GoalMonitoringVielModel with ChangeNotifier {
   bool _isFetching = false;
@@ -14,6 +15,8 @@ class GoalMonitoringVielModel with ChangeNotifier {
     // _getOpenGoalsAsync();
     _dataService.getOpenGoals().then((goalList) {
       _openGoals = goalList;
+
+      // var tree = _pathTreeFromGoals(_openGoals);
       notifyListeners();
     });
   }

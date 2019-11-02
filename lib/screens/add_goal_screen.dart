@@ -361,11 +361,12 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
 
   _buildParentGoalSelection(AddGoalViewModel vm) {
     return DropdownButton(
-        value: null,
-        onChanged: (newValue) {
-          print("Selected New Parent: $newValue");
+        value: vm.selectedParentGoal,
+        onChanged: (selectedParent) {
+          print("Selected New Parent: $selectedParent");
+          vm.selectedParentGoal = selectedParent;
         },
-        items: vm.openGoals.map<DropdownMenuItem>((og) {
+        items: vm.potentialParents.map<DropdownMenuItem>((og) {
           return DropdownMenuItem<Goal>(
             child: Text(og.goalText),
             value: og,

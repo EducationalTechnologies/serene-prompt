@@ -145,9 +145,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       begin: new Offset(3.0, 0.0),
       end: new Offset(0.0, 0.0),
     ).animate(animation);
-
-    double inset = index * 32.0;
-
+    
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed ||
           status == AnimationStatus.dismissed) {
@@ -162,6 +160,8 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       child: Container(
         key: Key('${goal.hashCode}'),
         child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Column(

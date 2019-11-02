@@ -135,7 +135,7 @@ class FirebaseService {
         .add(goal.toMap());
     await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(goal.documentId)
+        .document(goal.id)
         .delete()
         .catchError((e) {
       print(e);
@@ -145,7 +145,7 @@ class FirebaseService {
   updateGoal(Goal goal) async {
     await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(goal.documentId)
+        .document(goal.id)
         .updateData(goal.toMap());
   }
 

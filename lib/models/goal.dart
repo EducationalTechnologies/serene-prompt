@@ -1,14 +1,13 @@
 import 'package:serene/shared/enums.dart';
 
 class Goal {
-  int id;
+  String id;
   String goalText;
   DateTime deadline;
   int progress;
   String progressIndicator;
   String difficulty;
   String userId;
-  String documentId;
   String parentId;
   String path;
   DateTime creationDate;
@@ -20,7 +19,6 @@ class Goal {
       this.goalText = "",
       this.deadline,
       this.progress = 0,
-      this.documentId = "",
       this.userId = "",
       this.parentId = "",
       this.path = "",
@@ -28,7 +26,9 @@ class Goal {
       this.creationDate,
       this.completionDate,
       this.tags = const [],
-      this.progressIndicator = GoalProgressIndicator.checkbox});
+      this.progressIndicator = GoalProgressIndicator.checkbox}) {
+    this.creationDate = DateTime.now();
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -41,7 +41,6 @@ class Goal {
       "progressIndicator": this.progressIndicator,
       "difficulty": this.difficulty,
       "userId": this.userId,
-      "documentId": this.documentId,
       "tags": this.tags,
       "parentId": this.parentId,
       "path": this.path
@@ -63,9 +62,31 @@ class Goal {
     this.progress = map["progress"];
     this.userId = map["userId"];
     this.progressIndicator = map["progressIndicator"];
-    this.documentId = map.documentID;
     this.difficulty = map["difficulty"];
     this.parentId = map["parentId"];
     this.path = map["path"];
+    this.id = map.documentID;
   }
+
+  Goal.fromMap(Map<String, dynamic> map) {
+    DateTime deadline;
+    if (map["deadline"] != "") {
+      deadline = DateTime.parse(map["deadline"]);
+    }
+    DateTime creationDate;
+    if (map["creationDate"] != "") {
+      creationDate = DateTime.parse(map["creationDate"]);
+    }
+    this.deadline = deadline;
+    this.creationDate = creationDate;
+    this.goalText = map["goalText"];
+    this.progress = map["progress"];
+    this.userId = map["userId"];
+    this.progressIndicator = map["progressIndicator"];
+    this.difficulty = map["difficulty"];
+    this.parentId = map["parentId"];
+    this.path = map["path"];
+    this.id = map["id"].toString();
+  }
+  
 }
