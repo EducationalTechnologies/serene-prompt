@@ -8,6 +8,7 @@ import 'package:serene/models/tag.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
+import 'package:serene/shared/id_generator.dart';
 import 'package:serene/shared/materialized_path.dart';
 
 class DataService {
@@ -43,15 +44,13 @@ class DataService {
 
   createGoal(Goal goal) async {
     //TODO: Handle the case that saving fails
-    var docId = await _databaseService.addGoal(goal);
-    if (docId != null) {
-      goal.id = docId;
-      goal.path = MaterializedPath.toPathString(goal.id);
-      if (goal.parentId.isNotEmpty) {
-        var parentPath = getGoalById(goal.parentId).path;
-        goal.path = MaterializedPath.addToPath(parentPath, goal.path);
-      }
-      _openGoalsCache.add(goal);
+    goal.id = IdGenerator.generatePushId();
+    goal.path = MaterializedPath.toPathString(goal.id);
+    _openGoalsCache.add(goal);
+    await _databaseService.createGoal(goal, _userService.getUserEmail());
+    if (goal.parentId.isNotEmpty) {
+      var parentPath = getGoalById(goal.parentId).path;
+      goal.path = MaterializedPath.addToPath(parentPath, goal.path);
     }
   }
 
@@ -63,8 +62,8 @@ class DataService {
   Future<List<Goal>> getOpenGoals() async {
     //_openGoals = await DBProvider.db.getOpenGoals();
     if (_openGoalsCache.length == 0) {
-      var userId = _userService.getUsername();
-      _openGoalsCache = await _databaseService.getOpenGoals(userId);
+      _openGoalsCache =
+          await _databaseService.retrieveOpenGoals(_userService.getUserEmail());
     }
     return _openGoalsCache;
   }
@@ -76,7 +75,7 @@ class DataService {
         _openGoalsCache.removeAt(goalIndex);
       }
     }
-    await _databaseService.updateGoal(goal);
+    await _databaseService.updateGoal(goal, _userService.getUserEmail());
   }
 
   deleteGoal(Goal goal) async {
@@ -84,7 +83,7 @@ class DataService {
     if (goalIndex >= 0) {
       _openGoalsCache.removeAt(goalIndex);
     }
-    await _databaseService.deleteGoal(goal);
+    await _databaseService.deleteGoal(goal, _userService.getUserEmail());
   }
 
   Future<List<TagModel>> getTags() async {

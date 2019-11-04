@@ -17,8 +17,23 @@ class GoalMonitoringVielModel with ChangeNotifier {
       _openGoals = goalList;
 
       // var tree = _pathTreeFromGoals(_openGoals);
+      sortByTree();
       notifyListeners();
     });
+  }
+
+  void sortByTree() {
+    var ids = _openGoals.map((f) => f.path).toList();
+    var tree = MaterializedPath.pathTreeFromPathList(ids);
+    var dfList = MaterializedPath.depthFirstFromTree(tree);
+    List<Goal> list = [];
+    for (var id in dfList) {
+      var indexOf = _openGoals.indexWhere((g) => g.id == id);
+      if (indexOf >= 0) {
+        list.add(_openGoals[indexOf]);
+      }
+    }
+    _openGoals = list;
   }
 
   List<Goal> get goals {

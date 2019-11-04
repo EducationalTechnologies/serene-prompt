@@ -24,6 +24,7 @@ class FirebaseService {
 
   static const String COLLECTION_GOALS = "goals";
   static const String COLLECTION_GOALS_DELETED = "deletedGoals";
+  static const String COLLECTION_GOALS_OPEN = "openGoals";
   static const String COLLECTION_USERS = "users";
   static const String COLLECTION_ASSESSMENTS = "assessments";
   static const String COLLECTION_TAGS = "tags";
@@ -31,13 +32,30 @@ class FirebaseService {
   Future<List<DocumentSnapshot>> getGoals(String userId) async {
     var goals = await _databaseReference
         .collection(COLLECTION_GOALS)
-        .where("userId", isEqualTo: userId)
+        .document(userId)
+        .collection(COLLECTION_GOALS_OPEN)
         .getDocuments();
 
     return goals.documents;
   }
 
-  getOpenGoals(String userId) async {
+  /// Adds a goal to the database and returns its id
+  Future<String> createGoal(Goal goal, String email) async {
+    return await _databaseReference
+        .collection(COLLECTION_GOALS)
+        .document(email)
+        .collection(COLLECTION_GOALS_OPEN)
+        .document(goal.id)
+        .setData(goal.toMap())
+        .then((val) {
+      return null;
+    }).catchError((error) {
+      print("Error trying to submit a new goal: $error");
+      return null;
+    });
+  }
+
+  retrieveOpenGoals(String userId) async {
     var goals = await getGoals(userId);
     List<Goal> mappedGoals;
 
@@ -46,6 +64,35 @@ class FirebaseService {
       return Goal.fromDocument(openGoal);
     }).toList();
     return mappedGoals;
+  }
+
+  updateGoal(Goal goal, String email) async {
+    await _databaseReference
+        .collection(COLLECTION_GOALS)
+        .document(email)
+        .collection(COLLECTION_GOALS_OPEN)
+        .document(goal.id)
+        .updateData(goal.toMap());
+  }
+
+  /// Deletes a goal and at the same time adds it to the list of deleted goals
+  deleteGoal(Goal goal, String email) async {
+    goal.completionDate = DateTime.now();
+    await _databaseReference
+        .collection(COLLECTION_GOALS)
+        .document(email)
+        .collection(COLLECTION_GOALS_DELETED)
+        .document(goal.id)
+        .setData(goal.toMap());
+    await _databaseReference
+        .collection(COLLECTION_GOALS)
+        .document(email)
+        .collection(COLLECTION_GOALS_OPEN)
+        .document(goal.id)
+        .delete()
+        .catchError((e) {
+      print(e);
+    });
   }
 
   Future<bool> isNameAvailable(String userId) async {
@@ -82,6 +129,13 @@ class FirebaseService {
         .document(userData.email)
         .setData(userData.toMap());
 
+    await _databaseReference
+        .collection(COLLECTION_GOALS)
+        .document(userData.email)
+        .collection(COLLECTION_GOALS_OPEN)
+        .document("1")
+        .setData({});
+
     return resultDocuments;
   }
 
@@ -112,41 +166,6 @@ class FirebaseService {
       print("Error trying to sign in the user: $e");
       return null;
     }
-  }
-
-  /// Adds a goal to the database and returns its id
-  Future<String> addGoal(Goal goal) async {
-    return await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .add(goal.toMap())
-        .then((val) {
-      return val.documentID;
-    }).catchError((error) {
-      print("Error trying to submit a new goal: $error");
-      return null;
-    });
-  }
-
-  /// Deletes a goal and at the same time adds it to the list of deleted goals
-  deleteGoal(Goal goal) async {
-    goal.completionDate = DateTime.now();
-    await _databaseReference
-        .collection(COLLECTION_GOALS_DELETED)
-        .add(goal.toMap());
-    await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .document(goal.id)
-        .delete()
-        .catchError((e) {
-      print(e);
-    });
-  }
-
-  updateGoal(Goal goal) async {
-    await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .document(goal.id)
-        .updateData(goal.toMap());
   }
 
   createTag(TagModel tag, String email) async {
