@@ -29,16 +29,6 @@ class FirebaseService {
   static const String COLLECTION_ASSESSMENTS = "assessments";
   static const String COLLECTION_TAGS = "tags";
 
-  Future<List<DocumentSnapshot>> getGoals(String userId) async {
-    var goals = await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .document(userId)
-        .collection(COLLECTION_GOALS_OPEN)
-        .getDocuments();
-
-    return goals.documents;
-  }
-
   /// Adds a goal to the database and returns its id
   Future<String> createGoal(Goal goal, String email) async {
     return await _databaseReference
@@ -55,8 +45,18 @@ class FirebaseService {
     });
   }
 
+  Future<List<DocumentSnapshot>> retrieveAllGoals(String userId) async {
+    var goals = await _databaseReference
+        .collection(COLLECTION_GOALS)
+        .document(userId)
+        .collection(COLLECTION_GOALS_OPEN)
+        .getDocuments();
+
+    return goals.documents;
+  }
+
   retrieveOpenGoals(String userId) async {
-    var goals = await getGoals(userId);
+    var goals = await retrieveAllGoals(userId);
     List<Goal> mappedGoals;
 
     mappedGoals =

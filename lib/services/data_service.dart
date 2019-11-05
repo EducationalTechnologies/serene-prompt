@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:serene/locator.dart';
@@ -8,7 +9,6 @@ import 'package:serene/models/tag.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
-import 'package:serene/shared/id_generator.dart';
 import 'package:serene/shared/materialized_path.dart';
 
 class DataService {
@@ -27,11 +27,11 @@ class DataService {
   }
 
   get goals {
-    return _goalsCache;
+    return UnmodifiableListView(_goalsCache);
   }
 
   get openGoals {
-    return _openGoalsCache;
+    return UnmodifiableListView(_openGoalsCache);
   }
 
   Goal getGoalById(String id) {
