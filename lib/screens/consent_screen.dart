@@ -41,6 +41,19 @@ class ConsentScreen extends StatelessWidget {
     ""
   ];
 
+  final String _subheaderWhatIsExpected = "Was wird von mir erwartet?";
+  final List<String> _textWhatIsExpected = [
+    "Sie können die Applikation frei verwenden und die Teilnahme an der Studie jederzeit beenden",
+    "Während Sie die App installiert haben und verwenden, werden sie täglich an Ihre Lernpläne erinnert und gebeten, einen kurzen Fragebogen auszufüllen. Sie bestimmen somit selbst wie und wie oft Sie an der Studie teilnehmen"
+  ];
+
+  final String _subheaderWhatDoIGain =
+      "Welche Vorteile kann ich daraus ziehen?";
+  final List<String> _textWhatDoIGain = [
+    "Sie erhalten möglicherweise Einsichten in Ihr eigenes Lernverhalten und vielleicht profitieren Sie auch schon direkt von einer planvolleren herangehensweise an Ihre Lernziele",
+    "Darüber hinaus verlosen wir unter allen Teilnehmern vier Einkaufsgutscheine im Wert von je 25€. Die Teilnahme an diesem Gewinnspiel ist freiwillig. Allerdings benötigen wir dafür eine E-Mail Adresse, unter der wir Sie im Gewinnfall erreichen können. Mit jedem Tag, den sie die App benutzen (auch wenn sie der App nur mitteilen, dass sie am jeweiligen Tage nicht vorhaben zu lernen) wird Ihnen ein Los in der Verlosung gutgeschrieben. Sie werden im weiteren Verlauf der Verwendung dieser Applikation instruiert, wie Sie an dem Gewinnspiel konkret teilnehmen können. Die E-Mail Adresse mit der Sie an der Verlosung teilnehmen, wird nach Auslosung der Gewinne, spätestens zu Ende des laufenden Semesters (31.3.2020), gelöscht. Die E-Mail Adresse unter der Sie an dem Gewinnspiel teilnehmen, wird separat von den anderen Daten, die in der Verwendung der Applikation anfallen, gespeichert, und ausschließlich für die Verlosung verwendet."
+  ];
+
   final String _subheaderWhichRights = "Welche Rechte habe ich?";
   final String _textRights1 =
       "Sie haben jederzeit die Möglichkeit folgende Rechte geltend zu machen: ";
@@ -137,7 +150,7 @@ class ConsentScreen extends StatelessWidget {
     );
   }
 
-  buildConsentCard(List<String> paragraphs) {
+  _buildConsentCard(List<String> paragraphs) {
     return Card(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -168,7 +181,7 @@ class ConsentScreen extends StatelessWidget {
         child: (ListView(
           children: <Widget>[
             _buildSubheader("Informierte Einwilligung"),
-            buildConsentCard(_textIntroduction),
+            _buildConsentCard(_textIntroduction),
             UIHelper.verticalSpaceSmall(),
             buildConsentCardWhichData(_subheaderPurposes, _textPurposes, []),
             UIHelper.verticalSpaceSmall(),
@@ -180,10 +193,28 @@ class ConsentScreen extends StatelessWidget {
             // UIHelper.verticalSpaceSmall(),
             // buildSubheader(_subheaderWhichRights),
             // buildConsentCard([_textParagraph8]),
+            buildConsentCardWhichData(
+                _subheaderWhatIsExpected, _textWhatIsExpected, []),
+            buildConsentCardWhichData(
+                _subheaderWhatDoIGain, _textWhatDoIGain, []),
             buildRightsCard(),
             UIHelper.verticalSpaceMedium(),
             buildContactCard(),
             UIHelper.verticalSpaceMedium(),
+            Row(
+              children: <Widget>[
+                Checkbox(
+                    tristate: false,
+                    onChanged: (value) {
+                      consentState.consented = value;
+                    },
+                    value: consentState.consented),
+                Flexible(
+                  child: Text(
+                      "Ich bin mir bewusst, dass ich meine Teilnahme an der Studie jederzeit beenden kann und mir dadurch keinerlei Nachteile entstehen."),
+                ),
+              ],
+            ),
             Row(
               children: <Widget>[
                 Checkbox(

@@ -75,7 +75,14 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.settings,
-              text: "Settings",
+              text: "Einstellungen",
+              onTap: () {
+                Navigator.pushNamed(context, RouteNames.SETTINGS);
+              }),
+          Divider(),
+          _buildDrawerItem(
+              icon: Icons.receipt,
+              text: "Einverständniserklärung",
               onTap: () {
                 Navigator.pushNamed(context, RouteNames.SETTINGS);
               }),
