@@ -215,6 +215,7 @@ class ConsentScreen extends StatelessWidget {
                 ),
               ],
             ),
+            UIHelper.verticalSpaceSmall(),
             Row(
               children: <Widget>[
                 Checkbox(
