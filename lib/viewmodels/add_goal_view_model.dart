@@ -5,6 +5,7 @@ import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/id_generator.dart';
 import 'package:serene/shared/materialized_path.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
@@ -20,7 +21,8 @@ class AddGoalViewModel extends BaseViewModel {
   set selectedParentGoal(Goal selectedParentGoal) {
     _selectedParentGoal = selectedParentGoal;
     _currentGoal.parentId = selectedParentGoal.id;
-    _currentGoal.path = MaterializedPath.addToPath(selectedParentGoal.path, _currentGoal.path);
+    _currentGoal.path =
+        MaterializedPath.addToPath(selectedParentGoal.path, _currentGoal.path);
     notifyListeners();
   }
 
@@ -35,7 +37,9 @@ class AddGoalViewModel extends BaseViewModel {
     if (goal == null) {
       final userService = locator.get<UserService>();
       var userId = userService.getUsername();
-      _currentGoal = new Goal(goalText: "", progress: 0, userId: userId);
+      var id = IdGenerator.generatePushId();
+      var path = MaterializedPath.toPathString(id);
+      _currentGoal = new Goal(userId: userId, id: id, path: path);
       _mode = GoalScreenMode.create;
     } else {
       this._currentGoal = goal;
@@ -49,8 +53,7 @@ class AddGoalViewModel extends BaseViewModel {
 
     dataService.getOpenGoals().then((og) {
       _potentialParents = og;
-      _potentialParents
-          .removeWhere((g) => g.id == _currentGoal.id);
+      _potentialParents.removeWhere((g) => g.id == _currentGoal.id);
       notifyListeners();
     });
   }
@@ -77,15 +80,11 @@ class AddGoalViewModel extends BaseViewModel {
   Future saveCurrentGoal() async {
     setState(ViewState.busy);
     if (this.mode == GoalScreenMode.create) {
-      await this._saveNewGoal(this._currentGoal);
+      await this._dataService.createGoal(this._currentGoal);
     } else {
       await this._dataService.updateGoal(this._currentGoal);
     }
     setState(ViewState.idle);
-  }
-
-  Future _saveNewGoal(Goal goal) async {
-    await _dataService.createGoal(goal);
   }
 
   toggleTag(TagModel tag, bool value) {}

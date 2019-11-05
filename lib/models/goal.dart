@@ -1,4 +1,5 @@
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/id_generator.dart';
 
 class Goal {
   String id;
@@ -88,5 +89,4 @@ class Goal {
     this.path = map["path"];
     this.id = map["id"].toString();
   }
-  
 }

@@ -44,8 +44,10 @@ class DataService {
 
   createGoal(Goal goal) async {
     //TODO: Handle the case that saving fails
-    goal.id = IdGenerator.generatePushId();
-    goal.path = MaterializedPath.toPathString(goal.id);
+    if (goal.id.isEmpty) {
+      throw new Exception("Goal does not have an ID");
+    }
+
     _openGoalsCache.add(goal);
     await _databaseService.createGoal(goal, _userService.getUserEmail());
     if (goal.parentId.isNotEmpty) {
