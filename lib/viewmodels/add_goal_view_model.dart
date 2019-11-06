@@ -44,6 +44,10 @@ class AddGoalViewModel extends BaseViewModel {
     } else {
       this._currentGoal = goal;
       _mode = GoalScreenMode.edit;
+      if (this._currentGoal.parentId.isNotEmpty) {
+        this._selectedParentGoal =
+            this._dataService.getGoalById(this._currentGoal.parentId);
+      }
     }
 
     dataService.getTags().then((tags) {
@@ -52,8 +56,8 @@ class AddGoalViewModel extends BaseViewModel {
     });
 
     dataService.getOpenGoals().then((og) {
-      _potentialParents = og;
-      _potentialParents.removeWhere((g) => g.id == _currentGoal.id);
+      _potentialParents = og.where((g) => g.id != currentGoal.id).toList();
+      // _potentialParents.removeWhere((g) => g.id == _currentGoal.id);
       notifyListeners();
     });
   }

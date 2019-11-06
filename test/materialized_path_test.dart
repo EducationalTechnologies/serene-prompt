@@ -48,14 +48,14 @@ void main() {
     var id5 = "e";
     var id6 = "f";
 
-    var p1 = MaterializedPath.toPathString(id0);
-    var p2 = "/a/b";
-    var p3 = "/a/b/c";
-    var p4 = "/a/d";
-    var p5 = "/a/e";
-    var p6 = "/f";
+    var p0 = MaterializedPath.toPathString(id0);
+    var p1 = MaterializedPath.addToPath(p0, MaterializedPath.toPathString(id1));
+    var p2 = "/a/b/c";
+    var p3 = "/a/d";
+    var p4 = "/a/e";
+    var p5 = "/f";
 
-    var paths = [p1, p2, p3, p4, p5, p6];
+    var paths = [p0, p1, p2, p3, p4, p5];
     var tree = MaterializedPath.pathTreeFromPathList(paths);
     var depthFirstList = MaterializedPath.depthFirstFromTree(tree);
 
@@ -78,7 +78,6 @@ void main() {
       expect(depthFirstList[2], "c");
       expect(depthFirstList[3], "d");
       expect(depthFirstList[4], "e");
-      expect(depthFirstList[5], "f");
     });
   });
 }
