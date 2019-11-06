@@ -20,12 +20,14 @@ class NotificationService {
   NotificationService._internal() {
     localNotifications = FlutterLocalNotificationsPlugin();
 
+    configureFirebaseMessaging();
+  }
+
+  Future initialize() async {
     var initSettingsAndroid = new AndroidInitializationSettings('ic_launcher');
     var initSettings = InitializationSettings(initSettingsAndroid, null);
-    localNotifications.initialize(initSettings,
+    return await localNotifications.initialize(initSettings,
         onSelectNotification: onSelectNotification);
-
-    configureFirebaseMessaging();
   }
 
   configureFirebaseMessaging() {
@@ -85,5 +87,22 @@ class NotificationService {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await localNotifications.schedule(0, 'scheduled title', 'scheduled body',
         scheduledNotificationDateTime, platformChannelSpecifics);
+  }
+
+  scheduleDailyNotification() async {
+    var time = new Time(15, 25, 0);
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        'show weekly channel id',
+        'show weekly channel name',
+        'show weekly description');
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = new NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await localNotifications.showDailyAtTime(
+        0,
+        'show weekly title',
+        'Daily notification',
+        time,
+        platformChannelSpecifics);
   }
 }

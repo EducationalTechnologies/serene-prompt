@@ -29,10 +29,10 @@ class FirebaseService {
   static const String COLLECTION_ASSESSMENTS = "assessments";
   static const String COLLECTION_TAGS = "tags";
 
-  Future<List<DocumentSnapshot>> getGoals(String userId) async {
+  Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(userId)
+        .document(email)
         .collection(COLLECTION_GOALS_OPEN)
         .getDocuments();
 

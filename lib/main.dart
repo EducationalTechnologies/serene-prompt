@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/route_names.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   Future<bool> initialize() async {
     await locator.get<SettingsService>().initialize();
     await locator.get<UserService>().initialize();
+    await locator.get<NotificationService>().initialize();
     bool userInitialized =
         locator.get<UserService>().getUsername()?.isNotEmpty ?? false;
     return userInitialized;
