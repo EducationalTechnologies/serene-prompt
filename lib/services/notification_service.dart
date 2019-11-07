@@ -65,7 +65,7 @@ class NotificationService {
 
   showNotification() async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
+        CHANNEL_ID_ASSESSMENT, CHANNEL_NAME_ASSESSMENT, 'Erinnerung an den Fragebogen',
         importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
@@ -77,7 +77,7 @@ class NotificationService {
 
   scheduleNotifications() async {
     var scheduledNotificationDateTime =
-        new DateTime.now().add(new Duration(seconds: 5));
+        DateTime.now().add(Duration(minutes: 5));
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_ASSESSMENT,
         CHANNEL_NAME_ASSESSMENT,
@@ -85,8 +85,8 @@ class NotificationService {
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     NotificationDetails platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await localNotifications.schedule(0, 'scheduled title', 'scheduled body',
-        scheduledNotificationDateTime, platformChannelSpecifics);
+    await localNotifications.schedule(10, 'scheduled title', 'scheduled body',
+        scheduledNotificationDateTime, platformChannelSpecifics, androidAllowWhileIdle: true);
   }
 
   scheduleDailyNotification() async {

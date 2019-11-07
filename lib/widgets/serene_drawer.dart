@@ -106,8 +106,8 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
               title: Text("Test"),
               onTap: () async {
+                // await NotificationService().showNotification();
                 await NotificationService().scheduleNotifications();
-                await NotificationService().scheduleDailyNotification();
               }),
           ListTile(
               title: Text("Log In"),

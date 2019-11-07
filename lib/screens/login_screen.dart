@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Future.delayed(Duration.zero).then((val) {
       _userIdTextController.text =
-          Provider.of<LoginViewModel>(context).userEmail ?? "";
+          Provider.of<LoginViewModel>(context).email ?? "";
     });
   }
 
@@ -44,22 +44,22 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Account anlegen?"),
+            title: Text("Benutzername oder Passwort falsch"),
             content: Text(
-                "Kein Account für ${_userIdTextController.text} gefunden. Soll dieser Account angelegt werden?"),
+                "Der angegebene Benutzername oder das angegebene Passwort waren nicht korrekt"),
             actions: <Widget>[
               new FlatButton(
-                child: new Text("Ja"),
+                child: new Text("Okay"),
                 onPressed: () async {
                   Navigator.of(context).pop(true);
                 },
               ),
-              new FlatButton(
-                child: new Text("Nein"),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              ),
+              // new FlatButton(
+              //   child: new Text("Nein"),
+              //   onPressed: () {
+              //     Navigator.of(context).pop(false);
+              //   },
+              // ),
             ],
           );
         });
@@ -226,6 +226,29 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  _buildRegisterButton(BuildContext context) {
+    var vm = Provider.of<LoginViewModel>(context);
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
+      alignment: Alignment.center,
+      child: new Row(
+        children: <Widget>[
+          new Expanded(
+              child: FlatButton(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 20.0),
+                  onPressed: () async {
+                    _userIdTextController.text = "";
+                    _passwordTextController.text = "";
+                    vm.toRegisterScreen();
+                  },
+                  child: Text("Einen neuen Account anlegen"))),
+        ],
+      ),
+    );
+  }
+
   Widget buildControls(BuildContext context) {
     var vm = Provider.of<LoginViewModel>(context);
     return Container(
@@ -273,6 +296,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
+          if (vm.mode == SignInScreenMode.signIn)
+            _buildRegisterButton(context),
           new Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(

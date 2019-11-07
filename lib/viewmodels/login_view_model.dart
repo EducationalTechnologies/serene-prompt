@@ -5,16 +5,13 @@ import 'package:serene/viewmodels/base_view_model.dart';
 enum SignInScreenMode { signIn, register }
 
 class LoginViewModel extends BaseViewModel {
-  String _userId;
   String _email;
-  String get userId => _userId;
-  String get userEmail => _email;
+  String get email => _email;
 
   SignInScreenMode mode;
 
   UserService _userService;
   LoginViewModel(this._userService) {
-    this._userId = this._userService.getUsername();
     this._email = this._userService.getUserEmail();
 
     if (this._email == null) {
@@ -22,11 +19,6 @@ class LoginViewModel extends BaseViewModel {
     } else {
       mode = SignInScreenMode.signIn;
     }
-  }
-
-  saveUsername(String userId) async {
-    _userId = await this._userService.saveUsername(userId);
-    this._userId = userId;
   }
 
   Future<bool> register(String email, String password) async {
@@ -59,5 +51,11 @@ class LoginViewModel extends BaseViewModel {
     // TODO: Replace once the package loads
     return value.contains("@");
     // return EmailValidator.validate(value);
+  }
+
+  toRegisterScreen() {
+    this._email = "";
+    this.mode = SignInScreenMode.register;
+    notifyListeners();
   }
 }
