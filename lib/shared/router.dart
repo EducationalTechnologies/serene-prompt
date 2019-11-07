@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/edit_tags_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/login_screen.dart';
@@ -20,6 +21,7 @@ import 'package:serene/screens/main_screen.dart';
 import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
+import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
 import 'package:serene/viewmodels/edit_tags_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
@@ -118,6 +120,14 @@ class Router {
 
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());
+
+      case RouteNames.DAILY_LEARNING_QUESTIONS:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ChangeNotifierProvider<DailyLearningQuestionViewModel>(
+                  builder: (_) => DailyLearningQuestionViewModel(),
+                  child: DailyLearningQuestionScreen(),
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) {

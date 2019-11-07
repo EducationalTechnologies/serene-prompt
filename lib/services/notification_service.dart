@@ -2,6 +2,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:serene/services/firebase_service.dart';
+import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/route_names.dart';
+import 'package:serene/shared/screen_args.dart';
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -16,6 +19,10 @@ class NotificationService {
 
   static const String CHANNEL_ID_DEADLINE = "serene deadline";
   static const String CHANNEL_NAME_DEADLINE = "Deadline Erinnerung";
+
+  static const String PAYLOAD_DAILY_LEARN = "DAILY_LEARNING";
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   NotificationService._internal() {
     localNotifications = FlutterLocalNotificationsPlugin();
@@ -60,13 +67,24 @@ class NotificationService {
   Future onSelectNotification(String payload) async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
+
+      if (payload == PAYLOAD_DAILY_LEARN) {
+        await navigatorKey.currentState.pushNamed(
+            RouteNames.DAILY_LEARNING_QUESTIONS,
+            arguments: AssessmentScreenArguments(AssessmentType.preLearning));
+        await navigatorKey.currentState.pushNamed(RouteNames.GOAL_SHIELDING);
+      }
     }
   }
 
   showNotification() async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        CHANNEL_ID_ASSESSMENT, CHANNEL_NAME_ASSESSMENT, 'Erinnerung an den Fragebogen',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+        CHANNEL_ID_ASSESSMENT,
+        CHANNEL_NAME_ASSESSMENT,
+        'Erinnerung an den Fragebogen',
+        importance: Importance.Max,
+        priority: Priority.High,
+        ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
@@ -77,7 +95,7 @@ class NotificationService {
 
   scheduleNotifications() async {
     var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(minutes: 5));
+        DateTime.now().add(Duration(minutes: 1));
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_ASSESSMENT,
         CHANNEL_NAME_ASSESSMENT,
@@ -85,24 +103,21 @@ class NotificationService {
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     NotificationDetails platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await localNotifications.schedule(10, 'scheduled title', 'scheduled body',
-        scheduledNotificationDateTime, platformChannelSpecifics, androidAllowWhileIdle: true);
+    await localNotifications.schedule(11, 'scheduled title', 'scheduled body',
+        scheduledNotificationDateTime, platformChannelSpecifics,
+        androidAllowWhileIdle: true, payload: PAYLOAD_DAILY_LEARN);
   }
 
   scheduleDailyNotification() async {
     var time = new Time(15, 25, 0);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'show weekly channel id',
-        'show weekly channel name',
+        CHANNEL_ID_ASSESSMENT,
+        CHANNEL_NAME_ASSESSMENT,
         'show weekly description');
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await localNotifications.showDailyAtTime(
-        0,
-        'show weekly title',
-        'Daily notification',
-        time,
-        platformChannelSpecifics);
+    await localNotifications.showDailyAtTime(0, 'show weekly title',
+        'Daily notification', time, platformChannelSpecifics);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/id_generator.dart';
 
 class Goal {
   String id;

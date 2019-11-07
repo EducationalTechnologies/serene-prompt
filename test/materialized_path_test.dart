@@ -43,17 +43,18 @@ void main() {
   group("Tree Construction", () {
     var id0 = "a";
     var id1 = "b";
-    var id3 = "c";
-    var id4 = "d";
-    var id5 = "e";
-    var id6 = "f";
+    var id2 = "c";
+    var id3 = "d";
+    var id4 = "e";
+    var id5 = "f";
 
     var p0 = MaterializedPath.toPathString(id0);
-    var p1 = MaterializedPath.addToPath(p0, MaterializedPath.toPathString(id1));
-    var p2 = "/a/b/c";
-    var p3 = "/a/d";
-    var p4 = "/a/e";
-    var p5 = "/f";
+    var p1 = MaterializedPath.pathFromList([id0, id1]);
+    var p2 = MaterializedPath.addToPath(p1, MaterializedPath.toPathString(id2));
+    var p3 = MaterializedPath.addToPath(p0, MaterializedPath.toPathString(id3));
+    // Path = /a/e
+    var p4 = MaterializedPath.addToPath(p0, MaterializedPath.toPathString(id4));
+    var p5 = MaterializedPath.toPathString(id5);
 
     var paths = [p0, p1, p2, p3, p4, p5];
     var tree = MaterializedPath.pathTreeFromPathList(paths);

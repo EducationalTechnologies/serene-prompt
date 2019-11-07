@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
-import 'package:serene/screens/resource_links_screen.dart';
-import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
@@ -38,12 +36,13 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   buildAddGoalButton() {
-    return FloatingActionButton(
+    return FloatingActionButton.extended(
       // backgroundColor: Theme.of(context).accentColor,
       backgroundColor: Colors.blue[400],
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: Icon(Icons.add),
+      icon: Icon(Icons.add),
+      label: Text("Neues Ziel"),
       onPressed: () async {
         Navigator.pushNamed(context, RouteNames.ADD_GOAL);
         // Provider.of<GoalMonitoringState>(context).fetchData();

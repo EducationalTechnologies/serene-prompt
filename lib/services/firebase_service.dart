@@ -202,7 +202,7 @@ class FirebaseService {
   }
 
   updateTag(TagModel tag, String email) async {
-    var tagDoc = await _databaseReference
+    await _databaseReference
         .collection(COLLECTION_USERS)
         .document(email)
         .collection("tags")

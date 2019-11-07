@@ -19,8 +19,6 @@ class GoalMonitorScreen extends StatefulWidget {
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
-  AnimationController _controller;
-
   List<Goal> _goals = [];
 
   @override

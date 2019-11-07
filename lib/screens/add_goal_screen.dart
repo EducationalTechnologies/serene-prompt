@@ -153,9 +153,9 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   Widget buildDatePicker() {
     final appState = Provider.of<AddGoalViewModel>(context);
 
-    var date = appState.currentGoal.deadline ?? DateTime.now();
-    var dateText = DateFormat('dd.MM.yyy').format(date);
-    var timeText = DateFormat('kk:mm').format(date);
+    // var date = appState.currentGoal.deadline ?? DateTime.now();
+    // var dateText = DateFormat('dd.MM.yyy').format(date);
+    // var timeText = DateFormat('kk:mm').format(date);
 
     bool hasDate = appState.currentGoal.deadline != null;
 

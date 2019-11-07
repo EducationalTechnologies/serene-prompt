@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
           ),
           iconTheme: IconThemeData(color: Colors.black)),
       onGenerateRoute: Router.generateRoute,
+      navigatorKey: locator.get<NotificationService>().navigatorKey,
       // home: MainScreen(),
       initialRoute: initialRoute,
       // routes: Router.getRoutes(),
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (false) {
+    if (true) {
       return buildMaterialApp(RouteNames.MAIN);
     } else {
       return FutureBuilder<bool>(
