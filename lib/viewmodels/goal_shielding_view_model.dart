@@ -18,7 +18,7 @@ class GoalShieldingViewModel with ChangeNotifier {
   ];
   String _selectedShieldingAction;
   String _hindrance;
-  Goal _selectedGoal;
+  List<Goal> _selectedGoals = [];
   DataService _dataService;
   List<Goal> _openGoals;
   List<Goal> get openGoals {
@@ -42,10 +42,14 @@ class GoalShieldingViewModel with ChangeNotifier {
     });
   }
 
-  Goal get selectedGoal => _selectedGoal;
+  List<Goal> get selectedGoals => _selectedGoals;
 
-  set selectedGoal(Goal selectedGoal) {
-    _selectedGoal = selectedGoal;
+  toggleGoal(Goal selectedGoal) {
+    if (_selectedGoals.contains(selectedGoal)) {
+      _selectedGoals.remove(selectedGoal);
+    } else {
+      _selectedGoals.add(selectedGoal);
+    }
     notifyListeners();
   }
 

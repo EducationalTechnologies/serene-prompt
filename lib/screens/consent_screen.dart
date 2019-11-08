@@ -54,11 +54,6 @@ class ConsentScreen extends StatelessWidget {
     "Darüber hinaus verlosen wir unter allen Teilnehmern vier Einkaufsgutscheine im Wert von je 25€. Die Teilnahme an diesem Gewinnspiel ist freiwillig. Allerdings benötigen wir dafür eine E-Mail Adresse, unter der wir Sie im Gewinnfall erreichen können. Mit jedem Tag, den sie die App benutzen (auch wenn sie der App nur mitteilen, dass sie am jeweiligen Tage nicht vorhaben zu lernen) wird Ihnen ein Los in der Verlosung gutgeschrieben. Sie werden im weiteren Verlauf der Verwendung dieser Applikation instruiert, wie Sie an dem Gewinnspiel konkret teilnehmen können. Die E-Mail Adresse mit der Sie an der Verlosung teilnehmen, wird nach Auslosung der Gewinne, spätestens zu Ende des laufenden Semesters (31.3.2020), gelöscht. Die E-Mail Adresse unter der Sie an dem Gewinnspiel teilnehmen, wird separat von den anderen Daten, die in der Verwendung der Applikation anfallen, gespeichert, und ausschließlich für die Verlosung verwendet."
   ];
 
-  final String _subheaderWhichRights = "Welche Rechte habe ich?";
-  final String _textRights1 =
-      "Sie haben jederzeit die Möglichkeit folgende Rechte geltend zu machen: ";
-  final List<String> _rights = [""];
-
   _buildSubheader(String text) {
     return Text(
       text,

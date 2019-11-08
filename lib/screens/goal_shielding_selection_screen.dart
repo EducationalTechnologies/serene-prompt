@@ -68,7 +68,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
+    final vm = Provider.of<GoalShieldingViewModel>(context);
 
     return Container(
       padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -77,11 +77,11 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
         children: <Widget>[
           // Text("Dein Ziel:", style: _style),
           // UIHelper.verticalSpaceMedium(),
-          if (goalShieldingState.selectedGoal != null)
-            Text(goalShieldingState.selectedGoal.goalText,
-                style: Theme.of(context).textTheme.headline),
+          if (vm.selectedGoals != null)
+            for (var g in vm.selectedGoals)
+              Text(g.goalText, style: Theme.of(context).textTheme.headline),
           UIHelper.verticalSpaceSmall(),
-          Text("Was könnte dich vom Erreichen deines Zieles abhalten?",
+          Text("Was könnte dich vom Erreichen deiner Ziele abhalten?",
               textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.subhead),
           UIHelper.verticalSpaceSmall(),

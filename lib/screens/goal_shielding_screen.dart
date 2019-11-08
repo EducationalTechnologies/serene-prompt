@@ -11,25 +11,82 @@ class GoalShieldingScreen extends StatefulWidget {
 
 class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
   int _index;
+  final _controller = new PageController();
+  final _kDuration = const Duration(milliseconds: 300);
+  final _kCurve = Curves.ease;
+
+  final List<Widget> _goalShieldingPages = [
+    GoalSelectionScreen(),
+    GoalShieldingSelectionScreen(),
+    GoalShieldingInternalisationScreen()
+  ];
 
   @override
   void initState() {
     super.initState();
-    _index = 0;
+    _index = 1;
+  }
+
+  _buildBottomNavigation() {
+    print("index is $_index ");
+    print("length is ${_goalShieldingPages.length} ");
+    return Container(
+      // color: Colors.lightBlue[50],
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Visibility(
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: _index > 1,
+            child: FlatButton(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.navigate_before),
+                  Text("Zurück"),
+                ],
+              ),
+              onPressed: () {
+                setState(() {
+                  _index--;
+                });
+                _controller.previousPage(duration: _kDuration, curve: _kCurve);
+              },
+            ),
+          ),
+          Visibility(
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: _index < _goalShieldingPages.length,
+            child: FlatButton(
+              child: Row(
+                children: <Widget>[Text("Weiter"), Icon(Icons.navigate_next)],
+              ),
+              onPressed: () {
+                setState(() {
+                  _index++;
+                });
+                _controller.nextPage(duration: _kDuration, curve: _kCurve);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _goalShieldingPages = [
-      GoalSelectionScreen(),
-      GoalShieldingSelectionScreen(),
-      GoalShieldingInternalisationScreen()
-    ];
-    final _controller = new PageController();
-    const _kDuration = const Duration(milliseconds: 300);
-    const _kCurve = Curves.ease;
-
     print("Calling Build In Goal Shielding Screen");
+    if (_goalShieldingPages?.length == 0) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -57,51 +114,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
                 },
               ),
             ),
-            Container(
-              // color: Colors.lightBlue[50],
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Visibility(
-                    visible: _index > 0,
-                    child: FlatButton(
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.navigate_before),
-                          Text("Zurück"),
-                        ],
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _index--;
-                        });
-                        _controller.previousPage(
-                            duration: _kDuration, curve: _kCurve);
-                      },
-                    ),
-                  ),
-                  Visibility(
-                    visible: _index < _goalShieldingPages.length,
-                    child: FlatButton(
-                      child: Row(
-                        children: <Widget>[
-                          Text("Weiter"),
-                          Icon(Icons.navigate_next)
-                        ],
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _index++;
-                        });
-                        _controller.nextPage(
-                            duration: _kDuration, curve: _kCurve);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            )
+            _buildBottomNavigation()
           ],
         ),
       ),

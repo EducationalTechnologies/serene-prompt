@@ -36,7 +36,10 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
         return Container(
           child: Column(children: <Widget>[
             UIHelper.verticalSpaceMedium(),
-            Text("Ziel auswählen"),
+            Text(
+              "Wähle die Lernziele aus, an denen du heute arbeiten möchtest",
+              style: Theme.of(context).textTheme.subhead,
+            ),
             UIHelper.verticalSpaceMedium(),
             Expanded(
               child: GoalSelectionList(),
@@ -90,35 +93,33 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   _onSelected(int index) {
     var goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
-    goalShieldingState.selectedGoal = goalShieldingState.openGoals[index];
+    goalShieldingState.toggleGoal(goalShieldingState.openGoals[index]);
     setState(() {
       _selectedIndex = index;
     });
-    print(goalShieldingState.selectedGoal);
   }
 
   @override
   Widget build(BuildContext context) {
-    GoalShieldingViewModel goalShieldingState =
-        Provider.of<GoalShieldingViewModel>(context);
-    _selectedIndex =
-        goalShieldingState.openGoals.indexOf(goalShieldingState.selectedGoal);
+    GoalShieldingViewModel vm = Provider.of<GoalShieldingViewModel>(context);
+
     print("Selected Index: $_selectedIndex");
     return Container(
         child: ListView.builder(
-      itemCount: goalShieldingState.openGoals.length,
+      itemCount: vm.openGoals.length,
       itemBuilder: (context, index) {
+        var isSelected = vm.selectedGoals.contains(vm.openGoals[index]);
         return Card(
+          color: isSelected
+              ? Theme.of(context).selectedRowColor
+              : Colors.white,
           child: Container(
-              color: _selectedIndex == index
-                  ? Theme.of(context).selectedRowColor
-                  : Colors.transparent,
               child: ListTile(
-                title: Text(goalShieldingState.openGoals[index].goalText),
-                onTap: () {
-                  _onSelected(index);
-                },
-              )),
+            title: Text(vm.openGoals[index].goalText),
+            onTap: () {
+              _onSelected(index);
+            },
+          )),
         );
       },
     ));

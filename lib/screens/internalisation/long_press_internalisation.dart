@@ -248,8 +248,8 @@ class _TextHighlightState extends State<TextHighlight>
                 children: <Widget>[
                   Text("Gedrückt halten und Text lesen",
                       style: TextStyle(fontSize: 20)),
-                  Text("Bisher $_animationCounter-mal gelesen",
-                      style: TextStyle(fontSize: 20)),
+                  // Text("Bisher $_animationCounter-mal gelesen",
+                  //     style: TextStyle(fontSize: 20)),
                 ],
               ),
             )));
