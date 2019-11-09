@@ -27,11 +27,33 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
     _index = 1;
   }
 
+  _buildBackgroundImage() {
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage("assets/illustrations/undraw_dream_world_cin1.png"),
+        fit: BoxFit.scaleDown,
+      )),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 50),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Text(
+            "Du hast derzeit keine offenen Ziele",
+            style: Theme.of(context).textTheme.display1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  }
+
   _buildBottomNavigation() {
     print("index is $_index ");
     print("length is ${_goalShieldingPages.length} ");
     return Container(
       // color: Colors.lightBlue[50],
+
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -88,36 +110,73 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        textTheme:
-            TextTheme(title: TextStyle(color: Colors.black, fontSize: 22)),
-        centerTitle: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          textTheme:
+              TextTheme(title: TextStyle(color: Colors.black, fontSize: 22)),
+          centerTitle: true,
 
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(""),
-      ),
-      drawer: SereneDrawer(),
-      // backgroundColor: Colors.amber,
-      body: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Flexible(
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: _goalShieldingPages.length,
-                itemBuilder: (context, index) {
-                  return _goalShieldingPages[index];
-                },
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(""),
+        ),
+        drawer: SereneDrawer(),
+        // backgroundColor: Colors.amber,
+        body: Stack(
+          children: <Widget>[
+            Opacity(
+              opacity: 0.2,
+              child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage(
+                        "assets/illustrations/undraw_dream_world_cin1.png"),
+                    fit: BoxFit.scaleDown,
+                  )),
+                  margin: EdgeInsets.all(10)),
+            ),
+            Container(
+              margin: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Flexible(
+                    child: PageView.builder(
+                      controller: _controller,
+                      itemCount: _goalShieldingPages.length,
+                      itemBuilder: (context, index) {
+                        return _goalShieldingPages[index];
+                      },
+                    ),
+                  ),
+                  _buildBottomNavigation()
+                ],
               ),
             ),
-            _buildBottomNavigation()
           ],
-        ),
-      ),
-    );
+        )
+        // body: Container(
+        //   decoration: BoxDecoration(
+        //       image: DecorationImage(
+        //     image: AssetImage("assets/illustrations/undraw_dream_world_cin1.png"),
+        //     fit: BoxFit.scaleDown,
+        //   )),
+        //   margin: EdgeInsets.all(10),
+        //   child: Column(
+        //     children: [
+        //       Flexible(
+        //         child: PageView.builder(
+        //           controller: _controller,
+        //           itemCount: _goalShieldingPages.length,
+        //           itemBuilder: (context, index) {
+        //             return _goalShieldingPages[index];
+        //           },
+        //         ),
+        //       ),
+        //       _buildBottomNavigation()
+        //     ],
+        //   ),
+        // ),
+        );
   }
 }

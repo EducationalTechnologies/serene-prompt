@@ -55,10 +55,10 @@ class FirebaseService {
     });
   }
 
-  Future<List<DocumentSnapshot>> retrieveAllGoals(String userId) async {
+  Future<List<DocumentSnapshot>> retrieveAllGoals(String email) async {
     var goals = await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(userId)
+        .document(email)
         .collection(COLLECTION_GOALS_OPEN)
         .getDocuments();
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:serene/screens/internalisation/long_press_internalisation.dart';
-import 'package:serene/screens/internalisation/scramble_internalisation.dart';
 
 class GoalShieldingInternalisationScreen extends StatefulWidget {
   @override
@@ -22,22 +21,23 @@ class _GoalShieldingInternalisationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: Material(
-          child: TabBar(
-            controller: _controller,
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.watch),
-                text: "Long Press",
-              ),
-              // Tab(icon: Icon(Icons.headset_mic), ),
-              Tab(
-                icon: Icon(Icons.textsms),
-                text: "Scramble",
-              ),
-            ],
-          ),
-        ),
+        backgroundColor: Colors.transparent,
+        // bottomNavigationBar: Material(
+        //   child: TabBar(
+        //     controller: _controller,
+        //     tabs: <Widget>[
+        //       Tab(
+        //         icon: Icon(Icons.watch),
+        //         text: "Long Press",
+        //       ),
+        //       // Tab(icon: Icon(Icons.headset_mic), ),
+        //       Tab(
+        //         icon: Icon(Icons.textsms),
+        //         text: "Scramble",
+        //       ),
+        //     ],
+        //   ),
+        // ),
         body: LongPressInternalisation()
         // body: TabBarView(
         //   controller: _controller,

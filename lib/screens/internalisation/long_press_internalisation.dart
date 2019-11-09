@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/services/settings_service.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:provider/provider.dart';
@@ -77,6 +78,12 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 27));
   }
 
+  _iterationFinished() {
+    setState(() {
+      _repeatCounter++;
+    });
+  }
+
   void _increaseCounterWhilePressed() async {
     final int _textHighlightDelay = 400;
 
@@ -94,9 +101,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
 
       // wait a bit
       if (_highlightIndex == _fullTextLength - 1) {
-        setState(() {
-          _repeatCounter++;
-        });
+        _iterationFinished();
         break;
       }
       await Future.delayed(Duration(milliseconds: _textHighlightDelay));
@@ -198,6 +203,13 @@ class _TextHighlightState extends State<TextHighlight>
   //   _loopActive = false;
   // }
 
+  _onIterationCompleted() async {
+    _animationCounter++;
+    await Future.delayed(Duration(seconds: 1)).then((res) {
+      Navigator.pushNamed(context, RouteNames.MAIN);
+    });
+  }
+
   @override
   void initState() {
     var durationInMS =
@@ -215,8 +227,7 @@ class _TextHighlightState extends State<TextHighlight>
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _animationCounter++;
-        // _controller.reset();
+        _onIterationCompleted();
       }
     });
     // _controller.repeat();

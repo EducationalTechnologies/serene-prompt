@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (true) {
+    if (false) {
       return buildMaterialApp(RouteNames.MAIN);
     } else {
       return FutureBuilder<bool>(
@@ -82,3 +82,78 @@ class MyApp extends StatelessWidget {
     }
   }
 }
+
+//   enum InitializationState{
+//     loading,
+//     noUser,
+//     ready 
+//   }
+
+// class InitializerWidget extends StatefulWidget {
+//   @override
+//   _InitializerWidgetState createState() => _InitializerWidgetState();
+// }
+
+// class _InitializerWidgetState extends State<InitializerWidget> {
+
+
+//   InitializationState _initializationState = InitializationState.loading;
+
+//   @override 
+//   void initState() {
+
+//   }
+
+//   Future<bool> _initialize() async {
+//     await locator.get<SettingsService>().initialize();
+//     await locator.get<UserService>().initialize();
+//     await locator.get<NotificationService>().initialize();
+//     bool userInitialized =
+//         locator.get<UserService>().getUsername()?.isNotEmpty ?? false;
+//     return userInitialized;
+//   }
+
+//   _buildWaitingIndicator() {
+//     return Center(child: CircularProgressIndicator());
+//   }
+
+//   _buildMaterialApp(String initialRoute) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       // debugShowMaterialGrid: true,
+//       title: 'Serene',
+//       theme: ThemeData(
+//           canvasColor: Colors.white,
+//           primarySwatch: Colors.orange,
+//           accentColor: Color(0xfff96d15),
+//           buttonColor: Colors.orange[300],
+//           selectedRowColor: Colors.orange[200],
+//           buttonTheme: ButtonThemeData(
+//             shape:
+//                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+//           ),
+//           iconTheme: IconThemeData(color: Colors.black)),
+//       onGenerateRoute: Router.generateRoute,
+//       navigatorKey: locator.get<NotificationService>().navigatorKey,
+//       // home: MainScreen(),
+//       initialRoute: initialRoute,
+//       // routes: Router.getRoutes(),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     switch(_initializationState) {
+      
+//       case InitializationState.loading:
+//         return _buildWaitingIndicator();
+//         break;
+//       case InitializationState.noUser:
+//         _buildMaterialApp(RouteNames.MAIN);
+//         break;
+//       case InitializationState.ready:
+//         _buildMaterialApp(RouteNames.MAIN);
+//         break;
+//     }
+//   }
+// }

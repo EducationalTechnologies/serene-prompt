@@ -55,10 +55,10 @@ class _MainScreenState extends State<MainScreen> {
     print("Build MAIN Screen");
     return Scaffold(
       appBar: AppBar(
-        // title: Text("Serene"),
+        title: Text("Offene Aufgaben"),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
+        // backgroundColor: Colors.transparent,
+        elevation: 1.0,
       ),
       drawer: SereneDrawer(),
       floatingActionButton: buildAddGoalButton(),
