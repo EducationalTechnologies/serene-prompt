@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
         duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
   }
 
-  buildAddGoalButton() {
+  _buildAddGoalButton() {
     return FloatingActionButton.extended(
       // backgroundColor: Theme.of(context).accentColor,
       backgroundColor: Colors.blue[400],
@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
         elevation: 1.0,
       ),
       drawer: SereneDrawer(),
-      floatingActionButton: buildAddGoalButton(),
+      floatingActionButton: _buildAddGoalButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: _buildMonitoringScreen(),
       // body: PageView(

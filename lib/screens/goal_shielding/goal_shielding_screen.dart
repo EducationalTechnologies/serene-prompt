@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serene/screens/goal_shielding/goal_selection_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_internalisation_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_selection_screen.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class GoalShieldingScreen extends StatefulWidget {
@@ -89,6 +90,23 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
     );
   }
 
+  _buildAddGoalButton() {
+    if(_index != 1) {
+      return null;
+    }
+    return FloatingActionButton(
+      // backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Colors.blue[400],
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      child: Icon(Icons.add),
+      onPressed: () async {
+        Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+        // Provider.of<GoalMonitoringState>(context).fetchData();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     print("Calling Build In Goal Shielding Screen");
@@ -110,6 +128,8 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
           // the App.build method, and use it to set our appbar title.
           title: Text(""),
         ),
+        floatingActionButton: _buildAddGoalButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         drawer: SereneDrawer(),
         // backgroundColor: Colors.amber,
         body: Stack(
