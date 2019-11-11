@@ -109,15 +109,19 @@ class NotificationService {
   }
 
   scheduleDailyNotification() async {
-    var time = new Time(15, 25, 0);
+    var time = new Time(13, 49, 0);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_ASSESSMENT,
         CHANNEL_NAME_ASSESSMENT,
-        'show weekly description');
+        'Erinnerung an den Fragebogen');
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await localNotifications.showDailyAtTime(0, 'show weekly title',
-        'Daily notification', time, platformChannelSpecifics);
+    await localNotifications.showDailyAtTime(12, 'Täglicher Lernerinnerung',
+        'Bitte füll den Fragebogen für dein Lernverhalten aus', time, platformChannelSpecifics);
+  }
+
+  getPendingNotifications() async {
+    return await localNotifications.pendingNotificationRequests();
   }
 }

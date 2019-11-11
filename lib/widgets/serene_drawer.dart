@@ -67,12 +67,12 @@ class SereneDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, RouteNames.GOAL_SHIELDING);
               }),
-          _buildDrawerItem(
-              icon: Icons.label,
-              text: "Tags",
-              onTap: () {
-                Navigator.pushNamed(context, RouteNames.EDIT_TAGS);
-              }),
+          // _buildDrawerItem(
+          //     icon: Icons.label,
+          //     text: "Tags",
+          //     onTap: () {
+          //       Navigator.pushNamed(context, RouteNames.EDIT_TAGS);
+          //     }),
           Divider(),
           _buildDrawerItem(
               icon: Icons.settings,
@@ -94,7 +94,10 @@ class SereneDrawer extends StatelessWidget {
                 style: subHeaderStyle,
               ),
               onTap: () async {
-                Navigator.pushNamed(context, RouteNames.TEST);
+                // Navigator.pushNamed(context, RouteNames.TEST);
+                // await NotificationService().scheduleDailyNotification();
+                var openRequests = await NotificationService().getPendingNotifications();
+                print(openRequests);
               }),
           Divider(),
           ListTile(

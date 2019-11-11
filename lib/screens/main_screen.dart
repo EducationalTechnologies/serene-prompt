@@ -62,7 +62,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       drawer: SereneDrawer(),
       floatingActionButton: buildAddGoalButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: _buildMonitoringScreen(),
       // body: PageView(
       //   controller: _controller,

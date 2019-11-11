@@ -53,7 +53,8 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     if (vm.state != ViewState.idle) return;
     if (vm.canSubmit()) {
       await vm.saveCurrentGoal();
-      Navigator.pushNamed(context, RouteNames.MAIN);
+      // Navigator.pushNamed(context, RouteNames.MAIN);
+      Navigator.pop(context);
     } else {}
   }
 
@@ -426,15 +427,15 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                     UIHelper.verticalSpaceSmall(),
                     _buildDifficultySelector(),
                     UIHelper.verticalSpaceMedium(),
-                    buildSubHeader("Eingabe des Zielfortschritts"),
-                    UIHelper.verticalSpaceSmall(),
-                    _buildInputSelector(),
-                    UIHelper.verticalSpaceSmall(),
-                    if (vm.tags.length > 0)
-                      buildSubHeader("Tags"),
-                    _buildTagSelectionList(vm),
-                    buildSubHeader("Übergeordnetes Ziel"),
-                    _buildParentGoalSelection(vm),
+                    // buildSubHeader("Eingabe des Zielfortschritts"),
+                    // UIHelper.verticalSpaceSmall(),
+                    // _buildInputSelector(),
+                    // UIHelper.verticalSpaceSmall(),
+                    // if (vm.tags.length > 0)
+                    //   buildSubHeader("Tags"),
+                    // _buildTagSelectionList(vm),
+                    // buildSubHeader("Übergeordnetes Ziel"),
+                    // _buildParentGoalSelection(vm),
                     UIHelper.verticalSpaceMedium(),
                     Align(
                       alignment: Alignment.bottomCenter,
