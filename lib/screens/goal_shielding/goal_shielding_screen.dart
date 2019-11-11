@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serene/screens/goal_selection_screen.dart';
-import 'package:serene/screens/goal_shielding_internalisation_screen.dart';
-import 'package:serene/screens/goal_shielding_selection_screen.dart';
+import 'package:serene/screens/goal_shielding/goal_selection_screen.dart';
+import 'package:serene/screens/goal_shielding/goal_shielding_internalisation_screen.dart';
+import 'package:serene/screens/goal_shielding/goal_shielding_selection_screen.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class GoalShieldingScreen extends StatefulWidget {
@@ -34,17 +34,6 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
         image: AssetImage("assets/illustrations/undraw_dream_world_cin1.png"),
         fit: BoxFit.scaleDown,
       )),
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 50),
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Text(
-            "Du hast derzeit keine offenen Ziele",
-            style: Theme.of(context).textTheme.display1,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
     );
   }
 
@@ -125,17 +114,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
         // backgroundColor: Colors.amber,
         body: Stack(
           children: <Widget>[
-            Opacity(
-              opacity: 0.2,
-              child: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage(
-                        "assets/illustrations/undraw_dream_world_cin1.png"),
-                    fit: BoxFit.scaleDown,
-                  )),
-                  margin: EdgeInsets.all(10)),
-            ),
+            // _buildBackgroundImage(),
             Container(
               margin: EdgeInsets.all(10),
               child: Column(

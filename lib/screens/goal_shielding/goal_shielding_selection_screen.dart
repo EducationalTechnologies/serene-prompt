@@ -49,18 +49,16 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
   }
 
   buildObstacleList(BuildContext context) {
+    var vm = Provider.of<GoalShieldingViewModel>(context);
     return ListView(
       children: <Widget>[
-        _buildHindranceItem(context, Icons.announcement, "Überforderung",
+        _buildHindranceItem(context, Icons.announcement, vm.hindrances[0],
             "Ist dir deine Aufgabe zu schwer?"),
-        _buildHindranceItem(context, Icons.chat_bubble, "Ablenkung",
+        _buildHindranceItem(context, Icons.chat_bubble, vm.hindrances[1],
             "Kannst du dich nicht ausreichend konzentrieren, oder lenkst dich ständig ab?"),
-        _buildHindranceItem(context, Icons.child_care, "Lustlosigkeit",
+        _buildHindranceItem(context, Icons.child_care, vm.hindrances[2],
             "Bist du nicht ausreichend motiviert um dich der Aufgabe zu widmen?"),
-        _buildHindranceItem(
-            context,
-            Icons.cloud_upload,
-            "Körperliche Verfassung",
+        _buildHindranceItem(context, Icons.cloud_upload, vm.hindrances[3],
             "Fühlst du dich körperlich nicht in der Lage, mit dem Lernen zu beginnen?"),
       ],
     );

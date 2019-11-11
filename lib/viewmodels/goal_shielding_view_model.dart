@@ -8,11 +8,11 @@ class GoalShieldingViewModel with ChangeNotifier {
     "Überforderung",
     "Ablenkung",
     "Lustlosigkeit",
-    "Meine Verfassung"
+    "Körperliche Verfassung"
   ];
   List<String> shields = [
     "Wenn ich mich überfordert fühle, dann sage ich mir, dass ich es schaffen kann",
-    "wenn mir der Gedanke kommt, etwas anderes (nebenher) zu machen, bringe ich mich dazu, noch etwas weiterzulernen",
+    "Wenn mir der Gedanke kommt, etwas anderes (nebenher) zu machen, bringe ich mich dazu, noch etwas weiterzulernen",
     "Wenn ich gar keine Lust mehr auf das Lernen habe, dann sage ich mir, dass ich es aus gutem Grund tue.",
     "Wenn ich mich krank und müde fühle, höre ich auf mich krank und müde zu fühlen!"
   ];
@@ -64,5 +64,9 @@ class GoalShieldingViewModel with ChangeNotifier {
   set hindrance(String hindrance) {
     _hindrance = hindrance;
     notifyListeners();
+  }
+
+  canMoveNext() {
+    return _selectedGoals.length > 0;
   }
 }

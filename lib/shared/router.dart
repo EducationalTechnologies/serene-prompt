@@ -16,7 +16,7 @@ import 'package:serene/viewmodels/consent_state.dart';
 import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/consent_screen.dart';
-import 'package:serene/screens/goal_shielding_screen.dart';
+import 'package:serene/screens/goal_shielding/goal_shielding_screen.dart';
 import 'package:serene/screens/main_screen.dart';
 import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/shared/route_names.dart';
