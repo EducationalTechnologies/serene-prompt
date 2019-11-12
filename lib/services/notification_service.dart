@@ -22,6 +22,8 @@ class NotificationService {
 
   static const String PAYLOAD_DAILY_LEARN = "DAILY_LEARNING";
 
+  static const int ID_DAILY_REMINDER = 69;
+
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   NotificationService._internal() {
@@ -33,8 +35,15 @@ class NotificationService {
   Future initialize() async {
     var initSettingsAndroid = new AndroidInitializationSettings('ic_launcher');
     var initSettings = InitializationSettings(initSettingsAndroid, null);
-    return await localNotifications.initialize(initSettings,
+    await localNotifications.initialize(initSettings,
         onSelectNotification: onSelectNotification);
+
+    var pendingNotifications = await getPendingNotifications();
+    var dailyScheduleExists = pendingNotifications
+        .firstWhere((n) => n.id == ID_DAILY_REMINDER, orElse: () => null);
+    if (dailyScheduleExists == null) {
+      await scheduleDailyNotification();
+    }
   }
 
   configureFirebaseMessaging() {
@@ -117,11 +126,19 @@ class NotificationService {
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await localNotifications.showDailyAtTime(12, 'Täglicher Lernerinnerung',
-        'Bitte füll den Fragebogen für dein Lernverhalten aus', time, platformChannelSpecifics);
+    await localNotifications.showDailyAtTime(
+        ID_DAILY_REMINDER,
+        'Tägliche Lernerinnerung',
+        'Bitte fülle den Fragebogen für dein Lernverhalten aus',
+        time,
+        platformChannelSpecifics);
   }
 
-  getPendingNotifications() async {
+  Future<List<PendingNotificationRequest>> getPendingNotifications() async {
     return await localNotifications.pendingNotificationRequests();
+  }
+
+  clearPendingNotifications() async {
+    await localNotifications.cancelAll();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/screens/splash_screen.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
   }
 
   buildWaitingIndicator() {
-    return Center(child: CircularProgressIndicator());
+    // return Center(child: CircularProgressIndicator());
+    return SplashScreen();
   }
 
   buildMaterialApp(String initialRoute) {

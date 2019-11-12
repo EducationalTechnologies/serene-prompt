@@ -96,8 +96,7 @@ class SereneDrawer extends StatelessWidget {
               onTap: () async {
                 // Navigator.pushNamed(context, RouteNames.TEST);
                 // await NotificationService().scheduleDailyNotification();
-                var openRequests = await NotificationService().getPendingNotifications();
-                print(openRequests);
+                await NotificationService().clearPendingNotifications();
               }),
           Divider(),
           ListTile(
