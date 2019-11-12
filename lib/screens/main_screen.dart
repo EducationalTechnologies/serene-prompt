@@ -44,7 +44,9 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icon(Icons.add),
       label: Text("Neues Ziel"),
       onPressed: () async {
-        Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+        // TODO: This is very unfortunate double navigation that is nevertheless necessary
+        await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+        await Navigator.pushNamed(context, RouteNames.MAIN);
         // Provider.of<GoalMonitoringState>(context).fetchData();
       },
     );

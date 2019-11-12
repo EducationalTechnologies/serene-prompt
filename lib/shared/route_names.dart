@@ -12,4 +12,5 @@ class RouteNames {
   static const SETTINGS = "/settings";
   static const EDIT_TAGS = "/edittags";
   static const DAILY_LEARNING_QUESTIONS = "/dailylearningquestions";
+  static const MONITORING = "/monitoring";
 }

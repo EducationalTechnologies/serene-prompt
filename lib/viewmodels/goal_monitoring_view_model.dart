@@ -22,6 +22,16 @@ class GoalMonitoringVielModel with ChangeNotifier {
     });
   }
 
+  void refetchGoals() {
+    _dataService.getOpenGoals().then((goalList) {
+      _openGoals = goalList;
+
+      // var tree = _pathTreeFromGoals(_openGoals);
+      sortByTree();
+      notifyListeners();
+    });
+  }
+
   void sortByTree() {
     var ids = _openGoals.map((f) => f.path).toList();
     var tree = MaterializedPath.pathTreeFromPathList(ids);

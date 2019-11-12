@@ -155,8 +155,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     });
 
     var insetValue = MaterializedPath.getDepth(goal.path);
-    print("Goal Path: ${goal.path}");
-    print("Inset Value: $insetValue");
 
     return SlideTransition(
       position: anim,
