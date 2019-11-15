@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
@@ -9,7 +11,8 @@ class GoalMonitoringVielModel with ChangeNotifier {
   List<Goal> _openGoals;
 
   DataService _dataService;
-  // DataService _dataService;
+
+  StreamSubscription<Goal> _goalStreamSubscription;
 
   GoalMonitoringVielModel(this._dataService) {
     // _getOpenGoalsAsync();
@@ -20,6 +23,14 @@ class GoalMonitoringVielModel with ChangeNotifier {
       sortByTree();
       notifyListeners();
     });
+    _goalStreamSubscription = _dataService.goalStream.stream.listen((onData) {
+      print("LISTEN TO DATA: ${onData}");
+    });
+  }
+
+  Future<void> dispose() async {
+    super.dispose();
+    await _goalStreamSubscription.cancel();
   }
 
   void refetchGoals() {
@@ -65,6 +76,7 @@ class GoalMonitoringVielModel with ChangeNotifier {
 
   updateGoal(Goal goal) async {
     _dataService.updateGoal(goal);
+    refetchGoals();
   }
 
   bool get isFetching => _isFetching;

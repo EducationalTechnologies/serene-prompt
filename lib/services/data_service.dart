@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -20,6 +21,7 @@ class DataService {
   List<GoalShield> _goalShields;
   UserService _userService;
   FirebaseService _databaseService;
+  StreamController<Goal> goalStream = StreamController<Goal>.broadcast();
 
   DataService._internal() {
     this._userService = locator.get<UserService>();
@@ -49,6 +51,7 @@ class DataService {
     }
 
     _openGoalsCache.add(goal);
+    goalStream.add(goal);
     await _databaseService.createGoal(goal, _userService.getUserEmail());
     if (goal.parentId.isNotEmpty) {
       var parentPath = getGoalById(goal.parentId).path;

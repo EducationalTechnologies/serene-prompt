@@ -28,6 +28,12 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     //     AnimationController(value: 0.0, duration: Duration(milliseconds: 500));
   }
 
+  @override 
+  Future dispose() async {
+    super.dispose();
+    await Provider.of<GoalMonitoringVielModel>(context).dispose();
+  }
+
   _updateGoal(Goal goal) async {
     await Provider.of<GoalMonitoringVielModel>(context).updateGoal(goal);
   }
@@ -45,12 +51,12 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   _removeItem(Goal goal) async {
     // return null;
     var index = _goals.indexOf(goal);
-    Goal removed = _goals.removeAt(index);
-    _listKey.currentState.removeItem(
-        index,
-        (context, animation) =>
-            buildAnimatedListItem(context, index, goal, animation),
-        duration: const Duration(milliseconds: 350));
+    // Goal removed = _goals.removeAt(index);
+    // _listKey.currentState.removeItem(
+    //     index,
+    //     (context, animation) =>
+    //         buildAnimatedListItem(context, index, goal, animation),
+    //     duration: const Duration(milliseconds: 350));
   }
 
   buildConfirmationDialog(BuildContext context, Goal goal) {
@@ -193,12 +199,55 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     );
   }
 
-  buildListView(List<Goal> goals) {
+  _buildAnimatedListView(BuildContext context, List<Goal> goals) {
+    var l = goals.length;
     return AnimatedList(
       key: _listKey,
-      initialItemCount: goals.length,
+      initialItemCount: l,
       itemBuilder: (context, index, animation) =>
           buildAnimatedListItem(context, index, goals[index], animation),
+    );
+  }
+
+  _buildListView(List<Goal> goals) {
+    return ListView.builder(
+      itemCount: _goals.length,
+      itemBuilder: (context, index) {
+        var goal = goals[index];
+        var insetValue = MaterializedPath.getDepth(goal.path);
+        return Container(
+          // padding: EdgeInsets.all(insetValue * 8.0),
+          margin: EdgeInsets.only(left: insetValue * 8.0),
+          key: Key('${goal.hashCode}'),
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              children: <Widget>[
+                Row(children: <Widget>[
+                  if (goal.progressIndicator == GoalProgressIndicator.checkbox)
+                    Checkbox(
+                      onChanged: (value) {
+                        goal.progress = value ? 100 : 0;
+                        if (value) {
+                          _finishGoal(goal);
+                        }
+                      },
+                      value: goal.progress == 100,
+                    ),
+                  Expanded(
+                    child: Text(goal.goalText),
+                  ),
+                  buildPopupMenu(context, goal)
+                ]),
+                if (goal.progressIndicator == GoalProgressIndicator.slider)
+                  buildProgressInput(context, index, goal),
+                if (goal.deadline != null) buildDeadline(goal.deadline),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -211,9 +260,21 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
       print("build monitoring");
       if (_goals.length > 0) {
-        return Container(
-          child: buildListView(_goals),
-        );
+        // return Container(
+        //   child: _buildAnimatedListView(_goals),
+        // );
+        // return Stack(
+        //   children: <Widget>[
+        //     _buildAnimatedListView(context, _goals),
+        //     FlatButton(
+        //       child: Text("Reload"),
+        //       onPressed: () {
+        //         goalMonitoringState.refetchGoals();
+        //       },
+        //     )
+        //   ],
+        // );
+        return _buildListView(_goals);
       } else {
         return Container(
           decoration: BoxDecoration(

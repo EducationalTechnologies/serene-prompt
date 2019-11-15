@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:serene/services/notification_service.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/shared/screen_args.dart';
 import 'package:serene/shared/text_styles.dart';
 import 'package:serene/widgets/version_info.dart';
 
@@ -96,7 +98,8 @@ class SereneDrawer extends StatelessWidget {
               onTap: () async {
                 // Navigator.pushNamed(context, RouteNames.TEST);
                 // await NotificationService().scheduleDailyNotification();
-                await NotificationService().clearPendingNotifications();
+                // await NotificationService().clearPendingNotifications();
+                await Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT, arguments: AssessmentScreenArguments(AssessmentType.preLearning));
               }),
           Divider(),
           ListTile(
