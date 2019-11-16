@@ -25,6 +25,7 @@ class GoalMonitoringVielModel with ChangeNotifier {
     });
     _goalStreamSubscription = _dataService.goalStream.stream.listen((onData) {
       print("LISTEN TO DATA: ${onData}");
+      notifyListeners();
     });
   }
 

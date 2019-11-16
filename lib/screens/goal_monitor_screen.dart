@@ -51,12 +51,12 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   _removeItem(Goal goal) async {
     // return null;
     var index = _goals.indexOf(goal);
-    // Goal removed = _goals.removeAt(index);
-    // _listKey.currentState.removeItem(
-    //     index,
-    //     (context, animation) =>
-    //         buildAnimatedListItem(context, index, goal, animation),
-    //     duration: const Duration(milliseconds: 350));
+    Goal removed = _goals.removeAt(index);
+    _listKey.currentState.removeItem(
+        index,
+        (context, animation) =>
+            buildAnimatedListItem(context, index, goal, animation),
+        duration: const Duration(milliseconds: 350));
   }
 
   buildConfirmationDialog(BuildContext context, Goal goal) {
@@ -274,7 +274,8 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         //     )
         //   ],
         // );
-        return _buildListView(_goals);
+        return _buildAnimatedListView(context, _goals);
+        // return _buildListView(_goals);
       } else {
         return Container(
           decoration: BoxDecoration(

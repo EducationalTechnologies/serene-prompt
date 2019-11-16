@@ -53,6 +53,7 @@ class Router {
       case RouteNames.ADD_GOAL:
         final GoalScreenArguments goalArgs = settings.arguments;
         return MaterialPageRoute(
+            maintainState: false,
             builder: (context) =>
                 ChangeNotifierProvider<AddGoalViewModel>.value(
                     value: AddGoalViewModel(
