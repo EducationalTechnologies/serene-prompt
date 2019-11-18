@@ -54,13 +54,16 @@ class SereneDrawer extends StatelessWidget {
           _buildDrawerItem(
               icon: Icons.add_box,
               text: "Neues Ziel",
-              onTap: () {
-                Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+              onTap: () async {
+                await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+                await Navigator.pushNamed(context, RouteNames.MAIN);
+                Navigator.pop(context);
               }),
           _buildDrawerItem(
               icon: Icons.list,
               text: "Ziele",
               onTap: () {
+                Navigator.pop(context);
                 Navigator.pushNamed(context, RouteNames.MAIN);
               }),
           _buildDrawerItem(
@@ -99,7 +102,10 @@ class SereneDrawer extends StatelessWidget {
                 // Navigator.pushNamed(context, RouteNames.TEST);
                 // await NotificationService().scheduleDailyNotification();
                 // await NotificationService().clearPendingNotifications();
-                await Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT, arguments: AssessmentScreenArguments(AssessmentType.preLearning));
+                await Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT,
+                    arguments:
+                        AssessmentScreenArguments(AssessmentType.preLearning));
               }),
           Divider(),
           ListTile(

@@ -28,11 +28,11 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     //     AnimationController(value: 0.0, duration: Duration(milliseconds: 500));
   }
 
-  @override 
-  Future dispose() async {
-    super.dispose();
-    await Provider.of<GoalMonitoringVielModel>(context).dispose();
-  }
+  // @override
+  // Future dispose() async {
+  //   super.dispose();
+  //   await Provider.of<GoalMonitoringVielModel>(context).dispose();
+  // }
 
   _updateGoal(Goal goal) async {
     await Provider.of<GoalMonitoringVielModel>(context).updateGoal(goal);
@@ -274,7 +274,12 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         //     )
         //   ],
         // );
-        return _buildAnimatedListView(context, _goals);
+        return AnimatedList(
+          key: _listKey,
+          initialItemCount: _goals.length,
+          itemBuilder: (context, index, animation) =>
+              buildAnimatedListItem(context, index, _goals[index], animation),
+        );
         // return _buildListView(_goals);
       } else {
         return Container(

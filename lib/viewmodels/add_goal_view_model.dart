@@ -94,7 +94,7 @@ class AddGoalViewModel extends BaseViewModel {
   toggleTag(TagModel tag, bool value) {}
 
   canSubmit() {
-    return _currentGoal.goalText.length > 3;
+    return _currentGoal.goalText.length > 0;
   }
 
   bool hasParentsAvailable() {
