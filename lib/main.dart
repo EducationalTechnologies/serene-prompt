@@ -28,9 +28,11 @@ class MyApp extends StatelessWidget {
     }
 
     await locator.get<ExperimentService>().initialize();
-    bool showPreLearning = await locator.get<ExperimentService>().shouldShowPreLearningAssessment();
-    if(showPreLearning) {
-      
+    bool showPreLearning = await locator
+        .get<ExperimentService>()
+        .shouldShowPreLearningAssessment();
+    if (showPreLearning) {
+      return AppStartupMode.preLearningAssessment;
     }
     return AppStartupMode.normal;
   }
@@ -82,13 +84,13 @@ class MyApp extends StatelessWidget {
                 if (snapshot.hasData) {
                   switch (snapshot.data) {
                     case AppStartupMode.normal:
-                      buildMaterialApp(RouteNames.MAIN);
+                      return buildMaterialApp(RouteNames.MAIN);
                       break;
                     case AppStartupMode.signin:
                       // TODO: Handle this case.
                       break;
                     case AppStartupMode.preLearningAssessment:
-                      buildMaterialApp(RouteNames.AMBULATORY_ASSESSMENT);
+                      return buildMaterialApp(RouteNames.AMBULATORY_ASSESSMENT);
                       break;
                     case AppStartupMode.firstLaunch:
                       // TODO: Handle this case.

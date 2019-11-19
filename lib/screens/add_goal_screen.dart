@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
