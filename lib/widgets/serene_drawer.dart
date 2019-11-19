@@ -56,8 +56,8 @@ class SereneDrawer extends StatelessWidget {
               text: "Neues Ziel",
               onTap: () async {
                 await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
-                await Navigator.pushNamed(context, RouteNames.MAIN);
                 Navigator.pop(context);
+                await Navigator.pushNamed(context, RouteNames.MAIN);
               }),
           _buildDrawerItem(
               icon: Icons.list,

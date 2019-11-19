@@ -134,6 +134,7 @@ class DataService {
   }
 
   saveAssessment(AssessmentModel assessment) async {
-    await _databaseService.saveAssessment(assessment);
+    await _databaseService.saveAssessment(
+        assessment, _userService.getUserEmail());
   }
 }

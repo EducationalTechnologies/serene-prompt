@@ -227,9 +227,11 @@ class FirebaseService {
     await tokens.setData({'token': token});
   }
 
-  saveAssessment(AssessmentModel assessment) async {
+  saveAssessment(AssessmentModel assessment, String email) async {
     await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
+        .document(email)
+        .collection(assessment.assessmentType)
         .add(assessment.toMap());
   }
 }
