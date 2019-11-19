@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/notification_service.dart';
@@ -17,4 +18,6 @@ void setupLocator() {
       UserService(locator.get<SettingsService>()));
   locator.registerSingleton<DataService>(DataService());
   locator.registerSingleton<NotificationService>(NotificationService());
+  locator.registerSingleton<ExperimentService>(
+      ExperimentService(locator.get<DataService>()));
 }

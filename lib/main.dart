@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/splash_screen.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/router.dart';
 
@@ -15,13 +17,22 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Future<bool> initialize() async {
+  Future<AppStartupMode> initialize() async {
     await locator.get<SettingsService>().initialize();
     await locator.get<UserService>().initialize();
     await locator.get<NotificationService>().initialize();
     bool userInitialized =
         locator.get<UserService>().getUsername()?.isNotEmpty ?? false;
-    return userInitialized;
+    if (!userInitialized) {
+      return AppStartupMode.firstLaunch;
+    }
+
+    await locator.get<ExperimentService>().initialize();
+    bool showPreLearning = await locator.get<ExperimentService>().shouldShowPreLearningAssessment();
+    if(showPreLearning) {
+      
+    }
+    return AppStartupMode.normal;
   }
 
   buildWaitingIndicator() {
@@ -58,7 +69,7 @@ class MyApp extends StatelessWidget {
     if (false) {
       return buildMaterialApp(RouteNames.MAIN);
     } else {
-      return FutureBuilder<bool>(
+      return FutureBuilder<AppStartupMode>(
           future: initialize(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
@@ -69,10 +80,22 @@ class MyApp extends StatelessWidget {
                 break;
               case ConnectionState.done:
                 if (snapshot.hasData) {
-                  if (snapshot.data) {
-                    return buildMaterialApp(RouteNames.MAIN);
-                  } else {
-                    return buildMaterialApp(RouteNames.LOG_IN);
+                  switch (snapshot.data) {
+                    case AppStartupMode.normal:
+                      buildMaterialApp(RouteNames.MAIN);
+                      break;
+                    case AppStartupMode.signin:
+                      // TODO: Handle this case.
+                      break;
+                    case AppStartupMode.preLearningAssessment:
+                      buildMaterialApp(RouteNames.AMBULATORY_ASSESSMENT);
+                      break;
+                    case AppStartupMode.firstLaunch:
+                      // TODO: Handle this case.
+                      break;
+                    case AppStartupMode.postLearningAssessment:
+                      // TODO: Handle this case.
+                      break;
                   }
                 }
                 return buildWaitingIndicator();
@@ -88,7 +111,7 @@ class MyApp extends StatelessWidget {
 //   enum InitializationState{
 //     loading,
 //     noUser,
-//     ready 
+//     ready
 //   }
 
 // class InitializerWidget extends StatefulWidget {
@@ -98,10 +121,9 @@ class MyApp extends StatelessWidget {
 
 // class _InitializerWidgetState extends State<InitializerWidget> {
 
-
 //   InitializationState _initializationState = InitializationState.loading;
 
-//   @override 
+//   @override
 //   void initState() {
 
 //   }
@@ -146,7 +168,7 @@ class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     switch(_initializationState) {
-      
+
 //       case InitializationState.loading:
 //         return _buildWaitingIndicator();
 //         break;
