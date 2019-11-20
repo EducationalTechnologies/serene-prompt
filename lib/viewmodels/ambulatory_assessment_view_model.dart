@@ -12,6 +12,7 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   DataService _dataService;
   List<AssessmentItemModel> _currentAssessment;
   get currentAssessment => _currentAssessment;
+  String title;
 
   Map<String, String> results;
 
@@ -43,10 +44,141 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
           2,
           {1: "Ja", 2: "Nein"},
           "postLearning2"),
-      AssessmentItemModel("Wie zufrieden bist du mit dem heutigen Lerntag?", 5,
-          {1: "1: Gar nicht", 2: "", 3: "", 4: "", 5: "Sehr"}, "postLearning3"),
+      AssessmentItemModel(
+          "Wie zufrieden bist du mit dem heutigen Lerntag?",
+          5,
+          {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
+          "postLearning3"),
     ];
     return _afterLearning;
+  }
+
+  _getSrlQuestionnaire() {
+    var itemCount = 5;
+    List<AssessmentItemModel> _preGoal = [
+      AssessmentItemModel(
+          "Ich habe feste Ziele im Leben", itemCount, null, "srl[SQ001]"),
+      AssessmentItemModel(
+          "Ich kann überprüfen, ob ich meine Ziele erreicht habe",
+          itemCount,
+          null,
+          "srl[SQ002]"),
+      AssessmentItemModel(
+          "Ich wähle meine Ziele so, dass sie eine Herausforderung für mich sind",
+          itemCount,
+          null,
+          "srl[SQ003]"),
+      AssessmentItemModel(
+          "Ich versuche, meine eigene Leistung von Mal zu Mal zu steigern",
+          itemCount,
+          null,
+          "srl[SQ004]"),
+      AssessmentItemModel(
+          "Ich setze mir feste Zeitpunkte, zu denen ich meine Ziele erreichen will",
+          itemCount,
+          null,
+          "srl[SQ005]"),
+      AssessmentItemModel(
+          "Wenn ich viel zu lernen habe, mache ich mir einen Zeitplan, was ich wann lerne",
+          itemCount,
+          null,
+          "srl[SQ006]"),
+      AssessmentItemModel("Ich lerne immer zu gleich bleibenden Zeiten",
+          itemCount, null, "srl[SQ007]"),
+      AssessmentItemModel(
+          "Alle wichtigen Termine und Aufgaben schreibe ich mir auf",
+          itemCount,
+          null,
+          "srl[SQ008]"),
+      AssessmentItemModel(
+          "Ich denke an frühere Erfolge zurück, um mein Selbstbewusstsein zu stärken",
+          itemCount,
+          null,
+          "srl[SQ009]"),
+      AssessmentItemModel(
+          "Um mich zu motivieren, rufe ich mir vor Augen, wie schön es sein wird, wenn ich ein Ziel erreicht haben werde",
+          itemCount,
+          null,
+          "srl[SQ010]"),
+      AssessmentItemModel(
+          "Ich suche mir Erfolgserlebnisse, um mich für schwierige Aufgaben zu motivieren",
+          itemCount,
+          null,
+          "srl[SQ011]"),
+      AssessmentItemModel(
+          "Wenn mein Durchhaltevermögen nachlässt, weiß ich meist genau, wie ich meine Lust an der Sache verstärken kann",
+          itemCount,
+          null,
+          "srl[SQ012]"),
+      AssessmentItemModel(
+          "Ich kann es schaffen, einer anfangs unangenehmen Tätigkeit zunehmend angenehme Seiten abzugewinnen",
+          itemCount,
+          null,
+          "srl[SQ013]"),
+      AssessmentItemModel(
+          "Ich kann meine Stimmung so verändern, dass mir dann alles leichter von der Hand geht",
+          itemCount,
+          null,
+          "srl[SQ014]"),
+      AssessmentItemModel(
+          "Ich kann mich beim Lernen gut in die Stimmung hineinbringen, die ich im Moment am besten gebrauchen kann",
+          itemCount,
+          null,
+          "srl[SQ015]"),
+      AssessmentItemModel(
+          "Ich versuche, Beziehungen zu den Inhalten verwandter Fächer bzw. Lehrveranstaltungen herzustellen",
+          itemCount,
+          null,
+          "srl[SQ016]"),
+      AssessmentItemModel(
+          "Zu neuen Konzepten stelle ich mir praktische Anwendungen vor",
+          itemCount,
+          null,
+          "srl[SQ017]"),
+      AssessmentItemModel(
+          "Ich versuche in Gedanken, das Gelernte mit dem zu verbinden, was ich schon darüber weiß",
+          itemCount,
+          null,
+          "srl[SQ018]"),
+      AssessmentItemModel(
+          "Ich beginne erst mit dem Lernen, wenn ich mir die notwendingen Einzelschritte klargemacht habe",
+          itemCount,
+          null,
+          "srl[SQ019]"),
+      AssessmentItemModel("Ich denke regelmäßig über mein Lernen nach",
+          itemCount, null, "srl[SQ020]"),
+      AssessmentItemModel(
+          "Ich mache mir Aufzeichnungen über mein Lernverhalten",
+          itemCount,
+          null,
+          "srl[SQ021]"),
+      AssessmentItemModel(
+          "Ich notiere mir Strategien, die ich beim Lernen ausprobieren möchte",
+          itemCount,
+          null,
+          "srl[SQ022]"),
+      AssessmentItemModel(
+          "Nach einer Lernwoche überlege ich, was ich alles gelernt habe",
+          itemCount,
+          null,
+          "srl[SQ023]"),
+      AssessmentItemModel(
+          "Am Ende des Tages frage ich mich, ob ich zufrieden bin mit meiner Leistung",
+          itemCount,
+          null,
+          "srl[SQ024]"),
+      AssessmentItemModel(
+          "Wenn ich ein Thema gelernt habe, überlege ich, was ich beim Lernen für das nächste Thema anders machen möchte",
+          itemCount,
+          null,
+          "srl[SQ025]"),
+      AssessmentItemModel(
+          "Am Ende einer Woche denke ich darüber nach, welche Themen ich gekonnt habe und welche nicht",
+          itemCount,
+          null,
+          "srl[SQ026]"),
+    ];
+    return _preGoal;
   }
 
   getPostTest() {
@@ -85,11 +217,17 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   AmbulatoryAssessmentViewModel(
       this._type, this._userService, this._dataService) {
     if (this._type == AssessmentType.preLearning) {
+      title = "";
       this._currentAssessment = getPreLearningList();
     } else if (this._type == AssessmentType.postLearning) {
+      title = "";
       this._currentAssessment = getAfterLearningList();
     } else if (this._type == AssessmentType.postTest) {
+      title = "";
       this._currentAssessment = getPostTest();
+    } else if (this._type == AssessmentType.srl) {
+      title = "";
+      this._currentAssessment = _getSrlQuestionnaire();
     }
 
     results = {};

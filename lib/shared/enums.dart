@@ -21,6 +21,7 @@ class AssessmentType {
   static const String postTest = "postTest";
   static const String preLearning = "preLearning";
   static const String postLearning = "postLearning";
+  static const String srl = "srlSurvey";
 }
 
 class ResourceType {

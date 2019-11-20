@@ -47,10 +47,11 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var vm = Provider.of<AmbulatoryAssessmentViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Fragen zur Zielsetzung'),
+        title: Text(vm.title),
       ),
       body: Container(
         child: Padding(

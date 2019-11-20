@@ -83,6 +83,26 @@ class Router {
                         locator.get<DataService>()),
                     child: AmbulatoryAssessmentScreen()));
 
+      case RouteNames.AMBULATORY_ASSESSMENT_SRL:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
+                    builder: (_) => AmbulatoryAssessmentViewModel(
+                        AssessmentType.srl,
+                        locator.get<UserService>(),
+                        locator.get<DataService>()),
+                    child: AmbulatoryAssessmentScreen()));
+
+      case RouteNames.AMBULATORY_ASSESSMENT_POST_TEST:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
+                    builder: (_) => AmbulatoryAssessmentViewModel(
+                        AssessmentType.postLearning,
+                        locator.get<UserService>(),
+                        locator.get<DataService>()),
+                    child: AmbulatoryAssessmentScreen()));
+
       case RouteNames.CONSENT:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<ConsentState>(
