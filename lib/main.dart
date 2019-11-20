@@ -9,8 +9,6 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/router.dart';
 
-// TOOD: Wrap whole app in futurbuilder to perform initialization logic
-// https://stackoverflow.com/questions/50437687/flutter-initialising-variables-on-startup
 void main() {
   setupLocator();
   runApp(MyApp());
@@ -87,10 +85,10 @@ class MyApp extends StatelessWidget {
                       return buildMaterialApp(RouteNames.MAIN);
                       break;
                     case AppStartupMode.signin:
-                      // TODO: Handle this case.
+                      return buildMaterialApp(RouteNames.LOG_IN);
                       break;
                     case AppStartupMode.preLearningAssessment:
-                      return buildMaterialApp(RouteNames.AMBULATORY_ASSESSMENT);
+                      return buildMaterialApp(RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
                       break;
                     case AppStartupMode.firstLaunch:
                       // TODO: Handle this case.

@@ -10,6 +10,7 @@ import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/add_goal_view_model.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
 import 'package:serene/viewmodels/consent_state.dart';
@@ -68,6 +69,16 @@ class Router {
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     builder: (_) => AmbulatoryAssessmentViewModel(
                         assessmentArgs.assessmentType,
+                        locator.get<UserService>(),
+                        locator.get<DataService>()),
+                    child: AmbulatoryAssessmentScreen()));
+
+      case RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
+                    builder: (_) => AmbulatoryAssessmentViewModel(
+                        AssessmentType.preLearning,
                         locator.get<UserService>(),
                         locator.get<DataService>()),
                     child: AmbulatoryAssessmentScreen()));
