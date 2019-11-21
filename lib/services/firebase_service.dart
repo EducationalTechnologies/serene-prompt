@@ -234,4 +234,14 @@ class FirebaseService {
         .collection(assessment.assessmentType)
         .add(assessment.toMap());
   }
+
+  getLastSubmittedAssessment(String assessmentType, String email) async {
+    return await _databaseReference
+        .collection(COLLECTION_ASSESSMENTS)
+        .document(email)
+        .collection(assessmentType)
+        .orderBy("submissionDate", descending: true)
+        .limit(1)
+        .getDocuments();
+  }
 }

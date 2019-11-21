@@ -1,4 +1,5 @@
 import 'package:serene/services/data_service.dart';
+import 'package:serene/shared/enums.dart';
 
 class ExperimentService {
   DataService _dataService;
@@ -10,7 +11,10 @@ class ExperimentService {
   }
 
   // TODO: Request whether a pre-learning assessment was performed today
-  Future<bool> shouldShowPreLearningAssessment() {
+  Future<bool> shouldShowPreLearningAssessment() async {
+    var lastPreLearningAssessment = await this
+        ._dataService
+        .getLastSubmittedAssessment(AssessmentType.preLearning);
     return Future.delayed(Duration.zero).then((res) => false);
   }
 
@@ -19,7 +23,7 @@ class ExperimentService {
     return Future.delayed(Duration.zero).then((res) => true);
   }
 
-    // TODO: Request whether a post-learning assessment was performed yesterday
+  // TODO: Request whether a post-learning assessment was performed yesterday
   Future<bool> shouldShowSRLSurvey() {
     return Future.delayed(Duration.zero).then((res) => true);
   }

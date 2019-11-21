@@ -137,4 +137,9 @@ class DataService {
     await _databaseService.saveAssessment(
         assessment, _userService.getUserEmail());
   }
+
+  getLastSubmittedAssessment(String assessmentType) async {
+    return await _databaseService.getLastSubmittedAssessment(
+        assessmentType, _userService.getUserEmail());
+  }
 }
