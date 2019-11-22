@@ -235,13 +235,16 @@ class FirebaseService {
         .add(assessment.toMap());
   }
 
-  getLastSubmittedAssessment(String assessmentType, String email) async {
-    return await _databaseReference
+  Future<AssessmentModel> getLastSubmittedAssessment(String assessmentType, String email) async {
+    var doc = await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
         .document(email)
         .collection(assessmentType)
         .orderBy("submissionDate", descending: true)
         .limit(1)
         .getDocuments();
+
+    if(doc.documents.length == 0) return null;
+    return AssessmentModel.fromDocument(doc.documents[0]);
   }
 }

@@ -138,7 +138,7 @@ class DataService {
         assessment, _userService.getUserEmail());
   }
 
-  getLastSubmittedAssessment(String assessmentType) async {
+  Future<AssessmentModel> getLastSubmittedAssessment(String assessmentType) async {
     return await _databaseService.getLastSubmittedAssessment(
         assessmentType, _userService.getUserEmail());
   }

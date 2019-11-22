@@ -15,4 +15,9 @@ class AssessmentModel {
       "submissionDate": this.submissionDate.toIso8601String()
     };
   }
+
+  AssessmentModel.fromDocument(dynamic document) {
+    this.submissionDate = DateTime.parse(document["submissionDate"]);
+    this.assessmentType = document["assessmentType"];
+  }
 }

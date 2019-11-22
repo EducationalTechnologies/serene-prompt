@@ -15,7 +15,8 @@ class ExperimentService {
     var lastPreLearningAssessment = await this
         ._dataService
         .getLastSubmittedAssessment(AssessmentType.preLearning);
-    return Future.delayed(Duration.zero).then((res) => false);
+
+    return !isToday(lastPreLearningAssessment.submissionDate);
   }
 
   // TODO: Request whether a post-learning assessment was performed yesterday
@@ -26,5 +27,12 @@ class ExperimentService {
   // TODO: Request whether a post-learning assessment was performed yesterday
   Future<bool> shouldShowSRLSurvey() {
     return Future.delayed(Duration.zero).then((res) => true);
+  }
+
+  isToday(DateTime dateTime) {
+    var today = DateTime.now();
+    return dateTime.year == today.year &&
+        dateTime.month == today.month &&
+        dateTime.day == today.day;
   }
 }
