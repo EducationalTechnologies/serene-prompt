@@ -16,12 +16,22 @@ class ExperimentService {
         ._dataService
         .getLastSubmittedAssessment(AssessmentType.preLearning);
 
+    if (lastPreLearningAssessment == null) return true;
     return !isToday(lastPreLearningAssessment.submissionDate);
   }
 
   // TODO: Request whether a post-learning assessment was performed yesterday
-  Future<bool> shouldShowPostLearningAssessment() {
-    return Future.delayed(Duration.zero).then((res) => true);
+  Future<bool> shouldShowPostLearningAssessment() async {
+    var lastPostLearningAssessment = await this
+        ._dataService
+        .getLastSubmittedAssessment(AssessmentType.preLearning);
+
+    if (lastPostLearningAssessment == null) return true;
+    var diff =
+        DateTime.now().difference(lastPostLearningAssessment.submissionDate);
+
+        // TOOD: Rethink this value
+    return diff.inHours > 24;
   }
 
   // TODO: Request whether a post-learning assessment was performed yesterday
