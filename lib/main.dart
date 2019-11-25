@@ -97,14 +97,14 @@ class MyApp extends StatelessWidget {
                       break;
                     case AppStartupMode.preLearningAssessment:
                       return buildMaterialApp(
-                          RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
+                          RouteNames.GOAL_SHIELDING);
                       break;
                     case AppStartupMode.firstLaunch:
                       return buildMaterialApp(RouteNames.LOG_IN);
                       break;
                     case AppStartupMode.postLearningAssessment:
                       return buildMaterialApp(
-                          RouteNames.AMBULATORY_ASSESSMENT_SRL);
+                          RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
                       break;
                   }
                 }

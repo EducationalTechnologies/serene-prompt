@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
+import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/models/user_data.dart';
+import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -28,6 +30,7 @@ class FirebaseService {
   static const String COLLECTION_USERS = "users";
   static const String COLLECTION_ASSESSMENTS = "assessments";
   static const String COLLECTION_TAGS = "tags";
+  static const String COLLECTION_SHIELDS = "shields";
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -235,7 +238,8 @@ class FirebaseService {
         .add(assessment.toMap());
   }
 
-  Future<AssessmentModel> getLastSubmittedAssessment(String assessmentType, String email) async {
+  Future<AssessmentModel> getLastSubmittedAssessment(
+      String assessmentType, String email) async {
     var doc = await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
         .document(email)
@@ -244,7 +248,30 @@ class FirebaseService {
         .limit(1)
         .getDocuments();
 
-    if(doc.documents.length == 0) return null;
+    if (doc.documents.length == 0) return null;
     return AssessmentModel.fromDocument(doc.documents[0]);
+  }
+
+  saveShielding(GoalShield shield, String email) async {
+    var key = DateTime.now().toIso8601String();
+    await _databaseReference
+        .collection(COLLECTION_SHIELDS)
+        .document(email)
+        .collection(COLLECTION_SHIELDS)
+        .document(key)
+        .setData(shield.toMap());
+  }
+
+  Future<GoalShield> getLastSubmittedGoalShield(String email) async {
+    var doc = await _databaseReference
+        .collection(COLLECTION_SHIELDS)
+        .document(email)
+        .collection(COLLECTION_SHIELDS)
+        .orderBy("submissionDate", descending: true)
+        .limit(1)
+        .getDocuments();
+
+    if (doc.documents.length == 0) return null;
+    // return AssessmentModel.fromDocument(doc.documents[0]);
   }
 }

@@ -16,6 +16,7 @@ class ExperimentService {
         ._dataService
         .getLastSubmittedAssessment(AssessmentType.preLearning);
 
+    return false;
     if (lastPreLearningAssessment == null) return true;
     return !isToday(lastPreLearningAssessment.submissionDate);
   }
@@ -24,13 +25,13 @@ class ExperimentService {
   Future<bool> shouldShowPostLearningAssessment() async {
     var lastPostLearningAssessment = await this
         ._dataService
-        .getLastSubmittedAssessment(AssessmentType.preLearning);
+        .getLastSubmittedAssessment(AssessmentType.postLearning);
 
     if (lastPostLearningAssessment == null) return true;
     var diff =
         DateTime.now().difference(lastPostLearningAssessment.submissionDate);
 
-        // TOOD: Rethink this value
+    // TOOD: Rethink this value
     return diff.inHours > 24;
   }
 

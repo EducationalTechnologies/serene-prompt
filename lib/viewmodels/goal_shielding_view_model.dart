@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
+import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/data_service.dart';
 
 class GoalShieldingViewModel with ChangeNotifier {
@@ -68,5 +69,13 @@ class GoalShieldingViewModel with ChangeNotifier {
 
   canMoveNext() {
     return _selectedGoals.length > 0;
+  }
+
+  saveShielding() async {
+    var shield = GoalShield(
+        id: DateTime.now().toIso8601String(),
+        hindrance: this.hindrance,
+        shields: []);
+    await this._dataService.saveShielding(shield);
   }
 }

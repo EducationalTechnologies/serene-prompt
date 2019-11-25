@@ -142,4 +142,12 @@ class DataService {
     return await _databaseService.getLastSubmittedAssessment(
         assessmentType, _userService.getUserEmail());
   }
+
+  saveShielding(GoalShield shield) async {
+    return await _databaseService.saveShielding(shield, _userService.getUserEmail());
+  }
+
+  Future<GoalShield> getLastGoalShield() async {
+    return Future.value(GoalShield(id: "1", hindrance: "Miau", shields: ["Affentrompetenclown"]));
+  }
 }

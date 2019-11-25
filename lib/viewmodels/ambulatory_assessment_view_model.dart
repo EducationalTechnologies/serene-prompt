@@ -10,7 +10,7 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
 
   UserService _userService;
   DataService _dataService;
-  List<AssessmentItemModel> _currentAssessment;
+  List<AssessmentItemModel> _currentAssessment = [];
   get currentAssessment => _currentAssessment;
   String title;
 
@@ -20,32 +20,32 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     var itemCount = 5;
     List<AssessmentItemModel> _preGoal = [
       AssessmentItemModel(
-          "Wie verpflichtet fühlst du dich, dieses Ziel heute zu erreichen?",
+          "Wie verpflichtet fühlst du dich, deine Ziele heute zu erreichen?",
           itemCount,
           null,
           "preLearning1"),
       AssessmentItemModel(
-          "Wie schwierig wird es heute, dieses Ziel zu erreichen?",
+          "Wie schwierig wird es heute, deine Ziele zu erreichen?",
           itemCount,
           null,
           "preLearning2"),
-      AssessmentItemModel("Wie sehr freust du dich auf diese Aufgabe?",
-          itemCount, null, "preLearning3"),
+      AssessmentItemModel(
+          "Wie sehr freust du dich auf diese Aufgaben?",
+          5,
+          {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
+          "preLearning3"),
     ];
     return _preGoal;
   }
 
-  getAfterLearningList() {
+  getAfterLearningList(String shield) {
     List<AssessmentItemModel> _afterLearning = [
-      AssessmentItemModel("Warst du heute während des Lernens überfordert?", 2,
-          {1: "Ja", 2: "Nein"}, "postLearning1"),
+      AssessmentItemModel("Warst du überfordert als du zuletzt gelernt hast?",
+          2, {1: "Ja", 2: "Nein"}, "postLearning1"),
+      AssessmentItemModel("Hast du es dann geschafft, $shield?", 2,
+          {1: "Ja", 2: "Nein"}, "postLearning2"),
       AssessmentItemModel(
-          "Hast du es dann geschafft, dir zu sagen, dass du es trotzdem schaffen kannst?",
-          2,
-          {1: "Ja", 2: "Nein"},
-          "postLearning2"),
-      AssessmentItemModel(
-          "Wie zufrieden bist du mit dem heutigen Lerntag?",
+          "Wie zufrieden bist du mit deinem Lerntag?",
           5,
           {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
           "postLearning3"),
@@ -221,7 +221,11 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
       this._currentAssessment = getPreLearningList();
     } else if (this._type == AssessmentType.postLearning) {
       title = "";
-      this._currentAssessment = getAfterLearningList();
+      this._dataService.getLastGoalShield().then((shield) {
+        var insert = getInsertForHindrance(shield.hindrance);
+        this._currentAssessment = getAfterLearningList(insert);
+        notifyListeners();
+      });
     } else if (this._type == AssessmentType.postTest) {
       title = "";
       this._currentAssessment = getPostTest();
@@ -231,6 +235,16 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     }
 
     results = {};
+  }
+
+  getInsertForHindrance(String hindrance) {
+    // TODO: Replace hard coded stuff
+    if (hindrance == "Überforderung") return "Überforderung";
+    if (hindrance == "Ablenkung") return "Ablenkung";
+    if (hindrance == "Lustlosigkeit") return "Lustlosigkeit";
+    if (hindrance == "Körperliche Verfassung") return "Körperliche Verfassung";
+
+    return "HINDRANCE NOT FOUND";
   }
 
   setResult(String id, String value) {
