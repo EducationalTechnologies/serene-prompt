@@ -144,6 +144,7 @@ class DataService {
   }
 
   saveShielding(GoalShield shield) async {
+    shield.submissionDate = DateTime.now();
     return await _databaseService.saveShielding(shield, _userService.getUserEmail());
   }
 

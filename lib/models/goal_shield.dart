@@ -1,5 +1,3 @@
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
-
 class GoalShield {
   String id;
   String hindrance;

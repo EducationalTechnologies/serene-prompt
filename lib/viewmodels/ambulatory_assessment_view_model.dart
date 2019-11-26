@@ -141,7 +141,7 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
           null,
           "srl[SQ018]"),
       AssessmentItemModel(
-          "Ich beginne erst mit dem Lernen, wenn ich mir die notwendingen Einzelschritte klargemacht habe",
+          "Ich beginne erst mit dem Lernen, wenn ich mir die notwendigen Einzelschritte klargemacht habe",
           itemCount,
           null,
           "srl[SQ019]"),
@@ -224,6 +224,7 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
       this._dataService.getLastGoalShield().then((shield) {
         var insert = getInsertForHindrance(shield.hindrance);
         this._currentAssessment = getAfterLearningList(insert);
+        initializeResults();
         notifyListeners();
       });
     } else if (this._type == AssessmentType.postTest) {
@@ -234,7 +235,14 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
       this._currentAssessment = _getSrlQuestionnaire();
     }
 
+    initializeResults();
+  }
+
+  initializeResults() {
     results = {};
+    for (var a in _currentAssessment) {
+      results[a.id] = null;
+    }
   }
 
   getInsertForHindrance(String hindrance) {

@@ -12,12 +12,14 @@ class IntervalScale extends StatefulWidget {
   final Map<int, String> labels;
   final String id;
   final IntervalScaleCallback callback;
+  final int groupValue;
 
-  const IntervalScale(
+  IntervalScale(
       {Key key,
       this.title,
       this.itemCount = 5,
       this.labels,
+      this.groupValue,
       this.id,
       this.callback})
       : super(key: key);
@@ -26,26 +28,39 @@ class IntervalScale extends StatefulWidget {
 class _IntervalScaleState extends State<IntervalScale> {
   int _groupValue;
 
+  @override
+  void initState() {
+    super.initState();
+    _groupValue = widget.groupValue;
+  }
+
   buildItem(int value, String text) {
     if (text == null) {
       text = value.toString();
     }
-    return Column(
-      children: <Widget>[
-        Radio(
-          groupValue: _groupValue,
-          value: value,
-          onChanged: (val) {
-            setState(() {
-              _groupValue = val;
-            });
-            widget.callback(val.toString());
-          },
-        ),
-        Text(
-          text,
-        )
-      ],
+    return InkWell(
+      child: Column(
+        children: <Widget>[
+          Radio(
+            groupValue: _groupValue,
+            value: value,
+            onChanged: (val) {
+              setState(() {
+                _groupValue = val;
+              });
+              widget.callback(val.toString());
+            },
+          ),
+          Text(
+            text,
+          )
+        ],
+      ),
+      onTap: () {
+        setState(() {
+          _groupValue = value;
+        });
+      },
     );
   }
 

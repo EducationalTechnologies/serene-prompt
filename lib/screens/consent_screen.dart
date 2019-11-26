@@ -44,7 +44,8 @@ class ConsentScreen extends StatelessWidget {
   final String _subheaderWhatIsExpected = "Was wird von mir erwartet?";
   final List<String> _textWhatIsExpected = [
     "Sie können die Applikation frei verwenden und die Teilnahme an der Studie jederzeit beenden",
-    "Während Sie die App installiert haben und verwenden, werden sie täglich an Ihre Lernpläne erinnert und gebeten, einen kurzen Fragebogen auszufüllen. Sie bestimmen somit selbst wie und wie oft Sie an der Studie teilnehmen"
+    "Während Sie die App installiert haben und verwenden, werden sie täglich an Ihre Lernpläne erinnert und gebeten, einen kurzen Fragebogen auszufüllen. Sie bestimmen somit selbst wie und wie oft Sie an der Studie teilnehmen",
+    "Im Laufe der Studie werden Sie gebeten, mehrere Fragebögen auszufüllen. Für den initialen Fragebogen dauert das Ausfüllen etwa 3-4 Minuten. Die täglichen Fragen können innerhalb von weniger als einer Minute beantwortet werden. Das gleiche gilt für die Fragen, die wir zum Abschluss der Studie stellen werden, welche ebenfalls innerhalb von weniger als einer Minute beatnwortet werden können."
   ];
 
   final String _subheaderWhatDoIGain =

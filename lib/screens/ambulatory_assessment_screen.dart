@@ -15,33 +15,38 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
     var vm = Provider.of<AmbulatoryAssessmentViewModel>(context);
     var assessment = vm.currentAssessment;
     var canSubmit = vm.canSubmit();
-    return ListView(
-      children: <Widget>[
-        for (var index = 0; index < assessment.length; index++)
-          Card(
-              child: Padding(
-            padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
-            child: IntervalScale(
-              title: assessment[index].title,
-              itemCount: assessment[index].itemCount,
-              labels: assessment[index].labels,
-              id: assessment[index].id,
-              callback: (val) {
-                print("Changed Assessment value to: $val");
-                vm.setResult(assessment[index].id, val);
-              },
-            ),
-          )),
-        SizedBox(
-            width: double.infinity,
-            height: 60,
-            child: RaisedButton(
-              onPressed: canSubmit ? () async => _submit(context) : null,
-              shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(10.0)),
-              child: Text("Speichern", style: TextStyle(fontSize: 20)),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          for (var index = 0; index < assessment.length; index++)
+            Card(
+                child: Padding(
+              padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
+              child: IntervalScale(
+                title: assessment[index].title,
+                itemCount: assessment[index].itemCount,
+                labels: assessment[index].labels,
+                id: assessment[index].id,
+                groupValue: vm.results[index] != null
+                    ? int.parse(vm.results[assessment[index].id])
+                    : null,
+                callback: (val) {
+                  print("Changed Assessment value to: $val");
+                  vm.setResult(assessment[index].id, val);
+                },
+              ),
             )),
-      ],
+          SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: RaisedButton(
+                onPressed: canSubmit ? () async => _submit(context) : null,
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(10.0)),
+                child: Text("Speichern", style: TextStyle(fontSize: 20)),
+              )),
+        ],
+      ),
     );
   }
 

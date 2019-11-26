@@ -90,7 +90,7 @@ class SereneDrawer extends StatelessWidget {
               icon: Icons.receipt,
               text: "Einverständniserklärung",
               onTap: () {
-                Navigator.pushNamed(context, RouteNames.SETTINGS);
+                Navigator.pushNamed(context, RouteNames.CONSENT);
               }),
           Divider(),
           ListTile(
@@ -116,8 +116,10 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
               title: Text("Test"),
               onTap: () async {
-                // await NotificationService().showNotification();
-                await NotificationService().scheduleNotifications();
+                await Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT,
+                    arguments:
+                        AssessmentScreenArguments(AssessmentType.srl));
               }),
           ListTile(
               title: Text("Log In"),
