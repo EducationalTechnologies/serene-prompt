@@ -272,6 +272,6 @@ class FirebaseService {
         .getDocuments();
 
     if (doc.documents.length == 0) return null;
-    // return AssessmentModel.fromDocument(doc.documents[0]);
+    return GoalShield.fromDocument(doc.documents[0]);
   }
 }

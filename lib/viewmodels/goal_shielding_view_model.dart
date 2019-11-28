@@ -12,10 +12,10 @@ class GoalShieldingViewModel with ChangeNotifier {
     "Körperliche Verfassung"
   ];
   List<String> shields = [
-    "Wenn ich mich überfordert fühle, dann sage ich mir, dass ich es schaffen kann",
-    "Wenn mir der Gedanke kommt, etwas anderes (nebenher) zu machen, bringe ich mich dazu, noch etwas weiterzulernen",
+    "Wenn ich mich überfordert fühle, dann sage ich mir, dass ich es schaffen kann.",
+    "Wenn ich merke, dass ich abgelenkt bin, dann konzentriere ich mich wieder auf meine Aufgabe.",
     "Wenn ich gar keine Lust mehr auf das Lernen habe, dann sage ich mir, dass ich es aus gutem Grund tue.",
-    "Wenn ich mich krank und müde fühle, höre ich auf mich krank und müde zu fühlen!"
+    "Wenn ich mich nicht in der Verfassung zum Lernen fühle, dann bringe ich mich dazu, es zumindest zu probieren."
   ];
   String _selectedShieldingAction;
   String _hindrance;

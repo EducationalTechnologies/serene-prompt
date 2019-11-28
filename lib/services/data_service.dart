@@ -149,6 +149,6 @@ class DataService {
   }
 
   Future<GoalShield> getLastGoalShield() async {
-    return Future.value(GoalShield(id: "1", hindrance: "Miau", shields: ["Affentrompetenclown"]));
+    return await _databaseService.getLastSubmittedGoalShield(_userService.getUserEmail());
   }
 }

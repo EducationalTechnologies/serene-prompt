@@ -38,12 +38,13 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     return _preGoal;
   }
 
-  getAfterLearningList(String shield) {
+  getAfterLearningQuestionnaire(
+      String whereYouString, String stillManageString) {
     List<AssessmentItemModel> _afterLearning = [
-      AssessmentItemModel("Warst du überfordert als du zuletzt gelernt hast?",
-          2, {1: "Ja", 2: "Nein"}, "postLearning1"),
-      AssessmentItemModel("Hast du es dann geschafft, $shield?", 2,
-          {1: "Ja", 2: "Nein"}, "postLearning2"),
+      AssessmentItemModel(
+          "$whereYouString", 2, {1: "Ja", 2: "Nein"}, "postLearning1"),
+      AssessmentItemModel(
+          "$stillManageString", 2, {1: "Ja", 2: "Nein"}, "postLearning2"),
       AssessmentItemModel(
           "Wie zufrieden bist du mit deinem Lerntag?",
           5,
@@ -222,8 +223,11 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     } else if (this._type == AssessmentType.postLearning) {
       title = "";
       this._dataService.getLastGoalShield().then((shield) {
-        var insert = getInsertForHindrance(shield.hindrance);
-        this._currentAssessment = getAfterLearningList(insert);
+        var stillManageString =
+            getDidYouStillManageInsertForHindrance(shield.hindrance);
+        var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
+        this._currentAssessment =
+            getAfterLearningQuestionnaire(whereYouString, stillManageString);
         initializeResults();
         notifyListeners();
       });
@@ -245,12 +249,30 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     }
   }
 
-  getInsertForHindrance(String hindrance) {
+  getWhereYouInsertForHindrance(String hindrance) {
     // TODO: Replace hard coded stuff
-    if (hindrance == "Überforderung") return "Überforderung";
-    if (hindrance == "Ablenkung") return "Ablenkung";
-    if (hindrance == "Lustlosigkeit") return "Lustlosigkeit";
-    if (hindrance == "Körperliche Verfassung") return "Körperliche Verfassung";
+    if (hindrance == "Überforderung")
+      return "Warst du überfordert, als du zuletzt gelernt hast?";
+    if (hindrance == "Ablenkung")
+      return "Hast du dich von deinem Lernen ablenken lassen?";
+    if (hindrance == "Lustlosigkeit")
+      return "Hast du Lustlosigkeit gegenüber dem Lernen verspürt?";
+    if (hindrance == "Körperliche Verfassung")
+      return "Hat dich deine körperliche Verfassung beim Lernen beeinträchtigt?";
+
+    return "HINDRANCE NOT FOUND";
+  }
+
+  getDidYouStillManageInsertForHindrance(String hindrance) {
+    // TODO: Replace hard coded stuff
+    if (hindrance == "Überforderung")
+      return "Hast du es dann geschafft, dir zu sagen, dass du es trotzdem schaffen kannst?";
+    if (hindrance == "Ablenkung")
+      return "Hast du es dann geschafft, dich dann trotzdem auf deine Aufgabe zu konzentrieren?";
+    if (hindrance == "Lustlosigkeit")
+      return "Hast du es dann geschafft, dir zu sagen, dass du es aus einem guten Grund tust?";
+    if (hindrance == "Körperliche Verfassung")
+      return "Hast du es dann geschafft, dich dazu zu bringen, es trotzdem zu probieren?";
 
     return "HINDRANCE NOT FOUND";
   }
