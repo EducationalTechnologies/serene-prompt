@@ -14,7 +14,7 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   get currentAssessment => _currentAssessment;
   String title;
 
-  Map<String, String> results;
+  Map<String, String> results = {};
 
   getPreLearningList() {
     var itemCount = 5;
@@ -228,7 +228,6 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
         var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
         this._currentAssessment =
             getAfterLearningQuestionnaire(whereYouString, stillManageString);
-        initializeResults();
         notifyListeners();
       });
     } else if (this._type == AssessmentType.postTest) {
@@ -238,15 +237,12 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
       title = "";
       this._currentAssessment = _getSrlQuestionnaire();
     }
-
-    initializeResults();
   }
 
-  initializeResults() {
-    results = {};
-    for (var a in _currentAssessment) {
-      results[a.id] = null;
-    }
+  getResultForIndex(int index) {
+    var key = this._currentAssessment[index].id;
+    if(results.containsKey(key)) return int.parse(results[key]);
+    return null;
   }
 
   getWhereYouInsertForHindrance(String hindrance) {

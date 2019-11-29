@@ -27,9 +27,7 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
                 itemCount: assessment[index].itemCount,
                 labels: assessment[index].labels,
                 id: assessment[index].id,
-                groupValue: vm.results[index] != null
-                    ? int.parse(vm.results[assessment[index].id])
-                    : null,
+                groupValue: vm.getResultForIndex(index),
                 callback: (val) {
                   print("Changed Assessment value to: $val");
                   vm.setResult(assessment[index].id, val);
