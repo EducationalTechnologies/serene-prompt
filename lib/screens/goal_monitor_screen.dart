@@ -4,6 +4,7 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/materialized_path.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
+import 'package:serene/shared/symbol_helper.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -28,11 +29,11 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     //     AnimationController(value: 0.0, duration: Duration(milliseconds: 500));
   }
 
-  // @override
-  // Future dispose() async {
-  //   super.dispose();
-  //   await Provider.of<GoalMonitoringVielModel>(context).dispose();
-  // }
+  @override
+  Future dispose() async {
+    super.dispose();
+    // await Provider.of<GoalMonitoringVielModel>(context).dispose();
+  }
 
   _updateGoal(Goal goal) async {
     await Provider.of<GoalMonitoringVielModel>(context).updateGoal(goal);
@@ -171,28 +172,41 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: Column(
-            children: <Widget>[
-              Row(children: <Widget>[
-                if (goal.progressIndicator == GoalProgressIndicator.checkbox)
-                  Checkbox(
-                    onChanged: (value) {
-                      goal.progress = value ? 100 : 0;
-                      if (value) {
-                        _finishGoal(goal);
-                      }
-                    },
-                    value: goal.progress == 100,
+          child: InkWell(
+            onTap: () async {
+              await Navigator.pushNamed(context, RouteNames.ADD_GOAL,
+                  arguments: GoalScreenArguments(goal));
+              Provider.of<GoalMonitoringVielModel>(context).refetchGoals();
+            },
+            child: Column(
+              children: <Widget>[
+                Row(children: <Widget>[
+                  if (goal.progressIndicator == GoalProgressIndicator.checkbox)
+                    Checkbox(
+                      onChanged: (value) {
+                        goal.progress = value ? 100 : 0;
+                        if (value) {
+                          _finishGoal(goal);
+                        }
+                      },
+                      value: goal.progress == 100,
+                    ),
+                  Expanded(
+                    child: Text(goal.goalText),
                   ),
-                Expanded(
-                  child: Text(goal.goalText),
+                  buildPopupMenu(context, goal)
+                ]),
+                if (goal.progressIndicator == GoalProgressIndicator.slider)
+                  buildProgressInput(context, index, goal),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    if (goal.deadline != null) buildDeadline(goal.deadline),
+                  ],
                 ),
-                buildPopupMenu(context, goal)
-              ]),
-              if (goal.progressIndicator == GoalProgressIndicator.slider)
-                buildProgressInput(context, index, goal),
-              if (goal.deadline != null) buildDeadline(goal.deadline),
-            ],
+                // UIHelper.verticalSpaceSmall()
+              ],
+            ),
           ),
         ),
       ),

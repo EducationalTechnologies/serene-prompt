@@ -91,6 +91,12 @@ class AddGoalViewModel extends BaseViewModel {
     setState(ViewState.idle);
   }
 
+  Future deleteCurrentGoal() async {
+    setState(ViewState.busy);
+    await this._dataService.deleteGoal(this._currentGoal);
+    setState(ViewState.idle);
+  }
+
   toggleTag(TagModel tag, bool value) {}
 
   canSubmit() {

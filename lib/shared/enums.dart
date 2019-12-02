@@ -37,6 +37,7 @@ class SettingsKeys {
   static const String wordsPerMinute = "wordsPerMinute";
 }
 
+
 enum AppStartupMode {
   normal,
   signin,

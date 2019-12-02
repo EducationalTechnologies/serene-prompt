@@ -23,22 +23,20 @@ class GoalMonitoringVielModel with ChangeNotifier {
       sortByTree();
       notifyListeners();
     });
-    _goalStreamSubscription = _dataService.goalStream.stream.listen((onData) {
-      print("LISTEN TO DATA: ${onData}");
-      notifyListeners();
-    });
+    // _goalStreamSubscription = _dataService.goalStream.stream.listen((onData) {
+    //   print("LISTEN TO DATA: ${onData}");
+    //   notifyListeners();
+    // });
   }
 
-  Future<void> dispose() async {
-    super.dispose();
-    await _goalStreamSubscription.cancel();
-  }
+  // Future<void> dispose() async {
+  //   super.dispose();
+  //   await _goalStreamSubscription.cancel();
+  // }
 
   void refetchGoals() {
     _dataService.getOpenGoals().then((goalList) {
       _openGoals = goalList;
-
-      // var tree = _pathTreeFromGoals(_openGoals);
       sortByTree();
       notifyListeners();
     });
@@ -72,11 +70,11 @@ class GoalMonitoringVielModel with ChangeNotifier {
   }
 
   deleteGoal(Goal goal) async {
-    _dataService.deleteGoal(goal);
+    await _dataService.deleteGoal(goal);
   }
 
   updateGoal(Goal goal) async {
-    _dataService.updateGoal(goal);
+    await _dataService.updateGoal(goal);
     refetchGoals();
   }
 

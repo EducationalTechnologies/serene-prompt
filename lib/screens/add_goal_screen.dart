@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/symbol_helper.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,16 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     if (vm.state != ViewState.idle) return;
     if (vm.canSubmit()) {
       await vm.saveCurrentGoal();
-      // Navigator.pushNamed(context, RouteNames.MAIN);
+      Navigator.pop(context);
+    } else {}
+  }
+
+  _deleteGoal() async {
+    final vm = Provider.of<AddGoalViewModel>(context);
+    vm.currentGoal.goalText = _textController.text.toString();
+    if (vm.state != ViewState.idle) return;
+    if (vm.canSubmit()) {
+      await vm.deleteCurrentGoal();
       Navigator.pop(context);
     } else {}
   }
@@ -283,7 +293,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               SizedBox(
                 height: 2,
               ),
-              Text("❖"),
+              Text(SymbolHelper.getSymbolForDifficulty(GoalDifficulty.easy)),
               Container(
                   width: containerWidth,
                   alignment: Alignment.center,
@@ -296,7 +306,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("❖❖❖"),
+              Text(SymbolHelper.getSymbolForDifficulty(GoalDifficulty.medium)),
               Container(
                   width: containerWidth,
                   alignment: Alignment.center,
@@ -306,7 +316,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("❖❖❖"),
+              Text(SymbolHelper.getSymbolForDifficulty(GoalDifficulty.hard)),
               Container(
                   width: containerWidth,
                   alignment: Alignment.center,
@@ -399,11 +409,11 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0.0,
         actions: <Widget>[
+          if (vm.mode == GoalScreenMode.edit)
+            FlatButton(
+                child: Text("Löschen"), onPressed: () async => _deleteGoal()),
           FlatButton(
-              // textColor: Colors.white,
-              // icon: const Icon(Icons.save),
-              child: Text("Speichern"),
-              onPressed: () async => _submitGoal())
+              child: Text("Speichern"), onPressed: () async => _submitGoal())
         ],
       ),
       body: Container(
