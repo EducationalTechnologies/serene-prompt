@@ -10,6 +10,7 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/router.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(MyApp());
 }
@@ -25,21 +26,19 @@ class MyApp extends StatelessWidget {
       return AppStartupMode.firstLaunch;
     }
 
-    await locator.get<ExperimentService>().initialize();
-    bool showPreLearning = await locator
-        .get<ExperimentService>()
-        .shouldShowPreLearningAssessment();
-    if (showPreLearning) {
+    var experimentService = locator.get<ExperimentService>();
+    await experimentService.initialize();
+
+    if (await experimentService.shouldShowPreLearningAssessment()) {
       return AppStartupMode.preLearningAssessment;
     }
 
-    bool showPostLearning = await locator
-        .get<ExperimentService>()
-        .shouldShowPostLearningAssessment();
-
-    if (showPostLearning) {
+    if (await experimentService.shouldShowPostLearningAssessment()) {
       return AppStartupMode.postLearningAssessment;
     }
+
+    
+
     return AppStartupMode.normal;
   }
 
@@ -96,8 +95,7 @@ class MyApp extends StatelessWidget {
                       return buildMaterialApp(RouteNames.LOG_IN);
                       break;
                     case AppStartupMode.preLearningAssessment:
-                      return buildMaterialApp(
-                          RouteNames.GOAL_SHIELDING);
+                      return buildMaterialApp(RouteNames.GOAL_SHIELDING);
                       break;
                     case AppStartupMode.firstLaunch:
                       return buildMaterialApp(RouteNames.LOG_IN);

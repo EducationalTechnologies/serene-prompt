@@ -10,18 +10,16 @@ class ExperimentService {
     return Future.delayed(Duration.zero).then((res) => true);
   }
 
-  // TODO: Request whether a pre-learning assessment was performed today
   Future<bool> shouldShowPreLearningAssessment() async {
     var lastPreLearningAssessment = await this
         ._dataService
         .getLastSubmittedAssessment(AssessmentType.preLearning);
 
-    return false;
+    // return false;
     if (lastPreLearningAssessment == null) return true;
     return !isToday(lastPreLearningAssessment.submissionDate);
   }
 
-  // TODO: Request whether a post-learning assessment was performed yesterday
   Future<bool> shouldShowPostLearningAssessment() async {
     var lastPostLearningAssessment = await this
         ._dataService

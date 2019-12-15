@@ -67,7 +67,7 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                    builder: (_) => AmbulatoryAssessmentViewModel(
+                    create: (_) => AmbulatoryAssessmentViewModel(
                         assessmentArgs.assessmentType,
                         locator.get<UserService>(),
                         locator.get<DataService>()),
@@ -77,7 +77,7 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                    builder: (_) => AmbulatoryAssessmentViewModel(
+                    create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentType.preLearning,
                         locator.get<UserService>(),
                         locator.get<DataService>()),
@@ -87,7 +87,7 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                    builder: (_) => AmbulatoryAssessmentViewModel(
+                    create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentType.srl,
                         locator.get<UserService>(),
                         locator.get<DataService>()),
@@ -97,7 +97,7 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                    builder: (_) => AmbulatoryAssessmentViewModel(
+                    create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentType.postLearning,
                         locator.get<UserService>(),
                         locator.get<DataService>()),
@@ -106,12 +106,12 @@ class Router {
       case RouteNames.CONSENT:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<ConsentState>(
-                builder: (_) => ConsentState(), child: ConsentScreen()));
+                create: (_) => ConsentState(), child: ConsentScreen()));
 
       case RouteNames.TIMER:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<TimerViewModel>(
-                  builder: (_) =>
+                  create: (_) =>
                       TimerViewModel(locator.get<SettingsService>()),
                   child: TimerScreen(),
                 ));
@@ -140,14 +140,14 @@ class Router {
       case RouteNames.SETTINGS:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<SettingsViewModel>(
-                builder: (_) =>
+                create: (_) =>
                     SettingsViewModel(locator.get<SettingsService>()),
                 child: SettingsScreen()));
 
       case RouteNames.EDIT_TAGS:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<EditTagsViewModel>(
-                builder: (_) => EditTagsViewModel(locator.get<DataService>()),
+                create: (_) => EditTagsViewModel(locator.get<DataService>()),
                 child: EditTagsScreen()));
 
       case RouteNames.TEST:
@@ -157,7 +157,7 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<DailyLearningQuestionViewModel>(
-                  builder: (_) => DailyLearningQuestionViewModel(),
+                  create: (_) => DailyLearningQuestionViewModel(),
                   child: DailyLearningQuestionScreen(),
                 ));
 

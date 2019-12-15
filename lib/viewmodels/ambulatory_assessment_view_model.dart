@@ -22,12 +22,12 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
       AssessmentItemModel(
           "Wie verpflichtet fühlst du dich, deine Ziele heute zu erreichen?",
           itemCount,
-          null,
+          {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
           "preLearning1"),
       AssessmentItemModel(
           "Wie schwierig wird es heute, deine Ziele zu erreichen?",
           itemCount,
-          null,
+          {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
           "preLearning2"),
       AssessmentItemModel(
           "Wie sehr freust du dich auf diese Aufgaben?",

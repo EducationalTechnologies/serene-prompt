@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:serene/screens/goal_shielding/goal_selection_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_internalisation_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_selection_screen.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class GoalShieldingScreen extends StatefulWidget {
@@ -39,11 +41,11 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
   }
 
   _buildBottomNavigation() {
+    var vm = Provider.of<GoalShieldingViewModel>(context);
+
     print("index is $_index ");
     print("length is ${_goalShieldingPages.length} ");
     return Container(
-      // color: Colors.lightBlue[50],
-
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -57,7 +59,10 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
               child: Row(
                 children: <Widget>[
                   Icon(Icons.navigate_before),
-                  Text("Zurück"),
+                  Text(
+                    "Zurück",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ],
               ),
               onPressed: () {
@@ -72,10 +77,16 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: _index < _goalShieldingPages.length,
+            visible: _index < _goalShieldingPages.length && vm.canMoveNext(),
             child: FlatButton(
               child: Row(
-                children: <Widget>[Text("Weiter"), Icon(Icons.navigate_next)],
+                children: <Widget>[
+                  Text(
+                    "Weiter",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Icon(Icons.navigate_next)
+                ],
               ),
               onPressed: () {
                 setState(() {
@@ -91,7 +102,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
   }
 
   _buildAddGoalButton() {
-    if(_index != 1) {
+    if (_index != 1) {
       return null;
     }
     return FloatingActionButton(

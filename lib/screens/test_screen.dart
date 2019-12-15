@@ -65,21 +65,19 @@ class _TestScreenState extends State<TestScreen> {
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
-                    // TODO: Handle this case.
                     return Text("Open Stuff");
                     break;
                   case ConnectionState.waiting:
                     return Text("Open Stuff");
-                    // TODO: Handle this case.
                     break;
                   case ConnectionState.active:
                     return Text("Open Stuff");
-                    // TODO: Handle this case.
                     break;
                   case ConnectionState.done:
                     return snapshot.data;
-                    // TODO: Handle this case.
                     break;
+                  default:
+                    return Text("DEFAULT");
                 }
               },
             )

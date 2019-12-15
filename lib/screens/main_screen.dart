@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
 
   _buildMonitoringScreen() {
     return ChangeNotifierProvider<GoalMonitoringVielModel>(
-      builder: (_) => GoalMonitoringVielModel(locator.get<DataService>()),
+      create: (_) => GoalMonitoringVielModel(locator.get<DataService>()),
       child: GoalMonitorScreen(),
     );
   }
@@ -37,17 +37,14 @@ class _MainScreenState extends State<MainScreen> {
 
   _buildAddGoalButton() {
     return FloatingActionButton.extended(
-      // backgroundColor: Theme.of(context).accentColor,
       backgroundColor: Colors.blue[400],
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
       icon: Icon(Icons.add),
       label: Text("Neues Ziel"),
       onPressed: () async {
-        // TODO: This is very unfortunate double navigation that is nevertheless necessary
         await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
         await Navigator.pushNamed(context, RouteNames.MAIN);
-        // Provider.of<GoalMonitoringState>(context).fetchData();
       },
     );
   }

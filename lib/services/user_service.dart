@@ -5,7 +5,6 @@ import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/enums.dart';
 
 class UserService {
-  static final UserService _instance = UserService._internal();
   UserService(this._settings);
 
   SettingsService _settings;
@@ -66,11 +65,5 @@ class UserService {
 
   String getUserEmail() {
     return _settings.getSetting(SettingsKeys.email);
-  }
-
-  UserService._internal() {
-    // SharedPreferences.getInstance().then((prefs) {
-    //   _prefs = prefs;
-    // });
   }
 }
