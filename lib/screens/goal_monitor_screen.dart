@@ -192,7 +192,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                       value: goal.progress == 100,
                     ),
                   Expanded(
-                    child: Text(goal.goalText),
+                    child: Text(goal.goalText, style: TextStyle(fontSize: 20)),
                   ),
                   buildPopupMenu(context, goal)
                 ]),
