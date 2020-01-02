@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class AmbulatoryAssessmentScreen extends StatelessWidget {
   _submit(BuildContext context) async {
-    await Provider.of<AmbulatoryAssessmentViewModel>(context).submit();
+    await Provider.of<AmbulatoryAssessmentViewModel>(context, listen: false).submit();
     Navigator.pushNamed(context, RouteNames.MAIN);
   }
 

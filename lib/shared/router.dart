@@ -55,12 +55,11 @@ class Router {
         final GoalScreenArguments goalArgs = settings.arguments;
         return MaterialPageRoute(
             maintainState: false,
-            builder: (context) =>
-                ChangeNotifierProvider<AddGoalViewModel>.value(
-                    value: AddGoalViewModel(
-                        goal: goalArgs?.goal,
-                        dataService: locator.get<DataService>()),
-                    child: AddGoalScreen()));
+            builder: (context) => ChangeNotifierProvider<AddGoalViewModel>(
+                create: (_) => AddGoalViewModel(
+                    goal: goalArgs?.goal,
+                    dataService: locator.get<DataService>()),
+                child: AddGoalScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT:
         final AssessmentScreenArguments assessmentArgs = settings.arguments;
@@ -111,8 +110,7 @@ class Router {
       case RouteNames.TIMER:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<TimerViewModel>(
-                  create: (_) =>
-                      TimerViewModel(locator.get<SettingsService>()),
+                  create: (_) => TimerViewModel(locator.get<SettingsService>()),
                   child: TimerScreen(),
                 ));
 

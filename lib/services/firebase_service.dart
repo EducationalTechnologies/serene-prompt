@@ -5,7 +5,6 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/models/user_data.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -254,12 +253,17 @@ class FirebaseService {
 
   saveShielding(GoalShield shield, String email) async {
     var key = DateTime.now().toIso8601String();
-    await _databaseReference
-        .collection(COLLECTION_SHIELDS)
-        .document(email)
-        .collection(COLLECTION_SHIELDS)
-        .document(key)
-        .setData(shield.toMap());
+    try {
+      await _databaseReference
+          .collection(COLLECTION_SHIELDS)
+          .document(email)
+          .collection(COLLECTION_SHIELDS)
+          .document(key)
+          .setData(shield.toMap());
+    } catch (e) {
+      print("Error trying to save the goal shielding: $e");
+      return null;
+    }
   }
 
   Future<GoalShield> getLastSubmittedGoalShield(String email) async {

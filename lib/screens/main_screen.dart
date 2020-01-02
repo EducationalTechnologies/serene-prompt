@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/models/goal.dart';
+import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/viewmodels/add_goal_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
@@ -43,8 +46,20 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icon(Icons.add),
       label: Text("Neues Ziel"),
       onPressed: () async {
-        await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
-        await Navigator.pushNamed(context, RouteNames.MAIN);
+        // await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+        // await Navigator.pushNamed(context, RouteNames.MAIN);
+        await showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                color: Colors.green,
+                // child: AddGoalScreen(),
+                child: ChangeNotifierProvider(
+                  create: (_) => AddGoalViewModel(
+                      dataService: locator.get<DataService>(), goal: Goal()),
+                ),
+              );
+            });
       },
     );
   }

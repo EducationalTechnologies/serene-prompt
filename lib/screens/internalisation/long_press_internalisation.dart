@@ -231,8 +231,6 @@ class _TextHighlightState extends State<TextHighlight>
         _onIterationCompleted();
       }
     });
-    // _controller.repeat();
-    // animation.addStatusListener((status) => print(status));
 
     super.initState();
   }

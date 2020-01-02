@@ -12,8 +12,6 @@ class GoalMonitoringVielModel with ChangeNotifier {
 
   DataService _dataService;
 
-  StreamSubscription<Goal> _goalStreamSubscription;
-
   GoalMonitoringVielModel(this._dataService) {
     // _getOpenGoalsAsync();
     _dataService.getOpenGoals().then((goalList) {
@@ -23,16 +21,7 @@ class GoalMonitoringVielModel with ChangeNotifier {
       sortByTree();
       notifyListeners();
     });
-    // _goalStreamSubscription = _dataService.goalStream.stream.listen((onData) {
-    //   print("LISTEN TO DATA: ${onData}");
-    //   notifyListeners();
-    // });
   }
-
-  // Future<void> dispose() async {
-  //   super.dispose();
-  //   await _goalStreamSubscription.cancel();
-  // }
 
   void refetchGoals() {
     _dataService.getOpenGoals().then((goalList) {

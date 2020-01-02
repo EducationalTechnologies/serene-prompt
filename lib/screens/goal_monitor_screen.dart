@@ -25,14 +25,11 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   @override
   void initState() {
     super.initState();
-    // _controller =
-    //     AnimationController(value: 0.0, duration: Duration(milliseconds: 500));
   }
 
   @override
   Future dispose() async {
     super.dispose();
-    // await Provider.of<GoalMonitoringVielModel>(context).dispose();
   }
 
   _updateGoal(Goal goal) async {
@@ -274,20 +271,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
       print("build monitoring");
       if (_goals.length > 0) {
-        // return Container(
-        //   child: _buildAnimatedListView(_goals),
-        // );
-        // return Stack(
-        //   children: <Widget>[
-        //     _buildAnimatedListView(context, _goals),
-        //     FlatButton(
-        //       child: Text("Reload"),
-        //       onPressed: () {
-        //         goalMonitoringState.refetchGoals();
-        //       },
-        //     )
-        //   ],
-        // );
         return AnimatedList(
           key: _listKey,
           initialItemCount: _goals.length,
@@ -320,20 +303,5 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     } else {
       return Center(child: CircularProgressIndicator());
     }
-
-    // return FutureBuilder(
-    //   future: goalMonitoringState.getOpenGoalsAsync(),
-    //   builder: (BuildContext context, snapshot) {
-    //     if (snapshot.hasData) {
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         _goals = snapshot.data;
-    //         return Container(
-    //           child: buildListView(_goals),
-    //         );
-    //       }
-    //     }
-    //     return Center(child: CircularProgressIndicator());
-    //   },
-    // );
   }
 }
