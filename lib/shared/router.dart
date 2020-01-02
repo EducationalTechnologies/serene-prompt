@@ -42,13 +42,20 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteNames.MAIN:
-        return MaterialPageRoute(builder: (_) => MainScreen());
+        return MaterialPageRoute(
+            builder: (context) =>
+                ChangeNotifierProvider<GoalMonitoringVielModel>(
+                    create: (_) =>
+                        GoalMonitoringVielModel(locator.get<DataService>()),
+                    child: MainScreen()));
+      // return MaterialPageRoute(builder: (_) => MainScreen());
 
       case RouteNames.GOAL_SHIELDING:
         return MaterialPageRoute(
             builder: (context) =>
-                ChangeNotifierProvider<GoalShieldingViewModel>.value(
-                    value: GoalShieldingViewModel(locator.get<DataService>()),
+                ChangeNotifierProvider<GoalShieldingViewModel>(
+                    create: (_) =>
+                        GoalShieldingViewModel(locator.get<DataService>()),
                     child: GoalShieldingScreen()));
 
       case RouteNames.ADD_GOAL:
@@ -117,8 +124,9 @@ class Router {
       case RouteNames.OPEN_GOALS:
         return MaterialPageRoute(
             builder: (context) => MultiProvider(providers: [
-                  ChangeNotifierProvider<GoalMonitoringVielModel>.value(
-                      value: GoalMonitoringVielModel(Provider.of(context))),
+                  ChangeNotifierProvider<GoalMonitoringVielModel>(
+                      create: (_) =>
+                          GoalMonitoringVielModel(Provider.of(context))),
                 ], child: GoalMonitorScreen()));
 
       case RouteNames.LOG_IN:

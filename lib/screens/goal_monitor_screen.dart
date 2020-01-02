@@ -33,16 +33,19 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   }
 
   _updateGoal(Goal goal) async {
-    await Provider.of<GoalMonitoringVielModel>(context).updateGoal(goal);
+    await Provider.of<GoalMonitoringVielModel>(context, listen: false)
+        .updateGoal(goal);
   }
 
   _finishGoal(Goal goal) async {
-    await Provider.of<GoalMonitoringVielModel>(context).updateGoal(goal);
+    await Provider.of<GoalMonitoringVielModel>(context, listen: false)
+        .updateGoal(goal);
     _removeItem(goal);
   }
 
   _deleteGoal(Goal goal) async {
-    await Provider.of<GoalMonitoringVielModel>(context).deleteGoal(goal);
+    await Provider.of<GoalMonitoringVielModel>(context, listen: false)
+        .deleteGoal(goal);
     _removeItem(goal);
   }
 

@@ -28,7 +28,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     _dateFieldController = new TextEditingController(text: "");
 
     Future.delayed(Duration.zero, () {
-      final appState = Provider.of<AddGoalViewModel>(context);
+      final appState = Provider.of<AddGoalViewModel>(context, listen: false);
       _textController.text = appState.currentGoal.goalText;
 
       inputModeSelected = [
@@ -48,7 +48,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   _submitGoal() async {
-    final vm = Provider.of<AddGoalViewModel>(context);
+    final vm = Provider.of<AddGoalViewModel>(context, listen: false);
     vm.currentGoal.goalText = _textController.text.toString();
     if (vm.state != ViewState.idle) return;
     if (vm.canSubmit()) {
@@ -58,7 +58,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   _deleteGoal() async {
-    final vm = Provider.of<AddGoalViewModel>(context);
+    final vm = Provider.of<AddGoalViewModel>(context, listen: false);
     vm.currentGoal.goalText = _textController.text.toString();
     if (vm.state != ViewState.idle) return;
     if (vm.canSubmit()) {
@@ -68,7 +68,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final appState = Provider.of<AddGoalViewModel>(context);
+    final appState = Provider.of<AddGoalViewModel>(context, listen: false);
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -327,13 +327,17 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         onPressed: (int index) {
           setState(() {
             if (index == 0) {
-              Provider.of<AddGoalViewModel>(context)
+              Provider.of<AddGoalViewModel>(context, listen: false)
                   .currentGoal
-                  .progressIndicator = GoalProgressIndicator.checkbox;
+                  .difficulty = GoalDifficulty.easy;
             } else if (index == 1) {
-              Provider.of<AddGoalViewModel>(context)
+              Provider.of<AddGoalViewModel>(context, listen: false)
                   .currentGoal
-                  .progressIndicator = GoalProgressIndicator.slider;
+                  .difficulty = GoalDifficulty.medium;
+            } else if (index == 2) {
+              Provider.of<AddGoalViewModel>(context, listen: false)
+                  .currentGoal
+                  .difficulty = GoalDifficulty.hard;
             }
 
             for (int buttonIndex = 0;
