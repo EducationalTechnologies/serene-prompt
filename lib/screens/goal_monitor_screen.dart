@@ -176,7 +176,8 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
             onTap: () async {
               await Navigator.pushNamed(context, RouteNames.ADD_GOAL,
                   arguments: GoalScreenArguments(goal));
-              Provider.of<GoalMonitoringVielModel>(context).refetchGoals();
+              Provider.of<GoalMonitoringVielModel>(context, listen: false)
+                  .refetchGoals();
             },
             child: Column(
               children: <Widget>[

@@ -92,7 +92,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
   int _selectedIndex;
 
   _onSelected(int index) {
-    var goalShieldingState = Provider.of<GoalShieldingViewModel>(context);
+    var goalShieldingState = Provider.of<GoalShieldingViewModel>(context, listen: false);
     goalShieldingState.toggleGoal(goalShieldingState.openGoals[index]);
     setState(() {
       _selectedIndex = index;
@@ -101,7 +101,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   @override
   Widget build(BuildContext context) {
-    GoalShieldingViewModel vm = Provider.of<GoalShieldingViewModel>(context);
+    GoalShieldingViewModel vm = Provider.of<GoalShieldingViewModel>(context, listen: false);
 
     print("Selected Index: $_selectedIndex");
     return Container(
