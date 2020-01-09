@@ -43,6 +43,13 @@ class GoalShieldingViewModel with ChangeNotifier {
     });
   }
 
+  void refetchGoals() {
+    _dataService.getOpenGoals().then((goalList) {
+      _openGoals = goalList;
+      notifyListeners();
+    });
+  }
+
   List<Goal> get selectedGoals => _selectedGoals;
 
   toggleGoal(Goal selectedGoal) {
@@ -75,7 +82,8 @@ class GoalShieldingViewModel with ChangeNotifier {
     var shield = GoalShield(
         id: DateTime.now().toIso8601String(),
         hindrance: this.hindrance,
-        shields: []);
+        shields: [_selectedShieldingAction],
+        goalsToShield: _selectedGoals.map((g) => g.goalText).toList());
     await this._dataService.saveShielding(shield);
   }
 }

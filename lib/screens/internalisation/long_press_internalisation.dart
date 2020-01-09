@@ -205,7 +205,7 @@ class _TextHighlightState extends State<TextHighlight>
 
   _onIterationCompleted() async {
     _animationCounter++;
-    await Provider.of<GoalShieldingViewModel>(context).saveShielding();
+    await Provider.of<GoalShieldingViewModel>(context, listen: false).saveShielding();
     await Future.delayed(Duration(seconds: 1)).then((res) {
       Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
     });

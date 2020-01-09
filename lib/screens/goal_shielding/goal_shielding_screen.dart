@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/locator.dart';
+import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_selection_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_internalisation_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_selection_screen.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/viewmodels/add_goal_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
@@ -112,8 +116,20 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Icon(Icons.add),
       onPressed: () async {
-        Navigator.pushNamed(context, RouteNames.ADD_GOAL);
-        // Provider.of<GoalMonitoringState>(context).fetchData();
+        await showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                color: Colors.green,
+                // child: AddGoalScreen(),
+                child: ChangeNotifierProvider(
+                  create: (_) =>
+                      AddGoalViewModel(dataService: locator.get<DataService>()),
+                  child: AddGoalScreen(),
+                ),
+              );
+            });
+        Provider.of<GoalShieldingViewModel>(context, listen: false).refetchGoals();
       },
     );
   }

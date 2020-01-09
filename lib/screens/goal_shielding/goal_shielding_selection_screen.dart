@@ -24,7 +24,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
   }
 
   _onSelected(BuildContext context, String hindrance) {
-    Provider.of<GoalShieldingViewModel>(context).selectHindrance(hindrance);
+    Provider.of<GoalShieldingViewModel>(context, listen: false).selectHindrance(hindrance);
   }
 
   _buildHindranceItem(BuildContext context, IconData icon, String hindrance,

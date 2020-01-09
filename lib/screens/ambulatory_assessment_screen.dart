@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 
 class AmbulatoryAssessmentScreen extends StatelessWidget {
   _submit(BuildContext context) async {
-    await Provider.of<AmbulatoryAssessmentViewModel>(context, listen: false).submit();
+    await Provider.of<AmbulatoryAssessmentViewModel>(context, listen: false)
+        .submit();
     Navigator.pushNamed(context, RouteNames.MAIN);
   }
 
@@ -18,6 +19,9 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
+          Card(
+            child: Text(vm.preText)
+          ),
           for (var index = 0; index < assessment.length; index++)
             Card(
                 child: Padding(
