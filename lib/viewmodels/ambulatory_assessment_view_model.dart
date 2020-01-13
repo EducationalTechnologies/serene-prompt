@@ -16,6 +16,44 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   String preText = "Pre Text";
   Map<String, String> results = {};
 
+  AmbulatoryAssessmentViewModel(
+      this._type, this._userService, this._dataService) {
+    if (this._type == AssessmentType.preLearning) {
+      title = "";
+      this._currentAssessment = getPreLearningList();
+    } else if (this._type == AssessmentType.postLearning) {
+      title = "";
+      this._dataService.getLastGoalShield().then((shield) {
+        var stillManageString =
+            getDidYouStillManageInsertForHindrance(shield.hindrance);
+        var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
+        this._currentAssessment =
+            getAfterLearningQuestionnaire(whereYouString, stillManageString);
+
+        this.preText = "Du wolltest an folgenden Aufgaben arbeiten:";
+        this.preText += "\n";
+        this.preText += "\n";
+        this.preText +=
+            shield.goalsToShield.reduce((val1, val2) => val1 + "\n" + val2);
+        this.preText += "\n";
+        notifyListeners();
+      });
+    } else if (this._type == AssessmentType.postTest) {
+      title = "";
+      this._currentAssessment = getPostTest();
+    } else if (this._type == AssessmentType.srl) {
+      title = "";
+      this._currentAssessment = _getSrlQuestionnaire();
+    }
+  }
+
+  getPreText(String assessmentType) {
+    if (assessmentType == AssessmentType.postLearning) {
+    } else {
+      return "";
+    }
+  }
+
   getPreLearningList() {
     var itemCount = 5;
     List<AssessmentItemModel> _preGoal = [
@@ -215,33 +253,9 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     return _postTest;
   }
 
-  AmbulatoryAssessmentViewModel(
-      this._type, this._userService, this._dataService) {
-    if (this._type == AssessmentType.preLearning) {
-      title = "";
-      this._currentAssessment = getPreLearningList();
-    } else if (this._type == AssessmentType.postLearning) {
-      title = "";
-      this._dataService.getLastGoalShield().then((shield) {
-        var stillManageString =
-            getDidYouStillManageInsertForHindrance(shield.hindrance);
-        var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
-        this._currentAssessment =
-            getAfterLearningQuestionnaire(whereYouString, stillManageString);
-        notifyListeners();
-      });
-    } else if (this._type == AssessmentType.postTest) {
-      title = "";
-      this._currentAssessment = getPostTest();
-    } else if (this._type == AssessmentType.srl) {
-      title = "";
-      this._currentAssessment = _getSrlQuestionnaire();
-    }
-  }
-
   getResultForIndex(int index) {
     var key = this._currentAssessment[index].id;
-    if(results.containsKey(key)) return int.parse(results[key]);
+    if (results.containsKey(key)) return int.parse(results[key]);
     return null;
   }
 

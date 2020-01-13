@@ -20,8 +20,13 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Card(
-            child: Text(vm.preText)
-          ),
+              child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    vm.preText,
+                    textAlign: TextAlign.center,
+                    style: (TextStyle(fontSize: 18)),
+                  ))),
           for (var index = 0; index < assessment.length; index++)
             Card(
                 child: Padding(
