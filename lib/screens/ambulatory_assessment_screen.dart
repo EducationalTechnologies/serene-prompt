@@ -20,7 +20,18 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
+<<<<<<< HEAD
           Card(child: Text(vm.preText)),
+=======
+          Card(
+              child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    vm.preText,
+                    textAlign: TextAlign.center,
+                    style: (TextStyle(fontSize: 18)),
+                  ))),
+>>>>>>> ce3bac8514ce8e7bd10fb4600235204e6693a8dc
           for (var index = 0; index < assessment.length; index++)
             Card(
                 child: Padding(

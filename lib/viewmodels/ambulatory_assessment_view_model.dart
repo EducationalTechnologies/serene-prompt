@@ -30,6 +30,13 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
         var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
         this._currentAssessment =
             getAfterLearningQuestionnaire(whereYouString, stillManageString);
+
+        this.preText = "Du wolltest an folgenden Aufgaben arbeiten:";
+        this.preText += "\n";
+        this.preText += "\n";
+        this.preText +=
+            shield.goalsToShield.reduce((val1, val2) => val1 + "\n" + val2);
+        this.preText += "\n";
         notifyListeners();
       });
     } else if (this._assessmentType == AssessmentType.postTest) {
@@ -44,13 +51,11 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     }
   }
 
-  _getDailyQuestionList() {
-    var itemCount = 2;
-    List<AssessmentItemModel> _dailyQuestion = [
-      AssessmentItemModel("Hast du vor, heute zu lernen?", itemCount,
-          {1: "Ja", 2: "Nein"}, "dailyQuestion1")
-    ];
-    return _dailyQuestion;
+  getPreText(String assessmentType) {
+    if (assessmentType == AssessmentType.postLearning) {
+    } else {
+      return "";
+    }
   }
 
   getPreLearningList() {
@@ -73,6 +78,15 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
           "preLearning3"),
     ];
     return _preGoal;
+  }
+
+  _getDailyQuestionList() {
+    var itemCount = 2;
+    List<AssessmentItemModel> _dailyQuestion = [
+      AssessmentItemModel("Hast du heute vor zu lernen?", itemCount,
+          {1: "Ja", 2: "Nein"}, "dailyQuestion1")
+    ];
+    return _dailyQuestion;
   }
 
   getAfterLearningQuestionnaire(
@@ -307,7 +321,6 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   }
 
   getNextRoute() {
-    if(currentAssessment)
-    return RouteNames.MAIN;
+    if (currentAssessment) return RouteNames.MAIN;
   }
 }
