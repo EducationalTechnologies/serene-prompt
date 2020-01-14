@@ -38,6 +38,10 @@ class ExperimentService {
     return Future.delayed(Duration.zero).then((res) => true);
   }
 
+  Future<bool> shouldShowDailyQuestion() {
+    return Future.delayed(Duration.zero).then((res) => true);
+  }
+
   isToday(DateTime dateTime) {
     var today = DateTime.now();
     return dateTime.year == today.year &&

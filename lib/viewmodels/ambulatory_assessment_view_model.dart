@@ -4,9 +4,10 @@ import 'package:serene/models/assessment_item.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/route_names.dart';
 
 class AmbulatoryAssessmentViewModel with ChangeNotifier {
-  String _type;
+  String _assessmentType;
 
   UserService _userService;
   DataService _dataService;
@@ -15,6 +16,42 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   String title;
   String preText = "Pre Text";
   Map<String, String> results = {};
+
+  AmbulatoryAssessmentViewModel(
+      this._assessmentType, this._userService, this._dataService) {
+    if (this._assessmentType == AssessmentType.preLearning) {
+      title = "";
+      this._currentAssessment = getPreLearningList();
+    } else if (this._assessmentType == AssessmentType.postLearning) {
+      title = "";
+      this._dataService.getLastGoalShield().then((shield) {
+        var stillManageString =
+            getDidYouStillManageInsertForHindrance(shield.hindrance);
+        var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
+        this._currentAssessment =
+            getAfterLearningQuestionnaire(whereYouString, stillManageString);
+        notifyListeners();
+      });
+    } else if (this._assessmentType == AssessmentType.postTest) {
+      title = "";
+      this._currentAssessment = getPostTest();
+    } else if (this._assessmentType == AssessmentType.srl) {
+      title = "";
+      this._currentAssessment = _getSrlQuestionnaire();
+    } else if (this._assessmentType == AssessmentType.dailyQuestion) {
+      title = "Tägliche Lernabfrage";
+      _currentAssessment = _getDailyQuestionList();
+    }
+  }
+
+  _getDailyQuestionList() {
+    var itemCount = 2;
+    List<AssessmentItemModel> _dailyQuestion = [
+      AssessmentItemModel("Hast du vor, heute zu lernen?", itemCount,
+          {1: "Ja", 2: "Nein"}, "dailyQuestion1")
+    ];
+    return _dailyQuestion;
+  }
 
   getPreLearningList() {
     var itemCount = 5;
@@ -215,33 +252,9 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
     return _postTest;
   }
 
-  AmbulatoryAssessmentViewModel(
-      this._type, this._userService, this._dataService) {
-    if (this._type == AssessmentType.preLearning) {
-      title = "";
-      this._currentAssessment = getPreLearningList();
-    } else if (this._type == AssessmentType.postLearning) {
-      title = "";
-      this._dataService.getLastGoalShield().then((shield) {
-        var stillManageString =
-            getDidYouStillManageInsertForHindrance(shield.hindrance);
-        var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
-        this._currentAssessment =
-            getAfterLearningQuestionnaire(whereYouString, stillManageString);
-        notifyListeners();
-      });
-    } else if (this._type == AssessmentType.postTest) {
-      title = "";
-      this._currentAssessment = getPostTest();
-    } else if (this._type == AssessmentType.srl) {
-      title = "";
-      this._currentAssessment = _getSrlQuestionnaire();
-    }
-  }
-
   getResultForIndex(int index) {
     var key = this._currentAssessment[index].id;
-    if(results.containsKey(key)) return int.parse(results[key]);
+    if (results.containsKey(key)) return int.parse(results[key]);
     return null;
   }
 
@@ -288,8 +301,13 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
 
   submit() async {
     var assessmentModel = AssessmentModel(
-        _userService.getUsername(), results, _type, DateTime.now());
+        _userService.getUsername(), results, _assessmentType, DateTime.now());
 
     await this._dataService.saveAssessment(assessmentModel);
+  }
+
+  getNextRoute() {
+    if(currentAssessment)
+    return RouteNames.MAIN;
   }
 }

@@ -119,7 +119,7 @@ class SereneDrawer extends StatelessWidget {
                 await Navigator.pushNamed(
                     context, RouteNames.AMBULATORY_ASSESSMENT,
                     arguments:
-                        AssessmentScreenArguments(AssessmentType.postLearning));
+                        AssessmentScreenArguments(AssessmentType.dailyQuestion));
               }),
           ListTile(
               title: Text("Log In"),

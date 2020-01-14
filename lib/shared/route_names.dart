@@ -8,6 +8,7 @@ class RouteNames {
   static const AMBULATORY_ASSESSMENT_PRE_TEST = "/aapre";
   static const AMBULATORY_ASSESSMENT_POST_TEST = "/aapost";
   static const AMBULATORY_ASSESSMENT_SRL = "/aasrl";
+  static const AMBULATORY_ASSESSMENT_DAILY = "/aadaily";
   
   static const CONSENT = "/consent";
   static const TIMER = "/timer";

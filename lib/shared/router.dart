@@ -79,6 +79,17 @@ class Router {
                         locator.get<DataService>()),
                     child: AmbulatoryAssessmentScreen()));
 
+      case RouteNames.AMBULATORY_ASSESSMENT_DAILY:
+        final AssessmentScreenArguments assessmentArgs = settings.arguments;
+        return MaterialPageRoute(
+            builder: (_) =>
+                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
+                    create: (_) => AmbulatoryAssessmentViewModel(
+                        AssessmentType.dailyQuestion,
+                        locator.get<UserService>(),
+                        locator.get<DataService>()),
+                    child: AmbulatoryAssessmentScreen()));
+
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST:
         return MaterialPageRoute(
             builder: (_) =>
