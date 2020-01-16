@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Future.delayed(Duration.zero).then((val) {
       _userIdTextController.text =
-          Provider.of<LoginViewModel>(context).email ?? "";
+          Provider.of<LoginViewModel>(context, listen: false).email ?? "";
     });
   }
 
@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Passwort eingeben',
+                hintText: 'Passwort (min. 6 Zeichen) eingeben',
                 hintStyle: TextStyle(color: this.widget.foregroundColor),
               ),
             ),

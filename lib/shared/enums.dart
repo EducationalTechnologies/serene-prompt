@@ -38,6 +38,11 @@ class SettingsKeys {
   static const String wordsPerMinute = "wordsPerMinute";
 }
 
+class Hindrances {
+  static const String OVERWHELMED = "Überforderung";
+  static const String DISTRACTED = "Ablenkung";
+}
+
 
 enum AppStartupMode {
   normal,
