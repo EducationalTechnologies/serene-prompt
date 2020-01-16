@@ -13,12 +13,5 @@ class AppState with ChangeNotifier {
   DataService get dataService => _dataService;
   NotificationService get notificationService => _notificationService;
 
-  AppState() {
-    // _userService = UserService();
-    _dataService = DataService();
-    _notificationService = NotificationService();
-    // reloadData();
-  }
-
   reloadOpenGoals() {}
 }

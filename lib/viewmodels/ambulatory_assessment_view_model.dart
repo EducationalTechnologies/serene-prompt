@@ -321,6 +321,12 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   }
 
   getNextRoute() {
-    if (currentAssessment) return RouteNames.MAIN;
+    if (_assessmentType == AssessmentType.dailyQuestion) {
+      print("muh");
+      if(results["dailyQuestion1"] == "1") {
+        return RouteNames.GOAL_SHIELDING;
+      } 
+    } 
+    return RouteNames.MAIN;
   }
 }

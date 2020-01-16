@@ -13,8 +13,6 @@ import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/materialized_path.dart';
 
 class DataService {
-  static final DataService _instance = DataService._internal();
-  factory DataService() => _instance;
   List<Goal> _goalsCache;
   List<Goal> _openGoalsCache = [];
   List<TagModel> _tagCache = [];
@@ -23,10 +21,7 @@ class DataService {
   FirebaseService _databaseService;
   StreamController<Goal> goalStream = StreamController<Goal>.broadcast();
 
-  DataService._internal() {
-    this._userService = locator.get<UserService>();
-    this._databaseService = locator.get<FirebaseService>();
-  }
+  DataService(this._databaseService, this._userService);
 
   get goals {
     return UnmodifiableListView(_goalsCache);
@@ -138,17 +133,20 @@ class DataService {
         assessment, _userService.getUserEmail());
   }
 
-  Future<AssessmentModel> getLastSubmittedAssessment(String assessmentType) async {
+  Future<AssessmentModel> getLastSubmittedAssessment(
+      String assessmentType) async {
     return await _databaseService.getLastSubmittedAssessment(
         assessmentType, _userService.getUserEmail());
   }
 
   saveShielding(GoalShield shield) async {
     shield.submissionDate = DateTime.now();
-    return await _databaseService.saveShielding(shield, _userService.getUserEmail());
+    return await _databaseService.saveShielding(
+        shield, _userService.getUserEmail());
   }
 
   Future<GoalShield> getLastGoalShield() async {
-    return await _databaseService.getLastSubmittedGoalShield(_userService.getUserEmail());
+    return await _databaseService
+        .getLastSubmittedGoalShield(_userService.getUserEmail());
   }
 }

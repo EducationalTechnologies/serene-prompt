@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
@@ -7,7 +5,6 @@ import 'package:serene/shared/materialized_path.dart';
 
 class GoalMonitoringVielModel with ChangeNotifier {
   bool _isFetching = false;
-  List<Goal> _goals;
   List<Goal> _openGoals;
 
   DataService _dataService;
@@ -51,11 +48,6 @@ class GoalMonitoringVielModel with ChangeNotifier {
 
   List<Goal> get openGoals {
     return _openGoals;
-  }
-
-  Future<List<Goal>> getGoalsAsync() async {
-    _goals = await DataService().getGoals();
-    return _goals;
   }
 
   deleteGoal(Goal goal) async {

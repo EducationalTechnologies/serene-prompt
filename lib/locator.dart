@@ -16,7 +16,7 @@ void setupLocator() {
       SettingsService(locator.get<LocalDatabaseService>()));
   locator.registerSingleton<UserService>(
       UserService(locator.get<SettingsService>()));
-  locator.registerSingleton<DataService>(DataService());
+  locator.registerSingleton<DataService>(DataService(locator.get<FirebaseService>(), locator.get<UserService>()));
   locator.registerSingleton<NotificationService>(NotificationService());
   locator.registerSingleton<ExperimentService>(
       ExperimentService(locator.get<DataService>()));

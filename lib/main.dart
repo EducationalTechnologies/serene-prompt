@@ -36,9 +36,6 @@ class MyApp extends StatelessWidget {
     if (await experimentService.shouldShowPostLearningAssessment()) {
       return AppStartupMode.postLearningAssessment;
     }
-
-    
-
     return AppStartupMode.normal;
   }
 
