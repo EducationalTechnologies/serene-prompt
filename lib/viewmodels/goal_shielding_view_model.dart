@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/user_service.dart';
 
 class GoalShieldingViewModel with ChangeNotifier {
   int id;
@@ -11,16 +12,21 @@ class GoalShieldingViewModel with ChangeNotifier {
     "Lustlosigkeit",
     "Körperliche Verfassung"
   ];
-  List<String> shields = [
+  List<String> shieldsPersonalized = [
     "Wenn ich mich überfordert fühle, dann sage ich mir, dass ich es schaffen kann.",
     "Wenn ich merke, dass ich abgelenkt bin, dann konzentriere ich mich wieder auf meine Aufgabe.",
     "Wenn ich gar keine Lust mehr auf das Lernen habe, dann sage ich mir, dass ich es aus gutem Grund tue.",
     "Wenn ich mich nicht in der Verfassung zum Lernen fühle, dann bringe ich mich dazu, es zumindest zu probieren."
   ];
+
+  String shieldGeneric =
+      "Wenn mir der Gedanke kommt, für heute mit dem Lernen aufzuhören, dann sage ich mir, dass ich heute so lange lernen werde, bis ich meine Tagesziele erreicht habe!";
+  
   String _selectedShieldingAction;
   String _hindrance;
   List<Goal> _selectedGoals = [];
   DataService _dataService;
+  UserService _userService;
   List<Goal> _openGoals;
   List<Goal> get openGoals {
     return _openGoals;
@@ -33,9 +39,9 @@ class GoalShieldingViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  GoalShieldingViewModel(this._dataService) {
+  GoalShieldingViewModel(this._dataService, this._userService) {
     this._hindrance = hindrances[0];
-    this._selectedShieldingAction = shields[0];
+    this._selectedShieldingAction = shieldsPersonalized[0];
 
     _dataService.getOpenGoals().then((goalList) {
       _openGoals = goalList;
@@ -64,7 +70,7 @@ class GoalShieldingViewModel with ChangeNotifier {
   selectHindrance(String hindrance) {
     this.hindrance = hindrance;
     var hindex = this.hindrances.indexOf(hindrance);
-    this.selectedShieldingAction = shields[hindex];
+    this.selectedShieldingAction = shieldsPersonalized[hindex];
   }
 
   String get hindrance => _hindrance;

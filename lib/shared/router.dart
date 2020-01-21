@@ -55,7 +55,7 @@ class Router {
             builder: (context) =>
                 ChangeNotifierProvider<GoalShieldingViewModel>(
                     create: (_) =>
-                        GoalShieldingViewModel(locator.get<DataService>()),
+                        GoalShieldingViewModel(locator.get<DataService>(), locator.get<UserService>()),
                     child: GoalShieldingScreen()));
 
       case RouteNames.ADD_GOAL:

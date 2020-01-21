@@ -5,6 +5,7 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/models/user_data.dart';
+import 'package:serene/shared/enums.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -70,11 +71,12 @@ class FirebaseService {
   retrieveOpenGoals(String userId) async {
     var goals = await retrieveAllGoals(userId);
     List<Goal> mappedGoals;
-
-    mappedGoals =
-        goals.where((goal) => (goal["progress"] < 100)).map((openGoal) {
-      return Goal.fromDocument(openGoal);
-    }).toList();
+    if (goals.length > 0) {
+      mappedGoals =
+          goals.where((goal) => (goal["progress"] < 100)).map((openGoal) {
+        return Goal.fromDocument(openGoal);
+      }).toList();
+    }
     return mappedGoals;
   }
 
@@ -111,20 +113,21 @@ class FirebaseService {
     try {
       var availableMethods =
           await _firebaseAuth.fetchSignInMethodsForEmail(email: userId);
-      return availableMethods.length == 0;
+      return (availableMethods.length == 0);
     } catch (e) {
-      print("Error trying to get the email availabiltiyeeee: $e");
+      print("Error trying to get the email availabiltiy: $e");
       return false;
     }
   }
 
-  Future<UserData> registerUser(String userId, String password) async {
+  Future<UserData> registerUser(
+      String userId, String password, int group) async {
     try {
       var result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: userId, password: password);
 
-      var userData =
-          UserData(userId: result.user.uid, email: result.user.email);
+      var userData = UserData(
+          userId: result.user.uid, email: result.user.email, group: group);
 
       await insertUserData(userData);
 

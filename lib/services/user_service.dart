@@ -26,8 +26,14 @@ class UserService {
     await _settings.setSetting(SettingsKeys.email, email);
   }
 
+  int getTreatmentGroup() {
+    var rng = new Random();
+    return rng.nextInt(2);
+  }
+
   Future<UserData> registerUser(String email, String password) async {
-    var userData = await FirebaseService().registerUser(email, password);
+    var treatmentGroup = getTreatmentGroup();
+    var userData = await FirebaseService().registerUser(email, password, treatmentGroup);
     if (userData != null) {
       await saveUsername(userData.userId);
       await saveUserEmail(userData.email);

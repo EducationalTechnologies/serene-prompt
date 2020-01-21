@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  provider: ^4.0.1
+  provider: ^4.0.2
   intl: ^0.16.0
   sqflite: ^1.2.0
   flutter_markdown: ^0.2.0
@@ -36,7 +36,7 @@ dependencies:
   flutter_local_notifications: ^0.8.4+3
   flutter_duration_picker: ^1.0.4
   email_validator: ^1.0.0
-  get_it: ^3.0.3
+  get_it: ^3.1.0
   # speech_recognition: 0.3.0+1
 dev_dependencies:
   flutter_test:
