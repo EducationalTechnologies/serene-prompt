@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Passwort (min. 6 Zeichen) eingeben',
+                hintText: 'Passwort (min. 6 Zeichen)',
                 hintStyle: TextStyle(color: this.widget.foregroundColor),
               ),
             ),

@@ -19,11 +19,11 @@ class UserService {
   }
 
   saveUsername(String username) async {
-    await _settings.setSetting("userId", username);
+    await _settings.setSetting(SettingsKeys.userId, username);
   }
 
   saveUserEmail(String email) async {
-    await _settings.setSetting("email", email);
+    await _settings.setSetting(SettingsKeys.email, email);
   }
 
   Future<UserData> registerUser(String email, String password) async {

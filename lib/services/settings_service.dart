@@ -55,6 +55,11 @@ class SettingsService {
     _settingsCache[setting] = value;
   }
 
+  deleteSetting(String setting) async {
+    await this._databaseService.deleteSetting(setting);
+    _settingsCache.remove(setting);
+  }
+
   // static final SettingsService _instance = SettingsService._internal();
   // factory SettingsService() => _instance;
 }

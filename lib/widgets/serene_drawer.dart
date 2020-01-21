@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:serene/locator.dart';
+import 'package:serene/services/local_database_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
@@ -121,9 +123,12 @@ class SereneDrawer extends StatelessWidget {
                         AssessmentScreenArguments(AssessmentType.dailyQuestion));
               }),
           ListTile(
-              title: Text("Log In"),
+              title: Text("Delete User"),
               onTap: () async {
-                Navigator.pushNamed(context, RouteNames.LOG_IN);
+                // Navigator.pushNamed(context, RouteNames.LOG_IN);
+                var s = locator.get<LocalDatabaseService>();
+                s.deleteSetting(SettingsKeys.email);
+                s.deleteSetting(SettingsKeys.userId);
               }),
           // VersionInfo()
         ],

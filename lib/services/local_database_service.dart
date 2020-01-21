@@ -112,6 +112,12 @@ class LocalDatabaseService {
     return existing[0][key];
   }
 
+  deleteSetting(String key) async {
+    final db = await database;
+
+    await db.delete(TABLE_SETTINGS, where: "key = ?", whereArgs: [key]);
+  }
+
   insertGoal(Goal goal) async {
     final Database db = await database;
 
@@ -199,6 +205,12 @@ class LocalDatabaseService {
     final Database db = await database;
 
     await db.delete(TABLE_GOALS);
+  }
+
+  clearUser() async {
+    // final Database db = await database;
+
+    // await db.delete(TABLE_GOALS, where: "id = ?", whereArgs: [goal.id]);
   }
 
   insertSampleData() async {
