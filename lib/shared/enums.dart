@@ -43,6 +43,7 @@ class Hindrances {
   static const String DISTRACTED = "Ablenkung";
 }
 
+enum ExperimentalGroup { Control, Experiment }
 
 enum AppStartupMode {
   normal,

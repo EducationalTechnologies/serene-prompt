@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _buildRegisterButton(BuildContext context) {
-    var vm = Provider.of<LoginViewModel>(context);
+    var vm = Provider.of<LoginViewModel>(context, listen: false);
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
@@ -244,6 +244,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     vm.toRegisterScreen();
                   },
                   child: Text("Einen neuen Account anlegen"))),
+        ],
+      ),
+    );
+  }
+
+  _buildAlreadyHaveAccountButton(BuildContext context) {
+    var vm = Provider.of<LoginViewModel>(context, listen: false);
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
+      alignment: Alignment.center,
+      child: new Row(
+        children: <Widget>[
+          new Expanded(
+              child: FlatButton(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 20.0),
+                  onPressed: () async {
+                    _userIdTextController.text = "";
+                    _passwordTextController.text = "";
+                    vm.toSignInScreen();
+                  },
+                  child: Text("Ich habe bereits einen Account"))),
         ],
       ),
     );
@@ -298,6 +321,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           if (vm.mode == SignInScreenMode.signIn)
             _buildRegisterButton(context),
+          if (vm.mode == SignInScreenMode.register)
+            _buildAlreadyHaveAccountButton(context),
           new Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(

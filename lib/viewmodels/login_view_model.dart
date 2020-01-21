@@ -58,4 +58,10 @@ class LoginViewModel extends BaseViewModel {
     this.mode = SignInScreenMode.register;
     notifyListeners();
   }
+
+  toSignInScreen() {
+    this._email = "";
+    this.mode = SignInScreenMode.signIn;
+    notifyListeners();
+  }
 }
