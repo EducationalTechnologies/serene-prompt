@@ -110,9 +110,9 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           ListTile(
-              title: Text("Timer"),
+              title: Text("Login"),
               onTap: () async {
-                Navigator.pushNamed(context, RouteNames.TIMER);
+                Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
           ListTile(
               title: Text("Test"),
@@ -123,12 +123,14 @@ class SereneDrawer extends StatelessWidget {
                         AssessmentScreenArguments(AssessmentType.dailyQuestion));
               }),
           ListTile(
-              title: Text("Delete User"),
+              title: Text("Habit UI"),
               onTap: () async {
-                // Navigator.pushNamed(context, RouteNames.LOG_IN);
-                var s = locator.get<LocalDatabaseService>();
-                s.deleteSetting(SettingsKeys.email);
-                s.deleteSetting(SettingsKeys.userId);
+                // // Navigator.pushNamed(context, RouteNames.LOG_IN);
+                // var s = locator.get<LocalDatabaseService>();
+                // s.deleteSetting(SettingsKeys.email);
+                // s.deleteSetting(SettingsKeys.userId);
+                await Navigator.pushNamed(
+                    context, RouteNames.HABIT_CREATE);
               }),
           // VersionInfo()
         ],

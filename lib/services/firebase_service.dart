@@ -59,24 +59,39 @@ class FirebaseService {
   }
 
   Future<List<DocumentSnapshot>> retrieveAllGoals(String email) async {
-    var goals = await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .document(email)
-        .collection(COLLECTION_GOALS_OPEN)
-        .getDocuments();
+    try {
+      var goals = await _databaseReference
+          .collection(COLLECTION_GOALS)
+          .document(email)
+          .collection(COLLECTION_GOALS_OPEN)
+          .getDocuments();
 
-    return goals.documents;
+      return goals.documents;
+    } catch (e) {
+      print("Error trying to retrieve goals: $e");
+      return [];
+    } 
   }
 
   retrieveOpenGoals(String userId) async {
     var goals = await retrieveAllGoals(userId);
-    List<Goal> mappedGoals;
-    if (goals.length > 0) {
-      mappedGoals =
-          goals.where((goal) => (goal["progress"] < 100)).map((openGoal) {
-        return Goal.fromDocument(openGoal);
-      }).toList();
+    List<Goal> mappedGoals = [];
+
+    if (goals != null) {
+      if (goals.length > 0) {
+        mappedGoals =
+            goals.where((goal) {
+              if(goal["progress"] != null)
+              {
+                return goal["progress"] < 100;
+              }
+              return false;
+            }).map((openGoal) {
+          return Goal.fromDocument(openGoal);
+        }).toList();
+      }
     }
+
     return mappedGoals;
   }
 
@@ -242,16 +257,20 @@ class FirebaseService {
 
   Future<AssessmentModel> getLastSubmittedAssessment(
       String assessmentType, String email) async {
-    var doc = await _databaseReference
-        .collection(COLLECTION_ASSESSMENTS)
-        .document(email)
-        .collection(assessmentType)
-        .orderBy("submissionDate", descending: true)
-        .limit(1)
-        .getDocuments();
+    try {
+      var doc = await _databaseReference
+          .collection(COLLECTION_ASSESSMENTS)
+          .document(email)
+          .collection(assessmentType)
+          .orderBy("submissionDate", descending: true)
+          .limit(1)
+          .getDocuments();
 
-    if (doc.documents.length == 0) return null;
-    return AssessmentModel.fromDocument(doc.documents[0]);
+      if (doc.documents.length == 0) return null;
+      return AssessmentModel.fromDocument(doc.documents[0]);
+    } catch (e) {
+      print("Error trying to get the last submitted assessment: $e");
+    }
   }
 
   saveShielding(GoalShield shield, String email) async {

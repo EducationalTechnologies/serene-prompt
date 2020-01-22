@@ -20,4 +20,6 @@ class RouteNames {
   static const EDIT_TAGS = "/edittags";
   static const DAILY_LEARNING_QUESTIONS = "/dailylearningquestions";
   static const MONITORING = "/monitoring";
+
+  static const HABIT_CREATE = "/createhabit";
 }
