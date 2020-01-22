@@ -5,11 +5,13 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/models/user_data.dart';
-import 'package:serene/shared/enums.dart';
+import 'package:flutter/services.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
   factory FirebaseService() => _instance;
+
+  String lastError = "";
 
   final Firestore _databaseReference = Firestore.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -67,10 +69,11 @@ class FirebaseService {
           .getDocuments();
 
       return goals.documents;
-    } catch (e) {
+    } on PlatformException catch (e) {
       print("Error trying to retrieve goals: $e");
+      lastError = e.code;
       return [];
-    } 
+    }
   }
 
   retrieveOpenGoals(String userId) async {
@@ -79,14 +82,12 @@ class FirebaseService {
 
     if (goals != null) {
       if (goals.length > 0) {
-        mappedGoals =
-            goals.where((goal) {
-              if(goal["progress"] != null)
-              {
-                return goal["progress"] < 100;
-              }
-              return false;
-            }).map((openGoal) {
+        mappedGoals = goals.where((goal) {
+          if (goal["progress"] != null) {
+            return goal["progress"] < 100;
+          }
+          return false;
+        }).map((openGoal) {
           return Goal.fromDocument(openGoal);
         }).toList();
       }
@@ -129,8 +130,9 @@ class FirebaseService {
       var availableMethods =
           await _firebaseAuth.fetchSignInMethodsForEmail(email: userId);
       return (availableMethods.length == 0);
-    } catch (e) {
+    } on PlatformException catch (e) {
       print("Error trying to get the email availabiltiy: $e");
+      lastError = e.code;
       return false;
     }
   }
@@ -147,8 +149,9 @@ class FirebaseService {
       await insertUserData(userData);
 
       return userData;
-    } catch (e) {
+    } on PlatformException catch (e) {
       print("Error trying to register the user: $e");
+      lastError = e.code;
       return null;
     }
   }
@@ -192,8 +195,9 @@ class FirebaseService {
         await insertUserData(userData);
       }
       return userData;
-    } catch (e) {
+    } on PlatformException catch (e) {
       print("Error trying to sign in the user: $e");
+      lastError = e.code;
       return null;
     }
   }

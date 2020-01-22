@@ -4,6 +4,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/edit_tags_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
+import 'package:serene/screens/habit/habit_creation_screen.dart';
 import 'package:serene/screens/login_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
 import 'package:serene/screens/test_screen.dart';
@@ -26,6 +27,7 @@ import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
 import 'package:serene/viewmodels/edit_tags_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
+import 'package:serene/viewmodels/habit_creation_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/viewmodels/settings_view_model.dart';
@@ -54,8 +56,8 @@ class Router {
         return MaterialPageRoute(
             builder: (context) =>
                 ChangeNotifierProvider<GoalShieldingViewModel>(
-                    create: (_) =>
-                        GoalShieldingViewModel(locator.get<DataService>(), locator.get<UserService>()),
+                    create: (_) => GoalShieldingViewModel(
+                        locator.get<DataService>(), locator.get<UserService>()),
                     child: GoalShieldingScreen()));
 
       case RouteNames.ADD_GOAL:
@@ -177,6 +179,12 @@ class Router {
                   create: (_) => DailyLearningQuestionViewModel(),
                   child: DailyLearningQuestionScreen(),
                 ));
+
+      case RouteNames.HABIT_CREATE:
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<HabitCreationViewModel>(
+                create: (_) => HabitCreationViewModel(),
+                child: HabitCreationScreen()));
 
       default:
         return MaterialPageRoute(builder: (_) {

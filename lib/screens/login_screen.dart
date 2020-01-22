@@ -27,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _userIdTextController;
   TextEditingController _passwordTextController;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -39,14 +41,13 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  _buildCreateAccountDialog(LoginViewModel vm) async {
+  _buildErrorDialog(String title, String content) async {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Benutzername oder Passwort falsch"),
-            content: Text(
-                "Der angegebene Benutzername oder das angegebene Passwort waren nicht korrekt"),
+            title: Text(title),
+            content: Text(content),
             actions: <Widget>[
               new FlatButton(
                 child: new Text("Okay"),
@@ -54,12 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pop(true);
                 },
               ),
-              // new FlatButton(
-              //   child: new Text("Nein"),
-              //   onPressed: () {
-              //     Navigator.of(context).pop(false);
-              //   },
-              // ),
             ],
           );
         });
@@ -68,10 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
   _loginClick(LoginViewModel vm, BuildContext context) async {
     var signedIn = await vm.signIn(
         _userIdTextController.text, _passwordTextController.text);
-    if (signedIn) {
+    if (signedIn == REGISTRATION_CODES.SUCCESS) {
       Navigator.pushNamed(context, RouteNames.MAIN);
     } else {
-      var shouldCreate = await _buildCreateAccountDialog(vm);
+      var shouldCreate = await _buildErrorDialog("Anmeldedaten nicht gefunden",
+          "Benutzername oder Passwort waren nicht korrekt");
       if (shouldCreate) {
         _registerClick(vm, context);
       }
@@ -81,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
   _registerClick(LoginViewModel vm, BuildContext context) async {
     var registered = await vm.register(
         _userIdTextController.text, _passwordTextController.text);
-    if (registered) {
+    if (registered == REGISTRATION_CODES.SUCCESS) {
       Navigator.pushNamed(context, RouteNames.MAIN);
-    }
+    } else if (registered == REGISTRATION_CODES.WEAK_PASSWORD) {}
   }
 
   @override
@@ -138,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
           new Expanded(
             child: TextFormField(
               controller: _userIdTextController,
+              keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.center,
               onChanged: (text) {
                 // Provider.of<LoginState>(context).userId =
@@ -210,10 +207,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return new RaisedButton(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       onPressed: () async {
-        if (vm.mode == SignInScreenMode.register) {
-          await _registerClick(vm, context);
+        if (vm.validateEmail(_userIdTextController.text)) {
+          if (vm.mode == SignInScreenMode.register) {
+            await _registerClick(vm, context);
+          } else {
+            await _loginClick(vm, context);
+          }
         } else {
-          await _loginClick(vm, context);
+          await _buildErrorDialog("Ungültige Email Adresse",
+              "Bitte überprüfe die Schreibweise der angegebenen Email Adresse");
         }
       },
       child: vm.state == ViewState.idle
@@ -274,137 +276,92 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget buildControls(BuildContext context) {
     var vm = Provider.of<LoginViewModel>(context);
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end:
-              Alignment(1.0, 0.0), // 10% of the width, so there are ten blinds.
-          colors: [
-            this.widget.backgroundColor1,
-            this.widget.backgroundColor2
-          ], // whitish to gray
-          // tileMode: TileMode.repeated, // repeats the gradient over the canvas
+    return Form(
+      key: _formKey,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(
+                1.0, 0.0), // 10% of the width, so there are ten blinds.
+            colors: [
+              this.widget.backgroundColor1,
+              this.widget.backgroundColor2
+            ], // whitish to gray
+            // tileMode: TileMode.repeated, // repeats the gradient over the canvas
+          ),
         ),
-      ),
-      height: MediaQuery.of(context).size.height,
-      child: ListView(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(top: 150.0, bottom: 50.0),
-            child: Center(
-              child: new Column(
+        height: MediaQuery.of(context).size.height,
+        child: ListView(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(top: 150.0, bottom: 50.0),
+              child: Center(
+                child: new Column(
+                  children: <Widget>[
+                    buildCircleAvatar(),
+                    new Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: new Text(
+                        "Serene",
+                        style: TextStyle(color: this.widget.foregroundColor),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            buildUserIdField(context),
+            buildPasswordInput(context),
+            new Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
+              alignment: Alignment.center,
+              child: new Row(
                 children: <Widget>[
-                  buildCircleAvatar(),
-                  new Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: new Text(
-                      "Serene",
-                      style: TextStyle(color: this.widget.foregroundColor),
-                    ),
-                  )
+                  new Expanded(child: buildSubmitButton(context)),
                 ],
               ),
             ),
-          ),
-          buildUserIdField(context),
-          buildPasswordInput(context),
-          new Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
-            alignment: Alignment.center,
-            child: new Row(
-              children: <Widget>[
-                new Expanded(child: buildSubmitButton(context)),
-              ],
-            ),
-          ),
-          if (vm.mode == SignInScreenMode.signIn)
-            _buildRegisterButton(context),
-          if (vm.mode == SignInScreenMode.register)
-            _buildAlreadyHaveAccountButton(context),
-          new Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(
-                left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
-            alignment: Alignment.center,
-            child: new Row(
-              children: <Widget>[
-                new Expanded(
-                  child: InkWell(
-                    onTap: () async {
-                      await vm.progressWithoutUsername();
-                      Navigator.pushNamed(context, RouteNames.MAIN);
-                    },
-                    child: new FlatButton(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 20.0),
-                      color: Colors.transparent,
-                      onPressed: () async {
+            if (vm.mode == SignInScreenMode.signIn)
+              _buildRegisterButton(context),
+            if (vm.mode == SignInScreenMode.register)
+              _buildAlreadyHaveAccountButton(context),
+            new Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(
+                  left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
+              alignment: Alignment.center,
+              child: new Row(
+                children: <Widget>[
+                  new Expanded(
+                    child: InkWell(
+                      onTap: () async {
                         await vm.progressWithoutUsername();
                         Navigator.pushNamed(context, RouteNames.MAIN);
                       },
-                      child: Text(
-                        "Ohne Account verwenden",
-                        style: TextStyle(
-                            color:
-                                this.widget.foregroundColor.withOpacity(0.8)),
+                      child: new FlatButton(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 20.0),
+                        color: Colors.transparent,
+                        onPressed: () async {
+                          await vm.progressWithoutUsername();
+                          Navigator.pushNamed(context, RouteNames.MAIN);
+                        },
+                        child: Text(
+                          "Ohne Account verwenden",
+                          style: TextStyle(
+                              color:
+                                  this.widget.foregroundColor.withOpacity(0.8)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          // new Container(
-          //   width: MediaQuery.of(context).size.width,
-          //   margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-          //   alignment: Alignment.center,
-          //   child: new Row(
-          //     children: <Widget>[
-          //       new Expanded(
-          //         child: new FlatButton(
-          //           padding: const EdgeInsets.symmetric(
-          //               vertical: 20.0, horizontal: 20.0),
-          //           color: Colors.transparent,
-          //           onPressed: () => {},
-          //           child: Text(
-          //             "Forgot your password?",
-          //             style: TextStyle(
-          //                 color: this.foregroundColor.withOpacity(0.5)),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // new Expanded(
-          //   child: Divider(),
-          // ),
-          // new Container(
-          //   width: MediaQuery.of(context).size.width,
-          //   margin: const EdgeInsets.only(
-          //       left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
-          //   alignment: Alignment.center,
-          //   child: new Row(
-          //     children: <Widget>[
-          //       new Expanded(
-          //         child: new FlatButton(
-          //           padding: const EdgeInsets.symmetric(
-          //               vertical: 20.0, horizontal: 20.0),
-          //           color: Colors.transparent,
-          //           onPressed: () => {},
-          //           child: Text(
-          //             "Don't have an account? Create One",
-          //             style: TextStyle(
-          //                 color: this.foregroundColor.withOpacity(0.5)),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-        ],
+          ],
+        ),
       ),
     );
   }

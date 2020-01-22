@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:serene/locator.dart';
 import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/settings_service.dart';
@@ -31,23 +32,32 @@ class UserService {
     return rng.nextInt(2);
   }
 
-  Future<UserData> registerUser(String email, String password) async {
-    var treatmentGroup = getTreatmentGroup();
-    var userData = await FirebaseService().registerUser(email, password, treatmentGroup);
-    if (userData != null) {
-      await saveUsername(userData.userId);
-      await saveUserEmail(userData.email);
+  Future<String> registerUser(String email, String password) async {
+    try {
+      var treatmentGroup = getTreatmentGroup();
+      var userData =
+          await FirebaseService().registerUser(email, password, treatmentGroup);
+      if (userData != null) {
+        await saveUsername(userData.userId);
+        await saveUserEmail(userData.email);
+        return REGISTRATION_CODES.SUCCESS;
+      } else {
+        return locator.get<FirebaseService>().lastError;
+      }
+    } catch (e) {
+      print("Error trying to get the email availabiltiy: $e");
     }
-    return userData;
   }
 
-  Future<UserData> signInUser(String email, String password) async {
+  Future<String> signInUser(String email, String password) async {
     var userData = await FirebaseService().signInUser(email, password);
     if (userData != null) {
       await saveUsername(userData.userId);
       await saveUserEmail(userData.email);
+      return REGISTRATION_CODES.SUCCESS;
+    } else {
+      return locator.get<FirebaseService>().lastError;
     }
-    return userData;
   }
 
   saveRandomUser() async {

@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
@@ -21,36 +22,34 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
-  Future<bool> register(String email, String password) async {
+  Future<String> register(String email, String password) async {
     setState(ViewState.busy);
-    var success = false;
+    var success = "";
     var available = await this._userService.isNameAvailable(email);
     if (available) {
-      var userData = await _userService.registerUser(email, password);
-      success = userData != null;
+      success = await _userService.registerUser(email, password);
     } else {
-      var userData = await _userService.signInUser(email, password);
-      success = userData != null;
+      success = await _userService.signInUser(email, password);
     }
     setState(ViewState.idle);
     return success;
   }
 
-  signIn(String email, String password) async {
+  Future<String> signIn(String email, String password) async {
     setState(ViewState.busy);
-    var userData = await _userService.signInUser(email, password);
+    var signin = await _userService.signInUser(email, password);
     setState(ViewState.idle);
-    return userData != null;
+    return signin;
   }
 
   progressWithoutUsername() async {
     await _userService.saveRandomUser();
   }
 
-  _validateEmail(String value) {
+  validateEmail(String value) {
     // TODO: Replace once the package loads
-    return value.contains("@");
-    // return EmailValidator.validate(value);
+    // return value.contains("@");
+    return EmailValidator.validate(value);
   }
 
   toRegisterScreen() {
