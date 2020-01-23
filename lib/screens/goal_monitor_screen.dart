@@ -18,7 +18,7 @@ class GoalMonitorScreen extends StatefulWidget {
 }
 
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
   List<Goal> _goals = [];
 
@@ -269,7 +269,8 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   @override
   Widget build(BuildContext context) {
     final goalMonitoringState = Provider.of<GoalMonitoringVielModel>(context);
-
+    // TODO: Reassigning the global key is the only thing that works to assure that the widget gets rebuilt. However, I do not know why and this sucks. So I should definitely find the reason...
+    _listKey = GlobalKey();
     if (goalMonitoringState.openGoals != null) {
       _goals = [];
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));

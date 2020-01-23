@@ -39,6 +39,12 @@ class DataService {
     }
   }
 
+  clearCache() {
+    this._openGoalsCache.clear();
+    this._goalsCache.clear();
+    this._tagCache.clear();
+  }
+
   createGoal(Goal goal) async {
     //TODO: Handle the case that saving fails
     if (goal.id.isEmpty) {

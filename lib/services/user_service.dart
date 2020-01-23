@@ -33,19 +33,15 @@ class UserService {
   }
 
   Future<String> registerUser(String email, String password) async {
-    try {
-      var treatmentGroup = getTreatmentGroup();
-      var userData =
-          await FirebaseService().registerUser(email, password, treatmentGroup);
-      if (userData != null) {
-        await saveUsername(userData.userId);
-        await saveUserEmail(userData.email);
-        return REGISTRATION_CODES.SUCCESS;
-      } else {
-        return locator.get<FirebaseService>().lastError;
-      }
-    } catch (e) {
-      print("Error trying to get the email availabiltiy: $e");
+    var treatmentGroup = getTreatmentGroup();
+    var userData =
+        await FirebaseService().registerUser(email, password, treatmentGroup);
+    if (userData != null) {
+      await saveUsername(userData.userId);
+      await saveUserEmail(userData.email);
+      return REGISTRATION_CODES.SUCCESS;
+    } else {
+      return locator.get<FirebaseService>().lastError;
     }
   }
 
