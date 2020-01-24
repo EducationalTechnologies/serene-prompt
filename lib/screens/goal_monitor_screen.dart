@@ -4,7 +4,6 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/materialized_path.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
-import 'package:serene/shared/symbol_helper.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +17,7 @@ class GoalMonitorScreen extends StatefulWidget {
 }
 
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   List<Goal> _goals = [];
 
@@ -269,7 +268,8 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   @override
   Widget build(BuildContext context) {
     final goalMonitoringState = Provider.of<GoalMonitoringVielModel>(context);
-
+    // TODO: Reassigning the global key is the only thing that works to assure that the widget gets rebuilt. However, I do not know why and this sucks. So I should definitely find the reason...
+    _listKey = GlobalKey<AnimatedListState>();
     if (goalMonitoringState.openGoals != null) {
       _goals = [];
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));

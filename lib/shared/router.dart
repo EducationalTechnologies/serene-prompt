@@ -82,7 +82,6 @@ class Router {
                     child: AmbulatoryAssessmentScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT_DAILY:
-        final AssessmentScreenArguments assessmentArgs = settings.arguments;
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
@@ -147,7 +146,8 @@ class Router {
             builder: (_) => MultiProvider(
                     providers: [
                       ChangeNotifierProvider<LoginViewModel>.value(
-                          value: LoginViewModel(locator.get<UserService>())),
+                          value: LoginViewModel(locator.get<UserService>(),
+                              locator.get<DataService>())),
                     ],
                     child: LoginScreen(
                       backgroundColor1: Colors.orange[50],

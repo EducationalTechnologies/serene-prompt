@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
@@ -12,7 +13,9 @@ class LoginViewModel extends BaseViewModel {
   SignInScreenMode mode;
 
   UserService _userService;
-  LoginViewModel(this._userService) {
+  DataService _dataService;
+
+  LoginViewModel(this._userService, this._dataService) {
     this._email = this._userService.getUserEmail();
 
     if (this._email == null) {
@@ -28,6 +31,7 @@ class LoginViewModel extends BaseViewModel {
     var available = await this._userService.isNameAvailable(email);
     if (available) {
       success = await _userService.registerUser(email, password);
+      _dataService.clearCache();
     } else {
       success = await _userService.signInUser(email, password);
     }

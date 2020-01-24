@@ -63,6 +63,10 @@ class _MainScreenState extends State<MainScreen> {
         // setState(() {});
         Provider.of<GoalMonitoringVielModel>(context, listen: false)
             .refetchGoals();
+
+            setState(() {
+              
+            });
       },
     );
   }
