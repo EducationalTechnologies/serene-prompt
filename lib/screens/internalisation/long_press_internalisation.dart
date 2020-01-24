@@ -25,22 +25,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
   buildShieldingText() {
     final intention = Provider.of<GoalShieldingViewModel>(context);
 
-    // List<String> fullText = ["When ", "I ", "start "];
-
     List<TextSpan> texts = [];
-
-    // for (var i = 0; i < fullText.length; i++) {
-    //   texts.add(getRegularText(fullText[i]));
-    // }
-
-    // var split = intention.hindrance.split(" ");
-
-    // for (var s in split) {
-    //   texts.add(getRegularText("$s "));
-    // }
-
-    // texts.add(getRegularText("I "));
-    // texts.add(getRegularText("will "));
 
     if (intention.selectedShieldingAction == "") {
       return Text("Bitte wähle zunächst ein Lernhindernis aus");
@@ -173,38 +158,8 @@ class _TextHighlightState extends State<TextHighlight>
   Animation<int> _animation;
   AnimationController _controller;
   Duration _duration;
-  int _longPressCounter = 0;
-  bool _counterPressed = false;
-  bool _loopActive = false;
-  int _animationCounter = 0;
-
-  // void _increaseCounterWhilePressed() async {
-  //   // make sure that only one loop is active
-  //   if (_loopActive) return;
-
-  //   _loopActive = true;
-
-  //   while (_counterPressed) {
-  //     // do your thing
-  //     setState(() {
-  //       _longPressCounter++;
-  //     });
-
-  //     // wait a bit
-  //     if (_highlightIndex == _fullTextLength - 1) {
-  //       setState(() {
-  //         _repeatCounter++;
-  //       });
-  //       break;
-  //     }
-  //     await Future.delayed(Duration(milliseconds: _textHighlightDelay));
-  //   }
-
-  //   _loopActive = false;
-  // }
 
   _onIterationCompleted() async {
-    _animationCounter++;
     await Provider.of<GoalShieldingViewModel>(context, listen: false).saveShielding();
     await Future.delayed(Duration(seconds: 1)).then((res) {
       Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
@@ -238,7 +193,6 @@ class _TextHighlightState extends State<TextHighlight>
   buildRepetitionButton() {
     return GestureDetector(
         onLongPressStart: (details) {
-          _counterPressed = true;
           if (_controller.status == AnimationStatus.completed) {
             _controller.reset();
           }
@@ -246,7 +200,6 @@ class _TextHighlightState extends State<TextHighlight>
         },
         onLongPressEnd: (details) {
           _controller.stop();
-          _counterPressed = false;
         },
         child: SizedBox(
             width: double.infinity,

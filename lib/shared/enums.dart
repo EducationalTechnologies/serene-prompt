@@ -41,9 +41,12 @@ class SettingsKeys {
 class Hindrances {
   static const String OVERWHELMED = "Überforderung";
   static const String DISTRACTED = "Ablenkung";
+  static const String LISTLESSNESS = "Lustlosigkeit";
+  static const String PHYSICAL_CONDITION = "Körperliche Verfassung";
+
 }
 
-class REGISTRATION_CODES {
+class RegistrationCodes {
   // Password should be at least 6 characters
   static const SUCCESS = "SUCCESS";
   static const WEAK_PASSWORD = "ERROR_WEAK_PASSWORD";

@@ -40,7 +40,7 @@ class UserService {
       if (userData != null) {
         await saveUsername(userData.userId);
         await saveUserEmail(userData.email);
-        return REGISTRATION_CODES.SUCCESS;
+        return RegistrationCodes.SUCCESS;
       } else {
         return locator.get<FirebaseService>().lastError;
       }
@@ -54,7 +54,7 @@ class UserService {
     if (userData != null) {
       await saveUsername(userData.userId);
       await saveUserEmail(userData.email);
-      return REGISTRATION_CODES.SUCCESS;
+      return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
     }

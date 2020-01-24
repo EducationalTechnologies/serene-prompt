@@ -273,28 +273,26 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   }
 
   getWhereYouInsertForHindrance(String hindrance) {
-    // TODO: Replace hard coded stuff
-    if (hindrance == "Überforderung")
+    if (hindrance == Hindrances.OVERWHELMED)
       return "Warst du überfordert, als du zuletzt gelernt hast?";
-    if (hindrance == "Ablenkung")
+    if (hindrance == Hindrances.DISTRACTED)
       return "Hast du dich von deinem Lernen ablenken lassen?";
-    if (hindrance == "Lustlosigkeit")
+    if (hindrance == Hindrances.LISTLESSNESS)
       return "Hast du Lustlosigkeit gegenüber dem Lernen verspürt?";
-    if (hindrance == "Körperliche Verfassung")
+    if (hindrance == Hindrances.PHYSICAL_CONDITION)
       return "Hat dich deine körperliche Verfassung beim Lernen beeinträchtigt?";
 
     return "HINDRANCE NOT FOUND";
   }
 
   getDidYouStillManageInsertForHindrance(String hindrance) {
-    // TODO: Replace hard coded stuff
-    if (hindrance == "Überforderung")
+    if (hindrance == Hindrances.OVERWHELMED)
       return "Hast du es dann geschafft, dir zu sagen, dass du es trotzdem schaffen kannst?";
-    if (hindrance == "Ablenkung")
+    if (hindrance == Hindrances.DISTRACTED)
       return "Hast du es dann geschafft, dich dann trotzdem auf deine Aufgabe zu konzentrieren?";
-    if (hindrance == "Lustlosigkeit")
+    if (hindrance == Hindrances.LISTLESSNESS)
       return "Hast du es dann geschafft, dir zu sagen, dass du es aus einem guten Grund tust?";
-    if (hindrance == "Körperliche Verfassung")
+    if (hindrance == Hindrances.PHYSICAL_CONDITION)
       return "Hast du es dann geschafft, dich dazu zu bringen, es trotzdem zu probieren?";
 
     return "HINDRANCE NOT FOUND";
@@ -323,10 +321,10 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   getNextRoute() {
     if (_assessmentType == AssessmentType.dailyQuestion) {
       print("muh");
-      if(results["dailyQuestion1"] == "1") {
+      if (results["dailyQuestion1"] == "1") {
         return RouteNames.GOAL_SHIELDING;
-      } 
-    } 
+      }
+    }
     return RouteNames.MAIN;
   }
 }

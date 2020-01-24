@@ -178,7 +178,6 @@ class FirebaseService {
         .where("email", isEqualTo: email)
         .getDocuments();
 
-// TODO: Continue here
     return UserData.fromJson(resultDocuments.documents[0].data);
   }
 

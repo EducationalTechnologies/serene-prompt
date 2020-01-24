@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
   _loginClick(LoginViewModel vm, BuildContext context) async {
     var signedIn = await vm.signIn(
         _userIdTextController.text, _passwordTextController.text);
-    if (signedIn == REGISTRATION_CODES.SUCCESS) {
+    if (signedIn == RegistrationCodes.SUCCESS) {
       Navigator.pushNamed(context, RouteNames.MAIN);
     } else {
       var shouldCreate = await _buildErrorDialog("Anmeldedaten nicht gefunden",
@@ -77,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
   _registerClick(LoginViewModel vm, BuildContext context) async {
     var registered = await vm.register(
         _userIdTextController.text, _passwordTextController.text);
-    if (registered == REGISTRATION_CODES.SUCCESS) {
+    if (registered == RegistrationCodes.SUCCESS) {
       Navigator.pushNamed(context, RouteNames.MAIN);
-    } else if (registered == REGISTRATION_CODES.WEAK_PASSWORD) {}
+    } else if (registered == RegistrationCodes.WEAK_PASSWORD) {}
   }
 
   @override
