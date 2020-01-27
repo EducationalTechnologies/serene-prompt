@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/data_service.dart';
@@ -5,26 +7,45 @@ import 'package:serene/shared/materialized_path.dart';
 
 class GoalMonitoringVielModel with ChangeNotifier {
   bool _isFetching = false;
-  List<Goal> _openGoals;
+  List<Goal> _openGoals = [];
 
   DataService _dataService;
+
+  VoidCallback itemAdded;
+
+  StreamController<Goal> goalStreamController = StreamController<Goal>();
+  Stream<Goal> goalStream;
 
   GoalMonitoringVielModel(this._dataService) {
     // _getOpenGoalsAsync();
     _dataService.getOpenGoals().then((goalList) {
-      _openGoals = goalList;
+      // _openGoals = goalList;
 
       // var tree = _pathTreeFromGoals(_openGoals);
-      sortByTree();
+      // sortByTree();
+      for (var g in goalList) {
+        if (!_openGoals.contains(g)) {
+          goalStreamController.add(g);
+          _openGoals.add(g);
+        }
+      }
       notifyListeners();
     });
   }
 
   void refetchGoals() {
+    // itemAdded();
+
     _dataService.getOpenGoals().then((goalList) {
-      _openGoals = goalList;
-      sortByTree();
-      notifyListeners();
+      // _openGoals = goalList;
+      // sortByTree();
+      for (var g in goalList) {
+        if (!_openGoals.contains(g)) {
+          goalStreamController.add(g);
+          _openGoals.add(g);
+        }
+      }
+      // notifyListeners();
     });
   }
 
@@ -51,6 +72,7 @@ class GoalMonitoringVielModel with ChangeNotifier {
   }
 
   deleteGoal(Goal goal) async {
+    _openGoals.remove(goal);
     await _dataService.deleteGoal(goal);
   }
 

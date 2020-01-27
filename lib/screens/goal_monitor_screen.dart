@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/shared/enums.dart';
@@ -19,16 +21,30 @@ class GoalMonitorScreen extends StatefulWidget {
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
+  StreamSubscription<Goal> goalStreamSubscription;
+
   List<Goal> _goals = [];
 
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(Duration.zero, () {
+      goalStreamSubscription =
+          Provider.of<GoalMonitoringVielModel>(context, listen: false)
+              .goalStreamController
+              .stream
+              .listen((goal) {
+        _addItem(goal);
+        print("SOMETHING WAS ADDED TO STREAM");
+      });
+    });
   }
 
   @override
   Future dispose() async {
     super.dispose();
+    goalStreamSubscription.cancel();
   }
 
   _updateGoal(Goal goal) async {
@@ -48,10 +64,17 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     _removeItem(goal);
   }
 
+  _addItem(Goal goal) async {
+    if (_listKey.currentState != null) {
+      _listKey.currentState
+          .insertItem(_goals.length, duration: Duration(milliseconds: 250));
+      // _goals.add(goal);
+    }
+  }
+
   _removeItem(Goal goal) async {
-    // return null;
     var index = _goals.indexOf(goal);
-    Goal removed = _goals.removeAt(index);
+    _goals.removeAt(index);
     _listKey.currentState.removeItem(
         index,
         (context, animation) =>
@@ -265,11 +288,17 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     );
   }
 
+  itemAdded() {
+    print("ITEM ADDED");
+  }
+
   @override
   Widget build(BuildContext context) {
     final goalMonitoringState = Provider.of<GoalMonitoringVielModel>(context);
     // TODO: Reassigning the global key is the only thing that works to assure that the widget gets rebuilt. However, I do not know why and this sucks. So I should definitely find the reason...
-    _listKey = GlobalKey<AnimatedListState>();
+    // _listKey = GlobalKey<AnimatedListState>();
+
+    goalMonitoringState.itemAdded = itemAdded();
     if (goalMonitoringState.openGoals != null) {
       _goals = [];
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));

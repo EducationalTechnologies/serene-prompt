@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/services/local_database_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
@@ -31,11 +29,6 @@ class SereneDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          // DrawerHeader(
-          //   child: Text("Serene"),
-          //   decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-          // ),
-
           ListTile(
             title: Container(
               padding: EdgeInsets.only(top: 20, bottom: 10.0),
