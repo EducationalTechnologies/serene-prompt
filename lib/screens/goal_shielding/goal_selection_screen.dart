@@ -103,7 +103,6 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
   Widget build(BuildContext context) {
     GoalShieldingViewModel vm = Provider.of<GoalShieldingViewModel>(context, listen: false);
 
-    print("Selected Index: $_selectedIndex");
     return Container(
         child: ListView.builder(
       itemCount: vm.openGoals.length,

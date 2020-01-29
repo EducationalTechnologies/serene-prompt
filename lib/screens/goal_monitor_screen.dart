@@ -36,7 +36,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
               .stream
               .listen((goal) {
         _addItem(goal);
-        print("SOMETHING WAS ADDED TO STREAM");
+        print("Goal with id: ${goal.id} was added");
       });
     });
   }
@@ -288,17 +288,9 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     );
   }
 
-  itemAdded() {
-    print("ITEM ADDED");
-  }
-
   @override
   Widget build(BuildContext context) {
     final goalMonitoringState = Provider.of<GoalMonitoringVielModel>(context);
-    // TODO: Reassigning the global key is the only thing that works to assure that the widget gets rebuilt. However, I do not know why and this sucks. So I should definitely find the reason...
-    // _listKey = GlobalKey<AnimatedListState>();
-
-    goalMonitoringState.itemAdded = itemAdded();
     if (goalMonitoringState.openGoals != null) {
       _goals = [];
       goalMonitoringState.openGoals.forEach((g) => _goals.add(g));

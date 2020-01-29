@@ -46,9 +46,6 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
 
   _buildBottomNavigation() {
     var vm = Provider.of<GoalShieldingViewModel>(context);
-
-    print("index is $_index ");
-    print("length is ${_goalShieldingPages.length} ");
     return Container(
       child: Row(
         mainAxisSize: MainAxisSize.max,
