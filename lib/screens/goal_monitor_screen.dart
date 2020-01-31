@@ -21,30 +21,21 @@ class GoalMonitorScreen extends StatefulWidget {
 class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
-  StreamSubscription<Goal> goalStreamSubscription;
-
-  List<Goal> _goals = [];
-
   @override
   void initState() {
     super.initState();
 
     Future.delayed(Duration.zero, () {
-      goalStreamSubscription =
-          Provider.of<GoalMonitoringVielModel>(context, listen: false)
-              .goalStreamController
-              .stream
-              .listen((goal) {
-        _addItem(goal);
-        print("Goal with id: ${goal.id} was added");
-      });
+      var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);
+
+      vm.goalAdded = ((goal) => this._addGoal(goal));
+      vm.goalRemoved = ((goal) => this._deleteGoal(goal));
     });
   }
 
   @override
   Future dispose() async {
     super.dispose();
-    goalStreamSubscription.cancel();
   }
 
   _updateGoal(Goal goal) async {
@@ -53,28 +44,32 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   }
 
   _finishGoal(Goal goal) async {
+    _removeItem(goal);
     await Provider.of<GoalMonitoringVielModel>(context, listen: false)
         .updateGoal(goal);
-    _removeItem(goal);
   }
 
   _deleteGoal(Goal goal) async {
+    _removeItem(goal);
     await Provider.of<GoalMonitoringVielModel>(context, listen: false)
         .deleteGoal(goal);
-    _removeItem(goal);
   }
 
-  _addItem(Goal goal) async {
+  _addGoal(Goal goal) async {
+    var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);
+    print("Goal Length: ${vm.openGoals.length}");
     if (_listKey.currentState != null) {
-      _listKey.currentState
-          .insertItem(_goals.length, duration: Duration(milliseconds: 250));
+      _listKey.currentState.insertItem(vm.openGoals.length,
+          duration: Duration(milliseconds: 250));
       // _goals.add(goal);
     }
   }
 
   _removeItem(Goal goal) async {
-    var index = _goals.indexOf(goal);
-    _goals.removeAt(index);
+    // var index = _goals.indexOf(goal);
+    // _goals.removeAt(index);
+    var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);
+    var index = vm.openGoals.indexOf(goal);
     _listKey.currentState.removeItem(
         index,
         (context, animation) =>
@@ -169,6 +164,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
 
   buildAnimatedListItem(
       BuildContext context, int index, Goal goal, Animation animation) {
+    var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);
     var anim = new Tween(
       begin: new Offset(3.0, 0.0),
       end: new Offset(0.0, 0.0),
@@ -177,7 +173,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed ||
           status == AnimationStatus.dismissed) {
-        if (_goals.length == 0) {
+        if (vm.openGoals.length == 0) {
           setState(() {});
         }
       }
@@ -246,61 +242,19 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     );
   }
 
-  _buildListView(List<Goal> goals) {
-    return ListView.builder(
-      itemCount: _goals.length,
-      itemBuilder: (context, index) {
-        var goal = goals[index];
-        var insetValue = MaterializedPath.getDepth(goal.path);
-        return Container(
-          // padding: EdgeInsets.all(insetValue * 8.0),
-          margin: EdgeInsets.only(left: insetValue * 8.0),
-          key: Key('${goal.hashCode}'),
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Column(
-              children: <Widget>[
-                Row(children: <Widget>[
-                  if (goal.progressIndicator == GoalProgressIndicator.checkbox)
-                    Checkbox(
-                      onChanged: (value) {
-                        goal.progress = value ? 100 : 0;
-                        if (value) {
-                          _finishGoal(goal);
-                        }
-                      },
-                      value: goal.progress == 100,
-                    ),
-                  Expanded(
-                    child: Text(goal.goalText),
-                  ),
-                  buildPopupMenu(context, goal)
-                ]),
-                if (goal.progressIndicator == GoalProgressIndicator.slider)
-                  buildProgressInput(context, index, goal),
-                if (goal.deadline != null) buildDeadline(goal.deadline),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final goalMonitoringState = Provider.of<GoalMonitoringVielModel>(context);
     if (goalMonitoringState.openGoals != null) {
-      _goals = [];
-      goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
+      // _goals = [];
+      // goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
       print("build monitoring");
-      if (_goals.length > 0) {
+      if (goalMonitoringState.openGoals.length > 0) {
         return AnimatedList(
           key: _listKey,
-          initialItemCount: _goals.length,
-          itemBuilder: (context, index, animation) =>
-              buildAnimatedListItem(context, index, _goals[index], animation),
+          initialItemCount: goalMonitoringState.openGoals.length,
+          itemBuilder: (context, index, animation) => buildAnimatedListItem(
+              context, index, goalMonitoringState.openGoals[index], animation),
         );
         // return _buildListView(_goals);
       } else {

@@ -11,41 +11,31 @@ class GoalMonitoringVielModel with ChangeNotifier {
 
   DataService _dataService;
 
-  VoidCallback itemAdded;
+  Function(Goal) goalAdded;
+  Function(Goal) goalRemoved;
 
   StreamController<Goal> goalStreamController = StreamController<Goal>();
   Stream<Goal> goalStream;
 
   GoalMonitoringVielModel(this._dataService) {
-    // _getOpenGoalsAsync();
     _dataService.getOpenGoals().then((goalList) {
-      // _openGoals = goalList;
-
-      // var tree = _pathTreeFromGoals(_openGoals);
-      // sortByTree();
-      for (var g in goalList) {
-        if (!_openGoals.contains(g)) {
-          goalStreamController.add(g);
-          _openGoals.add(g);
-        }
-      }
+      _openGoals = goalList;
       notifyListeners();
     });
   }
 
   void refetchGoals() {
-    // itemAdded();
-
     _dataService.getOpenGoals().then((goalList) {
       // _openGoals = goalList;
       // sortByTree();
       for (var g in goalList) {
         if (!_openGoals.contains(g)) {
-          goalStreamController.add(g);
+          // goalStreamController.add(g);
+          this.goalAdded(g);
           _openGoals.add(g);
         }
       }
-      // notifyListeners();
+      notifyListeners();
     });
   }
 
@@ -74,6 +64,11 @@ class GoalMonitoringVielModel with ChangeNotifier {
   deleteGoal(Goal goal) async {
     _openGoals.remove(goal);
     await _dataService.deleteGoal(goal);
+  }
+
+  completeGoal(Goal goal) async {
+    await _dataService.updateGoal(goal);
+    this.goalRemoved(goal);
   }
 
   updateGoal(Goal goal) async {
