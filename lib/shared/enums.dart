@@ -43,18 +43,20 @@ class Hindrances {
   static const String DISTRACTED = "Ablenkung";
   static const String LISTLESSNESS = "Lustlosigkeit";
   static const String PHYSICAL_CONDITION = "Körperliche Verfassung";
-
 }
 
 class RegistrationCodes {
-  // Password should be at least 6 characters
   static const SUCCESS = "SUCCESS";
   static const WEAK_PASSWORD = "ERROR_WEAK_PASSWORD";
   static const INVALID_CREDENTIAL = "ERROR_INVALID_CREDENTIAL";
   static const EMAIL_ALREADY_IN_USE = "ERROR_EMAIL_ALREADY_IN_USE";
 }
 
-enum ExperimentalGroup { Control, Experiment }
+class ExperimentalGroup {
+  static const Control = "Control";
+  static const ExperimentGoalShieldingPersonalized =
+      "Experiment_GoalShielding_Personalized";
+}
 
 enum AppStartupMode {
   normal,

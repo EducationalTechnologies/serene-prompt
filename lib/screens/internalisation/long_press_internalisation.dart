@@ -22,31 +22,6 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
   int _fullTextLength = 0;
   int _repeatCounter = 0;
 
-  buildShieldingText() {
-    final intention = Provider.of<GoalShieldingViewModel>(context);
-
-    List<TextSpan> texts = [];
-
-    if (intention.selectedShieldingAction == "") {
-      return Text("Bitte wähle zunächst ein Lernhindernis aus");
-    }
-
-    var splitShieldingActions = intention.selectedShieldingAction.split(" ");
-
-    for (var s in splitShieldingActions) {
-      texts.add(getRegularText("$s "));
-    }
-
-    texts[_highlightIndex] = getHighlightedText(texts[_highlightIndex].text);
-
-    _fullTextLength = texts.length;
-
-    return RichText(
-        text: TextSpan(
-            style: DefaultTextStyle.of(context).style,
-            children: <TextSpan>[...texts]));
-  }
-
   buildShieldActionTextPart(String shieldText) {
     return TextSpan(text: "$shieldText ");
   }
@@ -123,16 +98,9 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
           child: Column(
             children: <Widget>[
               UIHelper.verticalSpaceMedium(),
-              // Text(
-              //   "Wiederhole den nächsten Satz mindestens drei mal:",
-              //   style: subHeaderStyle,
-              // ),
-              // UIHelper.verticalSpaceMedium(),
-              // buildShieldingText(),
               UIHelper.verticalSpaceMedium(),
-              // buildRepetitionButton(),
               TextHighlight(
-                  text: intention.selectedShieldingAction,
+                  text: intention.shieldingSentence,
                   wpm: locator.get<SettingsService>().getWordsPerMinute()),
               UIHelper.verticalSpaceMedium(),
               // Text("Debug Stuff Counter: $_longPressCounter")

@@ -30,7 +30,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       var shieldState = Provider.of<GoalShieldingViewModel>(context);
       print("ShieldState");
       _scrambledSentence = [];
-      var shieldSentence = shieldState.selectedShieldingAction.split(" ");
+      var shieldSentence = shieldState.shieldingSentence.split(" ");
       var step = 3;
       var index = 0;
       while (index < shieldSentence.length) {
