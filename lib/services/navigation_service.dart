@@ -1,3 +1,16 @@
-import 'package:serene/shared/route_names.dart';
+import 'package:flutter/material.dart';
 
-class NavigationService {}
+class NavigationService {
+  GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
+
+  bool pop() {
+    return _navigatorKey.currentState.pop();
+  }
+
+  Future<dynamic> navigateTo(String routeName, {dynamic arguments}) {
+    return _navigatorKey.currentState
+        .pushNamed(routeName, arguments: arguments);
+  }
+}

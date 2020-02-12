@@ -1,7 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/services/firebase_service.dart';
+import 'package:serene/services/navigation_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
@@ -23,8 +25,6 @@ class NotificationService {
   static const String PAYLOAD_DAILY_LEARN = "DAILY_LEARNING";
 
   static const int ID_DAILY_REMINDER = 69;
-
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   NotificationService._internal() {
     localNotifications = FlutterLocalNotificationsPlugin();
@@ -78,10 +78,11 @@ class NotificationService {
       debugPrint('notification payload: ' + payload);
 
       if (payload == PAYLOAD_DAILY_LEARN) {
-        await navigatorKey.currentState.pushNamed(
+        await locator<NavigationService>().navigateTo(
             RouteNames.DAILY_LEARNING_QUESTIONS,
             arguments: AssessmentScreenArguments(AssessmentType.preLearning));
-        await navigatorKey.currentState.pushNamed(RouteNames.GOAL_SHIELDING);
+        await locator<NavigationService>().navigateTo(RouteNames.GOAL_SHIELDING,
+            arguments: AssessmentScreenArguments(AssessmentType.preLearning));
       }
     }
   }
