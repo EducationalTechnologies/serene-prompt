@@ -19,7 +19,7 @@ class GoalMonitoringVielModel with ChangeNotifier {
 
   GoalMonitoringVielModel(this._dataService) {
     _dataService.getOpenGoals().then((goalList) {
-      _openGoals = goalList;
+      _openGoals = List<Goal>.from(goalList);
       notifyListeners();
     });
   }
@@ -69,6 +69,7 @@ class GoalMonitoringVielModel with ChangeNotifier {
   completeGoal(Goal goal) async {
     await _dataService.updateGoal(goal);
     this.goalRemoved(goal);
+    _openGoals.remove(goal);
   }
 
   updateGoal(Goal goal) async {

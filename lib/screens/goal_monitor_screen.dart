@@ -28,8 +28,8 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     Future.delayed(Duration.zero, () {
       var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);
 
-      vm.goalAdded = ((goal) => this._addGoal(goal));
-      vm.goalRemoved = ((goal) => this._deleteGoal(goal));
+      vm.goalAdded = ((goal) => this._addGoalToAnimatedList(goal));
+      vm.goalRemoved = ((goal) => this._removeGoalFromAnimatedList(goal));
     });
   }
 
@@ -44,18 +44,18 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   }
 
   _finishGoal(Goal goal) async {
-    _removeItem(goal);
+    // _removeItem(goal);
     await Provider.of<GoalMonitoringVielModel>(context, listen: false)
-        .updateGoal(goal);
+        .completeGoal(goal);
   }
 
   _deleteGoal(Goal goal) async {
-    _removeItem(goal);
+    // _removeItem(goal);
     await Provider.of<GoalMonitoringVielModel>(context, listen: false)
         .deleteGoal(goal);
   }
 
-  _addGoal(Goal goal) async {
+  _addGoalToAnimatedList(Goal goal) async {
     var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);
     print("Goal Length: ${vm.openGoals.length}");
     if (_listKey.currentState != null) {
@@ -65,7 +65,7 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     }
   }
 
-  _removeItem(Goal goal) async {
+  _removeGoalFromAnimatedList(Goal goal) async {
     // var index = _goals.indexOf(goal);
     // _goals.removeAt(index);
     var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);

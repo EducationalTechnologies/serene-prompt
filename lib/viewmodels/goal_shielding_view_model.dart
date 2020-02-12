@@ -3,6 +3,7 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/user_service.dart';
+import 'package:serene/shared/enums.dart';
 
 class GoalShieldingViewModel with ChangeNotifier {
   int id;
@@ -32,9 +33,9 @@ class GoalShieldingViewModel with ChangeNotifier {
     return _openGoals;
   }
 
-  String get selectedShieldingAction => _selectedShieldingAction;
+  String get shieldingSentence => _selectedShieldingAction;
 
-  set selectedShieldingAction(String selectedShieldingAction) {
+  set shieldingSentence(String selectedShieldingAction) {
     _selectedShieldingAction = selectedShieldingAction;
     notifyListeners();
   }
@@ -69,8 +70,11 @@ class GoalShieldingViewModel with ChangeNotifier {
 
   selectHindrance(String hindrance) {
     this.hindrance = hindrance;
-    var hindex = this.hindrances.indexOf(hindrance);
-    this.selectedShieldingAction = shieldsPersonalized[hindex];
+    var hindranceIndex = this.hindrances.indexOf(hindrance);
+    if(this._userService.getUserData().group == ExperimentalGroup.Control) {
+      
+    }
+    this.shieldingSentence = shieldsPersonalized[hindranceIndex];
   }
 
   String get hindrance => _hindrance;

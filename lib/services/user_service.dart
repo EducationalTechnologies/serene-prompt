@@ -11,6 +11,8 @@ class UserService {
   SettingsService _settings;
   String userId = "";
 
+  UserData _userData;
+
   Future<bool> initialize() {
     return Future.delayed(Duration.zero).then((res) => true);
   }
@@ -27,13 +29,14 @@ class UserService {
     await _settings.setSetting(SettingsKeys.email, email);
   }
 
-  int getTreatmentGroup() {
+  int _getTreatmentGroup() {
     var rng = new Random();
-    return rng.nextInt(2);
+    // TODO: This hardcoded value needs to go and the number of groups has to be stored somewhere else, maybe in an Experiment.json
+    return rng.nextInt(1);
   }
 
   Future<String> registerUser(String email, String password) async {
-    var treatmentGroup = getTreatmentGroup();
+    var treatmentGroup = _getTreatmentGroup();
     var userData =
         await FirebaseService().registerUser(email, password, treatmentGroup);
     if (userData != null) {
@@ -50,6 +53,7 @@ class UserService {
     if (userData != null) {
       await saveUsername(userData.userId);
       await saveUserEmail(userData.email);
+      this._userData = userData;
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
@@ -77,5 +81,9 @@ class UserService {
 
   String getUserEmail() {
     return _settings.getSetting(SettingsKeys.email);
+  }
+
+  UserData getUserData() {
+    return this._userData;
   }
 }
