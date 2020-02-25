@@ -41,8 +41,8 @@ class GoalShieldingViewModel with ChangeNotifier {
   }
 
   GoalShieldingViewModel(this._dataService, this._userService) {
-    this._hindrance = hindrances[0];
-    this._selectedShieldingAction = shieldsPersonalized[0];
+    this._hindrance = "";
+    // this._selectedShieldingAction = shieldsPersonalized[0];
 
     _dataService.getOpenGoals().then((goalList) {
       _openGoals = goalList;
@@ -71,9 +71,10 @@ class GoalShieldingViewModel with ChangeNotifier {
   selectHindrance(String hindrance) {
     this.hindrance = hindrance;
     var hindranceIndex = this.hindrances.indexOf(hindrance);
-    if(this._userService.getUserData().group == ExperimentalGroup.Control) {
+    // TODO: Fix this
+    // if(this._userService.getUserData().group == ExperimentalGroup.Control) {
       
-    }
+    // }
     this.shieldingSentence = shieldsPersonalized[hindranceIndex];
   }
 

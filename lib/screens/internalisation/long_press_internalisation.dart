@@ -14,13 +14,6 @@ class LongPressInternalisation extends StatefulWidget {
 }
 
 class _LongPressInternalisationState extends State<LongPressInternalisation> {
-  int _longPressCounter = 0;
-  bool _counterPressed = false;
-  bool _loopActive = false;
-  int _highlightIndex = 0;
-
-  int _fullTextLength = 0;
-  int _repeatCounter = 0;
 
   buildShieldActionTextPart(String shieldText) {
     return TextSpan(text: "$shieldText ");
@@ -36,56 +29,6 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
     return TextSpan(
         text: text,
         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 27));
-  }
-
-  _iterationFinished() {
-    setState(() {
-      _repeatCounter++;
-    });
-  }
-
-  void _increaseCounterWhilePressed() async {
-    final int _textHighlightDelay = 400;
-
-    // make sure that only one loop is active
-    if (_loopActive) return;
-
-    _loopActive = true;
-
-    while (_counterPressed) {
-      // do your thing
-      setState(() {
-        _longPressCounter++;
-        _highlightIndex = _longPressCounter % _fullTextLength;
-      });
-
-      // wait a bit
-      if (_highlightIndex == _fullTextLength - 1) {
-        _iterationFinished();
-        break;
-      }
-      await Future.delayed(Duration(milliseconds: _textHighlightDelay));
-    }
-
-    _loopActive = false;
-  }
-
-  buildRepetitionButton() {
-    return GestureDetector(
-        onLongPressStart: (details) {
-          _counterPressed = true;
-          _increaseCounterWhilePressed();
-        },
-        onLongPressEnd: (details) {
-          _counterPressed = false;
-        },
-        child: SizedBox(
-            width: double.infinity,
-            height: 80,
-            child: RaisedButton(
-              onPressed: () {},
-              child: Text("$_repeatCounter", style: TextStyle(fontSize: 20)),
-            )));
   }
 
   @override
