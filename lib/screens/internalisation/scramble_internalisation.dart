@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 
 class ScrambleText {
@@ -22,12 +23,15 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
 
   List<ScrambleText> _builtSentence = [];
 
+  bool _done = false;
+
   @override
   initState() {
     super.initState();
     // this._sentence = scrambleSentence(_sentence);
     Future.delayed(Duration.zero, () {
-      var shieldState = Provider.of<GoalShieldingViewModel>(context);
+      var shieldState =
+          Provider.of<GoalShieldingViewModel>(context, listen: false);
       print("ShieldState");
       _scrambledSentence = [];
       var shieldSentence = shieldState.shieldingSentence.split(" ");
@@ -44,7 +48,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         var st = ScrambleText(
             isSelected: false, text: sentenceChunk, originalPosition: 0);
         _scrambledSentence.add(st);
-        _builtSentence.add(st);
+        // _builtSentence.add(st);
       }
       setState(() {
         _scrambledSentence = scrambleSentence(_scrambledSentence);
@@ -58,6 +62,11 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         // _builtSentence.add(scramble);
         setState(() {
           scramble.isSelected = !scramble.isSelected;
+          if(scramble.isSelected) {
+            _builtSentence.add(scramble);
+          } else {
+            _builtSentence.remove(scramble);
+          }
         });
       },
       child: Container(
@@ -110,10 +119,25 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
 
   buildSelectStack() {}
 
+  _buildSubmitButton() {
+    return SizedBox(
+        width: double.infinity,
+        height: 60,
+        child: RaisedButton(
+          onPressed: () => {
+            Navigator.pushNamed(
+                context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST)
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
+          child: Text("Abschicken", style: TextStyle(fontSize: 20)),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height / 3,
@@ -132,6 +156,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
                   buildEmptyWord(s.text)
             ],
           ),
+          if (_done) _buildSubmitButton()
         ],
       ),
     );

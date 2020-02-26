@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 
@@ -68,10 +69,13 @@ class _TypingInternalisationScreenState
         width: double.infinity,
         height: 60,
         child: RaisedButton(
-          onPressed: () => {},
+          onPressed: () => {
+            Navigator.pushNamed(
+                context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST)
+          },
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0)),
-          child: Text("Speichern", style: TextStyle(fontSize: 20)),
+          child: Text("Abschicken", style: TextStyle(fontSize: 20)),
         ));
   }
 

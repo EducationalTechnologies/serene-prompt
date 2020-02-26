@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 
@@ -97,4 +98,5 @@ class GoalShieldingViewModel with ChangeNotifier {
         goalsToShield: _selectedGoals.map((g) => g.goalText).toList());
     await this._dataService.saveShielding(shield);
   }
+
 }
