@@ -27,7 +27,7 @@ class _WaitingInternalisationScreenState
 
     controller =
         AnimationController(duration: Duration(seconds: 15), vsync: this);
-    animation = Tween<double>(begin: 0, end: 1).animate(controller);
+    animation = Tween<double>(begin: 0, end: pi / 2).animate(controller);
     animation.addListener(() {
       print("Animation Listener");
       print(animation.value);
@@ -116,7 +116,9 @@ class _WaitingInternalisationScreenState
           UIHelper.verticalSpaceMedium(),
           Center(
               child: CircleProgressBar(
-                  foregroundColor: Colors.green, value: animation.value)),
+                  foregroundColor: Theme.of(context).primaryColor, 
+                  animationDuration: Duration(seconds: 5),
+                  value: animation.value)),
           UIHelper.verticalSpaceMedium(),
           buildTextEntry(),
           UIHelper.verticalSpaceMedium(),
@@ -170,7 +172,7 @@ class CircleProgressBarState extends State<CircleProgressBar>
 
     this.curve = CurvedAnimation(
       parent: this._controller,
-      curve: Curves.easeInOut,
+      curve: Curves.linear,
     );
 
     // Build the initial required tweens.
