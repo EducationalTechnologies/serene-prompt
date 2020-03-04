@@ -61,25 +61,6 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
     } else {
       return Center(child: CircularProgressIndicator());
     }
-    // return Container(
-    //     child: FutureBuilder<List<Goal>>(
-    //   future: goalShieldingState.getGoalsAsync(),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData &&
-    //         snapshot.connectionState == ConnectionState.done) {
-    //       return Column(children: <Widget>[
-    //         UIHelper.verticalSpaceMedium(),
-    //         Text("Ziel auswählen"),
-    //         UIHelper.verticalSpaceMedium(),
-    //         Expanded(
-    //           child: GoalSelectionList(),
-    //         ),
-    //         // this._showText ? buildNewGoalRow() : buildAddGoalButton()
-    //       ]);
-    //     }
-    //     return Center(child: CircularProgressIndicator());
-    //   },
-    // ));
   }
 }
 
@@ -92,7 +73,8 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
   int _selectedIndex;
 
   _onSelected(int index) {
-    var goalShieldingState = Provider.of<GoalShieldingViewModel>(context, listen: false);
+    var goalShieldingState =
+        Provider.of<GoalShieldingViewModel>(context, listen: false);
     goalShieldingState.toggleGoal(goalShieldingState.openGoals[index]);
     setState(() {
       _selectedIndex = index;
@@ -101,7 +83,8 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
 
   @override
   Widget build(BuildContext context) {
-    GoalShieldingViewModel vm = Provider.of<GoalShieldingViewModel>(context, listen: false);
+    GoalShieldingViewModel vm =
+        Provider.of<GoalShieldingViewModel>(context, listen: false);
 
     return Container(
         child: ListView.builder(
@@ -109,9 +92,7 @@ class _GoalSelectionListState extends State<GoalSelectionList> {
       itemBuilder: (context, index) {
         var isSelected = vm.selectedGoals.contains(vm.openGoals[index]);
         return Card(
-          color: isSelected
-              ? Theme.of(context).selectedRowColor
-              : Colors.white,
+          color: isSelected ? Theme.of(context).selectedRowColor : Colors.white,
           child: Container(
               child: ListTile(
             title: Text(vm.openGoals[index].goalText),

@@ -29,12 +29,6 @@ class SettingsService {
     return true;
   }
 
-  // SettingsService._internal() {
-  //   SharedPreferences.getInstance().then((prefs) {
-  //     _prefs = prefs;
-  //   });
-  // }
-
   getWordsPerMinute() {
     return double.parse(_settingsCache[SettingsKeys.wordsPerMinute]);
   }
@@ -45,7 +39,6 @@ class SettingsService {
 
   getSetting(String setting) {
     return _settingsCache[setting];
-    // return await this._databaseService.getSettingsValue(setting);
   }
 
   setSetting(String setting, String value) async {
@@ -59,7 +52,4 @@ class SettingsService {
     await this._databaseService.deleteSetting(setting);
     _settingsCache.remove(setting);
   }
-
-  // static final SettingsService _instance = SettingsService._internal();
-  // factory SettingsService() => _instance;
 }

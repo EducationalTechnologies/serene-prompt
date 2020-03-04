@@ -6,7 +6,6 @@ import 'package:serene/screens/goal_shielding/goal_selection_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_internalisation_screen.dart';
 import 'package:serene/screens/goal_shielding/goal_shielding_selection_screen.dart';
 import 'package:serene/services/data_service.dart';
-import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/add_goal_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/widgets/serene_drawer.dart';

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/services/data_service.dart';
-import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/user_service.dart';
-import 'package:serene/shared/enums.dart';
 
 class GoalShieldingViewModel with ChangeNotifier {
   int id;
@@ -72,10 +70,6 @@ class GoalShieldingViewModel with ChangeNotifier {
   selectHindrance(String hindrance) {
     this.hindrance = hindrance;
     var hindranceIndex = this.hindrances.indexOf(hindrance);
-    // TODO: Fix this
-    // if(this._userService.getUserData().group == ExperimentalGroup.Control) {
-      
-    // }
     this.shieldingSentence = shieldsPersonalized[hindranceIndex];
   }
 

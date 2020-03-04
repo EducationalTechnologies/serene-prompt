@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class Resource {
   String url;
@@ -64,11 +64,11 @@ class ResourceLinksScreen extends StatelessWidget {
         isThreeLine: true,
         onTap: () async {
           // await launch(url);
-          if (await canLaunch(resource.url)) {
-            await launch(resource.url);
-          } else {
-            throw 'Could not launch $resource.url';
-          }
+          // if (await canLaunch(resource.url)) {
+          //   await launch(resource.url);
+          // } else {
+          //   throw 'Could not launch $resource.url';
+          // }
         },
       ),
     );
