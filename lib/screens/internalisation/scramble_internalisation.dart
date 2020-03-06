@@ -10,6 +10,46 @@ class ScrambleText {
   String text;
 
   ScrambleText({this.originalPosition, this.isSelected, this.text});
+
+  static scrambleSentence(List sentence) {
+    var random = new Random();
+    for (var i = sentence.length - 1; i > 0; i--) {
+      var n = random.nextInt(i + 1);
+
+      var temp = sentence[i];
+      sentence[i] = sentence[n];
+      sentence[n] = temp;
+    }
+
+    return sentence;
+  }
+
+  static List<ScrambleText> scrambleTextListFromString(String text, int step) {
+    List<ScrambleText> output = [];
+    var shieldSentence = text.split(" ");
+    var index = 0;
+    while (index < shieldSentence.length) {
+      var sentenceChunk = "";
+      for (var j = 0; j < step; j++) {
+        if ((index + j) < (shieldSentence.length)) {
+          sentenceChunk += shieldSentence[index + j];
+        }
+        // Add whitespace except for the last character to not have trailing whitespace
+        if ((index + j) < shieldSentence.length - 1) {
+          sentenceChunk += " ";
+        }
+      }
+      index += step;
+      var st = ScrambleText(
+          isSelected: false, text: sentenceChunk, originalPosition: 0);
+      output.add(st);
+    }
+    return output;
+  }
+
+  static String stringFromScrambleTextList(List<ScrambleText> list) {
+    return list.map((st) => st.text).toList().join();
+  }
 }
 
 class ScrambleInternalisation extends StatefulWidget {
@@ -20,40 +60,27 @@ class ScrambleInternalisation extends StatefulWidget {
 
 class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   List<ScrambleText> _scrambledSentence = [];
-
+  String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
-
   bool _done = false;
 
   @override
   initState() {
     super.initState();
-    // this._sentence = scrambleSentence(_sentence);
     Future.delayed(Duration.zero, () {
       var shieldState =
           Provider.of<GoalShieldingViewModel>(context, listen: false);
-      print("ShieldState");
-      _scrambledSentence = [];
-      var shieldSentence = shieldState.shieldingSentence.split(" ");
-      var step = 3;
-      var index = 0;
-      while (index < shieldSentence.length) {
-        var sentenceChunk = "";
-        for (var j = 0; j < step; j++) {
-          if ((index + j) < (shieldSentence.length)) {
-            sentenceChunk += shieldSentence[index + j] + " ";
-          }
-        }
-        index += step;
-        var st = ScrambleText(
-            isSelected: false, text: sentenceChunk, originalPosition: 0);
-        _scrambledSentence.add(st);
-        // _builtSentence.add(st);
-      }
+      _correctSentence = shieldState.shieldingSentence;
       setState(() {
-        _scrambledSentence = scrambleSentence(_scrambledSentence);
+        _scrambledSentence = ScrambleText.scrambleSentence(
+            ScrambleText.scrambleTextListFromString(_correctSentence, 3));
       });
     });
+  }
+
+  isDone() {
+    var built = ScrambleText.stringFromScrambleTextList(_builtSentence);
+    return built == _correctSentence;
   }
 
   buildWordBox(ScrambleText scramble) {
@@ -62,8 +89,17 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         // _builtSentence.add(scramble);
         setState(() {
           scramble.isSelected = !scramble.isSelected;
-          if(scramble.isSelected) {
+          if (scramble.isSelected) {
             _builtSentence.add(scramble);
+            if (isDone()) {
+              setState(() {
+                _done = true;
+              });
+            } else {
+              setState(() {
+                _done = false;
+              });
+            }
           } else {
             _builtSentence.remove(scramble);
           }
@@ -72,7 +108,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.yellowAccent[700],
+            color: Theme.of(context).primaryColor,
             boxShadow: [
               BoxShadow(
                   color: Colors.black, offset: Offset(1, 1), blurRadius: 1.0)
@@ -101,20 +137,6 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         padding: EdgeInsets.all(9.0),
       ),
     );
-  }
-
-  scrambleSentence(List sentence) {
-    var random = new Random();
-
-    for (var i = sentence.length - 1; i > 0; i--) {
-      var n = random.nextInt(i + 1);
-
-      var temp = sentence[i];
-      sentence[i] = sentence[n];
-      sentence[n] = temp;
-    }
-
-    return sentence;
   }
 
   buildSelectStack() {}
