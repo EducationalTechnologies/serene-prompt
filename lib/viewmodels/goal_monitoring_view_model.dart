@@ -62,8 +62,9 @@ class GoalMonitoringVielModel with ChangeNotifier {
   }
 
   deleteGoal(Goal goal) async {
-    _openGoals.remove(goal);
     await _dataService.deleteGoal(goal);
+    this.goalRemoved(goal);
+    _openGoals.remove(goal);
   }
 
   completeGoal(Goal goal) async {

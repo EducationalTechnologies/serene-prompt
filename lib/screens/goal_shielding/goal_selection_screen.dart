@@ -38,7 +38,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
             UIHelper.verticalSpaceMedium(),
             Text(
               "Wähle die Lernziele aus, an denen du heute arbeiten möchtest",
-              style: Theme.of(context).textTheme.subhead,
+              style: Theme.of(context).textTheme.subtitle1,
             ),
             UIHelper.verticalSpaceMedium(),
             Expanded(
@@ -52,7 +52,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
           child: Center(
             child: Text(
               "Du hast derzeit keine offenen Ziele",
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline4,
               textAlign: TextAlign.center,
             ),
           ),

@@ -14,7 +14,7 @@ class TagModel {
   }
 
   TagModel.fromDocument(DocumentSnapshot map) {
-    id = map.documentID;
+    id = map.id;
     name = map["name"];
   }
 }

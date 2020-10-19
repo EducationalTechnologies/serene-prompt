@@ -9,7 +9,7 @@ class GoalShieldingPleaScreen extends StatelessWidget {
         body: Center(
       child: Text(
         "Versuche, den auf der folgenden Seite erscheinenden Satz zu verinnerlichen wenn du beim Lernen auf dein Hindernis stößt",
-        style: Theme.of(context).textTheme.display4,
+        style: Theme.of(context).textTheme.headline1,
       ),
     ));
   }

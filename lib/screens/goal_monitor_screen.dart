@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/shared/enums.dart';
@@ -44,13 +43,11 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
   }
 
   _finishGoal(Goal goal) async {
-    // _removeItem(goal);
     await Provider.of<GoalMonitoringVielModel>(context, listen: false)
         .completeGoal(goal);
   }
 
   _deleteGoal(Goal goal) async {
-    // _removeItem(goal);
     await Provider.of<GoalMonitoringVielModel>(context, listen: false)
         .deleteGoal(goal);
   }
@@ -61,13 +58,10 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     if (_listKey.currentState != null) {
       _listKey.currentState.insertItem(vm.openGoals.length,
           duration: Duration(milliseconds: 250));
-      // _goals.add(goal);
     }
   }
 
   _removeGoalFromAnimatedList(Goal goal) async {
-    // var index = _goals.indexOf(goal);
-    // _goals.removeAt(index);
     var vm = Provider.of<GoalMonitoringVielModel>(context, listen: false);
     var index = vm.openGoals.indexOf(goal);
     _listKey.currentState.removeItem(
@@ -184,7 +178,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     return SlideTransition(
       position: anim,
       child: Container(
-        // padding: EdgeInsets.all(insetValue * 8.0),
         margin: EdgeInsets.only(left: insetValue * 8.0),
         key: Key('${goal.hashCode}'),
         child: Card(
@@ -223,7 +216,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
                     if (goal.deadline != null) buildDeadline(goal.deadline),
                   ],
                 ),
-                // UIHelper.verticalSpaceSmall()
               ],
             ),
           ),
@@ -232,22 +224,10 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
     );
   }
 
-  _buildAnimatedListView(BuildContext context, List<Goal> goals) {
-    var l = goals.length;
-    return AnimatedList(
-      key: _listKey,
-      initialItemCount: l,
-      itemBuilder: (context, index, animation) =>
-          buildAnimatedListItem(context, index, goals[index], animation),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final goalMonitoringState = Provider.of<GoalMonitoringVielModel>(context);
     if (goalMonitoringState.openGoals != null) {
-      // _goals = [];
-      // goalMonitoringState.openGoals.forEach((g) => _goals.add(g));
       print("build monitoring");
       if (goalMonitoringState.openGoals.length > 0) {
         return AnimatedList(
@@ -256,7 +236,6 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
           itemBuilder: (context, index, animation) => buildAnimatedListItem(
               context, index, goalMonitoringState.openGoals[index], animation),
         );
-        // return _buildListView(_goals);
       } else {
         return Container(
           decoration: BoxDecoration(
@@ -270,15 +249,13 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
               alignment: Alignment.bottomCenter,
               child: Text(
                 "Du hast derzeit keine offenen Ziele",
-                style: Theme.of(context).textTheme.display1,
+                style: Theme.of(context).textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
             ),
           ),
         );
       }
-
-      // return Center(child: CircularProgressIndicator());
     } else {
       return Center(child: CircularProgressIndicator());
     }

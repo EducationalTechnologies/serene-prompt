@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/startup_screen.dart';
 import 'package:serene/services/navigation_service.dart';
-import 'package:serene/shared/router.dart';
+import 'package:serene/shared/app_router.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   setupLocator();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   buildMaterialApp() {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           ),
           iconTheme: IconThemeData(color: Colors.black)),
-      onGenerateRoute: Router.generateRoute,
+      onGenerateRoute: AppRouter.generateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
       home: StartupScreen(),
       // initialRoute: initialRoute,

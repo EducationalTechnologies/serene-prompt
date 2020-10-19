@@ -33,16 +33,6 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
     _index = 1;
   }
 
-  _buildBackgroundImage() {
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage("assets/illustrations/undraw_dream_world_cin1.png"),
-        fit: BoxFit.scaleDown,
-      )),
-    );
-  }
-
   _buildBottomNavigation() {
     var vm = Provider.of<GoalShieldingViewModel>(context);
     return Container(
@@ -106,7 +96,6 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
       return null;
     }
     return FloatingActionButton(
-      // backgroundColor: Theme.of(context).accentColor,
       backgroundColor: Colors.blue[400],
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -117,7 +106,6 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
             builder: (context) {
               return Container(
                 color: Colors.green,
-                // child: AddGoalScreen(),
                 child: ChangeNotifierProvider(
                   create: (_) =>
                       AddGoalViewModel(dataService: locator.get<DataService>()),
@@ -125,7 +113,8 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
                 ),
               );
             });
-        Provider.of<GoalShieldingViewModel>(context, listen: false).refetchGoals();
+        Provider.of<GoalShieldingViewModel>(context, listen: false)
+            .refetchGoals();
       },
     );
   }
@@ -143,8 +132,8 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          textTheme:
-              TextTheme(title: TextStyle(color: Colors.black, fontSize: 22)),
+          textTheme: TextTheme(
+              headline6: TextStyle(color: Colors.black, fontSize: 22)),
           centerTitle: true,
 
           // Here we take the value from the MyHomePage object that was created by
@@ -176,29 +165,6 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
               ),
             ),
           ],
-        )
-        // body: Container(
-        //   decoration: BoxDecoration(
-        //       image: DecorationImage(
-        //     image: AssetImage("assets/illustrations/undraw_dream_world_cin1.png"),
-        //     fit: BoxFit.scaleDown,
-        //   )),
-        //   margin: EdgeInsets.all(10),
-        //   child: Column(
-        //     children: [
-        //       Flexible(
-        //         child: PageView.builder(
-        //           controller: _controller,
-        //           itemCount: _goalShieldingPages.length,
-        //           itemBuilder: (context, index) {
-        //             return _goalShieldingPages[index];
-        //           },
-        //         ),
-        //       ),
-        //       _buildBottomNavigation()
-        //     ],
-        //   ),
-        // ),
-        );
+        ));
   }
 }

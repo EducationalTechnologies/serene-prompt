@@ -51,8 +51,6 @@ class LoginViewModel extends BaseViewModel {
   }
 
   validateEmail(String value) {
-    // TODO: Replace once the package loads
-    // return value.contains("@");
     return EmailValidator.validate(value);
   }
 

@@ -64,7 +64,8 @@ class _TimerScreenState extends State<TimerScreen>
                           Align(
                               alignment: FractionalOffset.center,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   Text(
@@ -84,11 +85,11 @@ class _TimerScreenState extends State<TimerScreen>
                                     },
                                     child: AnimatedBuilder(
                                         animation: controller,
-                                        builder:
-                                            (BuildContext context, Widget child) {
+                                        builder: (BuildContext context,
+                                            Widget child) {
                                           return Text(timerString,
-                                              style:
-                                                  themeData.textTheme.display4);
+                                              style: themeData
+                                                  .textTheme.headline1);
                                         }),
                                   ),
                                   InkWell(
@@ -99,7 +100,7 @@ class _TimerScreenState extends State<TimerScreen>
                                     },
                                     child: Text(
                                       "Zurücksetzen",
-                                      style: themeData.textTheme.subhead,
+                                      style: themeData.textTheme.subtitle1,
                                     ),
                                   ),
                                 ],
@@ -122,7 +123,7 @@ class _TimerScreenState extends State<TimerScreen>
                       },
                       child: Text(
                         "Löschen",
-                        style: themeData.textTheme.subhead,
+                        style: themeData.textTheme.subtitle1,
                       ),
                     ),
                     FloatingActionButton(

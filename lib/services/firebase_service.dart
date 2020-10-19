@@ -13,17 +13,11 @@ class FirebaseService {
 
   String lastError = "";
 
-  final Firestore _databaseReference = Firestore.instance;
+  final FirebaseFirestore _databaseReference = FirebaseFirestore.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   FirebaseService._internal() {
-    Firestore.instance
-        .settings(
-      persistenceEnabled: true,
-    )
-        .then((val) {
-      print("Set Firebase Instance Settings");
-    });
+    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
   }
 
   static const String COLLECTION_GOALS = "goals";
@@ -37,21 +31,21 @@ class FirebaseService {
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(email)
+        .doc(email)
         .collection(COLLECTION_GOALS_OPEN)
-        .getDocuments();
+        .get();
 
-    return goals.documents;
+    return goals.docs;
   }
 
   /// Adds a goal to the database and returns its id
   Future<String> createGoal(Goal goal, String email) async {
     return await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(email)
+        .doc(email)
         .collection(COLLECTION_GOALS_OPEN)
-        .document(goal.id)
-        .setData(goal.toMap())
+        .doc(goal.id)
+        .set(goal.toMap())
         .then((val) {
       return null;
     }).catchError((error) {
@@ -64,11 +58,11 @@ class FirebaseService {
     try {
       var goals = await _databaseReference
           .collection(COLLECTION_GOALS)
-          .document(email)
+          .doc(email)
           .collection(COLLECTION_GOALS_OPEN)
-          .getDocuments();
+          .get();
 
-      return goals.documents;
+      return goals.docs;
     } on PlatformException catch (e) {
       print("Error trying to retrieve goals: $e");
       lastError = e.code;
@@ -99,10 +93,10 @@ class FirebaseService {
   updateGoal(Goal goal, String email) async {
     await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(email)
+        .doc(email)
         .collection(COLLECTION_GOALS_OPEN)
-        .document(goal.id)
-        .updateData(goal.toMap());
+        .doc(goal.id)
+        .update(goal.toMap());
   }
 
   /// Deletes a goal and at the same time adds it to the list of deleted goals
@@ -110,15 +104,15 @@ class FirebaseService {
     goal.completionDate = DateTime.now();
     await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(email)
+        .doc(email)
         .collection(COLLECTION_GOALS_DELETED)
-        .document(goal.id)
-        .setData(goal.toMap());
+        .doc(goal.id)
+        .set(goal.toMap());
     await _databaseReference
         .collection(COLLECTION_GOALS)
-        .document(email)
+        .doc(email)
         .collection(COLLECTION_GOALS_OPEN)
-        .document(goal.id)
+        .doc(goal.id)
         .delete()
         .catchError((e) {
       print(e);
@@ -128,7 +122,7 @@ class FirebaseService {
   Future<bool> isNameAvailable(String userId) async {
     try {
       var availableMethods =
-          await _firebaseAuth.fetchSignInMethodsForEmail(email: userId);
+          await _firebaseAuth.fetchSignInMethodsForEmail(userId);
       return (availableMethods.length == 0);
     } on PlatformException catch (e) {
       print("Error trying to get the email availabiltiy: $e");
@@ -159,15 +153,8 @@ class FirebaseService {
   insertUserData(UserData userData) async {
     var resultDocuments = await _databaseReference
         .collection(COLLECTION_USERS)
-        .document(userData.email)
-        .setData(userData.toMap());
-
-    await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .document(userData.email)
-        .collection(COLLECTION_GOALS_OPEN)
-        .document("1")
-        .setData({});
+        .doc(userData.email)
+        .set(userData.toMap());
 
     return resultDocuments;
   }
@@ -176,9 +163,9 @@ class FirebaseService {
     var resultDocuments = await _databaseReference
         .collection(COLLECTION_USERS)
         .where("email", isEqualTo: email)
-        .getDocuments();
+        .get();
 
-    return UserData.fromJson(resultDocuments.documents[0].data);
+    return UserData.fromJson(resultDocuments.docs[0].data());
   }
 
   Future<UserData> signInUser(String userId, String password) async {
@@ -204,21 +191,21 @@ class FirebaseService {
   createTag(TagModel tag, String email) async {
     var tagDoc = await _databaseReference
         .collection(COLLECTION_USERS)
-        .document(email)
+        .doc(email)
         .collection("tags")
         .add(tag.toMap());
 
-    return tagDoc.documentID;
+    return tagDoc.id;
   }
 
   getTags(String email) async {
     var tags = await _databaseReference
         .collection(COLLECTION_USERS)
-        .document(email)
+        .doc(email)
         .collection(COLLECTION_TAGS)
-        .getDocuments();
+        .get();
 
-    List<TagModel> mappedTags = tags.documents.map((t) {
+    List<TagModel> mappedTags = tags.docs.map((t) {
       return TagModel.fromDocument(t);
     }).toList();
     return mappedTags;
@@ -227,33 +214,33 @@ class FirebaseService {
   updateTag(TagModel tag, String email) async {
     await _databaseReference
         .collection(COLLECTION_USERS)
-        .document(email)
+        .doc(email)
         .collection("tags")
-        .document(tag.id)
-        .setData(tag.toMap());
+        .doc(tag.id)
+        .set(tag.toMap());
   }
 
   test() async {
     await _databaseReference
         .collection(COLLECTION_USERS)
-        .document("daniel")
-        .setData({"hans": "cool"});
+        .doc("daniel")
+        .set({"hans": "cool"});
   }
 
   saveFcmToken(String userId, String token) async {
     var tokens = _databaseReference
         .collection(COLLECTION_USERS)
-        .document(userId)
+        .doc(userId)
         .collection('tokens')
-        .document(token);
+        .doc(token);
 
-    await tokens.setData({'token': token});
+    await tokens.set({'token': token});
   }
 
   saveAssessment(AssessmentModel assessment, String email) async {
     await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
-        .document(email)
+        .doc(email)
         .collection(assessment.assessmentType)
         .add(assessment.toMap());
   }
@@ -263,14 +250,14 @@ class FirebaseService {
     try {
       var doc = await _databaseReference
           .collection(COLLECTION_ASSESSMENTS)
-          .document(email)
+          .doc(email)
           .collection(assessmentType)
           .orderBy("submissionDate", descending: true)
           .limit(1)
-          .getDocuments();
+          .get();
 
-      if (doc.documents.length == 0) return null;
-      return AssessmentModel.fromDocument(doc.documents[0]);
+      if (doc.docs.length == 0) return null;
+      return AssessmentModel.fromDocument(doc.docs[0]);
     } catch (e) {
       print("Error trying to get the last submitted assessment: $e");
     }
@@ -281,10 +268,10 @@ class FirebaseService {
     try {
       await _databaseReference
           .collection(COLLECTION_SHIELDS)
-          .document(email)
+          .doc(email)
           .collection(COLLECTION_SHIELDS)
-          .document(key)
-          .setData(shield.toMap());
+          .doc(key)
+          .set(shield.toMap());
     } catch (e) {
       print("Error trying to save the goal shielding: $e");
       return null;
@@ -294,13 +281,13 @@ class FirebaseService {
   Future<GoalShield> getLastSubmittedGoalShield(String email) async {
     var doc = await _databaseReference
         .collection(COLLECTION_SHIELDS)
-        .document(email)
+        .doc(email)
         .collection(COLLECTION_SHIELDS)
         .orderBy("submissionDate", descending: true)
         .limit(1)
-        .getDocuments();
+        .get();
 
-    if (doc.documents.length == 0) return null;
-    return GoalShield.fromDocument(doc.documents[0]);
+    if (doc.docs.length == 0) return null;
+    return GoalShield.fromDocument(doc.docs[0]);
   }
 }

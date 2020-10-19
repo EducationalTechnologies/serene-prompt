@@ -192,7 +192,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                           InputDecoration(labelText: "Deadline hinzufügen"),
                       textAlign: TextAlign.left,
                       enabled: false,
-                      style: Theme.of(context).textTheme.body1,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
               ],
@@ -421,8 +421,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         ],
       ),
       body: Container(
-        // padding: EdgeInsets.all(10),
-        // margin: EdgeInsets.only(left: 10.0, right: 10.0),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[

@@ -87,7 +87,7 @@ class _EditTagsScreenState extends State<EditTagsScreen> {
               child: Column(
                 children: <Widget>[
                   Text("Neuen Tag anlegen",
-                      style: Theme.of(context).textTheme.headline),
+                      style: Theme.of(context).textTheme.headline5),
                   UIHelper.verticalSpaceLarge(),
                   TextFormField(
                     controller: _newTagController,

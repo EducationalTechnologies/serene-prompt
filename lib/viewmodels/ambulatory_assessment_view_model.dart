@@ -14,7 +14,7 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   List<AssessmentItemModel> _currentAssessment = [];
   get currentAssessment => _currentAssessment;
   String title;
-  String preText = "Pre Text";
+  String preText = "";
   Map<String, String> results = {};
 
   AmbulatoryAssessmentViewModel(

@@ -17,14 +17,15 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
             value: value,
             child: Text(
               value,
-              style: Theme.of(context).textTheme.body1,
+              style: Theme.of(context).textTheme.bodyText2,
             ));
       }).toList(),
     );
   }
 
   _onSelected(BuildContext context, String hindrance) {
-    Provider.of<GoalShieldingViewModel>(context, listen: false).selectHindrance(hindrance);
+    Provider.of<GoalShieldingViewModel>(context, listen: false)
+        .selectHindrance(hindrance);
   }
 
   _buildHindranceItem(BuildContext context, IconData icon, String hindrance,
@@ -81,7 +82,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
           UIHelper.verticalSpaceSmall(),
           Text("Was könnte dich vom Erreichen deiner Ziele abhalten?",
               textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.subhead),
+              style: Theme.of(context).textTheme.subtitle1),
           UIHelper.verticalSpaceSmall(),
           // buildObstacleDropdown(context),
           Expanded(

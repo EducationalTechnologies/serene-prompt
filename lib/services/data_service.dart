@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:serene/locator.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
@@ -58,6 +58,44 @@ class DataService {
       var parentPath = getGoalById(goal.parentId).path;
       goal.path = MaterializedPath.addToPath(parentPath, goal.path);
     }
+
+    // TODO: THIS IS FOR TESTING CURRENTLY
+    postToServer(goal);
+  }
+
+  postToServer(Goal goal) async {
+    print("Posting Goal to Server");
+
+    var body = json.encode({
+      "goal": goal.goalText,
+      "start": goal.deadline?.toIso8601String(),
+      "end": goal.deadline?.toIso8601String()
+    });
+
+    HttpClient client = new HttpClient();
+    client.badCertificateCallback =
+        ((X509Certificate cert, String host, int port) => true);
+
+    var url = "https://10.0.2.2:5001/api/LearningSession";
+
+    try {
+      var request = await client.postUrl(Uri.parse(url));
+      request.headers.set("content-type", "application/json");
+      request.add(utf8.encode(body));
+
+      var response = await request.close();
+      // var response =
+      //     await client.post("https://10.0.2.2:5001/api/LearningSession",
+      //         headers: {
+      //           HttpHeaders.contentTypeHeader: "application/json",
+      //         },
+      //         body: body);
+      var reply = await response.transform(utf8.decoder).join();
+      print(reply);
+    } catch (e) {
+      print("error in POST");
+      print(e);
+    }
   }
 
   getGoals() async {
@@ -66,10 +104,9 @@ class DataService {
   }
 
   Future<List<Goal>> getOpenGoals() async {
-    //_openGoals = await DBProvider.db.getOpenGoals();
     if (_openGoalsCache.length == 0) {
-      _openGoalsCache =
-          await _databaseService.retrieveOpenGoals(_userService.getUserEmail());
+      var mail = _userService.getUserEmail();
+      _openGoalsCache = await _databaseService.retrieveOpenGoals(mail);
     }
     return _openGoalsCache;
   }

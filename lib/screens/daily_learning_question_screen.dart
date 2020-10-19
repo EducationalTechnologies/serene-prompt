@@ -35,7 +35,7 @@ class DailyLearningQuestionScreen extends StatelessWidget {
         children: <Widget>[
           Text(
             "Has du vor, heute zu Lernen?",
-            style: Theme.of(context).textTheme.display1,
+            style: Theme.of(context).textTheme.headline4,
           ),
           UIHelper.verticalSpaceMedium(),
           Row(
@@ -66,7 +66,7 @@ class DailyLearningQuestionScreen extends StatelessWidget {
           if (!vm.willLearnToday)
             Text(
               "Warum?",
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline4,
             ),
           if (!vm.willLearnToday) _buildReasonSelection(context)
         ],

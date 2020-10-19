@@ -33,7 +33,7 @@ import 'package:provider/provider.dart';
 import 'package:serene/viewmodels/settings_view_model.dart';
 import 'package:serene/viewmodels/timer_view_model.dart';
 
-class Router {
+class AppRouter {
   static getRoutes() {
     // return {
     //   RouteNames.ADD_GOAL: (context) => ChangeNotifierProvider<GoalState>(
