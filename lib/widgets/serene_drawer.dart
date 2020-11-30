@@ -110,10 +110,9 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
               title: Text("Test"),
               onTap: () async {
-                await Navigator.pushNamed(
-                    context, RouteNames.AMBULATORY_ASSESSMENT,
-                    arguments:
-                        AssessmentScreenArguments(AssessmentType.dailyQuestion));
+                await Navigator.pushNamed(context, RouteNames.GS_HIGHLIGHT,
+                    arguments: AssessmentScreenArguments(
+                        AssessmentType.dailyQuestion));
               }),
           ListTile(
               title: Text("Habit UI"),
@@ -122,8 +121,7 @@ class SereneDrawer extends StatelessWidget {
                 // var s = locator.get<LocalDatabaseService>();
                 // s.deleteSetting(SettingsKeys.email);
                 // s.deleteSetting(SettingsKeys.userId);
-                await Navigator.pushNamed(
-                    context, RouteNames.HABIT_CREATE);
+                await Navigator.pushNamed(context, RouteNames.HABIT_CREATE);
               }),
           // VersionInfo()
         ],

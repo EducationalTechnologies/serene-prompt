@@ -180,12 +180,6 @@ class AppRouter {
                   child: DailyLearningQuestionScreen(),
                 ));
 
-      case RouteNames.HABIT_CREATE:
-        return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<HabitCreationViewModel>(
-                create: (_) => HabitCreationViewModel(),
-                child: HabitCreationScreen()));
-
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(

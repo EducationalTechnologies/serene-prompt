@@ -15,8 +15,6 @@ class GoalShieldingInternalisationScreen extends StatefulWidget {
 class _GoalShieldingInternalisationScreenState
     extends State<GoalShieldingInternalisationScreen>
     with TickerProviderStateMixin {
-
-
   @override
   void initState() {
     super.initState();
@@ -26,7 +24,7 @@ class _GoalShieldingInternalisationScreenState
   Widget build(BuildContext context) {
     var rng = Random();
     // var next = rng.nextInt(3);
-    var next = 2;
+    var next = 3;
     Widget internalisation = LongPressInternalisation();
     if (next == 0) {
       internalisation = LongPressInternalisation();
