@@ -37,7 +37,7 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
           child: Column(children: <Widget>[
             UIHelper.verticalSpaceMedium(),
             Text(
-              "Wähle die Lernziele aus, an denen du heute arbeiten möchtest",
+              "Wähle die Ziele aus, an denen du heute arbeiten möchtest",
               style: Theme.of(context).textTheme.subtitle1,
             ),
             UIHelper.verticalSpaceMedium(),
@@ -50,12 +50,22 @@ class _GoalSelectionScreenState extends State<GoalSelectionScreen> {
       } else {
         return Container(
           child: Center(
-            child: Text(
-              "Du hast derzeit keine offenen Ziele",
-              style: Theme.of(context).textTheme.headline4,
-              textAlign: TextAlign.center,
-            ),
-          ),
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Du hast noch keine Lernpläne erstellt",
+                style: Theme.of(context).textTheme.headline4,
+                textAlign: TextAlign.center,
+              ),
+              UIHelper.verticalSpaceLarge(),
+              Text(
+                "Lege ein an, indem du unten auf das + drückst",
+                style: Theme.of(context).textTheme.headline4,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )),
         );
       }
     } else {

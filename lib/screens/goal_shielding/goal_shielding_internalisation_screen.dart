@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:serene/screens/internalisation/highlight_internalisation_screen.dart';
 import 'package:serene/screens/internalisation/long_press_internalisation.dart';
 import 'package:serene/screens/internalisation/scramble_internalisation.dart';
 import 'package:serene/screens/internalisation/typing_internalisation_screen.dart';
@@ -24,16 +25,20 @@ class _GoalShieldingInternalisationScreenState
   Widget build(BuildContext context) {
     var rng = Random();
     // var next = rng.nextInt(3);
-    var next = 3;
+    var next = 5;
     Widget internalisation = LongPressInternalisation();
     if (next == 0) {
       internalisation = LongPressInternalisation();
     } else if (next == 1) {
       internalisation = TypingInternalisationScreen();
     } else if (next == 2) {
-      internalisation = ScrambleInternalisation();
+      internalisation = ScrambleInternalisation(false);
     } else if (next == 3) {
       internalisation = WaitingInternalisationScreen();
+    } else if (next == 4) {
+      internalisation = HighlightInternalisationScreen();
+    } else if (next == 5) {
+      internalisation = ScrambleInternalisation(true);
     }
     return Scaffold(backgroundColor: Colors.transparent, body: internalisation);
   }

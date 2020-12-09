@@ -154,6 +154,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
                   Flexible(
                     child: PageView.builder(
                       controller: _controller,
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: _goalShieldingPages.length,
                       itemBuilder: (context, index) {
                         return _goalShieldingPages[index];

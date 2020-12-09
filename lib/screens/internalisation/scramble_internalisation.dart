@@ -2,7 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
+import 'package:reorderables/reorderables.dart';
 
 class ScrambleText {
   int originalPosition;
@@ -53,6 +55,10 @@ class ScrambleText {
 }
 
 class ScrambleInternalisation extends StatefulWidget {
+  final bool showText;
+
+  const ScrambleInternalisation(this.showText);
+
   @override
   _ScrambleInternalisationState createState() =>
       _ScrambleInternalisationState();
@@ -63,6 +69,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
   bool _done = false;
+  bool _showIncorrectWarning = false;
 
   @override
   initState() {
@@ -73,14 +80,21 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       _correctSentence = shieldState.shieldingSentence;
       setState(() {
         _scrambledSentence = ScrambleText.scrambleSentence(
-            ScrambleText.scrambleTextListFromString(_correctSentence, 3));
+            ScrambleText.scrambleTextListFromString(_correctSentence, 2));
       });
     });
   }
 
-  isDone() {
+  _isDone() {
     var built = ScrambleText.stringFromScrambleTextList(_builtSentence);
     return built == _correctSentence;
+  }
+
+  _allChunksUsed() {
+    var selectedScramble = _scrambledSentence
+        .firstWhere((element) => !element.isSelected, orElse: () => null);
+
+    return selectedScramble != null;
   }
 
   buildWordBox(ScrambleText scramble) {
@@ -91,13 +105,11 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           scramble.isSelected = !scramble.isSelected;
           if (scramble.isSelected) {
             _builtSentence.add(scramble);
-            if (isDone()) {
+            print(scramble.isSelected);
+            if (_isDone()) {
               setState(() {
-                _done = true;
-              });
-            } else {
-              setState(() {
-                _done = false;
+                _done = _isDone();
+                _showIncorrectWarning = _allChunksUsed();
               });
             }
           } else {
@@ -111,10 +123,10 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
             color: Theme.of(context).primaryColor,
             boxShadow: [
               BoxShadow(
-                  color: Colors.black, offset: Offset(1, 1), blurRadius: 1.0)
+                  color: Colors.black, offset: Offset(2, 2), blurRadius: 4.0)
             ]),
         child: Text(scramble.text),
-        margin: EdgeInsets.all(8.0),
+        margin: EdgeInsets.all(4.0),
         padding: EdgeInsets.all(8.0),
       ),
     );
@@ -133,7 +145,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           color: Colors.grey[600],
         ),
         child: Opacity(opacity: 0, child: Text(text)),
-        margin: EdgeInsets.all(8.0),
+        margin: EdgeInsets.all(4.0),
         padding: EdgeInsets.all(9.0),
       ),
     );
@@ -156,19 +168,54 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         ));
   }
 
+  _buildCorrectText(String text) {
+    return Text(
+      text,
+      style: TextStyle(fontSize: 20),
+    );
+  }
+
+  thing(String text) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).primaryColor,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black, offset: Offset(1, 1), blurRadius: 1.0)
+          ]),
+      child: Text(text),
+      margin: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0),
+    );
+  }
+
+  _buildDragDrop() {
+    return Wrap(children: <Widget>[
+      Draggable(child: thing("Eins"), feedback: thing("Eins")),
+      Draggable(child: thing("Zwei"), feedback: thing("Zwei")),
+      Draggable(child: thing("Drei"), feedback: thing("Drei"))
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView(
         children: <Widget>[
+          UIHelper.verticalSpaceMedium(),
+          if (this.widget.showText) _buildCorrectText(_correctSentence),
+          UIHelper.verticalSpaceMedium(),
           Container(
             height: MediaQuery.of(context).size.height / 3,
             child: Wrap(
               children: <Widget>[
-                for (var s in _builtSentence) if (s.isSelected) buildWordBox(s),
+                for (var s in _builtSentence)
+                  if (s.isSelected) buildWordBox(s),
               ],
             ),
           ),
+          // _buildDragDrop(),
           Wrap(
             children: <Widget>[
               for (var s in _scrambledSentence)

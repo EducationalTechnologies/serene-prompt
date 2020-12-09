@@ -114,15 +114,6 @@ class SereneDrawer extends StatelessWidget {
                     arguments: AssessmentScreenArguments(
                         AssessmentType.dailyQuestion));
               }),
-          ListTile(
-              title: Text("Habit UI"),
-              onTap: () async {
-                // // Navigator.pushNamed(context, RouteNames.LOG_IN);
-                // var s = locator.get<LocalDatabaseService>();
-                // s.deleteSetting(SettingsKeys.email);
-                // s.deleteSetting(SettingsKeys.userId);
-                await Navigator.pushNamed(context, RouteNames.HABIT_CREATE);
-              }),
           // VersionInfo()
         ],
       ),
