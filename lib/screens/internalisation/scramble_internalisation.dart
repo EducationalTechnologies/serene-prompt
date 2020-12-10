@@ -69,7 +69,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
   bool _done = false;
-  bool _showIncorrectWarning = false;
+  // bool _allChunksUsed = false;
 
   @override
   initState() {
@@ -94,7 +94,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     var selectedScramble = _scrambledSentence
         .firstWhere((element) => !element.isSelected, orElse: () => null);
 
-    return selectedScramble != null;
+    return selectedScramble == null;
   }
 
   buildWordBox(ScrambleText scramble) {
@@ -106,12 +106,9 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           if (scramble.isSelected) {
             _builtSentence.add(scramble);
             print(scramble.isSelected);
-            if (_isDone()) {
-              setState(() {
-                _done = _isDone();
-                _showIncorrectWarning = _allChunksUsed();
-              });
-            }
+            setState(() {
+              _done = _isDone();
+            });
           } else {
             _builtSentence.remove(scramble);
           }
@@ -198,6 +195,19 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     ]);
   }
 
+  _buildIncorrectWarning() {
+    return Container(
+      color: Colors.red[200],
+      child: Center(
+          child: (Text(
+        "Der gebaute Satz ist leider nicht richtig",
+        style: TextStyle(fontSize: 20),
+      ))),
+      margin: EdgeInsets.fromLTRB(2, 10, 2, 20),
+      padding: EdgeInsets.fromLTRB(2, 10, 2, 10),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -216,6 +226,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
             ),
           ),
           // _buildDragDrop(),
+          if (_allChunksUsed() && !_isDone()) _buildIncorrectWarning(),
           Wrap(
             children: <Widget>[
               for (var s in _scrambledSentence)

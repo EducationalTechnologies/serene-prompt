@@ -119,7 +119,7 @@ class NotificationService {
   }
 
   scheduleDailyNotification() async {
-    var time = new Time(13, 49, 0);
+    var time = new Time(7, 0, 0);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_ASSESSMENT,
         CHANNEL_NAME_ASSESSMENT,
