@@ -44,7 +44,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: _index > 1,
+            visible: _index > 1 && _index < _goalShieldingPages.length - 1,
             child: FlatButton(
               child: Row(
                 children: <Widget>[
