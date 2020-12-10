@@ -17,23 +17,26 @@ class StartupViewModel extends BaseViewModel {
     });
   }
 
+  /*
+   * Navigate with replacement to prevent back navigation to the splash screen
+   */
   void startApp(AppStartupMode appStartupMode) {
     var nav = locator<NavigationService>();
     switch (appStartupMode) {
       case AppStartupMode.normal:
-        nav.navigateTo(RouteNames.MAIN);
+        nav.navigateWithReplacement(RouteNames.MAIN);
         break;
       case AppStartupMode.signin:
-        nav.navigateTo(RouteNames.LOG_IN);
+        nav.navigateWithReplacement(RouteNames.LOG_IN);
         break;
       case AppStartupMode.preLearningAssessment:
-        nav.navigateTo(RouteNames.GOAL_SHIELDING);
+        nav.navigateWithReplacement(RouteNames.GOAL_SHIELDING);
         break;
       case AppStartupMode.firstLaunch:
-        nav.navigateTo(RouteNames.LOG_IN);
+        nav.navigateWithReplacement(RouteNames.LOG_IN);
         break;
       case AppStartupMode.postLearningAssessment:
-        nav.navigateTo(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
+        nav.navigateWithReplacement(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
         break;
     }
   }
