@@ -6,6 +6,8 @@ class RouteNames {
   static const ADD_GOAL = "/addgoal";
   static const GS_HIGHLIGHT = "/gshighlight";
 
+  static const INIT_START = "/initstart";
+
   static const AMBULATORY_ASSESSMENT = "/ambulatoryassessment";
   static const AMBULATORY_ASSESSMENT_PRE_TEST = "/aapre";
   static const AMBULATORY_ASSESSMENT_POST_TEST = "/aapost";

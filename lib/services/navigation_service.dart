@@ -5,6 +5,10 @@ class NavigationService {
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
+  void clearHistory() {
+    // _navigatorKey.currentState.
+  }
+
   void pop() {
     return _navigatorKey.currentState.pop();
   }
@@ -18,5 +22,10 @@ class NavigationService {
       {dynamic arguments}) {
     return _navigatorKey.currentState
         .pushReplacementNamed(routeName, arguments: arguments);
+  }
+
+  Future<dynamic> navigateAndRemove(String routeName, {dynamic arguments}) {
+    return _navigatorKey.currentState
+        .pushNamedAndRemoveUntil(routeName, (r) => false, arguments: arguments);
   }
 }

@@ -24,19 +24,19 @@ class StartupViewModel extends BaseViewModel {
     var nav = locator<NavigationService>();
     switch (appStartupMode) {
       case AppStartupMode.normal:
-        nav.navigateWithReplacement(RouteNames.MAIN);
+        nav.navigateAndRemove(RouteNames.MAIN);
         break;
       case AppStartupMode.signin:
-        nav.navigateWithReplacement(RouteNames.LOG_IN);
+        nav.navigateAndRemove(RouteNames.LOG_IN);
         break;
       case AppStartupMode.preLearningAssessment:
-        nav.navigateWithReplacement(RouteNames.GOAL_SHIELDING);
+        nav.navigateAndRemove(RouteNames.GOAL_SHIELDING);
         break;
       case AppStartupMode.firstLaunch:
-        nav.navigateWithReplacement(RouteNames.LOG_IN);
+        nav.navigateAndRemove(RouteNames.LOG_IN);
         break;
       case AppStartupMode.postLearningAssessment:
-        nav.navigateWithReplacement(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
+        nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
         break;
     }
   }

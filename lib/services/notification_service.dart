@@ -7,6 +7,8 @@ import 'package:serene/services/navigation_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -34,7 +36,7 @@ class NotificationService {
 
   Future initialize() async {
     var initSettingsAndroid = new AndroidInitializationSettings('ic_launcher');
-    var initSettings = InitializationSettings(initSettingsAndroid, null);
+    var initSettings = InitializationSettings(android: initSettingsAndroid);
     await localNotifications.initialize(initSettings,
         onSelectNotification: onSelectNotification);
 
@@ -92,12 +94,13 @@ class NotificationService {
         CHANNEL_ID_ASSESSMENT,
         CHANNEL_NAME_ASSESSMENT,
         'Erinnerung an den Fragebogen',
-        importance: Importance.Max,
-        priority: Priority.High,
+        importance: Importance.max,
+        priority: Priority.high,
         ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     await localNotifications.show(
         0, 'plain title', 'plain body', platformChannelSpecifics,
         payload: 'item x');
@@ -112,10 +115,18 @@ class NotificationService {
         'Erinnerung an den Fragebogen');
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     NotificationDetails platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await localNotifications.schedule(11, 'scheduled title', 'scheduled body',
-        scheduledNotificationDateTime, platformChannelSpecifics,
-        androidAllowWhileIdle: true, payload: PAYLOAD_DAILY_LEARN);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+    await localNotifications.zonedSchedule(
+        11,
+        'scheduled title',
+        'scheduled body',
+        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        platformChannelSpecifics,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: PAYLOAD_DAILY_LEARN);
   }
 
   scheduleDailyNotification() async {
@@ -126,7 +137,8 @@ class NotificationService {
         'Erinnerung an den Fragebogen');
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     await localNotifications.showDailyAtTime(
         ID_DAILY_REMINDER,
         'Tägliche Lernerinnerung',

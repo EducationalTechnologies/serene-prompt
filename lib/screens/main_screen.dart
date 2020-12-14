@@ -25,10 +25,6 @@ class _MainScreenState extends State<MainScreen> {
 
   _buildMonitoringScreen() {
     return GoalMonitorScreen();
-    // return ChangeNotifierProvider<GoalMonitoringVielModel>(
-    //   create: (_) => GoalMonitoringVielModel(locator.get<DataService>()),
-    //   child: GoalMonitorScreen(),
-    // );
   }
 
   void _onItemTapped(int index) {
@@ -64,9 +60,7 @@ class _MainScreenState extends State<MainScreen> {
         Provider.of<GoalMonitoringVielModel>(context, listen: false)
             .refetchGoals();
 
-            setState(() {
-              
-            });
+        setState(() {});
       },
     );
   }

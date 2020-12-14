@@ -4,6 +4,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/edit_tags_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
+import 'package:serene/screens/initialsession/initial_session_screen.dart';
 import 'package:serene/screens/login_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
 import 'package:serene/screens/test_screen.dart';
@@ -26,6 +27,7 @@ import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
 import 'package:serene/viewmodels/edit_tags_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
+import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/viewmodels/settings_view_model.dart';
@@ -176,6 +178,13 @@ class AppRouter {
                 ChangeNotifierProvider<DailyLearningQuestionViewModel>(
                   create: (_) => DailyLearningQuestionViewModel(),
                   child: DailyLearningQuestionScreen(),
+                ));
+
+      case RouteNames.INIT_START:
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<InitSessionViewModel>(
+                  create: (_) => InitSessionViewModel(),
+                  child: InitialSessionScreen(),
                 ));
 
       default:

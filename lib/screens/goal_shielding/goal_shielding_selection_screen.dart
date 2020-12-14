@@ -78,7 +78,7 @@ class GoalShieldingSelectionScreen extends StatelessWidget {
           // UIHelper.verticalSpaceMedium(),
           if (vm.selectedGoals != null)
             for (var g in vm.selectedGoals)
-              Text(g.goalText, style: Theme.of(context).textTheme.headline),
+              Text(g.goalText, style: Theme.of(context).textTheme.headline5),
           UIHelper.verticalSpaceSmall(),
           Text("Was könnte dich vom Erreichen deiner Ziele abhalten?",
               textAlign: TextAlign.left,

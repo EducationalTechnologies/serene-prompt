@@ -80,7 +80,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       _correctSentence = shieldState.shieldingSentence;
       setState(() {
         _scrambledSentence = ScrambleText.scrambleSentence(
-            ScrambleText.scrambleTextListFromString(_correctSentence, 2));
+            ScrambleText.scrambleTextListFromString(_correctSentence, 3));
       });
     });
   }
