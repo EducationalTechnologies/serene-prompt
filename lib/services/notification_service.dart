@@ -107,8 +107,6 @@ class NotificationService {
   }
 
   scheduleNotifications() async {
-    var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(minutes: 1));
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_ASSESSMENT,
         CHANNEL_NAME_ASSESSMENT,

@@ -14,7 +14,6 @@ class GoalMonitoringVielModel with ChangeNotifier {
   Function(Goal) goalAdded;
   Function(Goal) goalRemoved;
 
-  StreamController<Goal> goalStreamController = StreamController<Goal>();
   Stream<Goal> goalStream;
 
   GoalMonitoringVielModel(this._dataService) {

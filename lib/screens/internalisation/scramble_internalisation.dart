@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
-import 'package:reorderables/reorderables.dart';
 
 class ScrambleText {
   int originalPosition;
@@ -185,14 +184,6 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       margin: EdgeInsets.all(8.0),
       padding: EdgeInsets.all(8.0),
     );
-  }
-
-  _buildDragDrop() {
-    return Wrap(children: <Widget>[
-      Draggable(child: thing("Eins"), feedback: thing("Eins")),
-      Draggable(child: thing("Zwei"), feedback: thing("Zwei")),
-      Draggable(child: thing("Drei"), feedback: thing("Drei"))
-    ]);
   }
 
   _buildIncorrectWarning() {

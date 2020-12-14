@@ -80,15 +80,11 @@ class GoalSelectionList extends StatefulWidget {
 }
 
 class _GoalSelectionListState extends State<GoalSelectionList> {
-  int _selectedIndex;
-
   _onSelected(int index) {
     var goalShieldingState =
         Provider.of<GoalShieldingViewModel>(context, listen: false);
     goalShieldingState.toggleGoal(goalShieldingState.openGoals[index]);
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() {});
   }
 
   @override

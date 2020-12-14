@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 
 class OutcomeSortingScreen extends StatefulWidget {
@@ -38,6 +37,10 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
       color: Outcome.isSelected
           ? Theme.of(context).selectedRowColor
           : Colors.white,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.black54, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
       key: ValueKey(Outcome.name),
       child: ListTile(
         leading: Image.asset(Outcome.iconPath),
@@ -61,7 +64,7 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
       children: [
         UIHelper.verticalSpaceLarge(),
         Text(
-          "Sortiere die Hindernisse nach Wichtigkeit, indem du sie an die entsprechende Stelle verschiebst",
+          "Sortiere die schönen Vorstellungen nach Wichtigkeit, indem du sie an die entsprechende Stelle verschiebst",
           style: Theme.of(context).textTheme.headline5,
         ),
       ],
@@ -79,24 +82,6 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<InitSessionViewModel>(context, listen: false);
     return Container(child: buildOutcomeList(context), height: 700);
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          UIHelper.verticalSpaceLarge(),
-          Text("Was könnte dich vom Erreichen deiner Ziele abhalten?",
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.subtitle1),
-          UIHelper.verticalSpaceSmall(),
-          // buildOutcomeDropdown(context),
-          Expanded(
-            child: buildOutcomeList(context),
-          ),
-        ],
-      ),
-    );
   }
 }

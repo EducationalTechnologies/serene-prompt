@@ -1,5 +1,6 @@
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class InitSessionViewModel extends BaseViewModel {
@@ -30,33 +31,7 @@ class InitSessionViewModel extends BaseViewModel {
         iconPath: "assets/icons/teacher.png"),
   ];
 
-  // TODO: Ensure that only the selected items from step 1 land in this list
-  var selectedObstacles = <Obstacle>[
-    Obstacle(
-        name: "Überforderung",
-        description: "Die Aufgaben sind zu schwer.",
-        iconPath: "assets/icons/mathematics.png"),
-    Obstacle(
-        name: "Konzentration",
-        description: "Ich kann mich nicht auf das Lernen konzentrieren.",
-        iconPath: "assets/icons/brain.png"),
-    Obstacle(
-        name: "Lustlosigkeit",
-        description: "Ich habe keine Lust, zu lernen.",
-        iconPath: "assets/icons/computer.png"),
-    Obstacle(
-        name: "Ablenkungen",
-        description: "Ich habe zu viele andere Sachen zu tun.",
-        iconPath: "assets/icons/education.png"),
-    Obstacle(
-        name: "Gesundheit",
-        description: "Ich fühle mich nicht fit genug zum Lernen.",
-        iconPath: "assets/icons/anatomy.png"),
-    Obstacle(
-        name: "Lehrer",
-        description: "Mein Lehrer ist immer an allem Schuld!",
-        iconPath: "assets/icons/teacher.png"),
-  ];
+  var selectedObstacles = <Obstacle>[];
 
   var outcomes = <Outcome>[
     Outcome(
@@ -70,8 +45,7 @@ class InitSessionViewModel extends BaseViewModel {
         iconPath: "assets/icons/mehappy.png"),
     Outcome(
         name: "Fähigkeiten",
-        description:
-            "Dann kann ich mich besser auf Englisch unterhalten und das ist wichtig für mich.",
+        description: "Dann kann ich mich besser auf Englisch unterhalten.",
         iconPath: "assets/icons/user.png"),
     Outcome(
         name: "Lieder",
@@ -88,37 +62,33 @@ class InitSessionViewModel extends BaseViewModel {
         iconPath: "assets/icons/teamwork.png"),
   ];
 
-  // TODO: Ensure that only the selected items from step 1 land in this list
-  var selectedOutcomes = <Outcome>[
-    Outcome(
-        name: "Überforderung",
-        description: "Die Aufgaben sind zu schwer.",
-        iconPath: "assets/icons/mathematics.png"),
-    Outcome(
-        name: "Konzentration",
-        description: "Ich kann mich nicht auf das Lernen konzentrieren.",
-        iconPath: "assets/icons/brain.png"),
-    Outcome(
-        name: "Lustlosigkeit",
-        description: "Ich habe keine Lust, zu lernen.",
-        iconPath: "assets/icons/computer.png"),
-    Outcome(
-        name: "Ablenkungen",
-        description: "Ich habe zu viele andere Sachen zu tun.",
-        iconPath: "assets/icons/education.png"),
-    Outcome(
-        name: "Gesundheit",
-        description: "Ich fühle mich nicht fit genug zum Lernen.",
-        iconPath: "assets/icons/anatomy.png"),
-    Outcome(
-        name: "Lehrer",
-        description: "Mein Lehrer ist immer an allem Schuld!",
-        iconPath: "assets/icons/teacher.png"),
-  ];
+  DataService _dataService;
+
+  InitSessionViewModel(this._dataService);
+
+  var selectedOutcomes = <Outcome>[];
+
+  outcomeSelected(Outcome outcome) {
+    if (selectedOutcomes.contains(outcome)) {
+      selectedOutcomes.remove(outcome);
+    } else {
+      selectedOutcomes.add(outcome);
+    }
+  }
+
+  obstacleSelected(Obstacle obstacle) {
+    if (selectedObstacles.contains(obstacle)) {
+      selectedObstacles.remove(obstacle);
+    } else {
+      selectedObstacles.add(obstacle);
+    }
+  }
 
   bool canMoveNext() {
     return true;
   }
 
-  InitSessionViewModel() {}
+  saveSelected() async {
+    await _dataService.saveSelectedOutcomes(selectedOutcomes);
+  }
 }

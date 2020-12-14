@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 
 class ObstacleSortingScreen extends StatefulWidget {
@@ -27,8 +26,6 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
   }
 
   _buildHindranceItem(BuildContext context, Obstacle obstacle) {
-    final vm = Provider.of<InitSessionViewModel>(context);
-
     var buildUpDownArrow = Column(
       children: [
         Icon(Icons.keyboard_arrow_up),
@@ -40,6 +37,10 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
       color: obstacle.isSelected
           ? Theme.of(context).selectedRowColor
           : Colors.white,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.black54, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
       key: ValueKey(obstacle.name),
       child: ListTile(
         leading: Image.asset(obstacle.iconPath),
@@ -81,24 +82,6 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<InitSessionViewModel>(context, listen: false);
     return Container(child: buildObstacleList(context), height: 700);
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          UIHelper.verticalSpaceLarge(),
-          Text("Was könnte dich vom Erreichen deiner Ziele abhalten?",
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.subtitle1),
-          UIHelper.verticalSpaceSmall(),
-          // buildObstacleDropdown(context),
-          Expanded(
-            child: buildObstacleList(context),
-          ),
-        ],
-      ),
-    );
   }
 }

@@ -16,18 +16,19 @@ class ObstacleSelectionScreen extends StatefulWidget {
 
 class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
   _buildHindranceItem(BuildContext context, Obstacle obstacle) {
-    final vm = Provider.of<InitSessionViewModel>(context);
-
     return Card(
       color: obstacle.isSelected
           ? Theme.of(context).selectedRowColor
           : Colors.white,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.black54, width: 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: ListTile(
         leading: Image.asset(obstacle.iconPath),
         title: Text(obstacle.name),
         subtitle: Text(obstacle.description),
         isThreeLine: true,
-        trailing: Icon(Icons.help_outline),
         onTap: () async {
           print("Do Something On Selected ");
           obstacle.isSelected = !obstacle.isSelected;
@@ -55,24 +56,6 @@ class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<InitSessionViewModel>(context);
     return Container(child: buildObstacleList(context));
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          UIHelper.verticalSpaceLarge(),
-          Text("Was könnte dich vom Erreichen deiner Ziele abhalten?",
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.subtitle1),
-          UIHelper.verticalSpaceSmall(),
-          // buildObstacleDropdown(context),
-          Expanded(
-            child: buildObstacleList(context),
-          ),
-        ],
-      ),
-    );
   }
 }

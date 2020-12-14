@@ -8,6 +8,7 @@ import 'package:serene/screens/goal_shielding/goal_shielding_selection_screen.da
 import 'package:serene/services/data_service.dart';
 import 'package:serene/viewmodels/add_goal_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
+import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
 class GoalShieldingScreen extends StatefulWidget {
@@ -129,17 +130,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          textTheme: TextTheme(
-              headline6: TextStyle(color: Colors.black, fontSize: 22)),
-          centerTitle: true,
-
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(""),
-        ),
+        appBar: SereneAppBar(title: "Achso"),
         floatingActionButton: _buildAddGoalButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         drawer: SereneDrawer(),

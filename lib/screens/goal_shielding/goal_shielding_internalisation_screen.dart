@@ -23,8 +23,6 @@ class _GoalShieldingInternalisationScreenState
 
   @override
   Widget build(BuildContext context) {
-    var rng = Random();
-    // var next = rng.nextInt(3);
     var next = 5;
     Widget internalisation = LongPressInternalisation();
     if (next == 0) {

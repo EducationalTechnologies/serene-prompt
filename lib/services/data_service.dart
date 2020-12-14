@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
+import 'package:serene/models/outcome.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
@@ -84,12 +85,7 @@ class DataService {
       request.add(utf8.encode(body));
 
       var response = await request.close();
-      // var response =
-      //     await client.post("https://10.0.2.2:5001/api/LearningSession",
-      //         headers: {
-      //           HttpHeaders.contentTypeHeader: "application/json",
-      //         },
-      //         body: body);
+
       var reply = await response.transform(utf8.decoder).join();
       print(reply);
     } catch (e) {
@@ -191,5 +187,10 @@ class DataService {
   Future<GoalShield> getLastGoalShield() async {
     return await _databaseService
         .getLastSubmittedGoalShield(_userService.getUserEmail());
+  }
+
+  saveSelectedOutcomes(List<Outcome> outcomes) async {
+    return await _databaseService.saveOutcomes(
+        outcomes, _userService.getUserEmail());
   }
 }

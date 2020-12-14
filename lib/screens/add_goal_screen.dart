@@ -201,70 +201,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     );
   }
 
-  _buildInputSelector() {
-    return Container(
-      child: ToggleButtons(
-        borderRadius: BorderRadius.circular(10),
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: 3,
-              ),
-              Icon(Icons.check_box),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.5 - 12,
-                  alignment: Alignment.center,
-                  child: Text("Checkbox")),
-              SizedBox(
-                height: 3,
-              ),
-            ],
-          ),
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: 3,
-              ),
-              Icon(Icons.settings_ethernet),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.5 - 12,
-                  alignment: Alignment.center,
-                  child: Text("Slider")),
-              SizedBox(
-                height: 3,
-              ),
-            ],
-          ),
-        ],
-        onPressed: (int index) {
-          setState(() {
-            if (index == 0) {
-              Provider.of<AddGoalViewModel>(context)
-                  .currentGoal
-                  .progressIndicator = GoalProgressIndicator.checkbox;
-            } else if (index == 1) {
-              Provider.of<AddGoalViewModel>(context)
-                  .currentGoal
-                  .progressIndicator = GoalProgressIndicator.slider;
-            }
-
-            for (int buttonIndex = 0;
-                buttonIndex < inputModeSelected.length;
-                buttonIndex++) {
-              if (buttonIndex == index) {
-                inputModeSelected[buttonIndex] = true;
-              } else {
-                inputModeSelected[buttonIndex] = false;
-              }
-            }
-          });
-        },
-        isSelected: inputModeSelected,
-      ),
-    );
-  }
-
   _buildDifficultySelector() {
     var containerWidth = MediaQuery.of(context).size.width * 0.33 - 7;
     return Container(
@@ -356,38 +292,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     );
   }
 
-  _buildTagSelectionList(AddGoalViewModel vm) {
-    return Column(
-      children: <Widget>[for (var tag in vm.tags) _buildTagSelection(vm, tag)],
-    );
-  }
-
-  _buildTagSelection(AddGoalViewModel vm, TagModel tag) {
-    return CheckboxListTile(
-      controlAffinity: ListTileControlAffinity.leading,
-      title: Text(tag.name),
-      onChanged: (bool value) {
-        vm.toggleTag(tag, value);
-      },
-      value: false,
-    );
-  }
-
-  _buildParentGoalSelection(AddGoalViewModel vm) {
-    return DropdownButton(
-        value: vm.selectedParentGoal,
-        onChanged: (selectedParent) {
-          print("Selected New Parent: $selectedParent");
-          vm.selectedParentGoal = selectedParent;
-        },
-        items: vm.potentialParents.map<DropdownMenuItem>((og) {
-          return DropdownMenuItem<Goal>(
-            child: Text(og.goalText),
-            value: og,
-          );
-        }).toList());
-  }
-
   _buildSubmitButton() {
     var vm = Provider.of<AddGoalViewModel>(context);
     return SizedBox(
@@ -408,7 +312,6 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     var vm = Provider.of<AddGoalViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        // title: Text('Neues Ziel'),
         centerTitle: true,
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0.0,
@@ -438,23 +341,11 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
                     UIHelper.verticalSpaceSmall(),
                     _buildDifficultySelector(),
                     UIHelper.verticalSpaceMedium(),
-                    // buildSubHeader("Eingabe des Zielfortschritts"),
-                    // UIHelper.verticalSpaceSmall(),
-                    // _buildInputSelector(),
-                    // UIHelper.verticalSpaceSmall(),
-                    // if (vm.tags.length > 0)
-                    //   buildSubHeader("Tags"),
-                    // _buildTagSelectionList(vm),
-                    // buildSubHeader("Übergeordnetes Ziel"),
-                    // _buildParentGoalSelection(vm),
                     UIHelper.verticalSpaceMedium(),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: _buildSubmitButton(),
                     ),
-
-                    // // buildSubmitButton(),
-                    // UIHelper.verticalSpaceLarge(),
                   ],
                 ),
               ),

@@ -44,7 +44,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: _index > 1 && _index < _pages.length - 1,
+            visible: true, // _index > 1 && _index < _pages.length - 1,
             child: FlatButton(
               child: Row(
                 children: <Widget>[
@@ -63,11 +63,16 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               },
             ),
           ),
+          ElevatedButton(
+              onPressed: () {
+                vm.saveSelected();
+              },
+              child: Text("Test")),
           Visibility(
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: _index < _pages.length && vm.canMoveNext(),
+            visible: vm.canMoveNext(),
             child: FlatButton(
               child: Row(
                 children: <Widget>[

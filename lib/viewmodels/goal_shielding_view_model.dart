@@ -21,12 +21,11 @@ class GoalShieldingViewModel with ChangeNotifier {
 
   String shieldGeneric =
       "Wenn mir der Gedanke kommt, für heute mit dem Lernen aufzuhören, dann sage ich mir, dass ich heute so lange lernen werde, bis ich meine Tagesziele erreicht habe!";
-  
+
   String _selectedShieldingAction;
   String _hindrance;
   List<Goal> _selectedGoals = [];
   DataService _dataService;
-  UserService _userService;
   List<Goal> _openGoals;
   List<Goal> get openGoals {
     return _openGoals;
@@ -39,7 +38,7 @@ class GoalShieldingViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  GoalShieldingViewModel(this._dataService, this._userService) {
+  GoalShieldingViewModel(this._dataService) {
     this._hindrance = "";
     // this._selectedShieldingAction = shieldsPersonalized[0];
 
@@ -92,5 +91,4 @@ class GoalShieldingViewModel with ChangeNotifier {
         goalsToShield: _selectedGoals.map((g) => g.goalText).toList());
     await this._dataService.saveShielding(shield);
   }
-
 }

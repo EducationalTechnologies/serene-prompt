@@ -56,8 +56,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) =>
                 ChangeNotifierProvider<GoalShieldingViewModel>(
-                    create: (_) => GoalShieldingViewModel(
-                        locator.get<DataService>(), locator.get<UserService>()),
+                    create: (_) =>
+                        GoalShieldingViewModel(locator.get<DataService>()),
                     child: GoalShieldingScreen()));
 
       case RouteNames.ADD_GOAL:
@@ -183,7 +183,8 @@ class AppRouter {
       case RouteNames.INIT_START:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<InitSessionViewModel>(
-                  create: (_) => InitSessionViewModel(),
+                  create: (_) =>
+                      InitSessionViewModel(locator.get<DataService>()),
                   child: InitialSessionScreen(),
                 ));
 
