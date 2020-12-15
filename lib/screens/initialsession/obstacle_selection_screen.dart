@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 
 class ObstacleSelectionScreen extends StatefulWidget {
@@ -15,7 +14,27 @@ class ObstacleSelectionScreen extends StatefulWidget {
 }
 
 class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
+  _showSelectSomethingDialog() async {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          AlertDialog(
+            title: Text("Du musst mindestens ein Hindernis auswählen"),
+            actions: [
+              TextButton(
+                child: Text("Okay"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
+
   _buildHindranceItem(BuildContext context, Obstacle obstacle) {
+    final vm = Provider.of<InitSessionViewModel>(context);
     return Card(
       color: obstacle.isSelected
           ? Theme.of(context).selectedRowColor
@@ -32,6 +51,7 @@ class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
         onTap: () async {
           print("Do Something On Selected ");
           obstacle.isSelected = !obstacle.isSelected;
+          vm.obstacleSelected(obstacle);
           setState(() => {});
         },
       ),

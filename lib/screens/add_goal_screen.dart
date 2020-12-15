@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serene/models/goal.dart';
-import 'package:serene/models/tag.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/symbol_helper.dart';
 import 'package:serene/shared/ui_helpers.dart';

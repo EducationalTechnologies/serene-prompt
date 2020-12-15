@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
+import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/models/user_data.dart';
@@ -29,6 +30,7 @@ class FirebaseService {
   static const String COLLECTION_TAGS = "tags";
   static const String COLLECTION_SHIELDS = "shields";
   static const String COLLECTION_OUTCOMES = "outcomes";
+  static const String COLLECTION_OBSTACLES = "obstacles";
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -287,6 +289,15 @@ class FirebaseService {
         .collection(COLLECTION_OUTCOMES)
         .doc(email)
         .set({"outcomes": dynamicList});
+  }
+
+  saveObstacles(List<Obstacle> obstacles, String email) async {
+    var dynamicList = obstacles.map((obstacle) => obstacle.toMap()).toList();
+
+    await _databaseReference
+        .collection(COLLECTION_OBSTACLES)
+        .doc(email)
+        .set({"obstacles": dynamicList});
   }
 
   Future<GoalShield> getLastSubmittedGoalShield(String email) async {

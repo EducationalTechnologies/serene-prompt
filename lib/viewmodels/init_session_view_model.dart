@@ -4,6 +4,8 @@ import 'package:serene/services/data_service.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class InitSessionViewModel extends BaseViewModel {
+  int step = 0;
+
   var obstacles = <Obstacle>[
     Obstacle(
         name: "Überforderung",
@@ -74,6 +76,8 @@ class InitSessionViewModel extends BaseViewModel {
     } else {
       selectedOutcomes.add(outcome);
     }
+
+    notifyListeners();
   }
 
   obstacleSelected(Obstacle obstacle) {
@@ -82,13 +86,19 @@ class InitSessionViewModel extends BaseViewModel {
     } else {
       selectedObstacles.add(obstacle);
     }
+
+    notifyListeners();
   }
 
   bool canMoveNext() {
-    return true;
+    return (step == 0 && selectedObstacles.length > 0) ||
+        (step == 1 && selectedObstacles.length > 0) ||
+        (step == 2 && selectedOutcomes.length > 0) ||
+        (step == 3 && selectedOutcomes.length > 0);
   }
 
   saveSelected() async {
     await _dataService.saveSelectedOutcomes(selectedOutcomes);
+    await _dataService.saveSelectedObstacles(selectedObstacles);
   }
 }

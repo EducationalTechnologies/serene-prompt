@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
+import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/models/tag.dart';
 import 'package:serene/services/firebase_service.dart';
@@ -192,5 +193,10 @@ class DataService {
   saveSelectedOutcomes(List<Outcome> outcomes) async {
     return await _databaseService.saveOutcomes(
         outcomes, _userService.getUserEmail());
+  }
+
+  saveSelectedObstacles(List<Obstacle> obstacles) async {
+    return await _databaseService.saveObstacles(
+        obstacles, _userService.getUserEmail());
   }
 }

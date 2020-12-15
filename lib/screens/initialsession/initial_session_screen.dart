@@ -15,7 +15,6 @@ class InitialSessionScreen extends StatefulWidget {
 }
 
 class _InitialSessionScreenState extends State<InitialSessionScreen> {
-  int _index;
   final _controller = new PageController();
   final _kDuration = const Duration(milliseconds: 300);
   final _kCurve = Curves.ease;
@@ -30,7 +29,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   @override
   void initState() {
     super.initState();
-    _index = 1;
   }
 
   _buildBottomNavigation() {
@@ -56,9 +54,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
                 ],
               ),
               onPressed: () {
-                setState(() {
-                  _index--;
-                });
                 _controller.previousPage(duration: _kDuration, curve: _kCurve);
               },
             ),
@@ -72,7 +67,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: vm.canMoveNext(),
+            visible: true,
             child: FlatButton(
               child: Row(
                 children: <Widget>[
@@ -84,9 +79,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
                 ],
               ),
               onPressed: () {
-                setState(() {
-                  _index++;
-                });
                 _controller.nextPage(duration: _kDuration, curve: _kCurve);
               },
             ),
@@ -97,6 +89,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   }
 
   buildPageView() {
+    var vm = Provider.of<InitSessionViewModel>(context);
     return Container(
       margin: EdgeInsets.all(10),
       child: Column(
@@ -108,6 +101,9 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               itemCount: _pages.length,
               itemBuilder: (context, index) {
                 return _pages[index];
+              },
+              onPageChanged: (int page) {
+                vm.step = page;
               },
             ),
           ),

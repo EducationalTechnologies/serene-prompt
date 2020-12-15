@@ -34,7 +34,6 @@ class EditTagsViewModel extends BaseViewModel {
   }
 
   addTag(String tag) {
-    //TODO: ADD REAL TAG
     var tm = TagModel(id: tag, name: tag);
     _dataService.saveTag(tm);
     _tags.add(tm);
