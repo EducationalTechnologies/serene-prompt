@@ -21,6 +21,10 @@ class NotificationService {
   static const String CHANNEL_NAME_ASSESSMENT = "Assessment Erinnerung";
   static const String CHANNEL_DESCRIPTION_ASSESSMENT = "Erinnerung Fragebogen";
 
+  static const String CHANNEL_ID_TASK = "Aufgabenerinnerung";
+  static const String CHANNEL_NAME_TASK = "Aufgabenerinnerung";
+  static const String CHANNEL_DESCRIPTION_TASK = "Aufgabenerinnerung";
+
   static const String CHANNEL_ID_DEADLINE = "serene deadline";
   static const String CHANNEL_NAME_DEADLINE = "Deadline Erinnerung";
 
@@ -44,7 +48,8 @@ class NotificationService {
     var dailyScheduleExists = pendingNotifications
         .firstWhere((n) => n.id == ID_DAILY_REMINDER, orElse: () => null);
     if (dailyScheduleExists == null) {
-      await scheduleDailyNotification();
+      await scheduleInternalisationReminder(new Time(6, 30, 0));
+      await scheduleTaskReminder(new Time(16, 30, 0));
     }
   }
 
@@ -114,8 +119,24 @@ class NotificationService {
         payload: PAYLOAD_DAILY_LEARN);
   }
 
-  scheduleDailyNotification() async {
-    var time = new Time(7, 0, 0);
+  scheduleInternalisationReminder(Time time) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        CHANNEL_ID_ASSESSMENT,
+        CHANNEL_NAME_ASSESSMENT,
+        'Erinnerung an den Fragebogen');
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = new NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+    await localNotifications.showDailyAtTime(
+        ID_DAILY_REMINDER,
+        'Tägliche Lernerinnerung',
+        'Bitte fülle den Fragebogen für dein Lernverhalten aus',
+        time,
+        platformChannelSpecifics);
+  }
+
+  scheduleTaskReminder(Time time) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_ASSESSMENT,
         CHANNEL_NAME_ASSESSMENT,
