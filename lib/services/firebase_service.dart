@@ -5,7 +5,6 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
-import 'package:serene/models/tag.dart';
 import 'package:serene/models/user_data.dart';
 import 'package:flutter/services.dart';
 
@@ -180,8 +179,7 @@ class FirebaseService {
       var userData = await getUserData(result.user.email);
 
       if (userData == null) {
-        userData = UserData(
-            userId: result.user.uid, email: result.user.email, tags: null);
+        userData = UserData(userId: result.user.uid, email: result.user.email);
         await insertUserData(userData);
       }
       return userData;
@@ -190,38 +188,6 @@ class FirebaseService {
       lastError = e.code;
       return null;
     }
-  }
-
-  createTag(TagModel tag, String email) async {
-    var tagDoc = await _databaseReference
-        .collection(COLLECTION_USERS)
-        .doc(email)
-        .collection("tags")
-        .add(tag.toMap());
-
-    return tagDoc.id;
-  }
-
-  getTags(String email) async {
-    var tags = await _databaseReference
-        .collection(COLLECTION_USERS)
-        .doc(email)
-        .collection(COLLECTION_TAGS)
-        .get();
-
-    List<TagModel> mappedTags = tags.docs.map((t) {
-      return TagModel.fromDocument(t);
-    }).toList();
-    return mappedTags;
-  }
-
-  updateTag(TagModel tag, String email) async {
-    await _databaseReference
-        .collection(COLLECTION_USERS)
-        .doc(email)
-        .collection("tags")
-        .doc(tag.id)
-        .set(tag.toMap());
   }
 
   test() async {

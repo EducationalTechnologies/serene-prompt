@@ -12,7 +12,6 @@ class Goal {
   String path;
   DateTime creationDate;
   DateTime completionDate;
-  List<String> tags;
 
   Goal(
       {this.id,
@@ -25,7 +24,6 @@ class Goal {
       this.difficulty = GoalDifficulty.medium,
       this.creationDate,
       this.completionDate,
-      this.tags = const [],
       this.progressIndicator = GoalProgressIndicator.checkbox}) {
     this.creationDate = DateTime.now();
   }
@@ -41,7 +39,6 @@ class Goal {
       "progressIndicator": this.progressIndicator,
       "difficulty": this.difficulty,
       "userId": this.userId,
-      "tags": this.tags,
       "parentId": this.parentId,
       "path": this.path
     };

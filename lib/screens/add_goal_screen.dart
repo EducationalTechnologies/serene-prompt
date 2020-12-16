@@ -79,7 +79,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   Widget buildTextEntry() {
-    final appState = Provider.of<AddGoalViewModel>(context);
+    final vm = Provider.of<AddGoalViewModel>(context);
 
     return Container(
       padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 30, top: 20),
@@ -112,7 +112,7 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
               textInputAction: TextInputAction.done,
               onChanged: (text) {
                 setState(() {
-                  appState.currentGoal.goalText = text.toString();
+                  vm.currentGoal.goalText = text.toString();
                 });
               },
             ),
@@ -159,13 +159,13 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
   }
 
   Widget buildDatePicker() {
-    final appState = Provider.of<AddGoalViewModel>(context);
+    final vm = Provider.of<AddGoalViewModel>(context);
 
     // var date = appState.currentGoal.deadline ?? DateTime.now();
     // var dateText = DateFormat('dd.MM.yyy').format(date);
     // var timeText = DateFormat('kk:mm').format(date);
 
-    bool hasDate = appState.currentGoal.deadline != null;
+    bool hasDate = vm.currentGoal.deadline != null;
 
     return Column(
       children: <Widget>[

@@ -25,7 +25,7 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
     });
   }
 
-  _buildHindranceItem(BuildContext context, Outcome Outcome) {
+  _buildHindranceItem(BuildContext context, Outcome outcome) {
     var upDownArrow = Column(
       children: [
         Icon(Icons.keyboard_arrow_up),
@@ -34,18 +34,16 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
     );
 
     return Card(
-      color: Outcome.isSelected
-          ? Theme.of(context).selectedRowColor
-          : Colors.white,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.black54, width: 1),
         borderRadius: BorderRadius.circular(10),
       ),
-      key: ValueKey(Outcome.name),
+      key: ValueKey(outcome.name),
       child: ListTile(
-        leading: Image.asset(Outcome.iconPath),
-        title: Text(Outcome.name),
-        subtitle: Text(Outcome.description),
+        leading: Image.asset(outcome.iconPath),
+        title: Text(outcome.name),
+        subtitle: Text(outcome.description),
         isThreeLine: true,
         trailing: upDownArrow,
         // onTap: () async {
@@ -65,7 +63,7 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
         UIHelper.verticalSpaceLarge(),
         Text(
           "Sortiere die schönen Vorstellungen nach Wichtigkeit, indem du sie an die entsprechende Stelle verschiebst",
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.subtitle1,
         ),
       ],
     );

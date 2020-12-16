@@ -62,19 +62,6 @@ class NotificationService {
         const IosNotificationSettings(sound: true, badge: true, alert: true));
   }
 
-  _saveDeviceToken() async {
-    String uid = "db";
-
-    String fcmToken = await _firebaseMessaging.getToken();
-
-    if (fcmToken != null) {
-      // var tokens =
-      FirebaseService().saveFcmToken(uid, fcmToken);
-    }
-  }
-
-  showReminderNotification() {}
-
   Future onSelectNotification(String payload) async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);

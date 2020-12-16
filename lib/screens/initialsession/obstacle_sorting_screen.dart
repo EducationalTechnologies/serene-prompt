@@ -34,9 +34,7 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
     );
 
     return Card(
-      color: obstacle.isSelected
-          ? Theme.of(context).selectedRowColor
-          : Colors.white,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.black54, width: 1),
         borderRadius: BorderRadius.circular(10),
@@ -65,7 +63,7 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
         UIHelper.verticalSpaceLarge(),
         Text(
           "Sortiere die Hindernisse nach Wichtigkeit, indem du sie an die entsprechende Stelle verschiebst",
-          style: Theme.of(context).textTheme.headline5,
+          style: Theme.of(context).textTheme.subtitle1,
         ),
       ],
     );

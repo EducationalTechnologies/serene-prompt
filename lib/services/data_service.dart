@@ -8,7 +8,6 @@ import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
-import 'package:serene/models/tag.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
@@ -17,7 +16,6 @@ import 'package:serene/shared/materialized_path.dart';
 class DataService {
   List<Goal> _goalsCache;
   List<Goal> _openGoalsCache = [];
-  List<TagModel> _tagCache = [];
   List<GoalShield> _goalShields;
   UserService _userService;
   FirebaseService _databaseService;
@@ -44,7 +42,6 @@ class DataService {
   clearCache() {
     this._openGoalsCache.clear();
     this._goalsCache.clear();
-    this._tagCache.clear();
   }
 
   createGoal(Goal goal) async {
@@ -124,38 +121,6 @@ class DataService {
       _openGoalsCache.removeAt(goalIndex);
     }
     await _databaseService.deleteGoal(goal, _userService.getUserEmail());
-  }
-
-  Future<List<TagModel>> getTags() async {
-    if (_tagCache.length == 0) {
-      var userId = _userService.getUserEmail();
-      _tagCache = await _databaseService.getTags(userId);
-    }
-    return _tagCache;
-  }
-
-  updateTag(TagModel tag) async {
-    await _databaseService.updateTag(tag, _userService.getUserEmail());
-    var existingTag =
-        _tagCache.firstWhere((t) => tag.id == t.id, orElse: () => null);
-    if (existingTag != null) {
-      existingTag.name = tag.name;
-    } else {
-      _tagCache.add(tag);
-    }
-  }
-
-  saveTag(TagModel tag) async {
-    var tagId =
-        await _databaseService.createTag(tag, _userService.getUserEmail());
-    tag.id = tagId;
-    var existingTag =
-        _tagCache.firstWhere((t) => tag.id == t.id, orElse: () => null);
-    if (existingTag != null) {
-      existingTag.name = tag.name;
-    } else {
-      _tagCache.add(tag);
-    }
   }
 
   getGoalShields() async {

@@ -19,7 +19,7 @@ class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          AlertDialog(
+          return AlertDialog(
             title: Text("Du musst mindestens ein Hindernis auswählen"),
             actions: [
               TextButton(
@@ -64,11 +64,12 @@ class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
-        UIHelper.verticalSpaceLarge(),
+        UIHelper.verticalSpaceMedium(),
         Text(
           "Was sind Hindernisse, die dich davon abhalten, mit dem Vokabellernen anzufangen oder die dich während des Vokabellernens stören? Wähle alle Hindernisse aus, die auf dich zutreffen - auch wenn sie nur manchmal zutreffen.",
-          style: (TextStyle(fontSize: 20)),
+          style: Theme.of(context).textTheme.subtitle1,
         ),
+        UIHelper.verticalSpaceMedium(),
         for (var o in vm.obstacles) _buildHindranceItem(context, o),
       ],
     );

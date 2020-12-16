@@ -130,7 +130,7 @@ class _GoalShieldingScreenState extends State<GoalShieldingScreen> {
     }
 
     return Scaffold(
-        appBar: SereneAppBar(title: "Achso"),
+        appBar: SereneAppBar(title: ""),
         floatingActionButton: _buildAddGoalButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         drawer: SereneDrawer(),

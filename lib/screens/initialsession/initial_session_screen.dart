@@ -55,6 +55,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               ),
               onPressed: () {
                 _controller.previousPage(duration: _kDuration, curve: _kCurve);
+                vm.canMoveNext();
               },
             ),
           ),
@@ -67,7 +68,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: true,
+            visible: vm.canMoveNext(),
             child: FlatButton(
               child: Row(
                 children: <Widget>[
@@ -80,6 +81,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               ),
               onPressed: () {
                 _controller.nextPage(duration: _kDuration, curve: _kCurve);
+                vm.canMoveNext();
               },
             ),
           ),

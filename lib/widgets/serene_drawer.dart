@@ -89,17 +89,11 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           ListTile(
               title: Text(
-                "TEST STUFF",
+                "LDT",
                 style: subHeaderStyle,
               ),
               onTap: () async {
-                // Navigator.pushNamed(context, RouteNames.TEST);
-                // await NotificationService().scheduleDailyNotification();
-                // await NotificationService().clearPendingNotifications();
-                await Navigator.pushNamed(
-                    context, RouteNames.AMBULATORY_ASSESSMENT,
-                    arguments:
-                        AssessmentScreenArguments(AssessmentType.postLearning));
+                await Navigator.pushNamed(context, RouteNames.LDT);
               }),
           Divider(),
           ListTile(

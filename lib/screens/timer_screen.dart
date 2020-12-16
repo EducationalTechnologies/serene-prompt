@@ -70,7 +70,7 @@ class _TimerScreenState extends State<TimerScreen>
                                 children: <Widget>[
                                   Text(
                                     "",
-                                    style: themeData.textTheme.subhead,
+                                    style: themeData.textTheme.subtitle1,
                                   ),
                                   InkWell(
                                     onTap: () async {

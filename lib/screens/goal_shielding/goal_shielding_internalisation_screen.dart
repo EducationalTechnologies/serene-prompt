@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:serene/screens/internalisation/highlight_internalisation_screen.dart';
 import 'package:serene/screens/internalisation/long_press_internalisation.dart';

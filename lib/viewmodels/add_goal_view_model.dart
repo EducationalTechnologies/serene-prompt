@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/models/tag.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/services/user_service.dart';
@@ -14,7 +13,6 @@ class AddGoalViewModel extends BaseViewModel {
   Goal _currentGoal;
   Goal _selectedParentGoal;
   DataService _dataService;
-  List<TagModel> _tags = [];
   List<Goal> _potentialParents = [];
 
   Goal get selectedParentGoal => _selectedParentGoal;
@@ -26,7 +24,6 @@ class AddGoalViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List<TagModel> get tags => _tags;
   List<Goal> get potentialParents => _potentialParents;
 
   String _mode = GoalScreenMode.create;
@@ -49,11 +46,6 @@ class AddGoalViewModel extends BaseViewModel {
             this._dataService.getGoalById(this._currentGoal.parentId);
       }
     }
-
-    dataService.getTags().then((tags) {
-      _tags = tags;
-      notifyListeners();
-    });
 
     dataService.getOpenGoals().then((og) {
       _potentialParents = og.where((g) => g.id != currentGoal.id).toList();
@@ -96,8 +88,6 @@ class AddGoalViewModel extends BaseViewModel {
     await this._dataService.deleteGoal(this._currentGoal);
     setState(ViewState.idle);
   }
-
-  toggleTag(TagModel tag, bool value) {}
 
   canSubmit() {
     return _currentGoal.goalText.length > 0;

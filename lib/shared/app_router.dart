@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
-import 'package:serene/screens/edit_tags_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
 import 'package:serene/screens/login_screen.dart';
+import 'package:serene/screens/questionnaire/lexical_decision_task_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
 import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
@@ -24,23 +24,16 @@ import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
-import 'package:serene/viewmodels/edit_tags_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
+import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/viewmodels/settings_view_model.dart';
 import 'package:serene/viewmodels/timer_view_model.dart';
 
 class AppRouter {
-  static getRoutes() {
-    // return {
-    //   RouteNames.ADD_GOAL: (context) => ChangeNotifierProvider<GoalState>(
-    //       builder: (_) => AddGoalState(null), child: AddGoalScreen())
-    // };
-  }
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteNames.MAIN:
@@ -163,12 +156,6 @@ class AppRouter {
                     SettingsViewModel(locator.get<SettingsService>()),
                 child: SettingsScreen()));
 
-      case RouteNames.EDIT_TAGS:
-        return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<EditTagsViewModel>(
-                create: (_) => EditTagsViewModel(locator.get<DataService>()),
-                child: EditTagsScreen()));
-
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());
 
@@ -186,6 +173,14 @@ class AppRouter {
                   create: (_) =>
                       InitSessionViewModel(locator.get<DataService>()),
                   child: InitialSessionScreen(),
+                ));
+
+      case RouteNames.LDT:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ChangeNotifierProvider<LexicalDecisionTaskViewModel>(
+                  create: (_) => LexicalDecisionTaskViewModel(),
+                  child: LexicalDecisionTaskScren(),
                 ));
 
       default:
