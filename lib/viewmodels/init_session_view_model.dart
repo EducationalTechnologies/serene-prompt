@@ -1,6 +1,7 @@
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/shared/app_asset_paths.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class InitSessionViewModel extends BaseViewModel {
@@ -10,27 +11,27 @@ class InitSessionViewModel extends BaseViewModel {
     Obstacle(
         name: "Überforderung",
         description: "Die Aufgaben sind zu schwer.",
-        iconPath: "assets/icons/mathematics.png"),
+        iconPath: AppAssetPaths.ICON_MATH),
     Obstacle(
         name: "Konzentration",
         description: "Ich kann mich nicht auf das Lernen konzentrieren.",
-        iconPath: "assets/icons/brain.png"),
+        iconPath: AppAssetPaths.ICON_BRAIN),
     Obstacle(
         name: "Lustlosigkeit",
         description: "Ich habe keine Lust, zu lernen.",
-        iconPath: "assets/icons/computer.png"),
+        iconPath: AppAssetPaths.ICON_COMPUTER),
     Obstacle(
         name: "Ablenkungen",
         description: "Ich habe zu viele andere Sachen zu tun.",
-        iconPath: "assets/icons/education.png"),
+        iconPath: AppAssetPaths.ICON_EDUCATION),
     Obstacle(
         name: "Gesundheit",
         description: "Ich fühle mich nicht fit genug zum Lernen.",
-        iconPath: "assets/icons/anatomy.png"),
+        iconPath: AppAssetPaths.ICON_ANATOMY),
     Obstacle(
         name: "Lehrer",
         description: "Mein Lehrer ist immer an allem Schuld!",
-        iconPath: "assets/icons/teacher.png"),
+        iconPath: AppAssetPaths.ICON_TEACHER),
   ];
 
   var selectedObstacles = <Obstacle>[];
@@ -40,28 +41,28 @@ class InitSessionViewModel extends BaseViewModel {
         name: "Stolz anderer Personen",
         description:
             "Dann sind andere Personen (z.B. meine Eltern) stolz auf mich.",
-        iconPath: "assets/icons/mathematics.png"),
+        iconPath: AppAssetPaths.ICON_MATH),
     Outcome(
         name: "Mein Stolz",
         description: "Dann bin ich selbst stolz auf mich.",
-        iconPath: "assets/icons/mehappy.png"),
+        iconPath: AppAssetPaths.ICON_MEHAPPY),
     Outcome(
         name: "Fähigkeiten",
         description: "Dann kann ich mich besser auf Englisch unterhalten.",
-        iconPath: "assets/icons/user.png"),
+        iconPath: AppAssetPaths.ICON_USER),
     Outcome(
         name: "Lieder",
         description: "Dann kann ich meine Lieblingslieder besser verstehen.",
-        iconPath: "assets/icons/musicnote.png"),
+        iconPath: AppAssetPaths.ICON_MUSICNOTE),
     Outcome(
         name: "Videospiele",
         description: "Dann kann ich meine Videospiele besser verstehen.",
-        iconPath: "assets/icons/gamepad.png"),
+        iconPath: AppAssetPaths.ICON_GAMEPAD),
     Outcome(
         name: "Arbeit",
         description:
             "Dann kriege ich eine bessere Arbeit wenn ich mit der Schule fertig bin.",
-        iconPath: "assets/icons/teamwork.png"),
+        iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
   DataService _dataService;
@@ -100,5 +101,33 @@ class InitSessionViewModel extends BaseViewModel {
   saveSelected() async {
     await _dataService.saveSelectedOutcomes(selectedOutcomes);
     await _dataService.saveSelectedObstacles(selectedObstacles);
+  }
+
+  editCustomObstacle(String key, String text) {
+    var contains = selectedObstacles.where((o) => o.name == key);
+    if (contains.isEmpty) {
+      var custom = Obstacle(
+          name: key,
+          description: text,
+          iconPath: AppAssetPaths.ICON_PROBLEMSOLVING);
+      selectedObstacles.add(custom);
+    } else {
+      var custom = selectedObstacles.firstWhere((o) => o.name == key);
+      custom.description = text;
+    }
+  }
+
+  editCustomOutcome(String key, String text) {
+    var contains = selectedOutcomes.where((o) => o.name == key);
+    if (contains.isEmpty) {
+      var custom = Outcome(
+          name: key,
+          description: text,
+          iconPath: AppAssetPaths.ICON_PROBLEMSOLVING);
+      selectedOutcomes.add(custom);
+    } else {
+      var custom = selectedOutcomes.firstWhere((o) => o.name == key);
+      custom.description = text;
+    }
   }
 }

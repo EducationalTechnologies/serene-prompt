@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
+import 'package:serene/screens/initialsession/outcome_enter_screen.dart';
 import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
 import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
@@ -21,8 +23,10 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
 
   final List<Widget> _pages = [
     ObstacleSelectionScreen(),
+    ObstacleEnterScreen(),
     ObstacleSortingScreen(),
     OutcomeSelectionScreen(),
+    OutcomeEnterScreen(),
     OutcomeSortingScreen()
   ];
 
@@ -59,11 +63,11 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               },
             ),
           ),
-          ElevatedButton(
-              onPressed: () {
-                vm.saveSelected();
-              },
-              child: Text("Test")),
+          // ElevatedButton(
+          //     onPressed: () {
+          //       vm.saveSelected();
+          //     },
+          //     child: Text("Test")),
           Visibility(
             maintainSize: true,
             maintainAnimation: true,

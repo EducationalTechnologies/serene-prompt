@@ -14,7 +14,6 @@ class LongPressInternalisation extends StatefulWidget {
 }
 
 class _LongPressInternalisationState extends State<LongPressInternalisation> {
-
   buildShieldActionTextPart(String shieldText) {
     return TextSpan(text: "$shieldText ");
   }
@@ -71,7 +70,8 @@ class _TextHighlightState extends State<TextHighlight>
   Duration _duration;
 
   _onIterationCompleted() async {
-    await Provider.of<GoalShieldingViewModel>(context, listen: false).saveShielding();
+    await Provider.of<GoalShieldingViewModel>(context, listen: false)
+        .saveShielding();
     await Future.delayed(Duration(seconds: 1)).then((res) {
       Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
     });
