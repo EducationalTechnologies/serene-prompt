@@ -96,7 +96,7 @@ class SereneDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
           ListTile(
-              title: Text("Initialization"),
+              title: Text("Internalisierung"),
               onTap: () async {
                 await Navigator.pushNamed(context, RouteNames.INIT_START,
                     arguments: AssessmentScreenArguments(

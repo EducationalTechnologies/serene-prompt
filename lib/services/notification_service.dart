@@ -4,9 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:serene/locator.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:serene/services/navigation_service.dart';
-import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/shared/screen_args.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -21,17 +19,18 @@ class NotificationService {
   static const String CHANNEL_NAME_II_REMINDER = "Wenn-Dann-Plan Erinnerung";
   static const String CHANNEL_DESCRIPTION_II_REMINDER =
       "Wenn-Dann-Plan Erinnerung";
+  static const String PAYLOAD_II_REMINDER = "DAILY_LEARNING";
 
   static const String CHANNEL_ID_TASK = "Aufgabenerinnerung";
   static const String CHANNEL_NAME_TASK = "Aufgabenerinnerung";
   static const String CHANNEL_DESCRIPTION_TASK = "Aufgabenerinnerung";
+  static const String PAYLOAD_TASK_REMINDER = "DAILY_LEARNING";
 
   static const String CHANNEL_ID_DEADLINE = "serene deadline";
   static const String CHANNEL_NAME_DEADLINE = "Deadline Erinnerung";
 
-  static const String PAYLOAD_DAILY_LEARN = "DAILY_LEARNING";
-
   static const int ID_INTERNALISATION = 69;
+  static const int ID_TASK_REMINDER = 42;
 
   NotificationService._internal() {
     localNotifications = FlutterLocalNotificationsPlugin();
@@ -49,10 +48,15 @@ class NotificationService {
         onSelectNotification: onSelectNotification);
 
     var pendingNotifications = await getPendingNotifications();
-    var dailyScheduleExists = pendingNotifications
+    var internalisationReminderExists = pendingNotifications
         .firstWhere((n) => n.id == ID_INTERNALISATION, orElse: () => null);
-    if (dailyScheduleExists == null) {
+    if (internalisationReminderExists == null) {
       await scheduleInternalisationReminder(new Time(6, 30, 0));
+    }
+
+    var taskReminderExists = pendingNotifications
+        .firstWhere((n) => n.id == ID_TASK_REMINDER, orElse: () => null);
+    if (taskReminderExists == null) {
       await scheduleTaskReminder(new Time(16, 30, 0));
     }
   }
@@ -81,13 +85,14 @@ class NotificationService {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
 
-      if (payload == PAYLOAD_DAILY_LEARN) {
-        await locator<NavigationService>().navigateTo(
-            RouteNames.DAILY_LEARNING_QUESTIONS,
-            arguments: AssessmentScreenArguments(AssessmentType.preLearning));
-        await locator<NavigationService>().navigateTo(
-            RouteNames.INTERNALISATION,
-            arguments: AssessmentScreenArguments(AssessmentType.preLearning));
+      if (payload == PAYLOAD_II_REMINDER) {
+        await locator<NavigationService>()
+            .navigateTo(RouteNames.INTERNALISATION);
+      }
+      if (payload == PAYLOAD_TASK_REMINDER) {
+        // TODO: REPLACE WITH ROUTE TO THE ACTUAL REMEMBERANCE TASK
+        await locator<NavigationService>()
+            .navigateTo(RouteNames.INTERNALISATION);
       }
     }
   }
@@ -123,6 +128,7 @@ class NotificationService {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
+        payload: PAYLOAD_II_REMINDER,
         androidAllowWhileIdle: true);
   }
 
@@ -143,6 +149,7 @@ class NotificationService {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
+        payload: PAYLOAD_TASK_REMINDER,
         androidAllowWhileIdle: true);
   }
 
