@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
+import 'package:serene/viewmodels/internalisation_view_model.dart';
 
 class ScrambleText {
   int originalPosition;
@@ -74,9 +74,8 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      var shieldState =
-          Provider.of<GoalShieldingViewModel>(context, listen: false);
-      _correctSentence = shieldState.shieldingSentence;
+      var vm = Provider.of<InternalisationViewModel>(context, listen: false);
+      _correctSentence = vm.implementationIntention;
       setState(() {
         _scrambledSentence = ScrambleText.scrambleSentence(
             ScrambleText.scrambleTextListFromString(_correctSentence, 3));
@@ -165,24 +164,12 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   }
 
   _buildCorrectText(String text) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 20),
-    );
-  }
-
-  thing(String text) {
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).primaryColor,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black, offset: Offset(1, 1), blurRadius: 1.0)
-          ]),
-      child: Text(text),
-      margin: EdgeInsets.all(8.0),
-      padding: EdgeInsets.all(8.0),
+      margin: EdgeInsets.all(10),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 20),
+      ),
     );
   }
 

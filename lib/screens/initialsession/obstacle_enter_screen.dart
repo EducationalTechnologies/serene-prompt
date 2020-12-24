@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
+import 'package:serene/viewmodels/init_session_view_model.dart';
 
 class ObstacleEnterScreen extends StatefulWidget {
   ObstacleEnterScreen({Key key}) : super(key: key);
@@ -15,12 +17,16 @@ class _ObstacleEnterScreenState extends State<ObstacleEnterScreen> {
   @override
   void initState() {
     super.initState();
-    _customObstacles.add(buildTextField());
+    _customObstacles.add(buildTextField("0"));
   }
 
-  buildTextField() {
+  buildTextField(String key) {
     return TextField(
       decoration: InputDecoration(hintText: 'Gib ein Hindernis ein'),
+      onChanged: (String text) {
+        Provider.of<InitSessionViewModel>(context)
+            .editCustomObstacle(key, text);
+      },
     );
   }
 
@@ -28,8 +34,9 @@ class _ObstacleEnterScreenState extends State<ObstacleEnterScreen> {
     return ElevatedButton.icon(
         onPressed: () {
           setState(() {
-            if (_customObstacles.length <= 3) {
-              _customObstacles.add(buildTextField());
+            if (_customObstacles.length < 3) {
+              _customObstacles.add(
+                  buildTextField((_customObstacles.length + 1).toString()));
             }
           });
         },
@@ -51,12 +58,7 @@ class _ObstacleEnterScreenState extends State<ObstacleEnterScreen> {
           //     "Falls du mehr als ein zusätzliches Hindernis aufschreiben möchtest, dann drücke das (+)-Symbol.",
           //     style: Theme.of(context).textTheme.subtitle1),
           // UIHelper.verticalSpaceMedium(),
-          Container(
-            height: 200,
-            child: ListView(
-              children: _customObstacles,
-            ),
-          ),
+          ..._customObstacles,
           // buildTextField(),
           UIHelper.verticalSpaceMedium(),
           buildAddButton()

@@ -4,8 +4,8 @@ import 'package:serene/locator.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/internalisation_view_model.dart';
 
 class LongPressInternalisation extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
 
   @override
   Widget build(BuildContext context) {
-    final intention = Provider.of<GoalShieldingViewModel>(context);
+    final intention = Provider.of<InternalisationViewModel>(context);
 
     return Column(
       children: <Widget>[
@@ -42,7 +42,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
               UIHelper.verticalSpaceMedium(),
               UIHelper.verticalSpaceMedium(),
               TextHighlight(
-                  text: intention.shieldingSentence,
+                  text: intention.implementationIntention,
                   wpm: locator.get<SettingsService>().getWordsPerMinute()),
               UIHelper.verticalSpaceMedium(),
               // Text("Debug Stuff Counter: $_longPressCounter")
@@ -70,8 +70,6 @@ class _TextHighlightState extends State<TextHighlight>
   Duration _duration;
 
   _onIterationCompleted() async {
-    await Provider.of<GoalShieldingViewModel>(context, listen: false)
-        .saveShielding();
     await Future.delayed(Duration(seconds: 1)).then((res) {
       Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
     });

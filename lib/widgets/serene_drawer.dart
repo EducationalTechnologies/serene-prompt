@@ -62,16 +62,10 @@ class SereneDrawer extends StatelessWidget {
               }),
           _buildDrawerItem(
               icon: Icons.security,
-              text: "Shielding",
+              text: "Internalisation",
               onTap: () {
-                Navigator.pushNamed(context, RouteNames.GOAL_SHIELDING);
+                Navigator.pushNamed(context, RouteNames.INTERNALISATION);
               }),
-          // _buildDrawerItem(
-          //     icon: Icons.label,
-          //     text: "Tags",
-          //     onTap: () {
-          //       Navigator.pushNamed(context, RouteNames.EDIT_TAGS);
-          //     }),
           Divider(),
           _buildDrawerItem(
               icon: Icons.settings,
@@ -89,7 +83,7 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           ListTile(
               title: Text(
-                "LDT",
+                "Lexical Decision Task",
                 style: subHeaderStyle,
               ),
               onTap: () async {

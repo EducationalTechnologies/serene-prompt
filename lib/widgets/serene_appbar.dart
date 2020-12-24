@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class SereneAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
 
-  const SereneAppBar({Key key, this.title}) : super(key: key);
+  const SereneAppBar({Key key, this.title = ""}) : super(key: key);
 
   @override
   AppBar build(BuildContext context) {

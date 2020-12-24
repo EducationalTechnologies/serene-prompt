@@ -2,7 +2,7 @@ class RouteNames {
   static const HOME = "/";
   static const MAIN = "/main";
   static const GOALS = "/goals";
-  static const GOAL_SHIELDING = "/goalshielding";
+  static const INTERNALISATION = "/internalisation";
   static const ADD_GOAL = "/addgoal";
   static const GS_HIGHLIGHT = "/gshighlight";
 
@@ -15,7 +15,6 @@ class RouteNames {
   static const AMBULATORY_ASSESSMENT_DAILY = "/aadaily";
 
   static const CONSENT = "/consent";
-  static const TIMER = "/timer";
   static const TEST = "/test";
   static const OPEN_GOALS = "/opengoals";
   static const LOG_IN = "/login";

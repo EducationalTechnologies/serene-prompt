@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
+import 'package:serene/viewmodels/internalisation_view_model.dart';
 
 class HighlightInternalisationScreen extends StatefulWidget {
   HighlightInternalisationScreen({Key key}) : super(key: key);
@@ -20,19 +20,19 @@ class _HighlightInternalisationScreenState
   @override
   Widget build(BuildContext context) {
     final intention =
-        Provider.of<GoalShieldingViewModel>(context, listen: false);
+        Provider.of<InternalisationViewModel>(context, listen: false);
 
-    var intentionTextList = getIndividualChars(intention.shieldingSentence);
+    var intentionTextList =
+        getIndividualChars(intention.implementationIntention);
 
     return Container(
       child: Column(
         children: <Widget>[
           UIHelper.verticalSpaceMedium(),
           UIHelper.verticalSpaceMedium(),
-          Text(intention.shieldingSentence),
+          Text(intention.implementationIntention),
           intentionTextList,
           UIHelper.verticalSpaceMedium(),
-          // Text("Debug Stuff Counter: $_longPressCounter")
         ],
       ),
     );

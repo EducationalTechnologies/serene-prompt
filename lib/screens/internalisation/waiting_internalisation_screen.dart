@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
+import 'package:serene/viewmodels/internalisation_view_model.dart';
 
 class WaitingInternalisationScreen extends StatefulWidget {
   @override
@@ -29,11 +29,7 @@ class _WaitingInternalisationScreenState
         AnimationController(duration: Duration(seconds: 15), vsync: this);
     animation = Tween<double>(begin: 0, end: pi / 2).animate(controller);
     animation.addListener(() {
-      print("Animation Listener");
-      print(animation.value);
-      setState(() {
-        
-      });
+      setState(() {});
     });
     controller.forward();
   }
@@ -45,8 +41,7 @@ class _WaitingInternalisationScreenState
   }
 
   Widget buildTextEntry() {
-    final intention =
-        Provider.of<GoalShieldingViewModel>(context, listen: false);
+    final vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return Container(
       padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 30, top: 20),
       decoration: BoxDecoration(
@@ -74,7 +69,7 @@ class _WaitingInternalisationScreenState
                   _done = true;
                 });
                 if (text.toLowerCase() ==
-                    intention.shieldingSentence.toLowerCase()) {
+                    vm.implementationIntention.toLowerCase()) {
                   print("MATCH");
                 } else {
                   print("NO MATCH");
@@ -104,19 +99,18 @@ class _WaitingInternalisationScreenState
 
   @override
   Widget build(BuildContext context) {
-    final intention =
-        Provider.of<GoalShieldingViewModel>(context, listen: false);
+    final vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return Container(
       child: ListView(
         children: <Widget>[
           UIHelper.verticalSpaceMedium(),
           UIHelper.verticalSpaceMedium(),
-          Text(intention.shieldingSentence,
+          Text(vm.implementationIntention,
               style: TextStyle(fontSize: 30.0, color: Colors.grey[900])),
           UIHelper.verticalSpaceMedium(),
           Center(
               child: CircleProgressBar(
-                  foregroundColor: Theme.of(context).primaryColor, 
+                  foregroundColor: Theme.of(context).primaryColor,
                   animationDuration: Duration(seconds: 5),
                   value: animation.value)),
           UIHelper.verticalSpaceMedium(),

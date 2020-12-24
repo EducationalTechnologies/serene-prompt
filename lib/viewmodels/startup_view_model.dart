@@ -30,7 +30,7 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.LOG_IN);
         break;
       case AppStartupMode.preLearningAssessment:
-        nav.navigateAndRemove(RouteNames.GOAL_SHIELDING);
+        nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.firstLaunch:
         nav.navigateAndRemove(RouteNames.LOG_IN);

@@ -4,6 +4,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
+import 'package:serene/screens/internalisation/internalisation_screen.dart';
 import 'package:serene/screens/login_screen.dart';
 import 'package:serene/screens/questionnaire/lexical_decision_task_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
@@ -18,20 +19,17 @@ import 'package:serene/viewmodels/consent_state.dart';
 import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/consent_screen.dart';
-import 'package:serene/screens/goal_shielding/goal_shielding_screen.dart';
 import 'package:serene/screens/main_screen.dart';
-import 'package:serene/screens/timer_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
-import 'package:serene/viewmodels/goal_shielding_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
+import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/viewmodels/settings_view_model.dart';
-import 'package:serene/viewmodels/timer_view_model.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -45,13 +43,13 @@ class AppRouter {
                     child: MainScreen()));
       // return MaterialPageRoute(builder: (_) => MainScreen());
 
-      case RouteNames.GOAL_SHIELDING:
+      case RouteNames.INTERNALISATION:
         return MaterialPageRoute(
             builder: (context) =>
-                ChangeNotifierProvider<GoalShieldingViewModel>(
+                ChangeNotifierProvider<InternalisationViewModel>(
                     create: (_) =>
-                        GoalShieldingViewModel(locator.get<DataService>()),
-                    child: GoalShieldingScreen()));
+                        InternalisationViewModel(locator.get<DataService>()),
+                    child: InternalisationScreen()));
 
       case RouteNames.ADD_GOAL:
         final GoalScreenArguments goalArgs = settings.arguments;
@@ -118,13 +116,6 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<ConsentState>(
                 create: (_) => ConsentState(), child: ConsentScreen()));
-
-      case RouteNames.TIMER:
-        return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<TimerViewModel>(
-                  create: (_) => TimerViewModel(locator.get<SettingsService>()),
-                  child: TimerScreen(),
-                ));
 
       case RouteNames.OPEN_GOALS:
         return MaterialPageRoute(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/init_session_view_model.dart';
 
 class OutcomeEnterScreen extends StatefulWidget {
   OutcomeEnterScreen({Key key}) : super(key: key);
@@ -12,15 +10,31 @@ class OutcomeEnterScreen extends StatefulWidget {
 }
 
 class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
-  buildTextField(String index) {
-    final vm = Provider.of<InitSessionViewModel>(context);
+  List<TextField> _customOutcomes = [];
 
+  @override
+  void initState() {
+    super.initState();
+    _customOutcomes.add(buildTextField());
+  }
+
+  buildTextField() {
     return TextField(
-        decoration: InputDecoration(hintText: 'Gib ein Hindernis ein'),
-        key: Key(index),
-        onChanged: (text) {
-          vm.editCustomOutcome(index, text);
-        });
+      decoration: InputDecoration(hintText: 'Gib ein Ziel ein'),
+    );
+  }
+
+  buildAddButton() {
+    return ElevatedButton.icon(
+        onPressed: () {
+          setState(() {
+            if (_customOutcomes.length <= 3) {
+              _customOutcomes.add(buildTextField());
+            }
+          });
+        },
+        icon: Icon(Icons.add),
+        label: Text("Weiteres Ziel hinzufügen"));
   }
 
   @override
@@ -30,15 +44,22 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-              "Wenn du in der vorherigen Liste nicht die Hindernisse gefunden hast, die dich am ehesten vom Vokabellernen abhalten, kannst du hier eigene eingeben.",
+              "Wenn du in der vorherigen Liste nicht die Ziele gefunden hast, die dich am ehesten zum Vokabellernen motivieren, kannst du hier eigene eingeben.",
               style: Theme.of(context).textTheme.subtitle1),
           UIHelper.verticalSpaceMedium(),
-          Text(
-              "Falls du mehr als ein zusätzliches Hindernis aufschreiben möchtest, dann drücke das (+)-Symbol.",
-              style: Theme.of(context).textTheme.subtitle1),
+          // Text(
+          //     "Falls du mehr als ein zusätzliches Hindernis aufschreiben möchtest, dann drücke das (+)-Symbol.",
+          //     style: Theme.of(context).textTheme.subtitle1),
+          // UIHelper.verticalSpaceMedium(),
+          Container(
+            height: 200,
+            child: ListView(
+              children: _customOutcomes,
+            ),
+          ),
+          // buildTextField(),
           UIHelper.verticalSpaceMedium(),
-          buildTextField("1"),
-          UIHelper.verticalSpaceMedium(),
+          buildAddButton()
         ],
       ),
     );

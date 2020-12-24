@@ -164,4 +164,17 @@ class DataService {
     return await _databaseService.saveObstacles(
         obstacles, _userService.getUserEmail());
   }
+
+  getCurrentImplementationIntention() async {
+    // TODO: Replace with actual code
+    return await Future.delayed(Duration.zero).then((value) {
+      return "Wenn ich beim Lernen müde werde, dann stehe ich kurz auf und strecke mich";
+    });
+  }
+
+  getInternalisationCondition() async {
+    return await Future.delayed(Duration.zero).then((value) {
+      return 1;
+    });
+  }
 }

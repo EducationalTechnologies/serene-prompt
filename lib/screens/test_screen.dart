@@ -25,11 +25,6 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.pushNamed(context, RouteNames.CONSENT);
                 }),
             ListTile(
-                title: Text("Timer"),
-                onTap: () async {
-                  Navigator.pushNamed(context, RouteNames.TIMER);
-                }),
-            ListTile(
                 title: Text("Assessment Pre Learning"),
                 onTap: () async {
                   Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT,
@@ -49,11 +44,6 @@ class _TestScreenState extends State<TestScreen> {
                   Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT,
                       arguments:
                           AssessmentScreenArguments(AssessmentType.postTest));
-                }),
-            ListTile(
-                title: Text("Test Notifications"),
-                onTap: () async {
-                  await NotificationService().showNotification();
                 }),
             RaisedButton(
               onPressed: () {
