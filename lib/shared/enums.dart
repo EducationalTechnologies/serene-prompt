@@ -63,5 +63,8 @@ enum AppStartupMode {
   signin,
   preLearningAssessment,
   firstLaunch,
-  postLearningAssessment
+  postLearningAssessment,
+  noTasks,
+  internalisationTask,
+  recallTask
 }

@@ -42,6 +42,41 @@ class ExperimentService {
     return Future.delayed(Duration.zero).then((res) => true);
   }
 
+  // TODO: Implement
+  Future<bool> isTimeForInternalisationTask() async {
+    return await Future.delayed(Duration.zero).then((value) {
+      return false;
+    });
+  }
+
+  // TODO: Implement
+  Future<bool> isTimeForRecallTask() async {
+    return await Future.delayed(Duration.zero).then((value) {
+      return false;
+    });
+  }
+
+  // TODO: Implement
+  Future<bool> isTimeForLexicalDecisionTask() async {
+    return await Future.delayed(Duration.zero).then((value) {
+      return false;
+    });
+  }
+
+  // TODO: Implement
+  Future<bool> isTimeForUsabilityTask() async {
+    return await Future.delayed(Duration.zero).then((value) {
+      return false;
+    });
+  }
+
+  // TODO: Implement
+  Future<bool> isRecallTaskDone() async {
+    return await Future.delayed(Duration.zero).then((value) {
+      return false;
+    });
+  }
+
   isToday(DateTime dateTime) {
     var today = DateTime.now();
     return dateTime.year == today.year &&

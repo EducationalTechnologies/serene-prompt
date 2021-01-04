@@ -38,6 +38,15 @@ class StartupViewModel extends BaseViewModel {
       case AppStartupMode.postLearningAssessment:
         nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
         break;
+      case AppStartupMode.internalisationTask:
+        nav.navigateAndRemove(RouteNames.INTERNALISATION);
+        break;
+      case AppStartupMode.recallTask:
+        nav.navigateAndRemove(RouteNames.RECALL_TASK);
+        break;
+      case AppStartupMode.noTasks:
+        nav.navigateAndRemove(RouteNames.NO_TASKS);
+        break;
     }
   }
 
@@ -54,13 +63,18 @@ class StartupViewModel extends BaseViewModel {
     var experimentService = locator<ExperimentService>();
     await experimentService.initialize();
 
-    if (await experimentService.shouldShowPreLearningAssessment()) {
-      return AppStartupMode.preLearningAssessment;
+    if (await experimentService.isTimeForInternalisationTask()) {
+      return AppStartupMode.internalisationTask;
     }
+    if (await experimentService.isTimeForRecallTask()) {}
 
-    if (await experimentService.shouldShowPostLearningAssessment()) {
-      return AppStartupMode.postLearningAssessment;
-    }
-    return AppStartupMode.normal;
+    if (await experimentService.isTimeForLexicalDecisionTask()) {}
+
+    if (await experimentService.isTimeForUsabilityTask()) {}
+    // if (await experimentService.shouldShowPostLearningAssessment()) {
+    //   return AppStartupMode.postLearningAssessment;
+    // }
+
+    return AppStartupMode.noTasks;
   }
 }

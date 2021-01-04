@@ -68,7 +68,6 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
   bool _done = false;
-  // bool _allChunksUsed = false;
 
   @override
   initState() {
@@ -149,18 +148,23 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   buildSelectStack() {}
 
   _buildSubmitButton() {
-    return SizedBox(
-        width: double.infinity,
-        height: 60,
-        child: RaisedButton(
-          onPressed: () => {
-            Navigator.pushNamed(
-                context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST)
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10.0)),
-          child: Text("Abschicken", style: TextStyle(fontSize: 20)),
-        ));
+    var vm = Provider.of<InternalisationViewModel>(context, listen: false);
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+          width: double.infinity,
+          height: 60,
+          child: RaisedButton(
+            onPressed: () async {
+              await vm.submit();
+              Navigator.pushNamed(
+                  context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(10.0)),
+            child: Text("Abschicken", style: TextStyle(fontSize: 20)),
+          )),
+    );
   }
 
   _buildCorrectText(String text) {
@@ -189,30 +193,38 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView(
-        children: <Widget>[
-          UIHelper.verticalSpaceMedium(),
-          if (this.widget.showText) _buildCorrectText(_correctSentence),
-          UIHelper.verticalSpaceMedium(),
-          Container(
-            height: MediaQuery.of(context).size.height / 3,
-            child: Wrap(
+      margin: EdgeInsets.fromLTRB(5, 10, 5, 20),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
               children: <Widget>[
-                for (var s in _builtSentence)
-                  if (s.isSelected) buildWordBox(s),
+                UIHelper.verticalSpaceMedium(),
+                if (this.widget.showText) _buildCorrectText(_correctSentence),
+                UIHelper.verticalSpaceMedium(),
+                Container(
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: Wrap(
+                    children: <Widget>[
+                      for (var s in _builtSentence)
+                        if (s.isSelected) buildWordBox(s),
+                    ],
+                  ),
+                ),
+                // _buildDragDrop(),
+                if (_allChunksUsed() && !_isDone()) _buildIncorrectWarning(),
+                Wrap(
+                  children: <Widget>[
+                    for (var s in _scrambledSentence)
+                      if (!s.isSelected)
+                        Stack(
+                            children: [buildEmptyWord(s.text), buildWordBox(s)])
+                      else
+                        buildEmptyWord(s.text)
+                  ],
+                ),
               ],
             ),
-          ),
-          // _buildDragDrop(),
-          if (_allChunksUsed() && !_isDone()) _buildIncorrectWarning(),
-          Wrap(
-            children: <Widget>[
-              for (var s in _scrambledSentence)
-                if (!s.isSelected)
-                  Stack(children: [buildEmptyWord(s.text), buildWordBox(s)])
-                else
-                  buildEmptyWord(s.text)
-            ],
           ),
           if (_done) _buildSubmitButton()
         ],

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
+import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/firebase_service.dart';
@@ -173,8 +174,11 @@ class DataService {
   }
 
   getInternalisationCondition() async {
-    return await Future.delayed(Duration.zero).then((value) {
-      return 1;
-    });
+    return _userService.getUserData().internalisationCondition;
+  }
+
+  saveInternalisation(Internalisation internalisation) async {
+    return await _databaseService.saveInternalisation(
+        internalisation, _userService.getUserEmail());
   }
 }

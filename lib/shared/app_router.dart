@@ -6,6 +6,7 @@ import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
 import 'package:serene/screens/login_screen.dart';
+import 'package:serene/screens/no_task_screen.dart';
 import 'package:serene/screens/questionnaire/lexical_decision_task_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
 import 'package:serene/screens/test_screen.dart';
@@ -149,6 +150,9 @@ class AppRouter {
 
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());
+
+      case RouteNames.NO_TASKS:
+        return MaterialPageRoute(builder: (_) => NoTasksScreen());
 
       case RouteNames.DAILY_LEARNING_QUESTIONS:
         return MaterialPageRoute(

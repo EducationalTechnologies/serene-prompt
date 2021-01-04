@@ -5,6 +5,7 @@ class RouteNames {
   static const INTERNALISATION = "/internalisation";
   static const ADD_GOAL = "/addgoal";
   static const GS_HIGHLIGHT = "/gshighlight";
+  static const RECALL_TASK = "/recalltask";
 
   static const INIT_START = "/initstart";
 
@@ -23,4 +24,5 @@ class RouteNames {
   static const MONITORING = "/monitoring";
 
   static const LDT = "/ldt";
+  static const NO_TASKS = "/notasks";
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:serene/locator.dart';
+import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
@@ -41,7 +43,11 @@ class SereneDrawer extends StatelessWidget {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text("Serene"), VersionInfo()])),
+                      children: [
+                        Text("Serene"),
+                        Text(locator<UserService>().getUserEmail()),
+                        VersionInfo()
+                      ])),
             ),
           ),
           Divider(),
@@ -96,7 +102,7 @@ class SereneDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
           ListTile(
-              title: Text("Internalisierung"),
+              title: Text("Initialisierung"),
               onTap: () async {
                 await Navigator.pushNamed(context, RouteNames.INIT_START,
                     arguments: AssessmentScreenArguments(

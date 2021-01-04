@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
+import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/models/user_data.dart';
@@ -30,6 +31,7 @@ class FirebaseService {
   static const String COLLECTION_SHIELDS = "shields";
   static const String COLLECTION_OUTCOMES = "outcomes";
   static const String COLLECTION_OBSTACLES = "obstacles";
+  static const String COLLECTION_INTERNALISATION = "internalisation";
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -277,5 +279,12 @@ class FirebaseService {
 
     if (doc.docs.length == 0) return null;
     return GoalShield.fromDocument(doc.docs[0]);
+  }
+
+  saveInternalisation(Internalisation internalisation, String email) async {
+    var map = internalisation.toMap();
+    map["user"] = email;
+
+    await _databaseReference.collection(COLLECTION_INTERNALISATION).add(map);
   }
 }
