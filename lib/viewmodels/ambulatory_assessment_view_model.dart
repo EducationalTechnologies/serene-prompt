@@ -19,7 +19,7 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
 
   AmbulatoryAssessmentViewModel(
       this._assessmentType, this._userService, this._dataService) {
-    if (this._assessmentType == AssessmentType.preLearning) {
+    if (this._assessmentType == AssessmentType.preImplementationIntention) {
       title = "";
       this._currentAssessment = getPreLearningList();
     } else if (this._assessmentType == AssessmentType.postLearning) {
@@ -323,7 +323,9 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
       if (results["dailyQuestion1"] == "1") {
         return RouteNames.INTERNALISATION;
       }
+    } else if (_assessmentType == AssessmentType.preImplementationIntention) {
+      return RouteNames.INTERNALISATION;
     }
-    return RouteNames.MAIN;
+    return RouteNames.NO_TASKS;
   }
 }

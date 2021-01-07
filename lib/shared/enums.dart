@@ -23,6 +23,7 @@ class AssessmentType {
   static const String preLearning = "preLearning";
   static const String postLearning = "postLearning";
   static const String srl = "srlSurvey";
+  static const String preImplementationIntention = "preImplementationIntention";
 }
 
 class ResourceType {

@@ -6,6 +6,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/navigation_service.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/widgets/full_width_button.dart';
 
 class LexicalDecisionTaskScren extends StatefulWidget {
@@ -21,9 +22,10 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
 
   final String clear = "++++++++++++";
 
-  bool clearState = false;
+  bool isTextState = true;
   int _currentWordIndex = 0;
-  int timerDuration = 500;
+  int timerDurationRegular = 1500;
+  int timerDurationClear = 500;
   Stopwatch stopwatch;
   Timer _nextTimer;
   bool _trialComplete = false;
@@ -51,6 +53,8 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
     stopwatch = Stopwatch();
     super.initState();
     change();
+    current = clear;
+    isTextState = false;
   }
 
   change() {
@@ -59,12 +63,9 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
       return;
     }
 
-    if (!clearState) {
-      timerDuration = 500;
-    } else {
-      timerDuration = 2000;
-    }
-    _nextTimer = Timer(Duration(milliseconds: timerDuration), () {
+    int duration = isTextState ? timerDurationRegular : timerDurationClear;
+
+    _nextTimer = Timer(Duration(milliseconds: duration), () {
       next();
       change();
     });
@@ -74,17 +75,17 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
     stopwatch.reset();
     stopwatch.start();
     setState(() {
-      if (clearState) {
+      if (isTextState) {
         current = clear;
       } else {
         current = _trial[_currentWordIndex].word;
         _currentWordIndex++;
       }
-      clearState = !clearState;
     });
+    isTextState = !isTextState;
   }
 
-  getRoundTime(int selection) {
+  pressed(int selection) {
     stopwatch.stop();
     _trial[_currentWordIndex].responseTime = stopwatch.elapsedMilliseconds;
     _trial[_currentWordIndex].status = selection;
@@ -121,37 +122,31 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
 
   buildLDT() {
     return Column(
-      children: [
-        Text(current, style: TextStyle(fontSize: 40, color: Colors.black)),
-        buildYesNo()
-      ],
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    );
-  }
-
-  Widget buildYesNo() {
-    return Row(
-      children: [
-        RaisedButton(
-          onPressed: () {
-            getRoundTime(1);
-          },
-          child: Text("Ja"),
-        ),
-        RaisedButton(
-            onPressed: () {
-              getRoundTime(0);
-            },
-            child: Text("Nein"))
-      ],
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    );
+        children: [
+          Text(
+            current,
+            style: TextStyle(fontSize: 40, color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
+          Visibility(
+            visible: isTextState,
+            child: FullWidthButton(
+              onPressed: () {
+                pressed(1);
+              },
+              text: "Ja",
+            ),
+          ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+      margin: UIHelper.getContainerMargin(),
       child: _trialComplete ? buildTrialSummary() : buildLDT(),
     ));
   }

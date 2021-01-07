@@ -46,7 +46,7 @@ class UIHelper {
     return EdgeInsets.all(10);
   }
 
-  static EdgeInsets containerMargin = EdgeInsets.all(10);
+  static const EdgeInsets containerMargin = EdgeInsets.all(10);
 
   static buildSubHeader(String title) {
     return Align(

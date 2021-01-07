@@ -1,13 +1,14 @@
 import 'package:serene/services/data_service.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/extensions.dart';
 
 class ExperimentService {
   DataService _dataService;
 
   ExperimentService(this._dataService);
 
-  Future<bool> initialize() {
-    return Future.delayed(Duration.zero).then((res) => true);
+  Future<bool> initialize() async {
+    return await Future.delayed(Duration.zero).then((res) => true);
   }
 
   Future<bool> shouldShowPreLearningAssessment() async {
@@ -17,7 +18,7 @@ class ExperimentService {
 
     // return false;
     if (lastPreLearningAssessment == null) return true;
-    return !isToday(lastPreLearningAssessment.submissionDate);
+    return !lastPreLearningAssessment.submissionDate.isToday();
   }
 
   Future<bool> shouldShowPostLearningAssessment() async {
@@ -42,11 +43,22 @@ class ExperimentService {
     return Future.delayed(Duration.zero).then((res) => true);
   }
 
-  // TODO: Implement
   Future<bool> isTimeForInternalisationTask() async {
-    return await Future.delayed(Duration.zero).then((value) {
+    var lastInternalisation = await _dataService.getLastInternalisation();
+
+    if (lastInternalisation == null) {
+      return true;
+    }
+
+    if (lastInternalisation.completionDate.isToday()) {
       return false;
-    });
+    }
+
+    var now = DateTime.now();
+    if (now.hour >= 18) {
+      return false;
+    }
+    return true;
   }
 
   // TODO: Implement
@@ -75,12 +87,5 @@ class ExperimentService {
     return await Future.delayed(Duration.zero).then((value) {
       return false;
     });
-  }
-
-  isToday(DateTime dateTime) {
-    var today = DateTime.now();
-    return dateTime.year == today.year &&
-        dateTime.month == today.month &&
-        dateTime.day == today.day;
   }
 }

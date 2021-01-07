@@ -50,8 +50,7 @@ class _WaitingInternalisationScreenState
         child: RaisedButton(
           onPressed: () async {
             await vm.submit(InternalisationCondition.waiting);
-            Navigator.pushNamed(
-                context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
+            Navigator.pushNamed(context, RouteNames.NO_TASKS);
           },
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0)),

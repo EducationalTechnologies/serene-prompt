@@ -172,7 +172,7 @@ class DataService {
     });
   }
 
-  getInternalisationCondition() async {
+  Future<int> getInternalisationCondition() async {
     return _userService.getUserData().internalisationCondition;
   }
 
@@ -184,5 +184,10 @@ class DataService {
   saveRecallTask(RecallTask recallTask) async {
     return await _databaseService.saveRecallTask(
         recallTask, _userService.getUserEmail());
+  }
+
+  Future<Internalisation> getLastInternalisation() async {
+    return await _databaseService
+        .getLastInternalisation(_userService.getUserEmail());
   }
 }

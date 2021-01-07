@@ -29,21 +29,14 @@ class UserService {
     await _settings.setSetting(SettingsKeys.email, email);
   }
 
-  int _getTreatmentGroup() {
-    var rng = new Random();
-    // TODO: This hardcoded value needs to go and the number of groups has to be stored somewhere else, maybe in an Experiment.json
-    return rng.nextInt(1);
-  }
-
   int _getInternalisationCondition() {
     var rng = new Random();
     // TODO: This hardcoded value needs to go and the number of groups has to be stored somewhere else, maybe in an Experiment.json
-    return rng.nextInt(3);
+    return rng.nextInt(2) + 1;
   }
 
   Future<String> registerUser(String email, String password) async {
-    var treatmentGroup = _getTreatmentGroup();
-    var internalisationCondition = _getInternalisationCondition();
+    var treatmentGroup = _getInternalisationCondition();
     var userData =
         await FirebaseService().registerUser(email, password, treatmentGroup);
     if (userData != null) {

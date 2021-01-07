@@ -4,7 +4,6 @@ import 'package:serene/screens/internalisation/scramble_internalisation.dart';
 import 'package:serene/screens/internalisation/waiting_internalisation_screen.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
-import 'package:serene/widgets/loading_overlay.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
@@ -34,13 +33,7 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
   Widget build(BuildContext context) {
     var vm = Provider.of<InternalisationViewModel>(context);
     var child =
-        getInternalisationScrenForCondition(InternalisationCondition.waiting);
-
-    // if (vm.state == ViewState.busy) {
-    //   LoadingOverlay.showLoadingDialog(context, vm.keyLoader);
-    // } else {
-    //   Navigator.of(vm.keyLoader.currentContext, rootNavigator: true).pop();
-    // }
+        getInternalisationScrenForCondition(vm.internalisationCondition);
 
     return Scaffold(
       appBar: SereneAppBar(),

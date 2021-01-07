@@ -6,7 +6,8 @@ import 'package:serene/viewmodels/base_view_model.dart';
 class InternalisationViewModel extends BaseViewModel {
   DataService _dataService;
   String implementationIntention;
-  int internalisationCondition = 1;
+  InternalisationCondition internalisationCondition =
+      InternalisationCondition.waiting;
 
   Internalisation _currentInternalisation = Internalisation();
 
@@ -17,7 +18,7 @@ class InternalisationViewModel extends BaseViewModel {
     });
 
     this._dataService.getInternalisationCondition().then((c) {
-      this.internalisationCondition = c;
+      this.internalisationCondition = InternalisationCondition.values[c];
     });
 
     _currentInternalisation.startDate = DateTime.now();
@@ -28,6 +29,7 @@ class InternalisationViewModel extends BaseViewModel {
     _currentInternalisation.completionDate = DateTime.now();
     _currentInternalisation.implementationIntention = implementationIntention;
     _currentInternalisation.condition = condition.toString();
-    return await this._dataService.saveInternalisation(_currentInternalisation);
+    await this._dataService.saveInternalisation(_currentInternalisation);
+    return true;
   }
 }

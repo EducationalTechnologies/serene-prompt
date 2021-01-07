@@ -123,6 +123,16 @@ class AppRouter {
                         locator.get<DataService>()),
                     child: AmbulatoryAssessmentScreen()));
 
+      case RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION:
+        return MaterialPageRoute(
+            builder: (_) =>
+                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
+                    create: (_) => AmbulatoryAssessmentViewModel(
+                        AssessmentType.preImplementationIntention,
+                        locator.get<UserService>(),
+                        locator.get<DataService>()),
+                    child: AmbulatoryAssessmentScreen()));
+
       case RouteNames.CONSENT:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<ConsentState>(

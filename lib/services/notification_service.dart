@@ -47,18 +47,16 @@ class NotificationService {
     await localNotifications.initialize(initSettings,
         onSelectNotification: onSelectNotification);
 
+    await scheduleInternalisationReminder(new Time(6, 30, 0));
+    await scheduleTaskReminder(new Time(16, 30, 0));
     var pendingNotifications = await getPendingNotifications();
     var internalisationReminderExists = pendingNotifications
         .firstWhere((n) => n.id == ID_INTERNALISATION, orElse: () => null);
-    if (internalisationReminderExists == null) {
-      await scheduleInternalisationReminder(new Time(6, 30, 0));
-    }
+    if (internalisationReminderExists == null) {}
 
     var taskReminderExists = pendingNotifications
         .firstWhere((n) => n.id == ID_TASK_REMINDER, orElse: () => null);
-    if (taskReminderExists == null) {
-      await scheduleTaskReminder(new Time(16, 30, 0));
-    }
+    if (taskReminderExists == null) {}
   }
 
   Future<void> _configureLocalTimeZone() async {
@@ -86,8 +84,8 @@ class NotificationService {
       debugPrint('notification payload: ' + payload);
 
       if (payload == PAYLOAD_II_REMINDER) {
-        await locator<NavigationService>()
-            .navigateTo(RouteNames.INTERNALISATION);
+        await locator<NavigationService>().navigateTo(
+            RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION);
       }
       if (payload == PAYLOAD_TASK_REMINDER) {
         await locator<NavigationService>().navigateTo(RouteNames.RECALL_TASK);
@@ -139,9 +137,9 @@ class NotificationService {
         iOS: iOSPlatformChannelSpecifics);
 
     await localNotifications.zonedSchedule(
-        ID_INTERNALISATION,
-        "Nutze deinen Wenn-Dann-Plan",
-        "Bitte nutze deinen Wenn-Dann-Plan",
+        ID_TASK_REMINDER,
+        "Versuche dich, an deinen Wenn-Dann-Plan zu erinnern",
+        "Klicke hier, um deine Erinnerung an den Wenn-Dann-Plan zu überprüfen",
         _getNextScheduleTimeFromTime(time),
         notificationDetails,
         uiLocalNotificationDateInterpretation:
