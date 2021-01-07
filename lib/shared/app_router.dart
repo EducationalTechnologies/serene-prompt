@@ -4,6 +4,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
+import 'package:serene/screens/internalisation/internalisation_recall_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
 import 'package:serene/screens/login_screen.dart';
 import 'package:serene/screens/no_task_screen.dart';
@@ -26,6 +27,7 @@ import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
 import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
+import 'package:serene/viewmodels/internalisation_recall_view_model.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
@@ -61,6 +63,14 @@ class AppRouter {
                     goal: goalArgs?.goal,
                     dataService: locator.get<DataService>()),
                 child: AddGoalScreen()));
+
+      case RouteNames.RECALL_TASK:
+        return MaterialPageRoute(
+            builder: (context) => ChangeNotifierProvider<
+                    InternalisationRecallViewModel>(
+                create: (_) =>
+                    InternalisationRecallViewModel(locator.get<DataService>()),
+                child: InternalisationRecallScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT:
         final AssessmentScreenArguments assessmentArgs = settings.arguments;

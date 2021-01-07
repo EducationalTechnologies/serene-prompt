@@ -51,25 +51,26 @@ class SereneDrawer extends StatelessWidget {
             ),
           ),
           Divider(),
+          // _buildDrawerItem(
+          //     icon: Icons.add_box,
+          //     text: "Neues Ziel",
+          //     onTap: () async {
+          //       await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
+          //       Navigator.pop(context);
+          //       await Navigator.pushNamed(context, RouteNames.MAIN);
+          //     }),
           _buildDrawerItem(
-              icon: Icons.add_box,
-              text: "Neues Ziel",
-              onTap: () async {
-                await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
-                Navigator.pop(context);
-                await Navigator.pushNamed(context, RouteNames.MAIN);
-              }),
-          _buildDrawerItem(
-              icon: Icons.list,
-              text: "Ziele",
+              icon: Icons.question_answer,
+              text: "Recall",
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.MAIN);
+                Navigator.pushNamed(context, RouteNames.RECALL_TASK);
               }),
           _buildDrawerItem(
               icon: Icons.security,
               text: "Internalisation",
               onTap: () {
+                Navigator.pop(context);
                 Navigator.pushNamed(context, RouteNames.INTERNALISATION);
               }),
           Divider(),
@@ -93,12 +94,14 @@ class SereneDrawer extends StatelessWidget {
                 style: subHeaderStyle,
               ),
               onTap: () async {
+                Navigator.pop(context);
                 await Navigator.pushNamed(context, RouteNames.LDT);
               }),
           Divider(),
           ListTile(
               title: Text("Login"),
               onTap: () async {
+                Navigator.pop(context);
                 Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
           ListTile(

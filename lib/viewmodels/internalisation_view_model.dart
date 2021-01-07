@@ -1,5 +1,6 @@
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class InternalisationViewModel extends BaseViewModel {
@@ -22,9 +23,11 @@ class InternalisationViewModel extends BaseViewModel {
     _currentInternalisation.startDate = DateTime.now();
   }
 
-  Future<bool> submit() async {
+  Future<bool> submit(InternalisationCondition condition) async {
+    this.setState(ViewState.busy);
     _currentInternalisation.completionDate = DateTime.now();
     _currentInternalisation.implementationIntention = implementationIntention;
+    _currentInternalisation.condition = condition.toString();
     return await this._dataService.saveInternalisation(_currentInternalisation);
   }
 }

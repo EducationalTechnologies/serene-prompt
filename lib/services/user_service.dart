@@ -49,6 +49,7 @@ class UserService {
     if (userData != null) {
       await saveUsername(userData.userId);
       await saveUserEmail(userData.email);
+      this._userData = userData;
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;

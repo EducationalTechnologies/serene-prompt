@@ -42,6 +42,12 @@ class UIHelper {
     return SizedBox(width: width);
   }
 
+  static EdgeInsets getContainerMargin() {
+    return EdgeInsets.all(10);
+  }
+
+  static EdgeInsets containerMargin = EdgeInsets.all(10);
+
   static buildSubHeader(String title) {
     return Align(
       alignment: Alignment.centerLeft,

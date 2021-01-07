@@ -9,6 +9,7 @@ import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
+import 'package:serene/models/recall_task.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
@@ -20,7 +21,6 @@ class DataService {
   List<GoalShield> _goalShields;
   UserService _userService;
   FirebaseService _databaseService;
-  StreamController<Goal> goalStream = StreamController<Goal>.broadcast();
 
   DataService(this._databaseService, this._userService);
 
@@ -52,7 +52,6 @@ class DataService {
     }
 
     _openGoalsCache.add(goal);
-    goalStream.add(goal);
     await _databaseService.createGoal(goal, _userService.getUserEmail());
     if (goal.parentId.isNotEmpty) {
       var parentPath = getGoalById(goal.parentId).path;
@@ -180,5 +179,10 @@ class DataService {
   saveInternalisation(Internalisation internalisation) async {
     return await _databaseService.saveInternalisation(
         internalisation, _userService.getUserEmail());
+  }
+
+  saveRecallTask(RecallTask recallTask) async {
+    return await _databaseService.saveRecallTask(
+        recallTask, _userService.getUserEmail());
   }
 }

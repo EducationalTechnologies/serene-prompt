@@ -90,9 +90,7 @@ class NotificationService {
             .navigateTo(RouteNames.INTERNALISATION);
       }
       if (payload == PAYLOAD_TASK_REMINDER) {
-        // TODO: REPLACE WITH ROUTE TO THE ACTUAL REMEMBERANCE TASK
-        await locator<NavigationService>()
-            .navigateTo(RouteNames.INTERNALISATION);
+        await locator<NavigationService>().navigateTo(RouteNames.RECALL_TASK);
       }
     }
   }

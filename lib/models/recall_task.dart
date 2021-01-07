@@ -1,19 +1,19 @@
-class Internalisation {
+class RecallTask {
   DateTime startDate;
   DateTime completionDate;
-  String id;
+  String recalledSentence;
   String implementationIntention;
   String condition;
 
-  Internalisation(
+  RecallTask(
       {this.startDate,
       this.completionDate,
-      this.id,
+      this.recalledSentence,
       this.implementationIntention,
       this.condition});
 
-  Internalisation.fromDocument(dynamic document) {
-    this.id = document.documentID;
+  RecallTask.fromDocument(dynamic document) {
+    this.recalledSentence = document["recalledSentence"];
     this.completionDate = DateTime.parse(document["completionDate"]);
     this.startDate = DateTime.parse(document["startDate"]);
     this.implementationIntention = document["implementationIntention"];
@@ -25,7 +25,8 @@ class Internalisation {
       "startDate": this.startDate.toIso8601String(),
       "completionDate": this.completionDate.toIso8601String(),
       "implementationIntention": this.implementationIntention,
-      "condition": this.condition
+      "condition": this.condition,
+      "recalledSentence": this.recalledSentence
     };
   }
 }

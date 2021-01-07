@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
@@ -156,7 +157,10 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           height: 60,
           child: RaisedButton(
             onPressed: () async {
-              await vm.submit();
+              var condition = widget.showText
+                  ? InternalisationCondition.scrambleWithHint
+                  : InternalisationCondition.scrambleWithoutHint;
+              await vm.submit(condition);
               Navigator.pushNamed(
                   context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
             },

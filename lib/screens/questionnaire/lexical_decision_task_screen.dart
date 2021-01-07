@@ -2,7 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/models/ldt_data.dart';
+import 'package:serene/services/navigation_service.dart';
+import 'package:serene/shared/route_names.dart';
+import 'package:serene/widgets/full_width_button.dart';
 
 class LexicalDecisionTaskScren extends StatefulWidget {
   LexicalDecisionTaskScren({Key key}) : super(key: key);
@@ -104,7 +108,12 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
     }
 
     return Column(
-      children: summaryItems,
+      children: [
+        ...summaryItems,
+        FullWidthButton(onPressed: () async {
+          await locator<NavigationService>().navigateTo(RouteNames.NO_TASKS);
+        })
+      ],
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
     );

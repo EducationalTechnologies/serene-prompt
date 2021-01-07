@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
@@ -17,79 +18,40 @@ class _WaitingInternalisationScreenState
     with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
-  TextEditingController _textController;
   bool _done = false;
 
   @override
   void initState() {
     super.initState();
-    _textController = new TextEditingController(text: "");
-
     controller =
         AnimationController(duration: Duration(seconds: 15), vsync: this);
     animation = Tween<double>(begin: 0, end: pi / 2).animate(controller);
     animation.addListener(() {
       setState(() {});
     });
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _done = true;
+      }
+    });
     controller.forward();
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
-  Widget buildTextEntry() {
-    final vm = Provider.of<InternalisationViewModel>(context, listen: false);
-    return Container(
-      padding: EdgeInsets.only(left: 10.0, right: 10, bottom: 30, top: 20),
-      decoration: BoxDecoration(
-          // color: Theme.of(context).backgroundColor,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding:
-                EdgeInsets.only(left: 10.0, right: 10, bottom: 10, top: 20),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: TextField(
-              controller: _textController,
-              keyboardType: TextInputType.text,
-              maxLines: null,
-              textInputAction: TextInputAction.done,
-              onChanged: (text) {
-                setState(() {});
-                print("ON CHANGED");
-              },
-              onSubmitted: (text) {
-                setState(() {
-                  _done = true;
-                });
-                if (text.toLowerCase() ==
-                    vm.implementationIntention.toLowerCase()) {
-                  print("MATCH");
-                } else {
-                  print("NO MATCH");
-                }
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   _buildSubmitButton() {
+    final vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return SizedBox(
         width: double.infinity,
         height: 60,
         child: RaisedButton(
-          onPressed: () => {
+          onPressed: () async {
+            await vm.submit(InternalisationCondition.waiting);
             Navigator.pushNamed(
-                context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST)
+                context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST);
           },
           shape: RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10.0)),
@@ -101,6 +63,7 @@ class _WaitingInternalisationScreenState
   Widget build(BuildContext context) {
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return Container(
+      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
       child: ListView(
         children: <Widget>[
           UIHelper.verticalSpaceMedium(),
@@ -114,7 +77,6 @@ class _WaitingInternalisationScreenState
                   animationDuration: Duration(seconds: 5),
                   value: animation.value)),
           UIHelper.verticalSpaceMedium(),
-          buildTextEntry(),
           UIHelper.verticalSpaceMedium(),
           if (_done) _buildSubmitButton()
         ],
@@ -245,6 +207,7 @@ class CircleProgressBarState extends State<CircleProgressBar>
             foregroundPainter: CircleProgressBarPainter(
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
+              strokeWidth: 12,
               percentage: this.valueTween.evaluate(this.curve),
             ),
           );

@@ -6,6 +6,7 @@ import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
+import 'package:serene/models/recall_task.dart';
 import 'package:serene/models/user_data.dart';
 import 'package:flutter/services.dart';
 
@@ -32,6 +33,7 @@ class FirebaseService {
   static const String COLLECTION_OUTCOMES = "outcomes";
   static const String COLLECTION_OBSTACLES = "obstacles";
   static const String COLLECTION_INTERNALISATION = "internalisation";
+  static const String COLLECTION_RECALLTASKS = "recallTasks";
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -285,6 +287,15 @@ class FirebaseService {
     var map = internalisation.toMap();
     map["user"] = email;
 
-    await _databaseReference.collection(COLLECTION_INTERNALISATION).add(map);
+    return await _databaseReference
+        .collection(COLLECTION_INTERNALISATION)
+        .add(map);
+  }
+
+  saveRecallTask(RecallTask recallTask, String email) async {
+    var map = recallTask.toMap();
+    map["user"] = email;
+
+    return await _databaseReference.collection(COLLECTION_RECALLTASKS).add(map);
   }
 }

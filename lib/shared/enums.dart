@@ -58,6 +58,8 @@ class ExperimentalGroup {
       "Experiment_GoalShielding_Personalized";
 }
 
+enum InternalisationCondition { waiting, scrambleWithHint, scrambleWithoutHint }
+
 enum AppStartupMode {
   normal,
   signin,

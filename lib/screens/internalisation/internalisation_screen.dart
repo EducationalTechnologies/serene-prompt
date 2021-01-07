@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/screens/internalisation/long_press_internalisation.dart';
 import 'package:serene/screens/internalisation/scramble_internalisation.dart';
+import 'package:serene/screens/internalisation/waiting_internalisation_screen.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
+import 'package:serene/widgets/loading_overlay.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
@@ -14,14 +16,17 @@ class InternalisationScreen extends StatefulWidget {
 }
 
 class _InternalisationScreenState extends State<InternalisationScreen> {
-  getInternalisationScrenForCondition(int condition) {
+  getInternalisationScrenForCondition(InternalisationCondition condition) {
     switch (condition) {
-      case 0:
-        return LongPressInternalisation();
-      case 1:
+      case InternalisationCondition.waiting:
+        return WaitingInternalisationScreen();
+        break;
+      case InternalisationCondition.scrambleWithHint:
         return ScrambleInternalisation(true);
-      case 2:
+        break;
+      case InternalisationCondition.scrambleWithoutHint:
         return ScrambleInternalisation(false);
+        break;
     }
   }
 
@@ -29,7 +34,13 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
   Widget build(BuildContext context) {
     var vm = Provider.of<InternalisationViewModel>(context);
     var child =
-        getInternalisationScrenForCondition(vm.internalisationCondition);
+        getInternalisationScrenForCondition(InternalisationCondition.waiting);
+
+    // if (vm.state == ViewState.busy) {
+    //   LoadingOverlay.showLoadingDialog(context, vm.keyLoader);
+    // } else {
+    //   Navigator.of(vm.keyLoader.currentContext, rootNavigator: true).pop();
+    // }
 
     return Scaffold(
       appBar: SereneAppBar(),
