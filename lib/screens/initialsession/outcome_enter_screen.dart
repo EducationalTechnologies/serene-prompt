@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
+import 'package:serene/viewmodels/init_session_view_model.dart';
 
 class OutcomeEnterScreen extends StatefulWidget {
   OutcomeEnterScreen({Key key}) : super(key: key);
@@ -15,12 +17,17 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
   @override
   void initState() {
     super.initState();
-    _customOutcomes.add(buildTextField());
+    _customOutcomes.add(buildTextField("0"));
   }
 
-  buildTextField() {
+  buildTextField(String key) {
+    var vm = Provider.of<InitSessionViewModel>(context, listen: false);
     return TextField(
       decoration: InputDecoration(hintText: 'Gib ein Ziel ein'),
+      onChanged: (String text) {
+        setState(() {});
+        vm.editCustomOutcome(key, text);
+      },
     );
   }
 
@@ -29,7 +36,8 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
         onPressed: () {
           setState(() {
             if (_customOutcomes.length <= 3) {
-              _customOutcomes.add(buildTextField());
+              _customOutcomes
+                  .add(buildTextField((_customOutcomes.length + 1).toString()));
             }
           });
         },

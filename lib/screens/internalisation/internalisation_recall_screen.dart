@@ -37,29 +37,37 @@ class _InternalisationRecallScreenState
     return Scaffold(
       body: Container(
         margin: UIHelper.getContainerMargin(),
-        child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Schreibe hier bitte deinen Wenn-Dann-Plan von vorhin so auf, wie du dich an ihn erinnerst",
-                style: Theme.of(context).textTheme.headline5,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  UIHelper.verticalSpaceMedium(),
+                  Text(
+                    "Schreibe deinen Wenn-Dann-Plan so auf, wie du dich an ihn erinnerst",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  UIHelper.verticalSpaceMedium(),
+                  Center(
+                      child: TextField(
+                    minLines: 3,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Gib hier deinen Wenn-Dann-Plan ein"),
+                    onChanged: (text) {
+                      setState(() {
+                        _done = true;
+                        _recalledText = text;
+                      });
+                    },
+                  )),
+                ],
               ),
-              UIHelper.verticalSpaceMedium(),
-              Center(
-                  child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(), hintText: "Wenn ich..."),
-                onChanged: (text) {
-                  setState(() {
-                    _done = true;
-                    _recalledText = text;
-                  });
-                },
-              )),
-              if (_done) _buildSubmitButton()
-            ],
-          ),
+            ),
+            if (_done) _buildSubmitButton()
+          ],
         ),
       ),
     );

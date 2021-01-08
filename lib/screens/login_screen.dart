@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var registered = await vm.register(
         _userIdTextController.text, _passwordTextController.text);
     if (registered == RegistrationCodes.SUCCESS) {
-      Navigator.pushNamed(context, RouteNames.MAIN);
+      Navigator.pushNamed(context, RouteNames.INIT_START);
     } else if (registered == RegistrationCodes.WEAK_PASSWORD) {}
   }
 
@@ -337,8 +337,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   new Expanded(
                     child: InkWell(
                       onTap: () async {
-                        await vm.progressWithoutUsername();
-                        Navigator.pushNamed(context, RouteNames.MAIN);
+                        // await vm.progressWithoutUsername();
+                        // Navigator.pushNamed(context, RouteNames.MAIN);
                       },
                       child: new FlatButton(
                         padding: const EdgeInsets.symmetric(
@@ -346,7 +346,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.transparent,
                         onPressed: () async {
                           await vm.progressWithoutUsername();
-                          Navigator.pushNamed(context, RouteNames.MAIN);
+                          Navigator.pushNamed(context, RouteNames.INIT_START);
                         },
                         child: Text(
                           "Ohne Account verwenden",

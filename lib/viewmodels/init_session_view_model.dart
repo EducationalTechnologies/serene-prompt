@@ -1,3 +1,4 @@
+import 'package:serene/models/initialSession.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/data_service.dart';
@@ -92,10 +93,13 @@ class InitSessionViewModel extends BaseViewModel {
   }
 
   bool canMoveNext() {
+    // TODO: Use actual logic
+    return true;
     return (step == 0 && selectedObstacles.length > 0) ||
         (step == 1 && selectedObstacles.length > 0) ||
         (step == 2 && selectedOutcomes.length > 0) ||
-        (step == 3 && selectedOutcomes.length > 0);
+        (step == 3 && selectedOutcomes.length > 0) ||
+        step == 4;
   }
 
   saveSelected() async {
@@ -115,6 +119,8 @@ class InitSessionViewModel extends BaseViewModel {
       var custom = selectedObstacles.firstWhere((o) => o.name == key);
       custom.description = text;
     }
+
+    // notifyListeners();
   }
 
   editCustomOutcome(String key, String text) {
@@ -129,5 +135,12 @@ class InitSessionViewModel extends BaseViewModel {
       var custom = selectedOutcomes.firstWhere((o) => o.name == key);
       custom.description = text;
     }
+  }
+
+  submit() async {
+    var initialSession = InitialSession();
+
+    initialSession.obstacles = new List<String>();
+    // this._dataService.saveInitialSession(initialSession);
   }
 }

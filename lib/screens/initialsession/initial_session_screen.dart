@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/screens/initialsession/initial_explanation_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
 import 'package:serene/screens/initialsession/outcome_enter_screen.dart';
 import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
 import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
+import 'package:serene/widgets/full_width_button.dart';
 
 class InitialSessionScreen extends StatefulWidget {
   InitialSessionScreen({Key key}) : super(key: key);
@@ -27,7 +30,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     ObstacleSortingScreen(),
     OutcomeSelectionScreen(),
     OutcomeEnterScreen(),
-    OutcomeSortingScreen()
+    OutcomeSortingScreen(),
+    InitialExplanationScreen()
   ];
 
   @override
@@ -59,15 +63,9 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               ),
               onPressed: () {
                 _controller.previousPage(duration: _kDuration, curve: _kCurve);
-                vm.canMoveNext();
               },
             ),
           ),
-          // ElevatedButton(
-          //     onPressed: () {
-          //       vm.saveSelected();
-          //     },
-          //     child: Text("Test")),
           Visibility(
             maintainSize: true,
             maintainAnimation: true,
@@ -84,14 +82,24 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
                 ],
               ),
               onPressed: () {
-                _controller.nextPage(duration: _kDuration, curve: _kCurve);
-                vm.canMoveNext();
+                if (vm.canMoveNext()) {
+                  _controller.nextPage(duration: _kDuration, curve: _kCurve);
+                }
+                setState(() {});
               },
             ),
           ),
         ],
       ),
     );
+  }
+
+  buildSubmitButton() {
+    var vm = Provider.of<InitSessionViewModel>(context, listen: false);
+    return FullWidthButton(onPressed: () async {
+      await vm.submit();
+      Navigator.pushNamed(context, RouteNames.INTERNALISATION);
+    });
   }
 
   buildPageView() {
@@ -113,7 +121,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               },
             ),
           ),
-          _buildBottomNavigation()
+          if (_controller.page < _pages.length - 1) _buildBottomNavigation(),
+          if (_controller.page == _pages.length - 1) buildSubmitButton()
         ],
       ),
     );

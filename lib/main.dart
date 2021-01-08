@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           selectedRowColor: Colors.orange[200],
           buttonTheme: ButtonThemeData(
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),
           iconTheme: IconThemeData(color: Colors.black)),
       onGenerateRoute: AppRouter.generateRoute,

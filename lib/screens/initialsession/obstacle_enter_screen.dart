@@ -21,11 +21,12 @@ class _ObstacleEnterScreenState extends State<ObstacleEnterScreen> {
   }
 
   buildTextField(String key) {
+    var vm = Provider.of<InitSessionViewModel>(context, listen: false);
     return TextField(
       decoration: InputDecoration(hintText: 'Gib ein Hindernis ein'),
       onChanged: (String text) {
-        Provider.of<InitSessionViewModel>(context)
-            .editCustomObstacle(key, text);
+        setState(() {});
+        vm.editCustomObstacle(key, text);
       },
     );
   }

@@ -206,7 +206,7 @@ class CircleProgressBarState extends State<CircleProgressBar>
             foregroundPainter: CircleProgressBarPainter(
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
-              strokeWidth: 12,
+              strokeWidth: 19,
               percentage: this.valueTween.evaluate(this.curve),
             ),
           );

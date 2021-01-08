@@ -8,6 +8,7 @@ class RouteNames {
   static const RECALL_TASK = "/recalltask";
 
   static const INIT_START = "/initstart";
+  static const INIT_EXPLANATION = "/initexplanation";
 
   static const AMBULATORY_ASSESSMENT = "/ambulatoryassessment";
   static const AMBULATORY_ASSESSMENT_PRE_TEST = "/aapre";
