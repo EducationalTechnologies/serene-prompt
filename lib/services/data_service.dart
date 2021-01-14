@@ -10,6 +10,7 @@ import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/models/recall_task.dart';
+import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
@@ -21,6 +22,8 @@ class DataService {
   List<GoalShield> _goalShields;
   UserService _userService;
   FirebaseService _databaseService;
+
+  UserData _userDataCache;
 
   DataService(this._databaseService, this._userService);
 
@@ -57,9 +60,6 @@ class DataService {
       var parentPath = getGoalById(goal.parentId).path;
       goal.path = MaterializedPath.addToPath(parentPath, goal.path);
     }
-
-    // TODO: THIS IS FOR TESTING CURRENTLY
-    postToServer(goal);
   }
 
   postToServer(Goal goal) async {
@@ -172,10 +172,6 @@ class DataService {
     });
   }
 
-  Future<int> getInternalisationCondition() async {
-    return _userService.getUserData().internalisationCondition;
-  }
-
   saveInternalisation(Internalisation internalisation) async {
     return await _databaseService.saveInternalisation(
         internalisation, _userService.getUserEmail());
@@ -189,5 +185,18 @@ class DataService {
   Future<Internalisation> getLastInternalisation() async {
     return await _databaseService
         .getLastInternalisation(_userService.getUserEmail());
+  }
+
+  Future<RecallTask> getLastRecallTask() async {
+    return await _databaseService
+        .getLastRecallTask(_userService.getUserEmail());
+  }
+
+  Future<UserData> getUserData() async {
+    if (_userDataCache == null) {
+      _userDataCache =
+          await _databaseService.getUserData(_userService.getUserEmail());
+    }
+    return _userDataCache;
   }
 }

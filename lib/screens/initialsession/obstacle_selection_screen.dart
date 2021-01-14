@@ -14,25 +14,6 @@ class ObstacleSelectionScreen extends StatefulWidget {
 }
 
 class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
-  _showSelectSomethingDialog() async {
-    return showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Du musst mindestens ein Hindernis auswählen"),
-            actions: [
-              TextButton(
-                child: Text("Okay"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
-  }
-
   _buildHindranceItem(BuildContext context, Obstacle obstacle) {
     final vm = Provider.of<InitSessionViewModel>(context);
     return Card(

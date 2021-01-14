@@ -47,6 +47,8 @@ class StartupViewModel extends BaseViewModel {
       case AppStartupMode.noTasks:
         nav.navigateAndRemove(RouteNames.NO_TASKS);
         break;
+      case AppStartupMode.lexicalDecisionTask:
+        nav.navigateAndRemove(RouteNames.LDT);
     }
   }
 
@@ -66,9 +68,13 @@ class StartupViewModel extends BaseViewModel {
     if (await experimentService.isTimeForInternalisationTask()) {
       return AppStartupMode.internalisationTask;
     }
-    if (await experimentService.isTimeForRecallTask()) {}
+    if (await experimentService.isTimeForRecallTask()) {
+      return AppStartupMode.recallTask;
+    }
 
-    if (await experimentService.isTimeForLexicalDecisionTask()) {}
+    if (await experimentService.isTimeForLexicalDecisionTask()) {
+      return AppStartupMode.lexicalDecisionTask;
+    }
 
     if (await experimentService.isTimeForUsabilityTask()) {}
     // if (await experimentService.shouldShowPostLearningAssessment()) {

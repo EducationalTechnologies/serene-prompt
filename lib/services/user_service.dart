@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:serene/locator.dart';
 import 'package:serene/models/user_data.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -63,7 +64,7 @@ class UserService {
 
   saveRandomUser() async {
     var uid = _getRandomUsername();
-    return await registerUser("$uid@edutec.guru", "123456");
+    return await registerUser("$uid@edutec.science", "123456");
   }
 
   _getRandomUsername() {
@@ -82,9 +83,5 @@ class UserService {
 
   String getUserEmail() {
     return _settings.getSetting(SettingsKeys.email);
-  }
-
-  UserData getUserData() {
-    return this._userData;
   }
 }

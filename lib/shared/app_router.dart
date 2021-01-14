@@ -12,6 +12,7 @@ import 'package:serene/screens/questionnaire/lexical_decision_task_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
 import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -50,8 +51,9 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (context) =>
                 ChangeNotifierProvider<InternalisationViewModel>(
-                    create: (_) =>
-                        InternalisationViewModel(locator.get<DataService>()),
+                    create: (_) => InternalisationViewModel(
+                        locator.get<DataService>(),
+                        locator.get<NavigationService>()),
                     child: InternalisationScreen()));
 
       case RouteNames.ADD_GOAL:

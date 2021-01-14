@@ -139,13 +139,15 @@ class FirebaseService {
   }
 
   Future<UserData> registerUser(
-      String userId, String password, int group) async {
+      String userId, String password, int internalisationCondition) async {
     try {
       var result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: userId, password: password);
 
       var userData = UserData(
-          userId: result.user.uid, email: result.user.email, group: group);
+          userId: result.user.uid,
+          email: result.user.email,
+          internalisationCondition: internalisationCondition);
 
       await insertUserData(userData);
 
@@ -234,6 +236,7 @@ class FirebaseService {
       return AssessmentModel.fromDocument(doc.docs[0]);
     } catch (e) {
       print("Error trying to get the last submitted assessment: $e");
+      return null;
     }
   }
 
@@ -296,8 +299,8 @@ class FirebaseService {
     var doc = await _databaseReference
         .collection(COLLECTION_INTERNALISATION)
         .where("user", isEqualTo: email)
-        // .orderBy("completionDate", descending: true)
-        // .limit(1)
+        .orderBy("completionDate", descending: true)
+        .limit(1)
         .get();
 
     if (doc.docs.length == 0) return null;
@@ -309,5 +312,17 @@ class FirebaseService {
     map["user"] = email;
 
     return await _databaseReference.collection(COLLECTION_RECALLTASKS).add(map);
+  }
+
+  Future<RecallTask> getLastRecallTask(String email) async {
+    var doc = await _databaseReference
+        .collection(COLLECTION_RECALLTASKS)
+        .where("user", isEqualTo: email)
+        .orderBy("completionDate", descending: true)
+        .limit(1)
+        .get();
+
+    if (doc.docs.length == 0) return null;
+    return RecallTask.fromDocument(doc.docs[0]);
   }
 }

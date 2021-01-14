@@ -42,7 +42,7 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
       key: ValueKey(obstacle.name),
       child: ListTile(
         leading: Image.asset(obstacle.iconPath),
-        title: Text(obstacle.name),
+        title: Text(obstacle.description),
         subtitle: Text(obstacle.description),
         isThreeLine: true,
         trailing: buildUpDownArrow,

@@ -3,6 +3,7 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/extensions.dart';
 
 class ExperimentService {
+  static const int INTERNALISATION_RECALL_BREAK = 6;
   DataService _dataService;
 
   ExperimentService(this._dataService);
@@ -45,7 +46,7 @@ class ExperimentService {
 
   Future<bool> isTimeForInternalisationTask() async {
     var lastInternalisation = await _dataService.getLastInternalisation();
-
+    // If there is no previous internalisation, we definitely need the first one
     if (lastInternalisation == null) {
       return true;
     }
@@ -61,14 +62,17 @@ class ExperimentService {
     return true;
   }
 
-  // TODO: Implement
   Future<bool> isTimeForRecallTask() async {
+    var lastInternalisation = await _dataService.getLastInternalisation();
+
+    if (lastInternalisation == null) {
+      return true;
+    }
     return await Future.delayed(Duration.zero).then((value) {
       return false;
     });
   }
 
-  // TODO: Implement
   Future<bool> isTimeForLexicalDecisionTask() async {
     return await Future.delayed(Duration.zero).then((value) {
       return false;
@@ -77,13 +81,6 @@ class ExperimentService {
 
   // TODO: Implement
   Future<bool> isTimeForUsabilityTask() async {
-    return await Future.delayed(Duration.zero).then((value) {
-      return false;
-    });
-  }
-
-  // TODO: Implement
-  Future<bool> isRecallTaskDone() async {
     return await Future.delayed(Duration.zero).then((value) {
       return false;
     });

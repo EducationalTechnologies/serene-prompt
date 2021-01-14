@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
@@ -83,9 +84,10 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.receipt,
-              text: "Einverständniserklärung",
+              text: "Trigger Reminder",
               onTap: () {
-                Navigator.pushNamed(context, RouteNames.CONSENT);
+                // Navigator.pushNamed(context, RouteNames.CONSENT);
+                locator<NotificationService>().sendDebugReminder();
               }),
           Divider(),
           ListTile(

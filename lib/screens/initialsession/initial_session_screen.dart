@@ -37,6 +37,16 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   @override
   void initState() {
     super.initState();
+
+    /// Attach a listener which will update the state and refresh the page index
+    _controller.addListener(() {
+      var vm = Provider.of<InitSessionViewModel>(context, listen: false);
+      if (_controller.page.round() != vm.step) {
+        setState(() {
+          vm.step = _controller.page.round();
+        });
+      }
+    });
   }
 
   _buildBottomNavigation() {
@@ -116,13 +126,10 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               itemBuilder: (context, index) {
                 return _pages[index];
               },
-              onPageChanged: (int page) {
-                vm.step = page;
-              },
             ),
           ),
-          if (_controller.page < _pages.length - 1) _buildBottomNavigation(),
-          if (_controller.page == _pages.length - 1) buildSubmitButton()
+          if (vm.step < _pages.length - 1) _buildBottomNavigation(),
+          if (vm.step == _pages.length - 1) buildSubmitButton()
         ],
       ),
     );

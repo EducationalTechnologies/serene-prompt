@@ -69,5 +69,6 @@ enum AppStartupMode {
   postLearningAssessment,
   noTasks,
   internalisationTask,
-  recallTask
+  recallTask,
+  lexicalDecisionTask
 }

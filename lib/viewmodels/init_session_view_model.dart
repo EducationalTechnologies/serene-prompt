@@ -19,7 +19,7 @@ class InitSessionViewModel extends BaseViewModel {
         iconPath: AppAssetPaths.ICON_BRAIN),
     Obstacle(
         name: "Lustlosigkeit",
-        description: "Ich habe keine Lust, zu lernen.",
+        description: "Ich habe keine Lust zu lernen.",
         iconPath: AppAssetPaths.ICON_COMPUTER),
     Obstacle(
         name: "Ablenkungen",

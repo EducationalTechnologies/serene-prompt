@@ -6,6 +6,7 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
+import 'package:serene/widgets/full_width_button.dart';
 
 class WaitingInternalisationScreen extends StatefulWidget {
   @override
@@ -20,11 +21,18 @@ class _WaitingInternalisationScreenState
   AnimationController controller;
   bool _done = false;
 
+  int _timerDurationSeconds = 15;
+
+  bool _timerStarted = false;
+
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(duration: Duration(seconds: 15), vsync: this);
+  }
+
+  void initTimer() {
+    controller = AnimationController(
+        duration: Duration(seconds: _timerDurationSeconds), vsync: this);
     animation = Tween<double>(begin: 0, end: pi / 2).animate(controller);
     animation.addListener(() {
       setState(() {});
@@ -61,26 +69,57 @@ class _WaitingInternalisationScreenState
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
+
+    if (_timerStarted) {
+      _buildPreTimerScreen();
+    } else {
+      return Container(
+        margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+        child: ListView(
+          children: <Widget>[
+            UIHelper.verticalSpaceMedium(),
+            UIHelper.verticalSpaceMedium(),
+            Text(vm.implementationIntention,
+                style: TextStyle(fontSize: 30.0, color: Colors.grey[900])),
+            UIHelper.verticalSpaceMedium(),
+            Center(
+                child: CircleProgressBar(
+                    foregroundColor: Theme.of(context).primaryColor,
+                    animationDuration: Duration(seconds: 5),
+                    value: animation.value)),
+            UIHelper.verticalSpaceMedium(),
+            UIHelper.verticalSpaceMedium(),
+            if (_done) _buildSubmitButton()
+          ],
+        ),
+      );
+    }
+  }
+
+  _buildPreTimerScreen() {
     return Container(
-      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      child: ListView(
-        children: <Widget>[
-          UIHelper.verticalSpaceMedium(),
-          UIHelper.verticalSpaceMedium(),
-          Text(vm.implementationIntention,
-              style: TextStyle(fontSize: 30.0, color: Colors.grey[900])),
-          UIHelper.verticalSpaceMedium(),
-          Center(
-              child: CircleProgressBar(
-                  foregroundColor: Theme.of(context).primaryColor,
-                  animationDuration: Duration(seconds: 5),
-                  value: animation.value)),
-          UIHelper.verticalSpaceMedium(),
-          UIHelper.verticalSpaceMedium(),
-          if (_done) _buildSubmitButton()
-        ],
-      ),
-    );
+        margin: UIHelper.getContainerMargin(),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage("assets/illustrations/undraw_in_no_time_6igu.png"),
+          fit: BoxFit.scaleDown,
+        )),
+        child: Align(
+            child: Column(
+              children: [
+                Text(
+                    "Sobald du anfängst, hast du $_timerDurationSeconds Sekunden Zeit, um dir deinen Wenn-Dann-Plan einzuprägen",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline4),
+                FullWidthButton(onPressed: () {
+                  setState(() {
+                    _timerStarted = true;
+                  });
+                  initTimer();
+                })
+              ],
+            ),
+            alignment: Alignment(0.0, 0.6)));
   }
 }
 

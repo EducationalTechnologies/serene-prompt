@@ -14,23 +14,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedPageIndex = 0;
-  PageController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = new PageController(initialPage: _selectedPageIndex);
   }
 
   _buildMonitoringScreen() {
     return GoalMonitorScreen();
-  }
-
-  void _onItemTapped(int index) {
-    if (index == 3) return;
-    this._controller.animateToPage(index,
-        duration: const Duration(milliseconds: 250), curve: Curves.easeInOut);
   }
 
   _buildAddGoalButton() {
