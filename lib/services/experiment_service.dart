@@ -17,7 +17,6 @@ class ExperimentService {
         ._dataService
         .getLastSubmittedAssessment(AssessmentType.preLearning);
 
-    // return false;
     if (lastPreLearningAssessment == null) return true;
     return !lastPreLearningAssessment.submissionDate.isToday();
   }
@@ -31,11 +30,9 @@ class ExperimentService {
     var diff =
         DateTime.now().difference(lastPostLearningAssessment.submissionDate);
 
-    // TOOD: Rethink this value
     return diff.inHours > 24;
   }
 
-  // TODO: Request whether a post-learning assessment was performed yesterday
   Future<bool> shouldShowSRLSurvey() {
     return Future.delayed(Duration.zero).then((res) => true);
   }

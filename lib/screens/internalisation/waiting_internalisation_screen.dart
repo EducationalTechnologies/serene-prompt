@@ -71,7 +71,7 @@ class _WaitingInternalisationScreenState
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
 
     if (_timerStarted) {
-      _buildPreTimerScreen();
+      return _buildPreTimerScreen();
     } else {
       return Container(
         margin: EdgeInsets.fromLTRB(5, 5, 5, 5),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/startup_screen.dart';
 import 'package:serene/services/navigation_service.dart';
@@ -13,17 +14,20 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  buildMaterialApp() {
+  buildMaterialApp(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // debugShowMaterialGrid: true,
       title: 'Serene',
       theme: ThemeData(
+          scaffoldBackgroundColor: Colors.orange[50],
           canvasColor: Colors.white,
           primarySwatch: Colors.orange,
           accentColor: Color(0xfff96d15),
           buttonColor: Colors.orange[300],
           selectedRowColor: Colors.orange[200],
+          textTheme:
+              GoogleFonts.varelaRoundTextTheme(Theme.of(context).textTheme),
           buttonTheme: ButtonThemeData(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -39,6 +43,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildMaterialApp();
+    return buildMaterialApp(context);
   }
 }

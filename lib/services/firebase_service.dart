@@ -325,4 +325,11 @@ class FirebaseService {
     if (doc.docs.length == 0) return null;
     return RecallTask.fromDocument(doc.docs[0]);
   }
+
+  setUserInitialized(String userid) async {
+    return await _databaseReference
+        .collection(COLLECTION_USERS)
+        .doc(userid)
+        .set({"initialized": true});
+  }
 }

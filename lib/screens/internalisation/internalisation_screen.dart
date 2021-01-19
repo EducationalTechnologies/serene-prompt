@@ -35,11 +35,14 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
     var child =
         getInternalisationScrenForCondition(vm.internalisationCondition);
 
-    return Scaffold(
-      appBar: SereneAppBar(),
-      drawer: SereneDrawer(),
-      body: Container(
-        child: child,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: SereneAppBar(),
+        drawer: SereneDrawer(),
+        body: Container(
+          child: child,
+        ),
       ),
     );
   }

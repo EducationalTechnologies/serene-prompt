@@ -192,11 +192,25 @@ class DataService {
         .getLastRecallTask(_userService.getUserEmail());
   }
 
+  setUserInitialized() async {
+    return await _databaseService
+        .setUserInitialized(_userService.getUserEmail());
+  }
+
   Future<UserData> getUserData() async {
     if (_userDataCache == null) {
       _userDataCache =
           await _databaseService.getUserData(_userService.getUserEmail());
     }
     return _userDataCache;
+  }
+
+  saveObstacles(List<Obstacle> obstacles) async {
+    await _databaseService.saveObstacles(
+        obstacles, _userService.getUserEmail());
+  }
+
+  saveOutcomes(List<Outcome> outcomes) async {
+    await _databaseService.saveOutcomes(outcomes, _userService.getUserEmail());
   }
 }

@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:serene/locator.dart';
@@ -12,8 +11,6 @@ class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
   factory NotificationService() => _instance;
   FlutterLocalNotificationsPlugin localNotifications;
-
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   static const String CHANNEL_ID_II_REMINDER = "WDP Erinnerung";
   static const String CHANNEL_NAME_II_REMINDER = "Wenn-Dann-Plan Erinnerung";
@@ -31,8 +28,6 @@ class NotificationService {
 
   NotificationService._internal() {
     localNotifications = FlutterLocalNotificationsPlugin();
-
-    configureFirebaseMessaging();
   }
 
   Future initialize() async {
@@ -62,27 +57,13 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
-  configureFirebaseMessaging() {
-    _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-      print("RECEIVED onMessage: $message");
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print("RECEIVED onLaunch: $message");
-    }, onResume: (Map<String, dynamic> message) async {
-      print("RECEIVED onResume: $message");
-    });
-
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-  }
-
   Future onSelectNotification(String payload) async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
 
       if (payload == PAYLOAD_II_REMINDER) {
-        await locator<NavigationService>().navigateTo(
-            RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION);
+        await locator<NavigationService>()
+            .navigateTo(RouteNames.INTERNALISATION);
       }
       if (payload == PAYLOAD_TASK_REMINDER) {
         await locator<NavigationService>().navigateTo(RouteNames.RECALL_TASK);

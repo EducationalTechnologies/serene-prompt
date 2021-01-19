@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/services/data_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
@@ -15,7 +13,6 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
-    var dataService = locator<DataService>();
     return Scaffold(
       drawer: SereneDrawer(),
       body: Container(

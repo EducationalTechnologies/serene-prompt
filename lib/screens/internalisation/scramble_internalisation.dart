@@ -113,15 +113,17 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       },
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).primaryColor,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black, offset: Offset(2, 2), blurRadius: 4.0)
-            ]),
-        child: Text(scramble.text),
-        margin: EdgeInsets.all(4.0),
-        padding: EdgeInsets.all(8.0),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.orange[200],
+        ),
+        child: Text(
+          scramble.text,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        margin: EdgeInsets.all(1.0),
+        padding: EdgeInsets.all(6.0),
       ),
     );
   }
@@ -139,8 +141,8 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           color: Colors.grey[600],
         ),
         child: Opacity(opacity: 0, child: Text(text)),
-        margin: EdgeInsets.all(4.0),
-        padding: EdgeInsets.all(9.0),
+        margin: EdgeInsets.all(1.0),
+        padding: EdgeInsets.all(6.0),
       ),
     );
   }

@@ -144,10 +144,13 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      margin: UIHelper.getContainerMargin(),
-      child: _trialComplete ? buildTrialSummary() : buildLDT(),
-    ));
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          body: Container(
+        margin: UIHelper.getContainerMargin(),
+        child: _trialComplete ? buildTrialSummary() : buildLDT(),
+      )),
+    );
   }
 }

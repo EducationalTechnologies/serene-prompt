@@ -1,4 +1,3 @@
-import 'package:serene/models/initialSession.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/data_service.dart';
@@ -138,9 +137,7 @@ class InitSessionViewModel extends BaseViewModel {
   }
 
   submit() async {
-    var initialSession = InitialSession();
-
-    initialSession.obstacles = new List<String>();
-    // this._dataService.saveInitialSession(initialSession);
+    await _dataService.saveObstacles(obstacles);
+    await _dataService.saveOutcomes(outcomes);
   }
 }
