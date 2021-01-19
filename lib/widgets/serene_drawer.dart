@@ -77,8 +77,9 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.settings,
-              text: "Einstellungen",
+              text: "TEST",
               onTap: () {
+                var x = Navigator.of(context);
                 Navigator.pushNamed(context, RouteNames.SETTINGS);
               }),
           Divider(),

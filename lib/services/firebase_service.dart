@@ -307,6 +307,18 @@ class FirebaseService {
     return Internalisation.fromDocument(doc.docs[0]);
   }
 
+  Future<Internalisation> getFirstInternalisation(String email) async {
+    var doc = await _databaseReference
+        .collection(COLLECTION_INTERNALISATION)
+        .where("user", isEqualTo: email)
+        .orderBy("completionDate", descending: false)
+        .limit(1)
+        .get();
+
+    if (doc.docs.length == 0) return null;
+    return Internalisation.fromDocument(doc.docs[0]);
+  }
+
   saveRecallTask(RecallTask recallTask, String email) async {
     var map = recallTask.toMap();
     map["user"] = email;

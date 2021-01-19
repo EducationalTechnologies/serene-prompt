@@ -47,11 +47,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         if (hourDiff >= 6) {
           nextText =
               "Überprüfe jetzt, wie gut du dich an deinen Wenn-Dann-Plan erinnern kannst";
-          // Future.delayed(Duration(seconds: 5), () {
-          //   Navigator.pushNamed(context, RouteNames.RECALL_TASK);
-          // });
-
-          // return;
         } else {
           //If the recall task is in less than
           var nextTime =

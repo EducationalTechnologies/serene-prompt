@@ -31,8 +31,6 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icon(Icons.add),
       label: Text("Neues Ziel"),
       onPressed: () async {
-        // await Navigator.pushNamed(context, RouteNames.ADD_GOAL);
-        // await Navigator.pushNamed(context, RouteNames.MAIN);
         await showModalBottomSheet(
             context: context,
             builder: (context) {

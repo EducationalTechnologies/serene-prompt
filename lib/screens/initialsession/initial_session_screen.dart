@@ -137,6 +137,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Container(child: buildPageView()));
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(body: Container(child: buildPageView())));
   }
 }

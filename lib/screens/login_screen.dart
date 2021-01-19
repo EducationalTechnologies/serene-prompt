@@ -65,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _userIdTextController.text, _passwordTextController.text);
     if (signedIn == RegistrationCodes.SUCCESS) {
       Navigator.pushNamed(context, RouteNames.MAIN);
+      return;
     } else {
       var shouldCreate = await _buildErrorDialog("Anmeldedaten nicht gefunden",
           "Benutzername oder Passwort waren nicht korrekt");

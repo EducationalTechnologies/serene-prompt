@@ -8,24 +8,25 @@ import 'package:serene/viewmodels/base_view_model.dart';
 class InternalisationViewModel extends BaseViewModel {
   DataService _dataService;
   NavigationService _navigationService;
-  String implementationIntention;
+  String implementationIntention = "";
   InternalisationCondition internalisationCondition =
       InternalisationCondition.waiting;
 
   Internalisation _currentInternalisation = Internalisation();
 
   InternalisationViewModel(this._dataService, this._navigationService) {
-    this._dataService.getCurrentImplementationIntention().then((ii) {
-      this.implementationIntention = ii;
-      notifyListeners();
-    });
-
-    this._dataService.getUserData().then((ud) {
-      this.internalisationCondition =
-          InternalisationCondition.values[ud.internalisationCondition];
-    });
-
     _currentInternalisation.startDate = DateTime.now();
+  }
+
+  Future<bool> init() async {
+    this.implementationIntention =
+        await this._dataService.getCurrentImplementationIntention();
+
+    var userData = await this._dataService.getUserData();
+    this.internalisationCondition =
+        InternalisationCondition.values[userData.internalisationCondition];
+
+    return true;
   }
 
   Future<bool> submit(InternalisationCondition condition) async {

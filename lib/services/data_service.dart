@@ -49,7 +49,6 @@ class DataService {
   }
 
   createGoal(Goal goal) async {
-    //TODO: Handle the case that saving fails
     if (goal.id.isEmpty) {
       throw new Exception("Goal does not have an ID");
     }

@@ -15,7 +15,7 @@ class InternalisationScreen extends StatefulWidget {
 }
 
 class _InternalisationScreenState extends State<InternalisationScreen> {
-  getInternalisationScrenForCondition(InternalisationCondition condition) {
+  getScreenForCondition(InternalisationCondition condition) {
     switch (condition) {
       case InternalisationCondition.waiting:
         return WaitingInternalisationScreen();
@@ -32,16 +32,27 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
   @override
   Widget build(BuildContext context) {
     var vm = Provider.of<InternalisationViewModel>(context);
-    var child =
-        getInternalisationScrenForCondition(vm.internalisationCondition);
 
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: SereneAppBar(),
         drawer: SereneDrawer(),
-        body: Container(
-          child: child,
+        body: FutureBuilder(
+          future: vm.init(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              return Container(
+                child: getScreenForCondition(vm.internalisationCondition),
+              );
+            } else {
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          },
         ),
       ),
     );

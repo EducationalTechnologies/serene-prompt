@@ -8,7 +8,7 @@ class AppAssetPaths {
 
   static const String ICON_MEHAPPY = "assets/icons/mehappy.png";
   static const String ICON_USER = "assets/icons/user.png";
-  static const String ICON_MUSICNOTE = "assets/icons/user.png";
+  static const String ICON_MUSICNOTE = "assets/icons/musicnote.png";
   static const String ICON_GAMEPAD = "assets/icons/gamepad.png";
   static const String ICON_TEAMWORK = "assets/icons/teamwork.png";
 
