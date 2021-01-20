@@ -1,5 +1,6 @@
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
@@ -8,13 +9,15 @@ import 'package:serene/viewmodels/base_view_model.dart';
 class InternalisationViewModel extends BaseViewModel {
   DataService _dataService;
   NavigationService _navigationService;
+  ExperimentService _experimentService;
   String implementationIntention = "";
   InternalisationCondition internalisationCondition =
       InternalisationCondition.waiting;
 
   Internalisation _currentInternalisation = Internalisation();
 
-  InternalisationViewModel(this._dataService, this._navigationService) {
+  InternalisationViewModel(
+      this._dataService, this._navigationService, this._experimentService) {
     _currentInternalisation.startDate = DateTime.now();
   }
 
@@ -22,9 +25,8 @@ class InternalisationViewModel extends BaseViewModel {
     this.implementationIntention =
         await this._dataService.getCurrentImplementationIntention();
 
-    var userData = await this._dataService.getUserData();
     this.internalisationCondition =
-        InternalisationCondition.values[userData.internalisationCondition];
+        await _experimentService.getTodaysInternalisationCondition();
 
     return true;
   }

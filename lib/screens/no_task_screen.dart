@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/widgets/serene_appbar.dart';
@@ -44,7 +45,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         var now = DateTime.now();
 
         var hourDiff = now.hour - lastInternalisation.completionDate.hour;
-        if (hourDiff >= 6) {
+        if (hourDiff >= ExperimentService.INTERNALISATION_RECALL_BREAK) {
           nextText =
               "Überprüfe jetzt, wie gut du dich an deinen Wenn-Dann-Plan erinnern kannst";
         } else {

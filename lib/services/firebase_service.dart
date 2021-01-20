@@ -338,10 +338,10 @@ class FirebaseService {
     return RecallTask.fromDocument(doc.docs[0]);
   }
 
-  setUserInitialized(String userid) async {
+  saveConsent(String userid, bool consentValue) async {
     return await _databaseReference
         .collection(COLLECTION_USERS)
         .doc(userid)
-        .set({"initialized": true});
+        .set({"consented": consentValue});
   }
 }

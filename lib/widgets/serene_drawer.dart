@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/services/notification_service.dart';
@@ -77,10 +78,10 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.settings,
-              text: "TEST",
-              onTap: () {
-                var x = Navigator.of(context);
-                Navigator.pushNamed(context, RouteNames.SETTINGS);
+              text: "FORCE CRASH",
+              onTap: () async {
+                // Navigator.pushNamed(context, RouteNames.SETTINGS);
+                FirebaseCrashlytics.instance.crash();
               }),
           Divider(),
           _buildDrawerItem(

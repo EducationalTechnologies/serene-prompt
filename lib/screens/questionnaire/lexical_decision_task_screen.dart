@@ -27,7 +27,6 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   int timerDurationRegular = 1500;
   int timerDurationClear = 500;
   Stopwatch stopwatch;
-  Timer _nextTimer;
   bool _trialComplete = false;
 
   final List<LdtData> _trial = [
@@ -59,13 +58,16 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
 
   change() {
     if (_currentWordIndex == _trial.length - 1) {
-      _trialComplete = true;
+      setState(() {
+        _trialComplete = true;
+      });
+
       return;
     }
 
     int duration = isTextState ? timerDurationRegular : timerDurationClear;
 
-    _nextTimer = Timer(Duration(milliseconds: duration), () {
+    Timer(Duration(milliseconds: duration), () {
       next();
       change();
     });

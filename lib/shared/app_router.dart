@@ -12,13 +12,14 @@ import 'package:serene/screens/questionnaire/lexical_decision_task_screen.dart';
 import 'package:serene/screens/settings_screen.dart';
 import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/add_goal_view_model.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
-import 'package:serene/viewmodels/consent_state.dart';
+import 'package:serene/viewmodels/consent_view_model.dart';
 import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/consent_screen.dart';
@@ -53,7 +54,8 @@ class AppRouter {
                 ChangeNotifierProvider<InternalisationViewModel>(
                     create: (_) => InternalisationViewModel(
                         locator.get<DataService>(),
-                        locator.get<NavigationService>()),
+                        locator.get<NavigationService>(),
+                        locator.get<ExperimentService>()),
                     child: InternalisationScreen()));
 
       case RouteNames.ADD_GOAL:
@@ -137,8 +139,12 @@ class AppRouter {
 
       case RouteNames.CONSENT:
         return MaterialPageRoute(
-            builder: (_) => ChangeNotifierProvider<ConsentState>(
-                create: (_) => ConsentState(), child: ConsentScreen()));
+            builder: (_) => ChangeNotifierProvider<ConsentViewModel>(
+                create: (_) => ConsentViewModel(
+                    locator.get<DataService>(),
+                    locator.get<UserService>(),
+                    locator.get<NavigationService>()),
+                child: ConsentScreen()));
 
       case RouteNames.OPEN_GOALS:
         return MaterialPageRoute(

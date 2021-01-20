@@ -28,6 +28,7 @@ class _WaitingInternalisationScreenState
   @override
   void initState() {
     super.initState();
+    initTimer();
   }
 
   void initTimer() {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/consent_state.dart';
+import 'package:serene/shared/enums.dart';
+import 'package:serene/viewmodels/consent_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
+import 'package:serene/widgets/full_width_button.dart';
 
 class ConsentScreen extends StatelessWidget {
   final List<String> _textIntroduction = [
@@ -160,17 +161,20 @@ class ConsentScreen extends StatelessWidget {
   }
 
   buildSubmitButton(BuildContext context) {
-    return RaisedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, RouteNames.LOG_IN);
+    var vm = Provider.of<ConsentViewModel>(context);
+    return FullWidthButton(
+      onPressed: () async {
+        await vm.submit();
       },
-      child: Text("Abschicken"),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final consentState = Provider.of<ConsentState>(context);
+    final vm = Provider.of<ConsentViewModel>(context);
+    if (vm.state == ViewState.busy) {
+      return Container(child: CircularProgressIndicator());
+    }
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -197,29 +201,15 @@ class ConsentScreen extends StatelessWidget {
             UIHelper.verticalSpaceMedium(),
             buildContactCard(),
             UIHelper.verticalSpaceMedium(),
-            Row(
-              children: <Widget>[
-                Checkbox(
-                    tristate: false,
-                    onChanged: (value) {
-                      consentState.consented = value;
-                    },
-                    value: consentState.consented),
-                Flexible(
-                  child: Text(
-                      "Ich bin mir bewusst, dass ich meine Teilnahme an der Studie jederzeit beenden kann und mir dadurch keinerlei Nachteile entstehen."),
-                ),
-              ],
-            ),
             UIHelper.verticalSpaceSmall(),
             Row(
               children: <Widget>[
                 Checkbox(
                     tristate: false,
                     onChanged: (value) {
-                      consentState.consented = value;
+                      vm.consented = value;
                     },
-                    value: consentState.consented),
+                    value: vm.consented),
                 Flexible(
                   child: Text(
                       "Ich bin damit einverstanden, an der Studie teilzunehmen und stimme der Erhebung und Auswertung von pseudonymisierten Daten im Kontext der Studie zu"),

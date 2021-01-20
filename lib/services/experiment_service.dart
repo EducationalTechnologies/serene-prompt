@@ -4,6 +4,8 @@ import 'package:serene/shared/extensions.dart';
 
 class ExperimentService {
   static const int INTERNALISATION_RECALL_BREAK = 6;
+  static const int NUM_CONDITIONS = 3;
+
   DataService _dataService;
 
   ExperimentService(this._dataService);
@@ -81,5 +83,42 @@ class ExperimentService {
     return await Future.delayed(Duration.zero).then((value) {
       return false;
     });
+  }
+
+  Future<InternalisationCondition> getTodaysInternalisationCondition() async {
+    var first = await this._dataService.getFirstInternalisation();
+    var conditionValue = 0;
+    if (first != null) {
+      // Creating a "comparison date" from the first internalisation date
+      // to ensure that the day difference is always at least one day if the weekday changes
+      // for example, if the first has been on monday, at 12 and it is tuesday, at 11, the day difference would be 0
+      // to avoid more complex stuff, this comparison simply assumes the first completion at shortly after midnight
+      // so all day differences should be at least one day after
+      var compareDate = DateTime(first.completionDate.year,
+          first.completionDate.month, first.completionDate.day, 0, 0, 1);
+      var now = DateTime.now();
+      var daysSince = now.difference(compareDate).inDays;
+
+      conditionValue = daysSince % NUM_CONDITIONS;
+    }
+
+    return InternalisationCondition.values[conditionValue];
+  }
+
+  Future<AppStartupMode> getCurrentStartRoute() async {
+    if (await isTimeForInternalisationTask()) {
+      return AppStartupMode.internalisationTask;
+    }
+    if (await isTimeForRecallTask()) {
+      return AppStartupMode.recallTask;
+    }
+
+    if (await isTimeForLexicalDecisionTask()) {
+      return AppStartupMode.lexicalDecisionTask;
+    }
+
+    if (await isTimeForUsabilityTask()) {}
+
+    return AppStartupMode.noTasks;
   }
 }

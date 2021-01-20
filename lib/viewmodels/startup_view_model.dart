@@ -9,6 +9,8 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class StartupViewModel extends BaseViewModel {
+  String debugText = "Wurst";
+
   StartupViewModel() {
     print("Startup");
     Future.delayed(Duration.zero).then((v) async {
@@ -33,7 +35,8 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.firstLaunch:
-        nav.navigateAndRemove(RouteNames.LOG_IN);
+        // nav.navigateAndRemove(RouteNames.LOG_IN);
+        nav.navigateAndRemove(RouteNames.CONSENT);
         break;
       case AppStartupMode.postLearningAssessment:
         nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
@@ -52,35 +55,28 @@ class StartupViewModel extends BaseViewModel {
     }
   }
 
+  setDebugText(String text) {
+    this.debugText = text;
+    notifyListeners();
+  }
+
   Future<AppStartupMode> initialize() async {
     await locator<SettingsService>().initialize();
+    setDebugText("Initialized Settings Service");
     await locator<UserService>().initialize();
+    setDebugText("Initialized User Service");
     await locator<NotificationService>().initialize();
+    setDebugText("Initialized Notification Service");
+    var experimentService = locator<ExperimentService>();
+    await experimentService.initialize();
+    setDebugText("Initialized Experiment Service");
     bool userInitialized =
         locator<UserService>().getUsername()?.isNotEmpty ?? false;
+    setDebugText("Initialized Experiment Service");
     if (!userInitialized) {
       return AppStartupMode.firstLaunch;
     }
 
-    var experimentService = locator<ExperimentService>();
-    await experimentService.initialize();
-
-    if (await experimentService.isTimeForInternalisationTask()) {
-      return AppStartupMode.internalisationTask;
-    }
-    if (await experimentService.isTimeForRecallTask()) {
-      return AppStartupMode.recallTask;
-    }
-
-    if (await experimentService.isTimeForLexicalDecisionTask()) {
-      return AppStartupMode.lexicalDecisionTask;
-    }
-
-    if (await experimentService.isTimeForUsabilityTask()) {}
-    // if (await experimentService.shouldShowPostLearningAssessment()) {
-    //   return AppStartupMode.postLearningAssessment;
-    // }
-
-    return AppStartupMode.noTasks;
+    return await experimentService.getCurrentStartRoute();
   }
 }

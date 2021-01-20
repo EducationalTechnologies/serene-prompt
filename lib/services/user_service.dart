@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'package:serene/locator.dart';
-import 'package:serene/models/user_data.dart';
-import 'package:serene/services/data_service.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -11,8 +9,6 @@ class UserService {
 
   SettingsService _settings;
   String userId = "";
-
-  UserData _userData;
 
   Future<bool> initialize() {
     return Future.delayed(Duration.zero).then((res) => true);
@@ -43,7 +39,6 @@ class UserService {
     if (userData != null) {
       await saveUsername(userData.userId);
       await saveUserEmail(userData.email);
-      this._userData = userData;
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
@@ -55,7 +50,6 @@ class UserService {
     if (userData != null) {
       await saveUsername(userData.userId);
       await saveUserEmail(userData.email);
-      this._userData = userData;
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;

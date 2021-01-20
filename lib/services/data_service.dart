@@ -181,6 +181,11 @@ class DataService {
         recallTask, _userService.getUserEmail());
   }
 
+  Future<Internalisation> getFirstInternalisation() async {
+    return await _databaseService
+        .getFirstInternalisation(_userService.getUserEmail());
+  }
+
   Future<Internalisation> getLastInternalisation() async {
     return await _databaseService
         .getLastInternalisation(_userService.getUserEmail());
@@ -189,11 +194,6 @@ class DataService {
   Future<RecallTask> getLastRecallTask() async {
     return await _databaseService
         .getLastRecallTask(_userService.getUserEmail());
-  }
-
-  setUserInitialized() async {
-    return await _databaseService
-        .setUserInitialized(_userService.getUserEmail());
   }
 
   Future<UserData> getUserData() async {
@@ -211,5 +211,9 @@ class DataService {
 
   saveOutcomes(List<Outcome> outcomes) async {
     await _databaseService.saveOutcomes(outcomes, _userService.getUserEmail());
+  }
+
+  saveConsent(bool consented) async {
+    await _databaseService.saveConsent(_userService.getUserEmail(), consented);
   }
 }
