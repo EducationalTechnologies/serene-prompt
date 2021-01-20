@@ -103,10 +103,10 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           ListTile(
-              title: Text("Login"),
+              title: Text("Einverständnis"),
               onTap: () async {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.LOG_IN);
+                Navigator.pushNamed(context, RouteNames.CONSENT);
               }),
           ListTile(
               title: Text("Initialisierung"),

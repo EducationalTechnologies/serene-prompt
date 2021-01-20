@@ -20,6 +20,8 @@ class NoTasksScreen extends StatefulWidget {
 
 class _NoTasksScreenState extends State<NoTasksScreen> {
   String _textNext = "";
+  String _textNotification =
+      "Sobald es weitergeht, wird dich die App benachrichtigen";
 
   getNextStats(BuildContext context) async {
     var dataService = locator<DataService>();
@@ -73,34 +75,41 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SereneAppBar(),
-      drawer: _getDrawer(),
-      body: FutureBuilder(
-          future: getNextStats(context),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Container(
-                  margin: UIHelper.getContainerMargin(),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage(
-                        "assets/illustrations/undraw_in_no_time_6igu.png"),
-                    fit: BoxFit.scaleDown,
-                  )),
-                  child: Align(
-                      child: Column(
-                        children: [
-                          Text(_textNext,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.headline4),
-                        ],
-                      ),
-                      alignment: Alignment(0.0, 0.6)));
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: SereneAppBar(),
+        drawer: _getDrawer(),
+        body: FutureBuilder(
+            future: getNextStats(context),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                    margin: UIHelper.getContainerMargin(),
+                    // decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //   image: AssetImage(
+                    //       "assets/illustrations/undraw_in_no_time_6igu.png"),
+                    //   fit: BoxFit.scaleDown,
+                    // )),
+                    child: Align(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(_textNext,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.headline4),
+                            Text(_textNotification,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.headline4),
+                          ],
+                        ),
+                        alignment: Alignment(0.0, 0.6)));
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
+      ),
     );
   }
 }
