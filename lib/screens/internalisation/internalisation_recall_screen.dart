@@ -53,6 +53,8 @@ class _InternalisationRecallScreenState
                       child: TextField(
                     minLines: 3,
                     maxLines: 5,
+                    autocorrect: false,
+                    enableSuggestions: false,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Gib hier deinen Wenn-Dann-Plan ein"),
