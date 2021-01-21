@@ -39,7 +39,7 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
         side: BorderSide(color: Colors.black54, width: 1),
         borderRadius: BorderRadius.circular(10),
       ),
-      key: ValueKey(outcome.name),
+      key: ValueKey("outcome ${outcome.name}"),
       child: ListTile(
         leading: Image.asset(outcome.iconPath),
         title: Text(outcome.name),

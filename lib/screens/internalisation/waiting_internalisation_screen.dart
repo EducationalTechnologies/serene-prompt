@@ -53,18 +53,10 @@ class _WaitingInternalisationScreenState
 
   _buildSubmitButton() {
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
-    return SizedBox(
-        width: double.infinity,
-        height: 60,
-        child: RaisedButton(
-          onPressed: () async {
-            await vm.submit(InternalisationCondition.waiting);
-            Navigator.pushNamed(context, RouteNames.NO_TASKS);
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10.0)),
-          child: Text("Abschicken", style: TextStyle(fontSize: 20)),
-        ));
+    return FullWidthButton(onPressed: () async {
+      await vm.submit(InternalisationCondition.waiting);
+      Navigator.pushNamed(context, RouteNames.NO_TASKS);
+    });
   }
 
   @override
@@ -82,13 +74,15 @@ class _WaitingInternalisationScreenState
             UIHelper.verticalSpaceMedium(),
             Text(vm.implementationIntention,
                 style: TextStyle(fontSize: 30.0, color: Colors.grey[900])),
-            UIHelper.verticalSpaceMedium(),
-            Center(
-                child: CircleProgressBar(
-                    foregroundColor: Theme.of(context).primaryColor,
-                    animationDuration: Duration(seconds: 5),
-                    value: animation.value)),
-            UIHelper.verticalSpaceMedium(),
+            LinearProgressIndicator(
+              value: animation.value,
+            ),
+            // UIHelper.verticalSpaceMedium(),
+            // Center(
+            //     child: CircleProgressBar(
+            //         foregroundColor: Theme.of(context).primaryColor,
+            //         animationDuration: Duration(seconds: 5),
+            //         value: animation.value)),
             UIHelper.verticalSpaceMedium(),
             if (_done) _buildSubmitButton()
           ],

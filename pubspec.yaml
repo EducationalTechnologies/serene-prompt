@@ -11,7 +11,7 @@ description: A Goal Setting Application
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.9+1
+version: 0.0.11+1
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -68,6 +68,7 @@ flutter:
     - assets/hindrances.json
     - assets/illustrations/
     - assets/icons/
+    - assets/config/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
@@ -20,6 +21,7 @@ class DataService {
   List<Goal> _goalsCache;
   List<Goal> _openGoalsCache = [];
   List<GoalShield> _goalShields;
+  List<String> _planCache = [];
   UserService _userService;
   FirebaseService _databaseService;
 
@@ -165,10 +167,18 @@ class DataService {
   }
 
   getCurrentImplementationIntention() async {
-    // TODO: Replace with actual code
-    return await Future.delayed(Duration.zero).then((value) {
-      return "Wenn ich beim Lernen müde werde, dann stehe ich kurz auf und strecke mich";
-    });
+    if (_planCache.length == 0) {
+      String data = await rootBundle.loadString("assets/config/plans.json");
+      for (var plan in jsonDecode(data)) {
+        _planCache.add(plan);
+      }
+    }
+
+    final _random = new Random();
+
+    var plan = _planCache[_random.nextInt(_planCache.length)];
+
+    return plan;
   }
 
   saveInternalisation(Internalisation internalisation) async {

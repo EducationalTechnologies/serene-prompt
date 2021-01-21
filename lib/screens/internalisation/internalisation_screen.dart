@@ -43,7 +43,8 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               return Container(
-                child: getScreenForCondition(vm.internalisationCondition),
+                // child: getScreenForCondition(vm.internalisationCondition),
+                child: ScrambleInternalisation(true),
               );
             } else {
               return Container(

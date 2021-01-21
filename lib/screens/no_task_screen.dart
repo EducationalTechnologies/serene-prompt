@@ -5,6 +5,7 @@ import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
+import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 import 'package:flutter/foundation.dart';
@@ -23,14 +24,17 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   String _textNotification =
       "Sobald es weitergeht, wird dich die App benachrichtigen";
 
-  getNextStats(BuildContext context) async {
+  bool _showToRecallTaskButton = false;
+
+  Future<bool> getNextStats(BuildContext context) async {
     var dataService = locator<DataService>();
+    var experimentService = locator<ExperimentService>();
     String nextText = "";
     var lastInternalisation = await dataService.getLastInternalisation();
 
     if (lastInternalisation == null) {
       Navigator.pushNamed(context, RouteNames.INTERNALISATION);
-      return;
+      return true;
     }
 
     var lastRecall = await dataService.getLastRecallTask();
@@ -40,37 +44,57 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         if (lastRecall.completionDate.isToday()) {
           nextText =
               "Danke, dass du für heute die Aufgaben erledigt hast. Bitte mache morgen weiter";
+          return true;
         }
       }
       //If no recall task was done today, we check when it is due next
-      else {
-        var now = DateTime.now();
 
-        var hourDiff = now.hour - lastInternalisation.completionDate.hour;
-        if (hourDiff >= ExperimentService.INTERNALISATION_RECALL_BREAK) {
-          nextText =
-              "Überprüfe jetzt, wie gut du dich an deinen Wenn-Dann-Plan erinnern kannst";
-        } else {
-          //If the recall task is in less than
-          var nextTime =
-              lastInternalisation.completionDate.add(Duration(hours: 6));
+      var timeForRecall = await experimentService.isTimeForRecallTask();
+      if (timeForRecall) {
+        nextText =
+            "Überprüfe jetzt, wie gut du dich an deinen heutigen Wenn-Dann-Plan erinnern kannst";
+
+        setState(() {
+          _showToRecallTaskButton = true;
+        });
+      } else {
+        //If the recall task is in less than
+        var nextTime =
+            lastInternalisation.completionDate.add(Duration(hours: 6));
+
+        if (nextTime.isToday()) {
           var nextTimeString = DateFormat("HH:mm").format(nextTime);
           nextText =
               "Ab $nextTimeString Uhr solltest du deine Erinnerung an deinen Wenn-Dann-Plan überprüfen";
+        } else {
+          nextText =
+              "Du hast deinen Wenn-Dann-Plan leider so spät ausgeführt, dass wir heute nicht mehr deine Erinnerung überprüfen können. Mache bitte morgen weiter.";
         }
       }
     }
 
-    setState(() {
-      _textNext = nextText;
-    });
-    return Future.delayed(Duration.zero).then((res) => true);
+    // setState(() {
+    //   _textNext = nextText;
+    // });
+    _textNext = nextText;
+    return true;
   }
 
   _getDrawer() {
-    if (kDebugMode) return SereneDrawer();
+    // TODO: Reactivate before release
+    // if (kDebugMode) return SereneDrawer();
 
-    return null;
+    return SereneDrawer();
+  }
+
+  _buildToRecallTaskButton() {
+    return FullWidthButton(
+      onPressed: () async {
+        Navigator.pushNamed(context, RouteNames.RECALL_TASK);
+        return;
+      },
+      text: "Zur Gedächtnisaufgabe",
+    );
   }
 
   @override
@@ -102,6 +126,8 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                             Text(_textNotification,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.headline4),
+                            if (_showToRecallTaskButton)
+                              _buildToRecallTaskButton(),
                           ],
                         ),
                         alignment: Alignment(0.0, 0.6)));

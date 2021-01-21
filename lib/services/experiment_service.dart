@@ -65,11 +65,15 @@ class ExperimentService {
     var lastInternalisation = await _dataService.getLastInternalisation();
 
     if (lastInternalisation == null) {
+      return false;
+    }
+
+    var now = DateTime.now();
+    var hourDiff = now.hour - lastInternalisation.completionDate.hour;
+    if (hourDiff >= ExperimentService.INTERNALISATION_RECALL_BREAK) {
       return true;
     }
-    return await Future.delayed(Duration.zero).then((value) {
-      return false;
-    });
+    return false;
   }
 
   Future<bool> isTimeForLexicalDecisionTask() async {
