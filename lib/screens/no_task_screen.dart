@@ -24,9 +24,17 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   String _textNotification =
       "Sobald es weitergeht, wird dich die App benachrichtigen";
 
+  Future<String> _nextText;
+
   bool _showToRecallTaskButton = false;
 
-  Future<bool> getNextStats(BuildContext context) async {
+  @override
+  void initState() {
+    super.initState();
+    _nextText = getNextText();
+  }
+
+  Future<String> getNextText() async {
     var dataService = locator<DataService>();
     var experimentService = locator<ExperimentService>();
     String nextText = "";
@@ -34,7 +42,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
     if (lastInternalisation == null) {
       Navigator.pushNamed(context, RouteNames.INTERNALISATION);
-      return true;
+      return "";
     }
 
     var lastRecall = await dataService.getLastRecallTask();
@@ -44,7 +52,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         if (lastRecall.completionDate.isToday()) {
           nextText =
               "Danke, dass du für heute die Aufgaben erledigt hast. Bitte mache morgen weiter";
-          return true;
         }
       }
       //If no recall task was done today, we check when it is due next
@@ -54,9 +61,10 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         nextText =
             "Überprüfe jetzt, wie gut du dich an deinen heutigen Wenn-Dann-Plan erinnern kannst";
 
-        setState(() {
-          _showToRecallTaskButton = true;
-        });
+        _showToRecallTaskButton = true;
+        // setState(() {
+        //   _showToRecallTaskButton = true;
+        // });
       } else {
         //If the recall task is in less than
         var nextTime =
@@ -72,12 +80,8 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         }
       }
     }
-
-    // setState(() {
-    //   _textNext = nextText;
-    // });
     _textNext = nextText;
-    return true;
+    return nextText;
   }
 
   _getDrawer() {
@@ -105,7 +109,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         appBar: SereneAppBar(),
         drawer: _getDrawer(),
         body: FutureBuilder(
-            future: getNextStats(context),
+            future: _nextText,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Container(

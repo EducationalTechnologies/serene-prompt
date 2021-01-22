@@ -3,6 +3,7 @@ class RouteNames {
   static const MAIN = "/main";
   static const GOALS = "/goals";
   static const INTERNALISATION = "/internalisation";
+  static const EMOJI_STORY = "/emojistory";
   static const ADD_GOAL = "/addgoal";
   static const GS_HIGHLIGHT = "/gshighlight";
   static const RECALL_TASK = "/recalltask";

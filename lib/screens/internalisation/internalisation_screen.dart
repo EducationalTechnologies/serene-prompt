@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/screens/internalisation/scramble_internalisation.dart';
 import 'package:serene/screens/internalisation/waiting_internalisation_screen.dart';
+import 'package:serene/screens/internalisation/writing_internalisation.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/serene_appbar.dart';
@@ -15,6 +16,11 @@ class InternalisationScreen extends StatefulWidget {
 }
 
 class _InternalisationScreenState extends State<InternalisationScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   getScreenForCondition(InternalisationCondition condition) {
     switch (condition) {
       case InternalisationCondition.waiting:
@@ -22,6 +28,9 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
         break;
       case InternalisationCondition.scrambleWithHint:
         return ScrambleInternalisation(true);
+        break;
+      case InternalisationCondition.writing:
+        return WritingInternalisation();
         break;
       case InternalisationCondition.scrambleWithoutHint:
         return ScrambleInternalisation(false);
@@ -39,12 +48,12 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
         appBar: SereneAppBar(),
         drawer: SereneDrawer(),
         body: FutureBuilder(
-          future: vm.init(),
+          future: vm.initialized,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               return Container(
-                // child: getScreenForCondition(vm.internalisationCondition),
-                child: ScrambleInternalisation(true),
+                child: getScreenForCondition(vm.internalisationCondition),
+                // child: ScrambleInternalisation(true),
               );
             } else {
               return Container(

@@ -62,10 +62,10 @@ class UserService {
   }
 
   _getRandomUsername() {
-    var chars = "abcdefghijklmnopqrstuvwxyz0123456789!";
+    var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
     Random rnd = new Random(new DateTime.now().millisecondsSinceEpoch);
     String result = "";
-    for (var i = 0; i < 16; i++) {
+    for (var i = 0; i < 12; i++) {
       result += chars[rnd.nextInt(chars.length)];
     }
     return result;

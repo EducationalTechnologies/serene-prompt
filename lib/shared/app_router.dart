@@ -4,6 +4,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
+import 'package:serene/screens/internalisation/emoji_story_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_recall_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
 import 'package:serene/screens/login_screen.dart';
@@ -14,6 +15,7 @@ import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
+import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -55,8 +57,16 @@ class AppRouter {
                     create: (_) => InternalisationViewModel(
                         locator.get<DataService>(),
                         locator.get<NavigationService>(),
-                        locator.get<ExperimentService>()),
+                        locator.get<ExperimentService>(),
+                        locator.get<NotificationService>()),
                     child: InternalisationScreen()));
+
+      case RouteNames.EMOJI_STORY:
+        final InternalisationViewModel vm = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) =>
+                ChangeNotifierProvider<InternalisationViewModel>(
+                    create: (_) => vm, child: EmojiStoryScreen()));
 
       case RouteNames.ADD_GOAL:
         final GoalScreenArguments goalArgs = settings.arguments;

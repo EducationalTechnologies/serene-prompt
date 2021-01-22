@@ -226,4 +226,9 @@ class DataService {
   saveConsent(bool consented) async {
     await _databaseService.saveConsent(_userService.getUserEmail(), consented);
   }
+
+  saveEmojiInternalisation(Internalisation internalisation) async {
+    await _databaseService.saveEmojiInternalisation(
+        _userService.getUserEmail(), internalisation);
+  }
 }

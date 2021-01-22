@@ -34,6 +34,8 @@ class FirebaseService {
   static const String COLLECTION_OBSTACLES = "obstacles";
   static const String COLLECTION_INTERNALISATION = "internalisation";
   static const String COLLECTION_RECALLTASKS = "recallTasks";
+  static const String COLLECTION_EMOJI_INTERNALISATION =
+      "emojiInternalisations";
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -343,5 +345,12 @@ class FirebaseService {
         .collection(COLLECTION_USERS)
         .doc(userid)
         .set({"consented": consentValue});
+  }
+
+  saveEmojiInternalisation(
+      String userEmail, Internalisation internalisation) async {
+    return await _databaseReference
+        .collection(COLLECTION_EMOJI_INTERNALISATION)
+        .add(internalisation.toMap());
   }
 }

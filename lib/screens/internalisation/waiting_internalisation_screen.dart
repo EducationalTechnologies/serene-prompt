@@ -40,7 +40,9 @@ class _WaitingInternalisationScreenState
     });
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _done = true;
+        setState(() {
+          _done = true;
+        });
       }
     });
     controller.forward();
@@ -55,7 +57,6 @@ class _WaitingInternalisationScreenState
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return FullWidthButton(onPressed: () async {
       await vm.submit(InternalisationCondition.waiting);
-      Navigator.pushNamed(context, RouteNames.NO_TASKS);
     });
   }
 

@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/services/notification_service.dart';
@@ -76,13 +75,13 @@ class SereneDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, RouteNames.INTERNALISATION);
               }),
           Divider(),
-          _buildDrawerItem(
-              icon: Icons.settings,
-              text: "FORCE CRASH",
-              onTap: () async {
-                // Navigator.pushNamed(context, RouteNames.SETTINGS);
-                FirebaseCrashlytics.instance.crash();
-              }),
+          // _buildDrawerItem(
+          //     icon: Icons.settings,
+          //     text: "Emoji Task",
+          //     onTap: () async {
+          //       Navigator.pushNamed(context, RouteNames.EMOJI_STORY);
+          //       // FirebaseCrashlytics.instance.crash();
+          //     }),
           Divider(),
           _buildDrawerItem(
               icon: Icons.receipt,
@@ -95,7 +94,6 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
               title: Text(
                 "Lexical Decision Task",
-                style: subHeaderStyle,
               ),
               onTap: () async {
                 Navigator.pop(context);
@@ -108,6 +106,7 @@ class SereneDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, RouteNames.CONSENT);
               }),
+          Divider(),
           ListTile(
               title: Text("Initialisierung"),
               onTap: () async {
