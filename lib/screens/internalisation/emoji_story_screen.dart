@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_emoji_keyboard/flutter_emoji_keyboard.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
@@ -31,16 +32,16 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
         ));
   }
 
-  // _buildEmojiPicker() {
-  //   return EmojiKeyboard(
-  //     onEmojiSelected: (Emoji emoji) {
-  //       setState(() {
-  //         _emojiStory += emoji.text;
-  //       });
-  //       print(emoji);
-  //     },
-  //   );
-  // }
+  _buildEmojiPicker() {
+    return EmojiKeyboard(
+      onEmojiSelected: (Emoji emoji) {
+        setState(() {
+          _emojiStory += emoji.text;
+        });
+        print(emoji);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

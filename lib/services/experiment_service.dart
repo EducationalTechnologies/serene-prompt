@@ -1,4 +1,6 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/extensions.dart';
 
@@ -9,8 +11,9 @@ class ExperimentService {
   static const int DASYS_INTERVAL_USABILITY = 3;
 
   DataService _dataService;
+  NotificationService _notificationService;
 
-  ExperimentService(this._dataService);
+  ExperimentService(this._dataService, this._notificationService);
 
   Future<bool> initialize() async {
     return await Future.delayed(Duration.zero).then((res) => true);
@@ -45,6 +48,21 @@ class ExperimentService {
     return Future.delayed(Duration.zero).then((res) => true);
   }
 
+  bool shouldScheduleRecallTaskToday(DateTime timeOfInternalisation) {
+    var date =
+        DateTime.now().add(Duration(hours: INTERNALISATION_RECALL_BREAK));
+    return date.isToday();
+  }
+
+  void scheduleRecallTaskNotificationIfAppropriate() {
+    var date =
+        DateTime.now().add(Duration(hours: INTERNALISATION_RECALL_BREAK));
+
+    if (date.isToday()) {
+      this._notificationService.scheduleRecallTaskReminder(date);
+    }
+  }
+
   Future<bool> isTimeForInternalisationTask() async {
     var lastInternalisation = await _dataService.getLastInternalisation();
     // If there is no previous internalisation, we definitely need the first one
@@ -68,6 +86,14 @@ class ExperimentService {
 
     if (lastInternalisation == null) {
       return false;
+    }
+
+    var lastRecall = await _dataService.getLastRecallTask();
+
+    if (lastRecall != null) {
+      if (lastRecall.completionDate.isToday()) {
+        return false;
+      }
     }
 
     var now = DateTime.now();

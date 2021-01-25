@@ -37,7 +37,7 @@ class NotificationService {
         onSelectNotification: onSelectNotification);
 
     await scheduleInternalisationReminder(new Time(6, 30, 0));
-    await scheduleTaskReminder(new Time(17, 00, 0));
+    // await scheduleTaskReminder(new Time(17, 00, 0));
     var pendingNotifications = await getPendingNotifications();
     var internalisationReminderExists = pendingNotifications
         .firstWhere((n) => n.id == ID_INTERNALISATION, orElse: () => null);
@@ -130,7 +130,7 @@ class NotificationService {
         androidAllowWhileIdle: true);
   }
 
-  scheduleRecallTaskReminder(Time time) async {
+  scheduleRecallTaskReminder(DateTime time) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_TASK, CHANNEL_NAME_TASK, CHANNEL_DESCRIPTION_TASK);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
@@ -138,19 +138,17 @@ class NotificationService {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
-    var now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(
-        tz.local, now.year, now.month, now.day, now.hour, now.minute + 2);
+    var scheduledDate =
+        tz.TZDateTime(tz.local, time.year, time.month, time.day);
 
     await localNotifications.zonedSchedule(
-        123123123,
+        ID_TASK_REMINDER,
         "Versuche dich, an deinen Wenn-Dann-Plan zu erinnern",
         "Klicke hier, um deine Erinnerung an den Wenn-Dann-Plan zu überprüfen",
         scheduledDate,
         notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time,
         payload: PAYLOAD_TASK_REMINDER,
         androidAllowWhileIdle: true);
   }

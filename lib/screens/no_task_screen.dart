@@ -27,6 +27,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   Future<String> _nextText;
 
   bool _showToRecallTaskButton = false;
+  bool _showInternalisationTaskButton = false;
 
   @override
   void initState() {
@@ -40,20 +41,21 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     String nextText = "";
     var lastInternalisation = await dataService.getLastInternalisation();
 
-    if (lastInternalisation == null) {
+    if (await experimentService.isTimeForInternalisationTask()) {
       Navigator.pushNamed(context, RouteNames.INTERNALISATION);
+      _showInternalisationTaskButton = true;
+      return "";
+    }
+
+    if (await experimentService.isTimeForRecallTask()) {
+      Navigator.pushNamed(context, RouteNames.RECALL_TASK);
+      _showToRecallTaskButton = true;
       return "";
     }
 
     var lastRecall = await dataService.getLastRecallTask();
 
     if (lastInternalisation.completionDate.isToday()) {
-      if (lastRecall != null) {
-        if (lastRecall.completionDate.isToday()) {
-          nextText =
-              "Danke, dass du für heute die Aufgaben erledigt hast. Bitte mache morgen weiter";
-        }
-      }
       //If no recall task was done today, we check when it is due next
 
       var timeForRecall = await experimentService.isTimeForRecallTask();
@@ -67,13 +69,20 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         // });
       } else {
         //If the recall task is in less than
-        var nextTime =
-            lastInternalisation.completionDate.add(Duration(hours: 6));
+        DateTime nextTime = lastInternalisation.completionDate.add(
+            Duration(hours: ExperimentService.INTERNALISATION_RECALL_BREAK));
 
         if (nextTime.isToday()) {
-          var nextTimeString = DateFormat("HH:mm").format(nextTime);
-          nextText =
-              "Ab $nextTimeString Uhr solltest du deine Erinnerung an deinen Wenn-Dann-Plan überprüfen";
+          if (lastRecall != null) {
+            if (lastRecall.completionDate.isToday()) {
+              nextText =
+                  "Danke, dass du für heute die Aufgaben erledigt hast. Bitte mache morgen weiter";
+            } else {
+              nextText = _getNextTimeTodayString(nextTime);
+            }
+          } else {
+            nextText = _getNextTimeTodayString(nextTime);
+          }
         } else {
           nextText =
               "Du hast deinen Wenn-Dann-Plan leider so spät ausgeführt, dass wir heute nicht mehr deine Erinnerung überprüfen können. Mache bitte morgen weiter.";
@@ -82,6 +91,11 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     }
     _textNext = nextText;
     return nextText;
+  }
+
+  _getNextTimeTodayString(DateTime nextTime) {
+    var nextTimeString = DateFormat("HH:mm").format(nextTime);
+    return "Ab $nextTimeString Uhr solltest du deine Erinnerung an deinen Wenn-Dann-Plan überprüfen";
   }
 
   _getDrawer() {

@@ -34,7 +34,7 @@ class _WaitingInternalisationScreenState
   void initTimer() {
     controller = AnimationController(
         duration: Duration(seconds: _timerDurationSeconds), vsync: this);
-    animation = Tween<double>(begin: 0, end: pi / 2).animate(controller);
+    animation = Tween<double>(begin: 0, end: 1).animate(controller);
     animation.addListener(() {
       setState(() {});
     });
