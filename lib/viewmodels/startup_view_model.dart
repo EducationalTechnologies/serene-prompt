@@ -9,7 +9,7 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class StartupViewModel extends BaseViewModel {
-  String debugText = "Wurst";
+  List<String> debugTexts = [];
 
   StartupViewModel() {
     print("Startup");
@@ -53,30 +53,33 @@ class StartupViewModel extends BaseViewModel {
       case AppStartupMode.lexicalDecisionTask:
         nav.navigateAndRemove(RouteNames.LDT);
     }
-  }
+  
 
-  setDebugText(String text) {
-    this.debugText = text;
+  addDebugText(String text) {
+    this.debugTexts.add(text);
     notifyListeners();
   }
 
   Future<AppStartupMode> initialize() async {
     await locator<SettingsService>().initialize();
-    setDebugText("Initialized Settings Service");
+    addDebugText("Initialized Settings Service");
     await locator<UserService>().initialize();
-    setDebugText("Initialized User Service");
+    addDebugText("Initialized User Service");
     await locator<NotificationService>().initialize();
-    setDebugText("Initialized Notification Service");
+    addDebugText("Initialized Notification Service");
     var experimentService = locator<ExperimentService>();
     await experimentService.initialize();
-    setDebugText("Initialized Experiment Service");
+    addDebugText("Initialized Experiment Service");
     bool userInitialized =
         locator<UserService>().getUsername()?.isNotEmpty ?? false;
-    setDebugText("Initialized Experiment Service");
+    addDebugText(
+        "Initialized Experiment Service. User Initialized: ${userInitialized}");
     if (!userInitialized) {
       return AppStartupMode.firstLaunch;
     }
 
+    addDebugText(
+        "Waiting for the current start route from the experiment service");
     return await experimentService.getCurrentStartRoute();
   }
 }

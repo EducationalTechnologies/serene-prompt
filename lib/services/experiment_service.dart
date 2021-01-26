@@ -1,4 +1,3 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -6,6 +5,7 @@ import 'package:serene/shared/extensions.dart';
 
 class ExperimentService {
   static const int INTERNALISATION_RECALL_BREAK = 6;
+  static const int MIN_TIME_HOURS = 16;
   static const int NUM_CONDITIONS = 3;
   static const int DASYS_INTERVAL_LDT = 3;
   static const int DASYS_INTERVAL_USABILITY = 3;
@@ -54,11 +54,25 @@ class ExperimentService {
     return date.isToday();
   }
 
-  void scheduleRecallTaskNotificationIfAppropriate() {
-    var date =
-        DateTime.now().add(Duration(hours: INTERNALISATION_RECALL_BREAK));
+  DateTime getScheduleTimeForRecallTask(DateTime timeOfInternalisation) {
+    var date = timeOfInternalisation
+        .add(Duration(hours: INTERNALISATION_RECALL_BREAK));
 
-    if (date.isToday()) {
+    // If the reminder would be before 4pm, we schedule it to be at least at four
+    var diff = MIN_TIME_HOURS - date.hour;
+
+    if (diff > 0) {
+      date = DateTime(
+          date.year, date.month, date.day, date.hour + diff, date.minute);
+    }
+
+    return date;
+  }
+
+  void scheduleRecallTaskNotificationIfAppropriate(
+      DateTime timeOfInternalisation) {
+    if (timeOfInternalisation.isToday()) {
+      var date = getScheduleTimeForRecallTask(timeOfInternalisation);
       this._notificationService.scheduleRecallTaskReminder(date);
     }
   }
@@ -143,5 +157,9 @@ class ExperimentService {
     if (await isTimeForUsabilityTask()) {}
 
     return AppStartupMode.noTasks;
+  }
+
+  Future<List<dynamic>> getLdtTask() async {
+    var allTasks = await this._dataService.getLexicalDecisionTaskList();
   }
 }

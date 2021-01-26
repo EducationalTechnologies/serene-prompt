@@ -20,6 +20,7 @@ import 'package:serene/shared/materialized_path.dart';
 class DataService {
   List<Goal> _goalsCache;
   List<Goal> _openGoalsCache = [];
+  List<dynamic> _ldtTaskListCache = [];
   List<GoalShield> _goalShields;
   List<String> _planCache = [];
   UserService _userService;
@@ -175,10 +176,21 @@ class DataService {
     }
 
     final _random = new Random();
-
+    // TODO: Do NOT use random plan next
     var plan = _planCache[_random.nextInt(_planCache.length)];
 
     return plan;
+  }
+
+  getLexicalDecisionTaskList() async {
+    if (this._ldtTaskListCache.length == 0) {
+      String data = await rootBundle.loadString("assets/config/plans.json");
+      for (var ldtTask in jsonDecode(data)) {
+        _ldtTaskListCache.add(ldtTask);
+      }
+    }
+
+    return _ldtTaskListCache;
   }
 
   saveInternalisation(Internalisation internalisation) async {

@@ -49,6 +49,10 @@ class InternalisationViewModel extends BaseViewModel {
     _currentInternalisation.condition = condition.toString();
     await this._dataService.saveInternalisation(_currentInternalisation);
 
+    this
+        ._experimentService
+        .scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
+
     _navigationService.navigateTo(RouteNames.EMOJI_STORY, arguments: this);
     return true;
   }

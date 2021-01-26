@@ -5,7 +5,6 @@ import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
-import 'package:serene/shared/text_styles.dart';
 import 'package:serene/widgets/version_info.dart';
 
 class SereneDrawer extends StatelessWidget {

@@ -6,6 +6,7 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
+import 'package:serene/widgets/speech_bubble.dart';
 
 class EmojiStoryScreen extends StatefulWidget {
   EmojiStoryScreen({Key key}) : super(key: key);
@@ -61,21 +62,21 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   UIHelper.verticalSpaceMedium(),
-                  Text(
-                    "'${vm.implementationIntention}'",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
+                  SpeechBubble(text: "'${vm.implementationIntention}'"),
                   UIHelper.verticalSpaceMedium(),
                   Center(
                       child: TextField(
                     minLines: 3,
                     maxLines: 5,
+                    autofocus: true,
                     autocorrect: false,
                     enableSuggestions: false,
                     style: Theme.of(context).textTheme.headline5,
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Gib hier deine Emoji-Repräsentation ein"),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        hintText: ""),
                     onChanged: (text) {
                       setState(() {
                         _done = true;

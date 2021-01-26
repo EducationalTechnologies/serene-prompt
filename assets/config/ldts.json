@@ -1,0 +1,79 @@
+[
+    {
+        "sentence": "Wenn mir langweilig ist, dann denke ich an eine Belohnung.",
+        "words": [
+            "langweilig",
+            "belohnung"
+        ],
+        "nonwords": [
+            "longwuleg",
+            "bulenhung"
+        ]
+    },
+    {
+        "sentence": "Wenn ich interessiert bin, dann kann ich viel entdecken.",
+        "words": [
+            "interessiert",
+            "entdecken"
+        ],
+        "nonwords": [
+            "antderessard",
+            "amtducken"
+        ]
+    },
+    {
+        "sentence": "Wenn ich wütend bin, dann werde ich in die Luft boxen.",
+        "words": [
+            "wütend",
+            "boxen"
+        ],
+        "nonwords": [
+            "votend",
+            "baxen"
+        ]
+    },
+    {
+        "sentence": "Wenn mich mein Handy ablenkt, dann werde ich es weglegen.",
+        "words": [
+            "handy",
+            "weglegen"
+        ],
+        "nonwords": [
+            "henti",
+            "warglagen"
+        ]
+    },
+    {
+        "sentence": "Wenn ich aufgeregt bin, dann denke ich an meinen Plan.",
+        "words": [
+            "aufgeregt",
+            "plan"
+        ],
+        "nonwords": [
+            "eufgaragt",
+            "plun"
+        ]
+    },
+    {
+        "sentence": "Wenn ich ängstlich bin, dann versuche ich mich zu beruhigen.",
+        "words": [
+            "ängstlich",
+            "beruhigen"
+        ],
+        "nonwords": [
+            "ungstlach",
+            "bäreigen"
+        ]
+    },
+    {
+        "sentence": "Wenn ich nervös bin, dann werde ich ganz tief durchatmen.",
+        "words": [
+            "nervös",
+            "durchatmen"
+        ],
+        "nonwords": [
+            "narvas",
+            "dorchetman"
+        ]
+    }
+]

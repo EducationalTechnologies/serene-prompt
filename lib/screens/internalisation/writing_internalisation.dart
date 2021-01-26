@@ -41,10 +41,11 @@ class _WritingInternalisationState extends State<WritingInternalisation> {
                 UIHelper.verticalSpaceMedium(),
                 Text(
                   "Schreibe den folgenden Plan auf:",
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
+                UIHelper.verticalSpaceMedium(),
                 Text(
-                  vm.implementationIntention,
+                  "'${vm.implementationIntention}'",
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 UIHelper.verticalSpaceMedium(),
@@ -54,7 +55,7 @@ class _WritingInternalisationState extends State<WritingInternalisation> {
                   maxLines: 5,
                   autocorrect: false,
                   enableSuggestions: false,
-                  style: TextStyle(fontSize: 30),
+                  style: Theme.of(context).textTheme.headline5,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: ""),
                   onChanged: (text) {

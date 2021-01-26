@@ -7,6 +7,7 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
+import 'package:serene/widgets/speech_bubble.dart';
 
 class WaitingInternalisationScreen extends StatefulWidget {
   @override
@@ -68,13 +69,11 @@ class _WaitingInternalisationScreenState
       return _buildPreTimerScreen();
     } else {
       return Container(
-        margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+        margin: UIHelper.getContainerMargin(),
         child: ListView(
           children: <Widget>[
             UIHelper.verticalSpaceMedium(),
-            UIHelper.verticalSpaceMedium(),
-            Text(vm.implementationIntention,
-                style: TextStyle(fontSize: 30.0, color: Colors.grey[900])),
+            SpeechBubble(text: vm.implementationIntention),
             LinearProgressIndicator(
               value: animation.value,
             ),

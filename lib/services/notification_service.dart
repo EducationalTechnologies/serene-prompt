@@ -138,8 +138,8 @@ class NotificationService {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
-    var scheduledDate =
-        tz.TZDateTime(tz.local, time.year, time.month, time.day);
+    var scheduledDate = tz.TZDateTime(
+        tz.local, time.year, time.month, time.day, time.hour, time.minute);
 
     await localNotifications.zonedSchedule(
         ID_TASK_REMINDER,

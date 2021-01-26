@@ -8,9 +8,13 @@ class SplashScreen extends StatelessWidget {
     // TODO: I NEED THIS FOR DEBUGGING ATM! REMOVE LATER
     var vm = Provider.of<StartupViewModel>(context);
     return Container(
-      color: Colors.white,
-      child: Text(vm.debugText),
-    );
+        color: Colors.white,
+        child: ListView(
+          children: [
+            for (var t in vm.debugTexts)
+              Text(t, style: TextStyle(fontSize: 14)),
+          ],
+        ));
 
     return Container(
       color: Colors.white,
