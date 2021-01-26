@@ -53,7 +53,7 @@ class StartupViewModel extends BaseViewModel {
       case AppStartupMode.lexicalDecisionTask:
         nav.navigateAndRemove(RouteNames.LDT);
     }
-  
+  }
 
   addDebugText(String text) {
     this.debugTexts.add(text);

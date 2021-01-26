@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
+import 'package:serene/widgets/speech_bubble.dart';
 
 class ScrambleText {
   int originalPosition;
@@ -113,9 +114,9 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.orange[200],
-        ),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.orange[200],
+            boxShadow: [BoxShadow(color: Colors.black, blurRadius: 0.5)]),
         child: Text(
           scramble.text,
           style: TextStyle(
@@ -171,13 +172,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   }
 
   _buildCorrectText(String text) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 20),
-      ),
-    );
+    return SpeechBubble(text: text);
   }
 
   _buildIncorrectWarning() {
