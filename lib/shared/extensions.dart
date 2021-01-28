@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
 
 extension GlobalKeyExtension on GlobalKey {
@@ -10,6 +12,21 @@ extension GlobalKeyExtension on GlobalKey {
     } else {
       return null;
     }
+  }
+}
+
+extension ListHelpers on List {
+  List randomizeList() {
+    var random = new Random();
+    for (var i = this.length - 1; i > 0; i--) {
+      var n = random.nextInt(i + 1);
+
+      var temp = this[i];
+      this[i] = this[n];
+      this[n] = temp;
+    }
+
+    return this;
   }
 }
 
@@ -36,5 +53,12 @@ extension DateHelpers on DateTime {
   int daysAgo() {
     var compareDate = DateTime(this.year, this.month, this.day, 0, 0, 0);
     return DateTime.now().difference(compareDate).inDays;
+  }
+
+  int weekDaysAgo(DateTime other) {
+    var compareDateThis = DateTime(this.year, this.month, this.day, 0, 0, 0);
+    var compareDateOther =
+        DateTime(other.year, other.month, other.day, 0, 0, 0);
+    return compareDateThis.difference(compareDateOther).inDays;
   }
 }

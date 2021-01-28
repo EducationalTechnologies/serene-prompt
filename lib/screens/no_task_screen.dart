@@ -95,7 +95,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
   _getNextTimeTodayString(DateTime nextTime) {
     var nextTimeString = DateFormat("HH:mm").format(nextTime);
-    return "Ab $nextTimeString Uhr solltest du deine Erinnerung an deinen Wenn-Dann-Plan überprüfen";
+    return "Ab $nextTimeString Uhr solltest du die Erinnerung an deinen Wenn-Dann-Plan überprüfen";
   }
 
   _getDrawer() {
@@ -140,10 +140,10 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                           children: [
                             Text(_textNext,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline4),
+                                style: Theme.of(context).textTheme.headline5),
                             Text(_textNotification,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline4),
+                                style: Theme.of(context).textTheme.headline5),
                             if (_showToRecallTaskButton)
                               _buildToRecallTaskButton(),
                           ],

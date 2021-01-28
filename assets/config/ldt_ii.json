@@ -1,0 +1,126 @@
+[
+    {
+        "sentence": "Wenn mir langweilig ist, dann denke ich an eine Belohnung.",
+        "primes": [
+            "langweilig",
+            "frosch",
+            "wurzel"
+        ],
+        "words": [
+            "belohnung",
+            "konstant",
+            "schlafen"
+        ],
+        "nonwords": [
+            "bulenhung",
+            "kantsont",
+            "schulfon"
+        ]
+    },
+    {
+        "sentence": "Wenn ich interessiert bin, dann kann ich viel entdecken.",
+        "primes": [
+            "interessiert",
+            "elastisch",
+            "links"
+        ],
+        "words": [
+            "entdecken",
+            "blaubeere",
+            "pony"
+        ],
+        "nonwords": [
+            "amtducken",
+            "bullbare",
+            "penti"
+        ]
+    },
+    {
+        "sentence": "Wenn ich wütend bin, dann werde ich in die Luft boxen.",
+        "primes": [
+            "wütend",
+            "trennen",
+            "angemessen"
+        ],
+        "words": [
+            "boxen",
+            "höflich",
+            "drama"
+        ],
+        "nonwords": [
+            "baxen",
+            "helflich",
+            "droma"
+        ]
+    },
+    {
+        "sentence": "Wenn mich mein Handy ablenkt, dann werde ich es weglegen.",
+        "primes": [
+            "handy",
+            "rolltreppe",
+            "krank"
+        ],
+        "words": [
+            "weglegen",
+            "export",
+            "maschine"
+        ],
+        "nonwords": [
+            "warglagen",
+            "axtpart",
+            "meschina"
+        ]
+    },
+    {
+        "sentence": "Wenn ich aufgeregt bin, dann denke ich an meinen Plan.",
+        "primes": [
+            "aufgeregt",
+            "allianz",
+            "gemütlich"
+        ],
+        "words": [
+            "plan",
+            "projekt",
+            "kohlenstoff"
+        ],
+        "nonwords": [
+            "plun"
+        ]
+    },
+    {
+        "sentence": "Wenn ich ängstlich bin, dann versuche ich mich zu beruhigen.",
+        "primes": [
+            "ängstlich",
+            "elastisch",
+            "links"
+        ],
+        "words": [
+            "beruhigen",
+            "blaubeere",
+            "pony"
+        ],
+        "nonwords": [
+            "bäreigen",
+            "bullbare",
+            "penti"
+        ]
+    },
+    {
+        "sentence": "Wenn ich nervös bin, dann werde ich ganz tief durchatmen.",
+        "primes": [
+            "nervös",
+            "frosch",
+            "wurzel"
+        ],
+        "words": [
+            "durchatmen",
+            "konstant",
+            "schlafen"
+        ],
+        "nonwords": [
+            "dorchetman",
+            "kantsont",
+            "schulfon"
+        ]
+    }
+]

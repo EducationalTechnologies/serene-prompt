@@ -13,17 +13,17 @@ class ScrambleText {
 
   ScrambleText({this.originalPosition, this.isSelected, this.text});
 
-  static scrambleSentence(List sentence) {
+  static randomizeList(List list) {
     var random = new Random();
-    for (var i = sentence.length - 1; i > 0; i--) {
+    for (var i = list.length - 1; i > 0; i--) {
       var n = random.nextInt(i + 1);
 
-      var temp = sentence[i];
-      sentence[i] = sentence[n];
-      sentence[n] = temp;
+      var temp = list[i];
+      list[i] = list[n];
+      list[n] = temp;
     }
 
-    return sentence;
+    return list;
   }
 
   static List<ScrambleText> scrambleTextListFromString(String text, int step) {
@@ -77,7 +77,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       var vm = Provider.of<InternalisationViewModel>(context, listen: false);
       _correctSentence = vm.implementationIntention;
       setState(() {
-        _scrambledSentence = ScrambleText.scrambleSentence(
+        _scrambledSentence = ScrambleText.randomizeList(
             ScrambleText.scrambleTextListFromString(_correctSentence, 3));
       });
     });

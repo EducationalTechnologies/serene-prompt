@@ -4,6 +4,7 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
+import 'package:serene/widgets/speech_bubble.dart';
 
 class WritingInternalisation extends StatefulWidget {
   WritingInternalisation({Key key}) : super(key: key);
@@ -14,7 +15,6 @@ class WritingInternalisation extends StatefulWidget {
 
 class _WritingInternalisationState extends State<WritingInternalisation> {
   bool _done = false;
-  String _iiText = "";
 
   _buildSubmitButton() {
     var vm = Provider.of<InternalisationViewModel>(context, listen: false);
@@ -44,10 +44,7 @@ class _WritingInternalisationState extends State<WritingInternalisation> {
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 UIHelper.verticalSpaceMedium(),
-                Text(
-                  "'${vm.implementationIntention}'",
-                  style: Theme.of(context).textTheme.headline5,
-                ),
+                SpeechBubble(text: "'${vm.implementationIntention}'"),
                 UIHelper.verticalSpaceMedium(),
                 Center(
                     child: TextField(
@@ -61,7 +58,6 @@ class _WritingInternalisationState extends State<WritingInternalisation> {
                   onChanged: (text) {
                     setState(() {
                       _done = true;
-                      _iiText = text;
                     });
                   },
                 )),

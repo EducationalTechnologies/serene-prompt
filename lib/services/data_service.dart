@@ -21,6 +21,7 @@ class DataService {
   List<Goal> _goalsCache;
   List<Goal> _openGoalsCache = [];
   List<dynamic> _ldtTaskListCache = [];
+  List<dynamic> _ldtListStrings = [];
   List<GoalShield> _goalShields;
   List<String> _planCache = [];
   UserService _userService;
@@ -135,6 +136,8 @@ class DataService {
     return _goalShields;
   }
 
+  getNumberOfInternalisations() async {}
+
   saveAssessment(AssessmentModel assessment) async {
     await _databaseService.saveAssessment(
         assessment, _userService.getUserEmail());
@@ -169,9 +172,9 @@ class DataService {
 
   getCurrentImplementationIntention() async {
     if (_planCache.length == 0) {
-      String data = await rootBundle.loadString("assets/config/plans.json");
+      String data = await rootBundle.loadString("assets/config/ldt_ii.json");
       for (var plan in jsonDecode(data)) {
-        _planCache.add(plan);
+        _planCache.add(plan["sentence"]);
       }
     }
 
@@ -182,15 +185,27 @@ class DataService {
     return plan;
   }
 
-  getLexicalDecisionTaskList() async {
+  getLexicalDecisionTaskListII() async {
     if (this._ldtTaskListCache.length == 0) {
-      String data = await rootBundle.loadString("assets/config/plans.json");
+      String data = await rootBundle.loadString("assets/config/ldt_ii.json");
       for (var ldtTask in jsonDecode(data)) {
         _ldtTaskListCache.add(ldtTask);
       }
     }
 
     return _ldtTaskListCache;
+  }
+
+  getLexicalDecisionTaskListStrings() async {
+    if (this._ldtListStrings.length == 0) {
+      String data =
+          await rootBundle.loadString("assets/config/ldt_strings.json");
+      for (var ldtTask in jsonDecode(data)) {
+        _ldtListStrings.add(ldtTask);
+      }
+    }
+
+    return _ldtListStrings;
   }
 
   saveInternalisation(Internalisation internalisation) async {

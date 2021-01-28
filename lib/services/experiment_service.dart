@@ -1,3 +1,4 @@
+import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -7,8 +8,8 @@ class ExperimentService {
   static const int INTERNALISATION_RECALL_BREAK = 6;
   static const int MIN_TIME_HOURS = 16;
   static const int NUM_CONDITIONS = 3;
-  static const int DASYS_INTERVAL_LDT = 3;
-  static const int DASYS_INTERVAL_USABILITY = 3;
+  static const int DAYS_INTERVAL_LDT = 3;
+  static const int DAYS_INTERVAL_USABILITY = 3;
 
   DataService _dataService;
   NotificationService _notificationService;
@@ -75,6 +76,58 @@ class ExperimentService {
       var date = getScheduleTimeForRecallTask(timeOfInternalisation);
       this._notificationService.scheduleRecallTaskReminder(date);
     }
+  }
+
+  List<int> getTrialIndices(DateTime dateOfFirstInternalization) {
+    var daysSinceFirstDate =
+        DateTime.now().weekDaysAgo(dateOfFirstInternalization);
+
+    List<int> indices = [];
+
+    // Division WITH remainder to get the start offset
+    var startIndex = daysSinceFirstDate ~/ DAYS_INTERVAL_LDT;
+    for (var i = 0; i < DAYS_INTERVAL_LDT; i++) {
+      indices.add(startIndex + i);
+    }
+    return indices;
+  }
+
+  Future<LdtData> getLdtData() async {
+    var ldtListAll = await this._dataService.getLexicalDecisionTaskListII();
+    var ldtList = [];
+    var first = await this._dataService.getFirstInternalisation();
+
+    var trialIndices = getTrialIndices(first.completionDate);
+    for (var index in trialIndices) {
+      // If the index is higher than there are elements in the LDT list, we start
+      // again at the front of the list.
+      if (index > ldtListAll.length - 1) {
+        index = (ldtListAll.length - 1) % index;
+      }
+      ldtList.add(ldtListAll[index]);
+    }
+
+    var ldt = LdtData();
+    for (var data in ldtList) {
+      for (var w in data["words"]) ldt.words.add(w);
+      for (var nw in data["nonwords"]) ldt.nonWords.add(nw);
+      for (var prm in data["primes"]) ldt.primes.add(prm);
+    }
+
+    //initialize the trial data now so that less objects have to be created during the trial
+    ldt.trials = [];
+
+    for (var word in ldt.words) {
+      var ldtTrialWord = LdtTrial(condition: "word", target: word);
+      ldt.trials.add(ldtTrialWord);
+    }
+
+    for (var nonword in ldt.nonWords) {
+      var ldtTrialNonWord = LdtTrial(condition: "nonword", target: nonword);
+      ldt.trials.add(ldtTrialNonWord);
+    }
+
+    return ldt;
   }
 
   Future<bool> isTimeForInternalisationTask() async {
@@ -160,6 +213,6 @@ class ExperimentService {
   }
 
   Future<List<dynamic>> getLdtTask() async {
-    var allTasks = await this._dataService.getLexicalDecisionTaskList();
+    var allTasks = await this._dataService.getLexicalDecisionTaskListII();
   }
 }

@@ -212,7 +212,8 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<LexicalDecisionTaskViewModel>(
-                  create: (_) => LexicalDecisionTaskViewModel(),
+                  create: (_) => LexicalDecisionTaskViewModel(
+                      locator.get<ExperimentService>()),
                   child: LexicalDecisionTaskScren(),
                 ));
 
