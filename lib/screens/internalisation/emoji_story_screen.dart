@@ -17,7 +17,8 @@ class EmojiStoryScreen extends StatefulWidget {
 
 class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
   bool _done = false;
-  String _emojiStory = "";
+  String _emojiStoryIf = "";
+  String _emojiStoryThen = "";
 
   // bool _useEmojiPicker = false;
 
@@ -27,21 +28,131 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
         alignment: Alignment.bottomCenter,
         child: FullWidthButton(
           onPressed: () async {
-            await vm.submitEmojiStory(_emojiStory);
+            await vm
+                .submitEmojiStory("Wenn $_emojiStoryIf dann $_emojiStoryThen");
             Navigator.pushNamed(context, RouteNames.NO_TASKS);
           },
         ));
+  }
+
+  void _checkIfIsDone() {
+    _done = _emojiStoryIf.isNotEmpty && _emojiStoryThen.isNotEmpty;
   }
 
   _buildEmojiPicker() {
     return EmojiKeyboard(
       onEmojiSelected: (Emoji emoji) {
         setState(() {
-          _emojiStory += emoji.text;
+          _emojiStoryIf += emoji.text;
         });
         print(emoji);
       },
     );
+  }
+
+  buildEmojiFieldsHorizontal() {
+    var width = MediaQuery.of(context).size.width * 0.4;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            Text("Wenn..."),
+            Container(
+                width: width,
+                child: TextField(
+                  minLines: 1,
+                  maxLines: 2,
+                  autofocus: true,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
+                  onChanged: (text) {
+                    setState(() {
+                      _checkIfIsDone();
+                      _emojiStoryIf = text;
+                    });
+                  },
+                )),
+          ],
+        ),
+        Text("➡", style: Theme.of(context).textTheme.headline6),
+        Column(
+          children: [
+            Text("dann..."),
+            Container(
+                width: width,
+                child: TextField(
+                  minLines: 1,
+                  maxLines: 2,
+                  autofocus: true,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
+                  onChanged: (text) {
+                    setState(() {
+                      _checkIfIsDone();
+                      _emojiStoryThen = text;
+                    });
+                  },
+                )),
+          ],
+        )
+      ],
+    );
+  }
+
+  buildEmojiFieldsVertical() {
+    return Column(children: [
+      Text("Wenn ich..."),
+      Center(
+          child: TextField(
+        minLines: 1,
+        maxLines: 2,
+        autofocus: true,
+        autocorrect: false,
+        enableSuggestions: false,
+        style: Theme.of(context).textTheme.headline6,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+        ),
+        onChanged: (text) {
+          setState(() {
+            _checkIfIsDone();
+            _emojiStoryIf = text;
+          });
+        },
+      )),
+      Text("dann..."),
+      Center(
+          child: TextField(
+        minLines: 1,
+        maxLines: 2,
+        autofocus: true,
+        autocorrect: false,
+        enableSuggestions: false,
+        style: Theme.of(context).textTheme.headline6,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+        ),
+        onChanged: (text) {
+          setState(() {
+            _checkIfIsDone();
+            _emojiStoryThen = text;
+          });
+        },
+      )),
+    ]);
   }
 
   @override
@@ -64,26 +175,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                   UIHelper.verticalSpaceMedium(),
                   SpeechBubble(text: "'${vm.implementationIntention}'"),
                   UIHelper.verticalSpaceMedium(),
-                  Center(
-                      child: TextField(
-                    minLines: 3,
-                    maxLines: 5,
-                    autofocus: true,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    style: Theme.of(context).textTheme.headline5,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        hintText: ""),
-                    onChanged: (text) {
-                      setState(() {
-                        _done = true;
-                        _emojiStory = text;
-                      });
-                    },
-                  )),
+                  buildEmojiFieldsHorizontal(),
                   UIHelper.verticalSpaceMedium(),
                   // _buildSubmitButton(),
                   UIHelper.verticalSpaceMedium(),
