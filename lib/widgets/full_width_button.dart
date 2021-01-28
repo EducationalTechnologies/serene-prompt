@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 class FullWidthButton extends StatelessWidget {
   final GestureTapCallback onPressed;
   final String text;
+  final double height;
 
-  FullWidthButton({@required this.onPressed, this.text = "Abschicken"});
+  FullWidthButton(
+      {@required this.onPressed, this.text = "Abschicken", this.height = 60});
 
   // const FullWidthButton({Key key}) : super(key: key);
 

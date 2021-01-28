@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:serene/services/experiment_service.dart';
 
@@ -21,6 +22,16 @@ void main() {
       var daysSince = now.difference(dateOfLastInternalisation).inDays;
       var conditionValue = daysSince % 3;
       expect(conditionValue, 2);
+    });
+
+    test("LDT index calculation should be 0, 1, 2", () {
+      var xps = ExperimentService(null, null);
+
+      var dateOfFirst = DateTime.now().subtract(Duration(days: 2));
+
+      var indices = xps.getTrialIndices(dateOfFirst);
+      print(indices);
+      expect(listEquals(indices, [0, 1, 2]), true);
     });
   });
 
