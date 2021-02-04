@@ -69,6 +69,8 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
   bool _done = false;
+  Duration FADE_OUT_DURATION = Duration(seconds: 10);
+  bool _showPlan = true;
 
   @override
   initState() {
@@ -80,6 +82,14 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         _scrambledSentence = ScrambleText.randomizeList(
             ScrambleText.scrambleTextListFromString(_correctSentence, 1));
       });
+
+      if (widget.showText) {
+        Future.delayed(Duration(milliseconds: 100), () {
+          setState(() {
+            _showPlan = false;
+          });
+        });
+      }
     });
   }
 
@@ -172,7 +182,10 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   }
 
   _buildCorrectText(String text) {
-    return SpeechBubble(text: text);
+    return AnimatedOpacity(
+        opacity: this._showPlan ? 1.0 : 0.0,
+        duration: FADE_OUT_DURATION,
+        child: SpeechBubble(text: text));
   }
 
   _buildIncorrectWarning() {
@@ -198,7 +211,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
             child: ListView(
               children: <Widget>[
                 UIHelper.verticalSpaceMedium(),
-                if (this.widget.showText) _buildCorrectText(_correctSentence),
+                _buildCorrectText(_correctSentence),
                 UIHelper.verticalSpaceMedium(),
                 Container(
                   height: MediaQuery.of(context).size.height / 3,
