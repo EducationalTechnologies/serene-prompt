@@ -141,10 +141,14 @@ class NotificationService {
     var scheduledDate = tz.TZDateTime(
         tz.local, time.year, time.month, time.day, time.hour, time.minute);
 
+    // var textReminder =
+    //     "Klicke hier, um deine Erinnerung an den Wenn-Dann-Plan zu überprüfen";
+    var textReminder = "Erinnerungserinnerung: ${time.toIso8601String()}";
+
     await localNotifications.zonedSchedule(
         ID_TASK_REMINDER,
         "Versuche dich, an deinen Wenn-Dann-Plan zu erinnern",
-        "Klicke hier, um deine Erinnerung an den Wenn-Dann-Plan zu überprüfen",
+        textReminder,
         scheduledDate,
         notificationDetails,
         uiLocalNotificationDateInterpretation:

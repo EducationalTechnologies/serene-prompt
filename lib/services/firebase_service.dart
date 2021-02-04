@@ -36,6 +36,7 @@ class FirebaseService {
   static const String COLLECTION_RECALLTASKS = "recallTasks";
   static const String COLLECTION_EMOJI_INTERNALISATION =
       "emojiInternalisations";
+  static const String COLLECTION_SCORES = "scores";
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -352,5 +353,23 @@ class FirebaseService {
     return await _databaseReference
         .collection(COLLECTION_EMOJI_INTERNALISATION)
         .add(internalisation.toMap());
+  }
+
+  saveScore(String userid, int score) async {
+    return await _databaseReference
+        .collection(COLLECTION_SCORES)
+        .doc(userid)
+        .set({"score": score});
+  }
+
+  Future<int> getScore(String userid) async {
+    var scores = await _databaseReference
+        .collection(COLLECTION_SCORES)
+        .doc(userid)
+        .get();
+
+    var score = scores.data()["score"];
+    if (score == null) return 0;
+    return score;
   }
 }

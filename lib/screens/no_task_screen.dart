@@ -75,8 +75,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         if (nextTime.isToday()) {
           if (lastRecall != null) {
             if (lastRecall.completionDate.isToday()) {
-              nextText =
-                  "Danke, dass du für heute die Aufgaben erledigt hast. Bitte mache morgen weiter";
+              nextText = "Danke, dass du für heute die Aufgaben erledigt hast.";
             } else {
               nextText = _getNextTimeTodayString(nextTime);
             }
@@ -128,19 +127,20 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
               if (snapshot.hasData) {
                 return Container(
                     margin: UIHelper.getContainerMargin(),
-                    // decoration: BoxDecoration(
-                    //     image: DecorationImage(
-                    //   image: AssetImage(
-                    //       "assets/illustrations/undraw_in_no_time_6igu.png"),
-                    //   fit: BoxFit.scaleDown,
-                    // )),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                "assets/illustrations/mascot_watch.PNG"),
+                            scale: 0.1,
+                            alignment: Alignment.bottomLeft)),
                     child: Align(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(_textNext,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.headline5),
+                            UIHelper.verticalSpaceLarge(),
                             Text(_textNotification,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.headline5),

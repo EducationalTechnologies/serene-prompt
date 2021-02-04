@@ -26,6 +26,7 @@ class DataService {
   List<String> _planCache = [];
   UserService _userService;
   FirebaseService _databaseService;
+  int score;
 
   UserData _userDataCache;
 
@@ -257,5 +258,13 @@ class DataService {
   saveEmojiInternalisation(Internalisation internalisation) async {
     await _databaseService.saveEmojiInternalisation(
         _userService.getUserEmail(), internalisation);
+  }
+
+  getScore() async {
+    return await _databaseService.getScore(_userService.getUserEmail());
+  }
+
+  saveScore(int score) async {
+    await _databaseService.saveScore(_userService.getUserEmail(), score);
   }
 }

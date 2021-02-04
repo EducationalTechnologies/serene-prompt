@@ -36,16 +36,43 @@ void main() {
   });
 
   group("Scheduling of notifications", () {
+    var expService = ExperimentService(null, null);
+    var now = DateTime.now();
+
     test("Schedule of recall task should be postponed to the same day at four",
         () {
-      var expService = ExperimentService(null, null);
-
-      var now = DateTime.now();
       var dateTooEarly = DateTime(now.year, now.month, now.day, 8, 30);
 
       var date = expService.getScheduleTimeForRecallTask(dateTooEarly);
 
       expect(date.hour, 16);
+    });
+
+    test(
+        "Schedule of recall task should be ${ExperimentService.INTERNALISATION_RECALL_BREAK} hours after internalisation",
+        () {
+      var hours = 14;
+      var dateTooEarly = DateTime(now.year, now.month, now.day, hours, 30);
+
+      var date = expService.getScheduleTimeForRecallTask(dateTooEarly);
+
+      expect(date.hour, hours + ExperimentService.INTERNALISATION_RECALL_BREAK);
+    });
+
+    test("No notification should be scheduled, because it is too late", () {
+      var dateTooLate = DateTime(now.year, now.month, now.day, 20, 30);
+
+      var shouldNot = expService.shouldScheduleRecallTaskToday(dateTooLate);
+
+      expect(shouldNot, false);
+    });
+
+    test("should be scheduled", () {
+      var dateEarlyEnough = DateTime(now.year, now.month, now.day, 16, 30);
+
+      var should = expService.shouldScheduleRecallTaskToday(dateEarlyEnough);
+
+      expect(should, true);
     });
   });
 }

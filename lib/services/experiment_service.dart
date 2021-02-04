@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/notification_service.dart';
@@ -6,7 +9,7 @@ import 'package:serene/shared/extensions.dart';
 
 class ExperimentService {
   static const int INTERNALISATION_RECALL_BREAK = 6;
-  static const int MIN_TIME_HOURS = 16;
+  static const TimeOfDay EARLIEST_RECALL = TimeOfDay(hour: 16, minute: 0);
   static const int NUM_CONDITIONS = 3;
   static const int DAYS_INTERVAL_LDT = 3;
   static const int DAYS_INTERVAL_USABILITY = 3;
@@ -50,29 +53,28 @@ class ExperimentService {
   }
 
   bool shouldScheduleRecallTaskToday(DateTime timeOfInternalisation) {
-    var date =
-        DateTime.now().add(Duration(hours: INTERNALISATION_RECALL_BREAK));
+    // We add the "break time" on top of the internalisation time
+    var date = timeOfInternalisation
+        .add(Duration(hours: INTERNALISATION_RECALL_BREAK));
+
+    // Only schedule a notification if the resulting time would be today
     return date.isToday();
   }
 
   DateTime getScheduleTimeForRecallTask(DateTime timeOfInternalisation) {
-    var date = timeOfInternalisation
-        .add(Duration(hours: INTERNALISATION_RECALL_BREAK));
+    // We check if the scheduled time would be before 4pm, as this is the earliest
+    // time where we want to schedule a notification
+    var targetTime = timeOfInternalisation.hour + INTERNALISATION_RECALL_BREAK;
+    var diff = EARLIEST_RECALL.hour - targetTime;
+    var offset = max(0, diff);
 
-    // If the reminder would be before 4pm, we schedule it to be at least at four
-    var diff = MIN_TIME_HOURS - date.hour;
-
-    if (diff > 0) {
-      date = DateTime(
-          date.year, date.month, date.day, date.hour + diff, date.minute);
-    }
-
-    return date;
+    return timeOfInternalisation
+        .add(Duration(hours: INTERNALISATION_RECALL_BREAK + offset));
   }
 
   void scheduleRecallTaskNotificationIfAppropriate(
       DateTime timeOfInternalisation) {
-    if (timeOfInternalisation.isToday()) {
+    if (shouldScheduleRecallTaskToday(timeOfInternalisation)) {
       var date = getScheduleTimeForRecallTask(timeOfInternalisation);
       this._notificationService.scheduleRecallTaskReminder(date);
     }

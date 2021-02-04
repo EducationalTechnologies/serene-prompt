@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -84,10 +85,10 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.receipt,
-              text: "Trigger Reminder",
+              text: "Set Some Score",
               onTap: () {
                 // Navigator.pushNamed(context, RouteNames.CONSENT);
-                locator<NotificationService>().sendDebugReminder();
+                locator<DataService>().saveScore(2);
               }),
           Divider(),
           ListTile(

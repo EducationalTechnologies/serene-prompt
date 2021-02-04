@@ -1,23 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:serene/locator.dart';
+import 'package:serene/services/reward_service.dart';
+import 'package:serene/shared/ui_helpers.dart';
 
-class SereneAppBar extends StatelessWidget with PreferredSizeWidget {
+class SereneAppBar extends StatefulWidget with PreferredSizeWidget {
   final String title;
 
   const SereneAppBar({Key key, this.title = ""}) : super(key: key);
 
   @override
+  _SereneAppBarState createState() => _SereneAppBarState();
+
+  @override
+  Size get preferredSize => Size.fromHeight(50);
+}
+
+class _SereneAppBarState extends State<SereneAppBar> {
+  getRewardDisplay() {}
+
+  @override
   AppBar build(BuildContext context) {
+    var rewardService = locator.get<RewardService>();
+    var rewardBaseSymbol = "👑";
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: Text(title),
+      actions: [
+        FutureBuilder(
+            future: rewardService.initialized,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(
+                  "$rewardBaseSymbol ${rewardService.score.toString()}",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow[800]),
+                );
+              } else {
+                return Text("nix daten");
+              }
+            }),
+        UIHelper.horizontalSpaceMedium()
+      ],
+      title: Text(""),
       textTheme:
           TextTheme(headline6: TextStyle(color: Colors.black, fontSize: 22)),
       centerTitle: true,
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(50);
 }

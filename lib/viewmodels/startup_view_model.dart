@@ -2,6 +2,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/notification_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -70,6 +71,7 @@ class StartupViewModel extends BaseViewModel {
     var experimentService = locator<ExperimentService>();
     await experimentService.initialize();
     addDebugText("Initialized Experiment Service");
+    locator<RewardService>().initialize();
     bool userInitialized =
         locator<UserService>().getUsername()?.isNotEmpty ?? false;
     addDebugText(

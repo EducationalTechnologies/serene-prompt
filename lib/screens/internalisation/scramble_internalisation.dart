@@ -78,7 +78,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       _correctSentence = vm.implementationIntention;
       setState(() {
         _scrambledSentence = ScrambleText.randomizeList(
-            ScrambleText.scrambleTextListFromString(_correctSentence, 3));
+            ScrambleText.scrambleTextListFromString(_correctSentence, 1));
       });
     });
   }

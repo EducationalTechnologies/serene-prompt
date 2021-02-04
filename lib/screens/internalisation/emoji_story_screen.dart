@@ -73,8 +73,8 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                   ),
                   onChanged: (text) {
                     setState(() {
-                      _checkIfIsDone();
                       _emojiStoryIf = text;
+                      _checkIfIsDone();
                     });
                   },
                 )),
@@ -99,8 +99,8 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                   ),
                   onChanged: (text) {
                     setState(() {
-                      _checkIfIsDone();
                       _emojiStoryThen = text;
+                      _checkIfIsDone();
                     });
                   },
                 )),
@@ -127,8 +127,8 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
         ),
         onChanged: (text) {
           setState(() {
-            _checkIfIsDone();
             _emojiStoryIf = text;
+            _checkIfIsDone();
           });
         },
       )),
@@ -147,8 +147,8 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
         ),
         onChanged: (text) {
           setState(() {
-            _checkIfIsDone();
             _emojiStoryThen = text;
+            _checkIfIsDone();
           });
         },
       )),

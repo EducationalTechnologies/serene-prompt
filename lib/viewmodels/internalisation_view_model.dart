@@ -5,6 +5,7 @@ import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/notification_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
@@ -13,7 +14,7 @@ class InternalisationViewModel extends BaseViewModel {
   final DataService _dataService;
   final NavigationService _navigationService;
   final ExperimentService _experimentService;
-  final NotificationService _notificationService;
+  final RewardService _rewardService;
   String implementationIntention = "";
   Future<bool> initialized;
   InternalisationCondition internalisationCondition =
@@ -22,7 +23,7 @@ class InternalisationViewModel extends BaseViewModel {
   Internalisation _currentInternalisation = Internalisation();
 
   InternalisationViewModel(this._dataService, this._navigationService,
-      this._experimentService, this._notificationService) {
+      this._experimentService, this._rewardService) {
     _currentInternalisation.startDate = DateTime.now();
 
     initialized = init();
@@ -48,6 +49,8 @@ class InternalisationViewModel extends BaseViewModel {
     _currentInternalisation.implementationIntention = implementationIntention;
     _currentInternalisation.condition = condition.toString();
     await this._dataService.saveInternalisation(_currentInternalisation);
+
+    await this._rewardService.addPoints(1);
 
     this
         ._experimentService

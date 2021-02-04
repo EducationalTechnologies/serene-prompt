@@ -16,6 +16,7 @@ import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/notification_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -58,7 +59,7 @@ class AppRouter {
                         locator.get<DataService>(),
                         locator.get<NavigationService>(),
                         locator.get<ExperimentService>(),
-                        locator.get<NotificationService>()),
+                        locator.get<RewardService>()),
                     child: InternalisationScreen()));
 
       case RouteNames.EMOJI_STORY:
