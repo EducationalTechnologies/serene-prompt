@@ -40,7 +40,7 @@ class _SereneAppBarState extends State<SereneAppBar> {
                       color: Colors.yellow[800]),
                 );
               } else {
-                return Text("nix daten");
+                return Text("");
               }
             }),
         UIHelper.horizontalSpaceMedium()

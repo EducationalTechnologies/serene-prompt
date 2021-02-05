@@ -197,23 +197,6 @@ class ExperimentService {
     return InternalisationCondition.values[conditionValue];
   }
 
-  Future<AppStartupMode> getCurrentStartRoute() async {
-    if (await isTimeForInternalisationTask()) {
-      return AppStartupMode.internalisationTask;
-    }
-    if (await isTimeForRecallTask()) {
-      return AppStartupMode.recallTask;
-    }
-
-    if (await isTimeForLexicalDecisionTask()) {
-      return AppStartupMode.lexicalDecisionTask;
-    }
-
-    if (await isTimeForUsabilityTask()) {}
-
-    return AppStartupMode.noTasks;
-  }
-
   Future<List<dynamic>> getLdtTask() async {
     var allTasks = await this._dataService.getLexicalDecisionTaskListII();
   }

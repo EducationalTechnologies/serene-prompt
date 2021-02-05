@@ -82,6 +82,23 @@ class StartupViewModel extends BaseViewModel {
 
     addDebugText(
         "Waiting for the current start route from the experiment service");
-    return await experimentService.getCurrentStartRoute();
+
+    addDebugText("Time For Internalisation Task?");
+    if (await experimentService.isTimeForInternalisationTask()) {
+      return AppStartupMode.internalisationTask;
+    }
+    addDebugText("Time For Recall Task?");
+    if (await experimentService.isTimeForRecallTask()) {
+      return AppStartupMode.recallTask;
+    }
+    addDebugText("Time For Lexical Decision Task?");
+    if (await experimentService.isTimeForLexicalDecisionTask()) {
+      return AppStartupMode.lexicalDecisionTask;
+    }
+    addDebugText("Time For Usability Task?");
+    if (await experimentService.isTimeForUsabilityTask()) {}
+
+    addDebugText("No Tasks!");
+    return AppStartupMode.noTasks;
   }
 }
