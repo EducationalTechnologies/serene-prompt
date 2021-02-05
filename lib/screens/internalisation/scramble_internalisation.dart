@@ -69,7 +69,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
   bool _done = false;
-  Duration FADE_OUT_DURATION = Duration(seconds: 10);
+  Duration fadeOutDuration = Duration(seconds: 10);
   bool _showPlan = true;
 
   @override
@@ -169,10 +169,8 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           height: 60,
           child: RaisedButton(
             onPressed: () async {
-              var condition = widget.showText
-                  ? InternalisationCondition.scrambleWithHint
-                  : InternalisationCondition.scrambleWithoutHint;
-              vm.submit(condition);
+              var condition = InternalisationCondition.scrambleWithHint;
+              vm.submit(condition, "");
             },
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(10.0)),
@@ -184,7 +182,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   _buildCorrectText(String text) {
     return AnimatedOpacity(
         opacity: this._showPlan ? 1.0 : 0.0,
-        duration: FADE_OUT_DURATION,
+        duration: fadeOutDuration,
         child: SpeechBubble(text: text));
   }
 

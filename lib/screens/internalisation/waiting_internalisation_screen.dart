@@ -55,7 +55,7 @@ class _WaitingInternalisationScreenState
   _buildSubmitButton() {
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return FullWidthButton(onPressed: () async {
-      await vm.submit(InternalisationCondition.waiting);
+      await vm.submit(InternalisationCondition.waiting, "");
     });
   }
 

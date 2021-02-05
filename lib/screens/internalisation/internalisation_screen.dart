@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/screens/internalisation/emoji_story_screen.dart';
 import 'package:serene/screens/internalisation/scramble_internalisation.dart';
 import 'package:serene/screens/internalisation/waiting_internalisation_screen.dart';
 import 'package:serene/screens/internalisation/writing_internalisation.dart';
@@ -29,11 +30,8 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
       case InternalisationCondition.scrambleWithHint:
         return ScrambleInternalisation(true);
         break;
-      case InternalisationCondition.writing:
-        return WritingInternalisation();
-        break;
-      case InternalisationCondition.scrambleWithoutHint:
-        return ScrambleInternalisation(false);
+      case InternalisationCondition.emoji:
+        return EmojiStoryScreen();
         break;
     }
   }

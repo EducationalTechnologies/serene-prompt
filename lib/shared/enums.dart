@@ -62,8 +62,8 @@ class ExperimentalGroup {
 enum InternalisationCondition {
   waiting,
   scrambleWithHint,
-  writing,
-  scrambleWithoutHint
+  emoji,
+  // scrambleWithoutHint
 }
 
 enum AppStartupMode {

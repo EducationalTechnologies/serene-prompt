@@ -267,4 +267,9 @@ class DataService {
   saveScore(int score) async {
     await _databaseService.saveScore(_userService.getUserEmail(), score);
   }
+
+  logData(dynamic data) async {
+    data["user"] = _userService.getUserEmail();
+    await _databaseService.logEvent(_userService.getUserEmail(), data);
+  }
 }

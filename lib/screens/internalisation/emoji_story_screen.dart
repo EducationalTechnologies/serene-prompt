@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_emoji_keyboard/flutter_emoji_keyboard.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
@@ -28,8 +29,8 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
         alignment: Alignment.bottomCenter,
         child: FullWidthButton(
           onPressed: () async {
-            await vm
-                .submitEmojiStory("Wenn $_emojiStoryIf dann $_emojiStoryThen");
+            await vm.submit(InternalisationCondition.emoji,
+                "Wenn $_emojiStoryIf dann $_emojiStoryThen");
             Navigator.pushNamed(context, RouteNames.NO_TASKS);
           },
         ));

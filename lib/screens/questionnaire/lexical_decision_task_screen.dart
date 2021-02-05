@@ -26,7 +26,9 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   final TextStyle ldtTextStyle = TextStyle(fontSize: 40, color: Colors.black);
 
   bool isTextState = true;
+  Stopwatch _primeStopwatch = Stopwatch();
   Stopwatch stopwatch;
+  List<int> primeDurations = [];
   bool _trialComplete = false;
 
   @override
@@ -63,31 +65,39 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   buildTrialSummary() {
     List<Widget> summaryItems = [];
 
-    for (var t in vm.ldt.trials) {
+    for (var i = 0; i < vm.ldt.trials.length; i++) {
+      var t = vm.ldt.trials[i];
       summaryItems.add(Row(
         children: [
+          Text(
+            "Prime Duration: ${primeDurations[i]} | ",
+            textAlign: TextAlign.left,
+          ),
           Text(t.target),
           Text("|"),
           Text(t.responseTime.toString()),
           Text("|"),
           Text(t.status.toString())
         ],
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
       ));
     }
 
-    return Column(
-      children: [
-        ...summaryItems,
-        FullWidthButton(onPressed: () async {
-          // TODO: Loading screen while submit
-          await vm.submit();
-          await locator<NavigationService>().navigateTo(RouteNames.NO_TASKS);
-        })
-      ],
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Container(
+      margin: UIHelper.getContainerMargin(),
+      child: Column(
+        children: [
+          ...summaryItems,
+          FullWidthButton(onPressed: () async {
+            // TODO: Loading screen while submit
+            await vm.submit();
+            await locator<NavigationService>().navigateTo(RouteNames.NO_TASKS);
+          })
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
     );
   }
 
@@ -115,8 +125,12 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
     if (phase == 0) {
       currentPhaseWidget = buildFixationCross();
     } else if (phase == 1) {
+      _primeStopwatch.reset();
+      _primeStopwatch.start();
       currentPhaseWidget = buildPrime(vm.getCurrentPrime());
     } else if (phase == 2) {
+      _primeStopwatch.stop();
+      primeDurations.add(_primeStopwatch.elapsedMilliseconds);
       currentPhaseWidget = buildBackwardMask();
     } else if (phase == 3) {
       isTextState = true;
@@ -161,8 +175,8 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          appBar: AppBar(),
-          drawer: SereneDrawer(),
+          appBar: vm.done ? AppBar() : null,
+          drawer: vm.done ? SereneDrawer() : null,
           body: FutureBuilder(
             future: vm.initialized,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

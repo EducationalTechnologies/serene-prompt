@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:serene/locator.dart';
+import 'package:serene/services/logging_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -60,13 +62,14 @@ class NotificationService {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
 
-      // if (payload == PAYLOAD_II_REMINDER) {
-      //   await locator<NavigationService>()
-      //       .navigateTo(RouteNames.INTERNALISATION);
-      // }
-      // if (payload == PAYLOAD_TASK_REMINDER) {
-      //   await locator<NavigationService>().navigateTo(RouteNames.RECALL_TASK);
-      // }
+      if (payload == PAYLOAD_II_REMINDER) {
+        locator
+            .get<LoggingService>()
+            .logEvent("NotificationClickInternalisation");
+      }
+      if (payload == PAYLOAD_TASK_REMINDER) {
+        locator.get<LoggingService>().logEvent("NotificationClickRecallTask");
+      }
     }
   }
 
@@ -86,7 +89,8 @@ class NotificationService {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_II_REMINDER,
         CHANNEL_NAME_II_REMINDER,
-        CHANNEL_DESCRIPTION_II_REMINDER);
+        CHANNEL_DESCRIPTION_II_REMINDER,
+        ongoing: true);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var notificationDetails = new NotificationDetails(
         android: androidPlatformChannelSpecifics,
@@ -144,6 +148,8 @@ class NotificationService {
     // var textReminder =
     //     "Klicke hier, um deine Erinnerung an den Wenn-Dann-Plan zu überprüfen";
     var textReminder = "Erinnerungserinnerung: ${time.toIso8601String()}";
+
+    locator.get<LoggingService>().logEvent("TaskReminderNotificationSchedule");
 
     await localNotifications.zonedSchedule(
         ID_TASK_REMINDER,

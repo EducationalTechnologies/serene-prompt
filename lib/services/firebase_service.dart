@@ -37,6 +37,7 @@ class FirebaseService {
   static const String COLLECTION_EMOJI_INTERNALISATION =
       "emojiInternalisations";
   static const String COLLECTION_SCORES = "scores";
+  static const String COLLECTION_LOGS = "logs";
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -371,5 +372,9 @@ class FirebaseService {
     var score = scores.data()["score"];
     if (score == null) return 0;
     return score;
+  }
+
+  logEvent(String userid, dynamic data) async {
+    return await _databaseReference.collection(COLLECTION_LOGS).add(data);
   }
 }

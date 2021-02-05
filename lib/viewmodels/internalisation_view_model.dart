@@ -43,9 +43,10 @@ class InternalisationViewModel extends BaseViewModel {
     return true;
   }
 
-  Future<bool> submit(InternalisationCondition condition) async {
+  Future<bool> submit(InternalisationCondition condition, String input) async {
     this.setState(ViewState.busy);
     _currentInternalisation.completionDate = DateTime.now();
+    _currentInternalisation.input = input;
     _currentInternalisation.implementationIntention = implementationIntention;
     _currentInternalisation.condition = condition.toString();
     await this._dataService.saveInternalisation(_currentInternalisation);
@@ -56,19 +57,7 @@ class InternalisationViewModel extends BaseViewModel {
         ._experimentService
         .scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
 
-    _navigationService.navigateTo(RouteNames.EMOJI_STORY, arguments: this);
-    return true;
-  }
-
-  // TODO: This needs a better data representation
-  Future<bool> submitEmojiStory(String emojiStory) async {
-    this.setState(ViewState.busy);
-    _currentInternalisation.completionDate = DateTime.now();
-    _currentInternalisation.implementationIntention = implementationIntention;
-    _currentInternalisation.condition = emojiStory;
-    await this._dataService.saveEmojiInternalisation(_currentInternalisation);
-
-    _navigationService.navigateTo(RouteNames.NO_TASKS);
+    await _navigationService.navigateTo(RouteNames.NO_TASKS, arguments: this);
     return true;
   }
 }
