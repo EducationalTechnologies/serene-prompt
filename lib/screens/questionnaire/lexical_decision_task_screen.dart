@@ -30,6 +30,7 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   Stopwatch stopwatch;
   List<int> primeDurations = [];
   bool _trialComplete = false;
+  bool _selectionMade = false;
 
   @override
   void initState() {
@@ -60,6 +61,8 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   pressed(int selection) {
     stopwatch.stop();
     vm.setTrialResult(stopwatch.elapsedMilliseconds, selection);
+
+    next();
   }
 
   buildTrialSummary() {
