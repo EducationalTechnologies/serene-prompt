@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
@@ -9,6 +12,7 @@ import 'package:serene/models/outcome.dart';
 import 'package:serene/models/recall_task.dart';
 import 'package:serene/models/user_data.dart';
 import 'package:flutter/services.dart';
+import 'package:serene/services/logging_service.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -38,6 +42,14 @@ class FirebaseService {
       "emojiInternalisations";
   static const String COLLECTION_SCORES = "scores";
   static const String COLLECTION_LOGS = "logs";
+
+  void handleError(Object e) {
+    locator.get<LoggingService>().logEvent("Firestore error: ${e.toString()}");
+  }
+
+  void handleTimeout(String function) {
+    locator.get<LoggingService>().logEvent("Firetore Timeout: $function");
+  }
 
   Future<List<DocumentSnapshot>> getGoals(String email) async {
     var goals = await _databaseReference
@@ -300,13 +312,20 @@ class FirebaseService {
   }
 
   Future<Internalisation> getLastInternalisation(String email) async {
+    handleTimeout("Firebase Service: retrieving last internalisation");
     var doc = await _databaseReference
         .collection(COLLECTION_INTERNALISATION)
         .where("user", isEqualTo: email)
         .orderBy("completionDate", descending: true)
         .limit(1)
-        .get();
+        .get()
+        .timeout(Duration(seconds: 5), onTimeout: () {
+      handleTimeout("Last Internalisation");
+      return null;
+    }).catchError((handleError));
 
+    handleTimeout("Retrieved Last internalisation: ${doc.toString()}");
+    if (doc == null) return null;
     if (doc.docs.length == 0) return null;
     return Internalisation.fromDocument(doc.docs[0]);
   }

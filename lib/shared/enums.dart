@@ -69,7 +69,7 @@ enum InternalisationCondition {
 enum AppStartupMode {
   normal,
   signin,
-  preLearningAssessment,
+  preInternalisationAssessment,
   firstLaunch,
   postLearningAssessment,
   noTasks,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/services/data_service.dart';
-import 'package:serene/services/notification_service.dart';
+import 'package:serene/screens/startup_screen.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
@@ -69,10 +68,11 @@ class SereneDrawer extends StatelessWidget {
               }),
           _buildDrawerItem(
               icon: Icons.security,
-              text: "Internalisation",
+              text: "Internalisierung",
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.INTERNALISATION);
+                Navigator.pushNamed(context,
+                    RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION);
               }),
           Divider(),
           // _buildDrawerItem(
@@ -85,10 +85,10 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.receipt,
-              text: "Set Some Score",
+              text: "Zum Log Screen",
               onTap: () {
-                // Navigator.pushNamed(context, RouteNames.CONSENT);
-                locator<DataService>().saveScore(2);
+                Navigator.pushNamed(context, RouteNames.TEST);
+                // locator<DataService>().saveScore(2);
               }),
           Divider(),
           ListTile(
@@ -110,9 +110,13 @@ class SereneDrawer extends StatelessWidget {
           ListTile(
               title: Text("Initialisierung"),
               onTap: () async {
-                await Navigator.pushNamed(context, RouteNames.INIT_START,
-                    arguments: AssessmentScreenArguments(
-                        AssessmentType.dailyQuestion));
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StartupScreen()),
+                );
+                // await Navigator.pushNamed(context, RouteNames.INIT_START,
+                //     arguments: AssessmentScreenArguments(
+                //         AssessmentType.dailyQuestion));
               }),
           // VersionInfo()
         ],

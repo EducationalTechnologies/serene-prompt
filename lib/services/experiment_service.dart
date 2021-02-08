@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/logging_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/extensions.dart';
@@ -16,8 +16,10 @@ class ExperimentService {
 
   DataService _dataService;
   NotificationService _notificationService;
+  LoggingService _loggingService;
 
-  ExperimentService(this._dataService, this._notificationService);
+  ExperimentService(
+      this._dataService, this._notificationService, this._loggingService);
 
   Future<bool> initialize() async {
     return await Future.delayed(Duration.zero).then((res) => true);
@@ -133,20 +135,20 @@ class ExperimentService {
   }
 
   Future<bool> isTimeForInternalisationTask() async {
+    _loggingService.logEvent("Trying to retrieve the last internalisation");
     var lastInternalisation = await _dataService.getLastInternalisation();
     // If there is no previous internalisation, we definitely need the first one
     if (lastInternalisation == null) {
+      _loggingService.logEvent("Last Internalisation was NULL");
       return true;
     }
 
+    _loggingService.logEvent("Checking if last internalisation was today");
     if (lastInternalisation.completionDate.isToday()) {
       return false;
     }
 
-    var now = DateTime.now();
-    if (now.hour >= 18) {
-      return false;
-    }
+    _loggingService.logEvent("Should return true");
     return true;
   }
 

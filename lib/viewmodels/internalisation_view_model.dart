@@ -4,7 +4,6 @@ import 'package:serene/models/internalisation.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
-import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';

@@ -23,7 +23,7 @@ class StartupViewModel extends BaseViewModel {
   /*
    * Navigate with replacement to prevent back navigation to the splash screen
    */
-  void startApp(AppStartupMode appStartupMode) {
+  Future<void> startApp(AppStartupMode appStartupMode) async {
     var nav = locator<NavigationService>();
     switch (appStartupMode) {
       case AppStartupMode.normal:
@@ -32,7 +32,7 @@ class StartupViewModel extends BaseViewModel {
       case AppStartupMode.signin:
         nav.navigateAndRemove(RouteNames.LOG_IN);
         break;
-      case AppStartupMode.preLearningAssessment:
+      case AppStartupMode.preInternalisationAssessment:
         nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.firstLaunch:
@@ -43,6 +43,8 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
         break;
       case AppStartupMode.internalisationTask:
+        await nav.navigateAndRemove(
+            RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION);
         nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.recallTask:
@@ -73,13 +75,13 @@ class StartupViewModel extends BaseViewModel {
     addDebugText("Initialized Experiment Service");
     locator<RewardService>().initialize();
     bool userInitialized =
-        locator<UserService>().getUsername()?.isNotEmpty ?? false;
-    addDebugText(
-        "Initialized Experiment Service. User Initialized: ${userInitialized}");
+        locator<UserService>().getUserEmail()?.isNotEmpty ?? false;
+    addDebugText("User Initialized: $userInitialized");
+
     if (!userInitialized) {
       return AppStartupMode.firstLaunch;
     }
-
+    addDebugText("Current User: ${locator<UserService>().getUserEmail()}");
     addDebugText(
         "Waiting for the current start route from the experiment service");
 

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -69,8 +70,9 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
   bool _done = false;
-  Duration fadeOutDuration = Duration(seconds: 10);
+  Duration fadeOutDuration = Duration(seconds: 15);
   bool _showPlan = true;
+  bool _showPuzzle = false;
 
   @override
   initState() {
@@ -84,9 +86,10 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       });
 
       if (widget.showText) {
-        Future.delayed(Duration(milliseconds: 100), () {
+        Timer(Duration(seconds: 15), () {
           setState(() {
             _showPlan = false;
+            _showPuzzle = true;
           });
         });
       }
@@ -182,8 +185,17 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   _buildCorrectText(String text) {
     return AnimatedOpacity(
         opacity: this._showPlan ? 1.0 : 0.0,
-        duration: fadeOutDuration,
-        child: SpeechBubble(text: text));
+        duration: Duration(seconds: 1),
+        child: Column(
+          children: [
+            Text(
+              "Merke dir folgenden Text, und Puzzle ihn dann gleich zusammen:",
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            UIHelper.verticalSpaceMedium(),
+            SpeechBubble(text: text),
+          ],
+        ));
   }
 
   _buildIncorrectWarning() {
@@ -196,6 +208,18 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       ))),
       margin: EdgeInsets.fromLTRB(2, 10, 2, 20),
       padding: EdgeInsets.fromLTRB(2, 10, 2, 10),
+    );
+  }
+
+  buildPuzzle() {
+    return Wrap(
+      children: <Widget>[
+        for (var s in _scrambledSentence)
+          if (!s.isSelected)
+            Stack(children: [buildEmptyWord(s.text), buildWordBox(s)])
+          else
+            buildEmptyWord(s.text)
+      ],
     );
   }
 
@@ -222,15 +246,20 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
                 ),
                 // _buildDragDrop(),
                 if (_allChunksUsed() && !_isDone()) _buildIncorrectWarning(),
-                Wrap(
-                  children: <Widget>[
-                    for (var s in _scrambledSentence)
-                      if (!s.isSelected)
-                        Stack(
-                            children: [buildEmptyWord(s.text), buildWordBox(s)])
-                      else
-                        buildEmptyWord(s.text)
-                  ],
+                Visibility(
+                  visible: _showPuzzle,
+                  child: Wrap(
+                    children: <Widget>[
+                      for (var s in _scrambledSentence)
+                        if (!s.isSelected)
+                          Stack(children: [
+                            buildEmptyWord(s.text),
+                            buildWordBox(s)
+                          ])
+                        else
+                          buildEmptyWord(s.text)
+                    ],
+                  ),
                 ),
               ],
             ),
