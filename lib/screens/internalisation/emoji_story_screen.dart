@@ -7,6 +7,7 @@ import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
+import 'package:serene/widgets/info_bubble.dart';
 import 'package:serene/widgets/speech_bubble.dart';
 
 class EmojiStoryScreen extends StatefulWidget {
@@ -169,10 +170,9 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
               child: ListView(
                 children: [
                   UIHelper.verticalSpaceMedium(),
-                  Text(
-                    "Erstelle aus Emojis eine Darstellung deines Wenn-Dann-Planes:",
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
+                  InfoBubble(
+                      text:
+                          "Erstelle aus Emojis eine Darstellung deines Wenn-Dann-Planes"),
                   UIHelper.verticalSpaceMedium(),
                   SpeechBubble(text: "'${vm.implementationIntention}'"),
                   UIHelper.verticalSpaceMedium(),

@@ -17,19 +17,12 @@ class InternalisationRecallScreen extends StatefulWidget {
 class _InternalisationRecallScreenState
     extends State<InternalisationRecallScreen> {
   bool _done = false;
-  String _recalledText;
 
-  _buildSubmitButton() {
-    var vm =
-        Provider.of<InternalisationRecallViewModel>(context, listen: false);
-    return Align(
-        alignment: Alignment.bottomCenter,
-        child: FullWidthButton(
-          onPressed: () async {
-            await vm.submit(_recalledText);
-            Navigator.pushNamed(context, RouteNames.NO_TASKS);
-          },
-        ));
+  String _ifPart = "";
+  String _thenPart = "";
+
+  void _checkIfIsDone() {
+    _done = _ifPart.isNotEmpty && _thenPart.isNotEmpty;
   }
 
   @override
@@ -49,22 +42,7 @@ class _InternalisationRecallScreenState
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   UIHelper.verticalSpaceMedium(),
-                  Center(
-                      child: TextField(
-                    minLines: 3,
-                    maxLines: 5,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Gib hier deinen Wenn-Dann-Plan ein"),
-                    onChanged: (text) {
-                      setState(() {
-                        _done = true;
-                        _recalledText = text;
-                      });
-                    },
-                  )),
+                  buildInputBoxes()
                 ],
               ),
             ),
@@ -73,5 +51,64 @@ class _InternalisationRecallScreenState
         ),
       ),
     );
+  }
+
+  buildInputBoxes() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text("Wenn...", style: Theme.of(context).textTheme.headline6),
+      Center(
+          child: TextField(
+        minLines: 1,
+        maxLines: 2,
+        autofocus: true,
+        autocorrect: false,
+        enableSuggestions: false,
+        style: Theme.of(context).textTheme.headline6,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+        ),
+        onChanged: (text) {
+          setState(() {
+            _ifPart = text;
+            _checkIfIsDone();
+          });
+        },
+      )),
+      Text("dann...", style: Theme.of(context).textTheme.headline6),
+      Center(
+          child: TextField(
+        minLines: 1,
+        maxLines: 2,
+        autofocus: true,
+        autocorrect: false,
+        enableSuggestions: false,
+        style: Theme.of(context).textTheme.headline6,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+        ),
+        onChanged: (text) {
+          setState(() {
+            _thenPart = text;
+            _checkIfIsDone();
+          });
+        },
+      )),
+    ]);
+  }
+
+  _buildSubmitButton() {
+    var vm =
+        Provider.of<InternalisationRecallViewModel>(context, listen: false);
+    return Align(
+        alignment: Alignment.bottomCenter,
+        child: FullWidthButton(
+          onPressed: () async {
+            var recalledText = "Wenn ${_ifPart} dann ${_thenPart}";
+            await vm.submit(recalledText);
+            Navigator.pushNamed(context, RouteNames.NO_TASKS);
+          },
+        ));
   }
 }

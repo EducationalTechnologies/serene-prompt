@@ -22,8 +22,8 @@ class SpeechBubble extends StatelessWidget {
         color: Theme.of(context).selectedRowColor,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0)),
+            // bottomLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0)),
       ),
     );
   }

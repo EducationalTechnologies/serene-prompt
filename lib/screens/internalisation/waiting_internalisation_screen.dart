@@ -5,9 +5,14 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
+import 'package:serene/widgets/info_bubble.dart';
 import 'package:serene/widgets/speech_bubble.dart';
 
 class WaitingInternalisationScreen extends StatefulWidget {
+  final Duration waitingDuration;
+
+  const WaitingInternalisationScreen(this.waitingDuration);
+
   @override
   _WaitingInternalisationScreenState createState() =>
       _WaitingInternalisationScreenState();
@@ -18,11 +23,7 @@ class _WaitingInternalisationScreenState
     with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
-  bool _done = false;
-
-  int _timerDurationSeconds = 15;
-
-  bool _timerStarted = false;
+  bool _done = true;
 
   @override
   void initState() {
@@ -31,19 +32,19 @@ class _WaitingInternalisationScreenState
   }
 
   void initTimer() {
-    controller = AnimationController(
-        duration: Duration(seconds: _timerDurationSeconds), vsync: this);
+    var waitingDuration = widget.waitingDuration;
+    controller = AnimationController(duration: waitingDuration, vsync: this);
     animation = Tween<double>(begin: 0, end: 1).animate(controller);
     animation.addListener(() {
       setState(() {});
     });
-    animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          _done = true;
-        });
-      }
-    });
+    // animation.addStatusListener((status) {
+    //   if (status == AnimationStatus.completed) {
+    //     setState(() {
+    //       _done = true;
+    //     });
+    //   }
+    // });
     controller.forward();
   }
 
@@ -63,56 +64,23 @@ class _WaitingInternalisationScreenState
   Widget build(BuildContext context) {
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
 
-    if (_timerStarted) {
-      return _buildPreTimerScreen();
-    } else {
-      return Container(
-        margin: UIHelper.getContainerMargin(),
-        child: ListView(
-          children: <Widget>[
-            UIHelper.verticalSpaceMedium(),
-            SpeechBubble(text: vm.implementationIntention),
-            LinearProgressIndicator(
-              value: animation.value,
-            ),
-            // UIHelper.verticalSpaceMedium(),
-            // Center(
-            //     child: CircleProgressBar(
-            //         foregroundColor: Theme.of(context).primaryColor,
-            //         animationDuration: Duration(seconds: 5),
-            //         value: animation.value)),
-            UIHelper.verticalSpaceMedium(),
-            if (_done) _buildSubmitButton()
-          ],
-        ),
-      );
-    }
-  }
-
-  _buildPreTimerScreen() {
     return Container(
-        margin: UIHelper.getContainerMargin(),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage("assets/illustrations/undraw_in_no_time_6igu.png"),
-          fit: BoxFit.scaleDown,
-        )),
-        child: Align(
-            child: Column(
-              children: [
-                Text(
-                    "Sobald du anfängst, hast du $_timerDurationSeconds Sekunden Zeit, um dir deinen Wenn-Dann-Plan einzuprägen",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline4),
-                FullWidthButton(onPressed: () {
-                  setState(() {
-                    _timerStarted = true;
-                  });
-                  initTimer();
-                })
-              ],
-            ),
-            alignment: Alignment(0.0, 0.6)));
+      margin: UIHelper.getContainerMargin(),
+      child: ListView(
+        children: <Widget>[
+          InfoBubble(
+              text:
+                  "Lies den folgenden Text drei mal, und drücke dann auf Abschicken"),
+          UIHelper.verticalSpaceMedium(),
+          SpeechBubble(text: vm.implementationIntention),
+          // LinearProgressIndicator(
+          //   value: animation.value,
+          // ),
+          UIHelper.verticalSpaceMedium(),
+          if (_done) _buildSubmitButton()
+        ],
+      ),
+    );
   }
 }
 

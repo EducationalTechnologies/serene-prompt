@@ -18,7 +18,7 @@ class InternalisationViewModel extends BaseViewModel {
   Future<bool> initialized;
   InternalisationCondition internalisationCondition =
       InternalisationCondition.waiting;
-
+  Duration waitingDuration = Duration(seconds: 15);
   Internalisation _currentInternalisation = Internalisation();
 
   InternalisationViewModel(this._dataService, this._navigationService,
@@ -26,6 +26,7 @@ class InternalisationViewModel extends BaseViewModel {
     _currentInternalisation.startDate = DateTime.now();
 
     initialized = init();
+    waitingDuration = ExperimentService.WAITING_TIMER_DURATION;
   }
 
   Future<bool> init() async {

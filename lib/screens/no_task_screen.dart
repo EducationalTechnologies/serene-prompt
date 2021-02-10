@@ -84,7 +84,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
           }
         } else {
           nextText =
-              "Du hast deinen Wenn-Dann-Plan leider so spät ausgeführt, dass wir heute nicht mehr deine Erinnerung überprüfen können. Mache bitte morgen weiter.";
+              "Du hast deinen Wenn-Dann-Plan heute sehr spät ausgeführ. Versuche doch, das Morgen etwas früher zu tun.";
         }
       }
     }

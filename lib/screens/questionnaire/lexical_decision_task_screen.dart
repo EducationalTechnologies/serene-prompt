@@ -29,9 +29,6 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   Stopwatch _primeStopwatch = Stopwatch();
   Stopwatch stopwatch;
   List<int> primeDurations = [];
-  bool _trialComplete = false;
-  bool _selectionMade = false;
-
   @override
   void initState() {
     vm = Provider.of<LexicalDecisionTaskViewModel>(context, listen: false);
@@ -157,14 +154,14 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
                           pressed(1);
                         },
                         text: "Ja",
-                        height: 90),
-                    UIHelper.verticalSpaceMedium(),
+                        height: 140),
+                    UIHelper.verticalSpaceLarge(),
                     FullWidthButton(
                         onPressed: () {
                           pressed(0);
                         },
                         text: "Nein",
-                        height: 90),
+                        height: 140),
                   ],
                 ),
               ),

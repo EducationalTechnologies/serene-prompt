@@ -13,6 +13,7 @@ class ExperimentService {
   static const int NUM_CONDITIONS = 3;
   static const int DAYS_INTERVAL_LDT = 3;
   static const int DAYS_INTERVAL_USABILITY = 3;
+  static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
 
   DataService _dataService;
   NotificationService _notificationService;

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:serene/screens/internalisation/emoji_story_screen.dart';
 import 'package:serene/screens/internalisation/scramble_internalisation.dart';
 import 'package:serene/screens/internalisation/waiting_internalisation_screen.dart';
-import 'package:serene/screens/internalisation/writing_internalisation.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/serene_appbar.dart';
@@ -23,9 +22,11 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
   }
 
   getScreenForCondition(InternalisationCondition condition) {
+    var vm = Provider.of<InternalisationViewModel>(context);
+
     switch (condition) {
       case InternalisationCondition.waiting:
-        return WaitingInternalisationScreen();
+        return WaitingInternalisationScreen(vm.waitingDuration);
         break;
       case InternalisationCondition.scrambleWithHint:
         return ScrambleInternalisation(true);
