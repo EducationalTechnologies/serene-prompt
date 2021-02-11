@@ -178,8 +178,10 @@ class DataService {
         _planCache.add(plan["sentence"]);
       }
     }
+    var rand = Random();
 
-    var plan = _planCache[_userDataCache.internalisationCondition];
+    // TODO: Change
+    var plan = _planCache[rand.nextInt(_planCache.length - 1)];
 
     return plan;
   }

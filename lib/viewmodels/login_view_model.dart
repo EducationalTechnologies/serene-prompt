@@ -15,6 +15,8 @@ class LoginViewModel extends BaseViewModel {
   UserService _userService;
   DataService _dataService;
 
+  String defaultPassword = "Hasselhoernchen";
+
   LoginViewModel(this._userService, this._dataService) {
     this._email = this._userService.getUserEmail();
 
@@ -26,6 +28,7 @@ class LoginViewModel extends BaseViewModel {
   }
 
   Future<String> register(String email, String password) async {
+    email = "$email@prompt.studie";
     setState(ViewState.busy);
     var success = "";
     var available = await this._userService.isNameAvailable(email);
@@ -51,6 +54,8 @@ class LoginViewModel extends BaseViewModel {
   }
 
   validateEmail(String value) {
+    return true;
+    // TODO: Create new validation function to check if user id is valid
     return EmailValidator.validate(value);
   }
 

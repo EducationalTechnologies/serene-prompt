@@ -208,6 +208,10 @@ class FirebaseService {
       print("Error trying to sign in the user: $e");
       lastError = e.code;
       return null;
+    } on FirebaseAuthException catch (e) {
+      print("Error trying to sign in the user: $e");
+      lastError = e.code;
+      return null;
     }
   }
 

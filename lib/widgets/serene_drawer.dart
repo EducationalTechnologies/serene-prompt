@@ -108,15 +108,15 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           ListTile(
-              title: Text("Initialisierung"),
+              title: Text("Session 0"),
               onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => StartupScreen()),
-                );
-                // await Navigator.pushNamed(context, RouteNames.INIT_START,
-                //     arguments: AssessmentScreenArguments(
-                //         AssessmentType.dailyQuestion));
+                // await Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => StartupScreen()),
+                // );
+                await Navigator.pushNamed(context, RouteNames.INIT_START,
+                    arguments: AssessmentScreenArguments(
+                        AssessmentType.dailyQuestion));
               }),
           // VersionInfo()
         ],

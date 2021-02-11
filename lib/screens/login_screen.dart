@@ -61,8 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _loginClick(LoginViewModel vm, BuildContext context) async {
-    var signedIn = await vm.signIn(
-        _userIdTextController.text, _passwordTextController.text);
+    var signedIn =
+        await vm.signIn(_userIdTextController.text, vm.defaultPassword);
     if (signedIn == RegistrationCodes.SUCCESS) {
       Navigator.pushNamed(context, RouteNames.MAIN);
       return;
@@ -125,13 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new Padding(
-            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-            child: Icon(
-              Icons.alternate_email,
-              color: this.widget.foregroundColor,
-            ),
-          ),
+          // new Padding(
+          //   padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+          //   child: Icon(
+          //     Icons.handyman,
+          //     color: this.widget.foregroundColor,
+          //   ),
+          // ),
           new Expanded(
             child: TextFormField(
               controller: _userIdTextController,
@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // labelText: "Email",
                 // alignLabelWithHint: true,
                 border: InputBorder.none,
-                hintText: 'Email Adresse eingeben',
+                hintText: 'Nutzernamen eingeben',
               ),
             ),
           ),
@@ -208,24 +208,119 @@ class _LoginScreenState extends State<LoginScreen> {
     return new RaisedButton(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       onPressed: () async {
+        String message = "";
         if (vm.validateEmail(_userIdTextController.text)) {
           if (vm.mode == SignInScreenMode.register) {
-            await _registerClick(vm, context);
+            message = await _registerClick(vm, context);
           } else {
-            await _loginClick(vm, context);
+            message = await _loginClick(vm, context);
           }
         } else {
-          await _buildErrorDialog("Ungültige Email Adresse",
-              "Bitte überprüfe die Schreibweise der angegebenen Email Adresse");
+          await _buildErrorDialog("$message", "$message");
         }
       },
       child: vm.state == ViewState.idle
           ? Text(
               vm.mode == SignInScreenMode.register
                   ? "Registrieren"
-                  : "Einloggen",
+                  : "Anmelden",
             )
           : CircularProgressIndicator(),
+    );
+  }
+
+  Widget buildControls(BuildContext context) {
+    var vm = Provider.of<LoginViewModel>(context);
+    return Form(
+      key: _formKey,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(
+                1.0, 0.0), // 10% of the width, so there are ten blinds.
+            colors: [
+              this.widget.backgroundColor1,
+              this.widget.backgroundColor2
+            ], // whitish to gray
+            // tileMode: TileMode.repeated, // repeats the gradient over the canvas
+          ),
+        ),
+        height: MediaQuery.of(context).size.height,
+        child: ListView(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(top: 150.0, bottom: 50.0),
+              child: Center(
+                child: new Column(
+                  children: <Widget>[
+                    buildCircleAvatar(),
+                    new Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: new Text(
+                        "Serene",
+                        style: TextStyle(color: this.widget.foregroundColor),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            buildUserIdField(context),
+            // buildPasswordInput(context),
+            new Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
+              alignment: Alignment.center,
+              child: new Row(
+                children: <Widget>[
+                  new Expanded(child: buildSubmitButton(context)),
+                ],
+              ),
+            ),
+            // if (vm.mode == SignInScreenMode.signIn)
+            //   _buildRegisterButton(context),
+            // if (vm.mode == SignInScreenMode.register)
+            //   _buildAlreadyHaveAccountButton(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildUseWithoutAccountControls() {
+    var vm = Provider.of<LoginViewModel>(context);
+    return new Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(
+          left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
+      alignment: Alignment.center,
+      child: new Row(
+        children: <Widget>[
+          new Expanded(
+            child: InkWell(
+              onTap: () async {
+                // await vm.progressWithoutUsername();
+                // Navigator.pushNamed(context, RouteNames.MAIN);
+              },
+              child: new FlatButton(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 20.0, horizontal: 20.0),
+                color: Colors.transparent,
+                onPressed: () async {
+                  await vm.progressWithoutUsername();
+                  Navigator.pushNamed(context, RouteNames.INIT_START);
+                },
+                child: Text(
+                  "Ohne Account verwenden",
+                  style: TextStyle(
+                      color: this.widget.foregroundColor.withOpacity(0.8)),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -271,98 +366,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Text("Ich habe bereits einen Account"))),
         ],
-      ),
-    );
-  }
-
-  Widget buildControls(BuildContext context) {
-    var vm = Provider.of<LoginViewModel>(context);
-    return Form(
-      key: _formKey,
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(
-                1.0, 0.0), // 10% of the width, so there are ten blinds.
-            colors: [
-              this.widget.backgroundColor1,
-              this.widget.backgroundColor2
-            ], // whitish to gray
-            // tileMode: TileMode.repeated, // repeats the gradient over the canvas
-          ),
-        ),
-        height: MediaQuery.of(context).size.height,
-        child: ListView(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(top: 150.0, bottom: 50.0),
-              child: Center(
-                child: new Column(
-                  children: <Widget>[
-                    buildCircleAvatar(),
-                    new Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: new Text(
-                        "Serene",
-                        style: TextStyle(color: this.widget.foregroundColor),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            buildUserIdField(context),
-            buildPasswordInput(context),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
-              alignment: Alignment.center,
-              child: new Row(
-                children: <Widget>[
-                  new Expanded(child: buildSubmitButton(context)),
-                ],
-              ),
-            ),
-            if (vm.mode == SignInScreenMode.signIn)
-              _buildRegisterButton(context),
-            if (vm.mode == SignInScreenMode.register)
-              _buildAlreadyHaveAccountButton(context),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.only(
-                  left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
-              alignment: Alignment.center,
-              child: new Row(
-                children: <Widget>[
-                  new Expanded(
-                    child: InkWell(
-                      onTap: () async {
-                        // await vm.progressWithoutUsername();
-                        // Navigator.pushNamed(context, RouteNames.MAIN);
-                      },
-                      child: new FlatButton(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 20.0),
-                        color: Colors.transparent,
-                        onPressed: () async {
-                          await vm.progressWithoutUsername();
-                          Navigator.pushNamed(context, RouteNames.INIT_START);
-                        },
-                        child: Text(
-                          "Ohne Account verwenden",
-                          style: TextStyle(
-                              color:
-                                  this.widget.foregroundColor.withOpacity(0.8)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
