@@ -49,13 +49,9 @@ class InternalisationViewModel extends BaseViewModel {
     _currentInternalisation.input = input;
     _currentInternalisation.implementationIntention = implementationIntention;
     _currentInternalisation.condition = condition.toString();
-    await this._dataService.saveInternalisation(_currentInternalisation);
-
-    await this._rewardService.addPoints(1);
-
-    this
+    await this
         ._experimentService
-        .scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
+        .submitInternalisation(_currentInternalisation);
 
     await _navigationService.navigateTo(RouteNames.NO_TASKS, arguments: this);
     return true;

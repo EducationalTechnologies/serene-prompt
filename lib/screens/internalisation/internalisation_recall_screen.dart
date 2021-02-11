@@ -105,7 +105,7 @@ class _InternalisationRecallScreenState
         alignment: Alignment.bottomCenter,
         child: FullWidthButton(
           onPressed: () async {
-            var recalledText = "Wenn ${_ifPart} dann ${_thenPart}";
+            var recalledText = "Wenn $_ifPart dann $_thenPart";
             await vm.submit(recalledText);
             Navigator.pushNamed(context, RouteNames.NO_TASKS);
           },

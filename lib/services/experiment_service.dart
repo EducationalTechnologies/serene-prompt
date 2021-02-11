@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/logging_service.dart';
 import 'package:serene/services/notification_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/extensions.dart';
 
@@ -18,11 +20,13 @@ class ExperimentService {
   DataService _dataService;
   NotificationService _notificationService;
   LoggingService _loggingService;
+  RewardService _rewardService;
 
-  ExperimentService(
-      this._dataService, this._notificationService, this._loggingService);
+  ExperimentService(this._dataService, this._notificationService,
+      this._loggingService, this._rewardService);
 
   Future<bool> initialize() async {
+    // TODO: Check the current inernalisation condition here and, if necessary, recalculate it
     return await Future.delayed(Duration.zero).then((res) => true);
   }
 
@@ -207,5 +211,15 @@ class ExperimentService {
 
   Future<List<dynamic>> getLdtTask() async {
     var allTasks = await this._dataService.getLexicalDecisionTaskListII();
+  }
+
+  Future<void> submitInternalisation(Internalisation internalisation) async {
+    await this._dataService.saveInternalisation(internalisation);
+
+    await this._rewardService.addPoints(1);
+
+    this.scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
+
+    return;
   }
 }
