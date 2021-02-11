@@ -179,9 +179,7 @@ class DataService {
       }
     }
 
-    final _random = new Random();
-    // TODO: Do NOT use random plan next
-    var plan = _planCache[_random.nextInt(_planCache.length)];
+    var plan = _planCache[_userDataCache.internalisationCondition];
 
     return plan;
   }
@@ -227,6 +225,11 @@ class DataService {
   Future<Internalisation> getLastInternalisation() async {
     return await _databaseService
         .getLastInternalisation(_userService.getUserEmail());
+  }
+
+  Future<List<Internalisation>> getLastInternalisations(int number) async {
+    return await _databaseService.getLastInternalisations(
+        _userService.getUserEmail(), number);
   }
 
   Future<RecallTask> getLastRecallTask() async {

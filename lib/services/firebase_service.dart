@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/locator.dart';
@@ -311,23 +310,35 @@ class FirebaseService {
         .add(map);
   }
 
-  Future<Internalisation> getLastInternalisation(String email) async {
-    handleTimeout("Firebase Service: retrieving last internalisation");
+  Future<List<Internalisation>> getLastInternalisations(
+      String userid, int number) async {
     var doc = await _databaseReference
         .collection(COLLECTION_INTERNALISATION)
-        .where("user", isEqualTo: email)
+        .where("user", isEqualTo: userid)
         .orderBy("completionDate", descending: true)
-        .limit(1)
+        .limit(number)
         .get()
-        .timeout(Duration(seconds: 5), onTimeout: () {
+        .timeout(Duration(seconds: 10), onTimeout: () {
       handleTimeout("Last Internalisation");
       return null;
     }).catchError((handleError));
 
-    handleTimeout("Retrieved Last internalisation: ${doc.toString()}");
     if (doc == null) return null;
-    if (doc.docs.length == 0) return null;
-    return Internalisation.fromDocument(doc.docs[0]);
+
+    List<Internalisation> internalisations = [];
+    for (var doc in doc.docs) {
+      internalisations.add(Internalisation.fromDocument(doc));
+    }
+
+    return internalisations;
+  }
+
+  Future<Internalisation> getLastInternalisation(String email) async {
+    var docs = await getLastInternalisations(email, 1);
+
+    if (docs == null) return null;
+    if (docs.length == 0) return null;
+    return (docs[0]);
   }
 
   Future<Internalisation> getFirstInternalisation(String email) async {

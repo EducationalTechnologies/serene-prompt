@@ -84,7 +84,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
           }
         } else {
           nextText =
-              "Du hast deinen Wenn-Dann-Plan heute sehr spät ausgeführ. Versuche doch, das Morgen etwas früher zu tun.";
+              "Du hast deinen Wenn-Dann-Plan heute sehr spät gelernt. Versuche doch, das Morgen etwas früher zu tun.";
         }
       }
     }
@@ -130,8 +130,9 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                "assets/illustrations/mascot_watch.PNG"),
-                            scale: 0.1,
+                                "assets/illustrations/mascot_schild.png"),
+                            fit: BoxFit.contain,
+                            scale: 2.0,
                             alignment: Alignment.bottomLeft)),
                     child: Align(
                         child: Column(

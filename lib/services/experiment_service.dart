@@ -176,10 +176,15 @@ class ExperimentService {
     return false;
   }
 
+  Future<bool> lastThreeConditionsWereTheSame() async {
+    var lastThree = await _dataService.getLastInternalisations(3);
+    if (lastThree.length < 3) return false;
+    return lastThree
+        .every((element) => element.condition == lastThree[0].condition);
+  }
+
   Future<bool> isTimeForLexicalDecisionTask() async {
-    return await Future.delayed(Duration.zero).then((value) {
-      return false;
-    });
+    return await lastThreeConditionsWereTheSame();
   }
 
   // TODO: Implement
