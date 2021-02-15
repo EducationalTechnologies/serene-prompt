@@ -199,14 +199,9 @@ class ExperimentService {
   }
 
   Future<InternalisationCondition> getTodaysInternalisationCondition() async {
-    var first = await this._dataService.getFirstInternalisation();
-    var conditionValue = 0;
-    if (first != null) {
-      var daysAgo = first.completionDate.daysAgo();
-      conditionValue = daysAgo % NUM_CONDITIONS;
-    }
+    var ud = await this._dataService.getUserData();
 
-    return InternalisationCondition.values[conditionValue];
+    return InternalisationCondition.values[ud.internalisationCondition];
   }
 
   Future<List<dynamic>> getLdtTask() async {
@@ -215,19 +210,29 @@ class ExperimentService {
 
   Future<int> getNextInternalisationCondition(int current) async {
     // var max = await _dataService.
-    return await lastThreeConditionsWereTheSame() ? current + 1 : current;
+    var next = current;
+    if (await lastThreeConditionsWereTheSame()) {
+      next = (next + 1) % 3;
+    }
+    return next;
   }
 
   Future<void> updateInternalisationConditionGroup() async {
     // TODO
+    var userData = await _dataService.getUserData();
+    var newCondition = await getNextInternalisationCondition(
+        userData.internalisationCondition);
+    if (newCondition != userData.internalisationCondition) {
+      await _dataService.updateInternalisationConditionGroup(newCondition);
+    }
   }
 
   // Future<void> saveNewI
 
   Future<void> submitInternalisation(Internalisation internalisation) async {
-    this._dataService.saveInternalisation(internalisation);
+    await this._dataService.saveInternalisation(internalisation);
 
-    this._rewardService.addPoints(1);
+    await this._rewardService.addPoints(1);
 
     this.scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
 

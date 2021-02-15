@@ -33,12 +33,8 @@ class InternalisationViewModel extends BaseViewModel {
     this.implementationIntention =
         await this._dataService.getCurrentImplementationIntention();
 
-    // TODO: TEMP! CHANGE BACK TO REGULAR!
-    var random = Random();
     this.internalisationCondition =
-        InternalisationCondition.values[random.nextInt(3)];
-    // this.internalisationCondition =
-    //     await _experimentService.getTodaysInternalisationCondition();
+        await _experimentService.getTodaysInternalisationCondition();
 
     return true;
   }

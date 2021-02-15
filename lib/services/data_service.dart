@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
@@ -178,14 +177,9 @@ class DataService {
         _planCache.add(plan["sentence"]);
       }
     }
-    var rand = Random();
-
     var userData = await getUserData();
     var condition = userData.internalisationCondition;
-
-    // TODO: Change
-    var plan = _planCache[rand.nextInt(_planCache.length - 1)];
-
+    var plan = _planCache[condition];
     return plan;
   }
 
@@ -284,5 +278,6 @@ class DataService {
   updateInternalisationConditionGroup(int group) async {
     await _databaseService.updateInternalisationConditionGroup(
         _userService.getUserEmail(), group);
+    _userDataCache.internalisationCondition = group;
   }
 }

@@ -35,7 +35,7 @@ class _SereneAppBarState extends State<SereneAppBar> {
                   "$rewardBaseSymbol ${rewardService.score.toString()}",
                   textAlign: TextAlign.right,
                   style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Colors.yellow[800]),
                 );
