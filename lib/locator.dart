@@ -33,11 +33,12 @@ void setupLocator() {
 
   locator.registerSingleton<NotificationService>(NotificationService());
 
+  locator.registerSingleton<RewardService>(
+      RewardService(locator.get<DataService>()));
+
   locator.registerSingleton<ExperimentService>(ExperimentService(
       locator.get<DataService>(),
       locator.get<NotificationService>(),
-      locator.get<LoggingService>()));
-
-  locator.registerSingleton<RewardService>(RewardService(
-      locator.get<DataService>(), locator.get<ExperimentService>()));
+      locator.get<LoggingService>(),
+      locator.get<RewardService>()));
 }

@@ -1,5 +1,4 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:serene/services/data_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
@@ -13,11 +12,10 @@ class LoginViewModel extends BaseViewModel {
   SignInScreenMode mode;
 
   UserService _userService;
-  DataService _dataService;
 
   String defaultPassword = "Hasselhoernchen";
 
-  LoginViewModel(this._userService, this._dataService) {
+  LoginViewModel(this._userService) {
     this._email = this._userService.getUserEmail();
 
     if (this._email == null) {
@@ -28,13 +26,19 @@ class LoginViewModel extends BaseViewModel {
   }
 
   Future<String> register(String email, String password) async {
-    email = "$email@prompt.studie";
+    if (!validateEmail(email)) {
+      email = "$email@prompt.studie";
+    }
+    if (password.isEmpty) {
+      // TODO: Change for production to read from environment file
+      password = "Hasselhoernchen";
+    }
+
     setState(ViewState.busy);
     var success = "";
     var available = await this._userService.isNameAvailable(email);
     if (available) {
       success = await _userService.registerUser(email, password);
-      _dataService.clearCache();
     } else {
       success = await _userService.signInUser(email, password);
     }
@@ -53,10 +57,13 @@ class LoginViewModel extends BaseViewModel {
     await _userService.saveRandomUser();
   }
 
-  validateEmail(String value) {
+  validateEmail(String userid) {
+    return EmailValidator.validate(userid);
+  }
+
+  validateUserId(String value) {
     return true;
     // TODO: Create new validation function to check if user id is valid
-    return EmailValidator.validate(value);
   }
 
   toRegisterScreen() {

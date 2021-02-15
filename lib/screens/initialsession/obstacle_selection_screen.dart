@@ -26,11 +26,10 @@ class _ObstacleSelectionScreenState extends State<ObstacleSelectionScreen> {
       ),
       child: ListTile(
         leading: Image.asset(obstacle.iconPath),
-        title: Text(obstacle.name),
-        subtitle: Text(obstacle.description),
+        title: Text(obstacle.description),
+        subtitle: Text(""),
         isThreeLine: true,
         onTap: () async {
-          print("Do Something On Selected ");
           obstacle.isSelected = !obstacle.isSelected;
           vm.obstacleSelected(obstacle);
           setState(() => {});

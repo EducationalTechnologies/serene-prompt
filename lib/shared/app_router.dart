@@ -169,8 +169,7 @@ class AppRouter {
             builder: (_) => MultiProvider(
                     providers: [
                       ChangeNotifierProvider<LoginViewModel>.value(
-                          value: LoginViewModel(locator.get<UserService>(),
-                              locator.get<DataService>())),
+                          value: LoginViewModel(locator.get<UserService>())),
                     ],
                     child: LoginScreen(
                       backgroundColor1: Colors.orange[50],

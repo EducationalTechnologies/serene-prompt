@@ -10,8 +10,11 @@ class UserService {
   SettingsService _settings;
   String userId = "";
 
-  Future<bool> initialize() {
-    return Future.delayed(Duration.zero).then((res) => true);
+  Future<bool> initialize() async {
+    var id = getUserEmail();
+    if (id == null) return false;
+    if (id.isEmpty) return false;
+    return !await FirebaseService().isNameAvailable(id);
   }
 
   Future<bool> isNameAvailable(String userId) async {
@@ -55,6 +58,8 @@ class UserService {
       return locator.get<FirebaseService>().lastError;
     }
   }
+
+  Future<bool> userInitialized() async {}
 
   saveRandomUser() async {
     var uid = _getRandomUsername();

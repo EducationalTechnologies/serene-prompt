@@ -213,12 +213,25 @@ class ExperimentService {
     var allTasks = await this._dataService.getLexicalDecisionTaskListII();
   }
 
-  Future<void> submitInternalisation(Internalisation internalisation) async {
-    await this._dataService.saveInternalisation(internalisation);
+  Future<int> getNextInternalisationCondition(int current) async {
+    // var max = await _dataService.
+    return await lastThreeConditionsWereTheSame() ? current + 1 : current;
+  }
 
-    await this._rewardService.addPoints(1);
+  Future<void> updateInternalisationConditionGroup() async {
+    // TODO
+  }
+
+  // Future<void> saveNewI
+
+  Future<void> submitInternalisation(Internalisation internalisation) async {
+    this._dataService.saveInternalisation(internalisation);
+
+    this._rewardService.addPoints(1);
 
     this.scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
+
+    this.updateInternalisationConditionGroup();
 
     return;
   }

@@ -18,7 +18,7 @@ import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/materialized_path.dart';
 
 class DataService {
-  List<Goal> _goalsCache;
+  List<Goal> _goalsCache = [];
   List<Goal> _openGoalsCache = [];
   List<dynamic> _ldtTaskListCache = [];
   List<dynamic> _ldtListStrings = [];
@@ -51,6 +51,8 @@ class DataService {
   clearCache() {
     this._openGoalsCache.clear();
     this._goalsCache.clear();
+    this._planCache.clear();
+    this._ldtTaskListCache.clear();
   }
 
   createGoal(Goal goal) async {
@@ -137,8 +139,6 @@ class DataService {
     return _goalShields;
   }
 
-  getNumberOfInternalisations() async {}
-
   saveAssessment(AssessmentModel assessment) async {
     await _databaseService.saveAssessment(
         assessment, _userService.getUserEmail());
@@ -179,6 +179,9 @@ class DataService {
       }
     }
     var rand = Random();
+
+    var userData = await getUserData();
+    var condition = userData.internalisationCondition;
 
     // TODO: Change
     var plan = _planCache[rand.nextInt(_planCache.length - 1)];
@@ -276,5 +279,10 @@ class DataService {
   logData(dynamic data) async {
     data["user"] = _userService.getUserEmail();
     await _databaseService.logEvent(_userService.getUserEmail(), data);
+  }
+
+  updateInternalisationConditionGroup(int group) async {
+    await _databaseService.updateInternalisationConditionGroup(
+        _userService.getUserEmail(), group);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/screens/startup_screen.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';

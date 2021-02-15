@@ -390,11 +390,19 @@ class FirebaseService {
         .add(internalisation.toMap());
   }
 
-  saveScore(String userid, int score) async {
+  Future<void> saveScore(String userid, int score) async {
     return await _databaseReference
         .collection(COLLECTION_SCORES)
         .doc(userid)
         .set({"score": score});
+  }
+
+  Future<void> updateInternalisationConditionGroup(
+      String userid, int group) async {
+    return await _databaseReference
+        .collection(COLLECTION_USERS)
+        .doc(userid)
+        .set({"internalisationCondition": group});
   }
 
   Future<int> getScore(String userid) async {

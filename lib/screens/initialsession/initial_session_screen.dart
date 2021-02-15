@@ -25,12 +25,12 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   final _kCurve = Curves.ease;
 
   final List<Widget> _pages = [
-    ObstacleSelectionScreen(),
-    ObstacleEnterScreen(),
-    ObstacleSortingScreen(),
     OutcomeSelectionScreen(),
     OutcomeEnterScreen(),
     OutcomeSortingScreen(),
+    ObstacleSelectionScreen(),
+    ObstacleEnterScreen(),
+    ObstacleSortingScreen(),
     InitialExplanationScreen()
   ];
 
@@ -60,7 +60,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: true, // _index > 1 && _index < _pages.length - 1,
+            visible:
+                vm.canMoveBack(), // _index > 1 && _index < _pages.length - 1,
             child: FlatButton(
               child: Row(
                 children: <Widget>[
@@ -93,7 +94,10 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               ),
               onPressed: () {
                 if (vm.canMoveNext()) {
-                  _controller.nextPage(duration: _kDuration, curve: _kCurve);
+                  // _controller.jumpToPage(vm.getNextPage());
+                  _controller.animateToPage(vm.getNextPage(),
+                      duration: _kDuration, curve: _kCurve);
+                  // _controller.nextPage(duration: _kDuration, curve: _kCurve);
                 }
                 setState(() {});
               },

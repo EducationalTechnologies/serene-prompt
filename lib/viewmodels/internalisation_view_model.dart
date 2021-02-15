@@ -44,14 +44,14 @@ class InternalisationViewModel extends BaseViewModel {
   }
 
   Future<bool> submit(InternalisationCondition condition, String input) async {
-    this.setState(ViewState.busy);
+    if (state == ViewState.busy) return false;
+    setState(ViewState.busy);
+
     _currentInternalisation.completionDate = DateTime.now();
     _currentInternalisation.input = input;
     _currentInternalisation.implementationIntention = implementationIntention;
     _currentInternalisation.condition = condition.toString();
-    await this
-        ._experimentService
-        .submitInternalisation(_currentInternalisation);
+    this._experimentService.submitInternalisation(_currentInternalisation);
 
     await _navigationService.navigateTo(RouteNames.NO_TASKS, arguments: this);
     return true;

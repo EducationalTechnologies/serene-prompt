@@ -43,7 +43,7 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
       child: ListTile(
         leading: Image.asset(obstacle.iconPath),
         title: Text(obstacle.description),
-        subtitle: Text(obstacle.description),
+        subtitle: Text(""),
         isThreeLine: true,
         trailing: buildUpDownArrow,
         // onTap: () async {

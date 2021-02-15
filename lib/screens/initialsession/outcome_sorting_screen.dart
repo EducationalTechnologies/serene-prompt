@@ -42,8 +42,8 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
       key: ValueKey("outcome ${outcome.name}"),
       child: ListTile(
         leading: Image.asset(outcome.iconPath),
-        title: Text(outcome.name),
-        subtitle: Text(outcome.description),
+        title: Text(outcome.description),
+        subtitle: Text(""),
         isThreeLine: true,
         trailing: upDownArrow,
         // onTap: () async {

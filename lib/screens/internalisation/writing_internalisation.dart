@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
@@ -17,7 +16,6 @@ class _WritingInternalisationState extends State<WritingInternalisation> {
   bool _done = false;
 
   _buildSubmitButton() {
-    var vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return Align(
         alignment: Alignment.bottomCenter,
         child: FullWidthButton(

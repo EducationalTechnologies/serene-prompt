@@ -60,21 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
         });
   }
 
-  _loginClick(LoginViewModel vm, BuildContext context) async {
-    var signedIn =
-        await vm.signIn(_userIdTextController.text, vm.defaultPassword);
-    if (signedIn == RegistrationCodes.SUCCESS) {
-      Navigator.pushNamed(context, RouteNames.MAIN);
-      return;
-    } else {
-      var shouldCreate = await _buildErrorDialog("Anmeldedaten nicht gefunden",
-          "Benutzername oder Passwort waren nicht korrekt");
-      if (shouldCreate) {
-        _registerClick(vm, context);
-      }
-    }
-  }
-
   _registerClick(LoginViewModel vm, BuildContext context) async {
     var registered = await vm.register(
         _userIdTextController.text, _passwordTextController.text);
@@ -160,61 +145,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  buildPasswordInput(BuildContext context) {
-    return new Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-              color: this.widget.foregroundColor,
-              width: 0.5,
-              style: BorderStyle.solid),
-        ),
-      ),
-      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-      child: new Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          new Padding(
-            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-            child: Icon(
-              Icons.lock,
-              color: this.widget.foregroundColor,
-            ),
-          ),
-          new Expanded(
-            child: TextFormField(
-              controller: _passwordTextController,
-              obscureText: true,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Passwort (min. 6 Zeichen)',
-                hintStyle: TextStyle(color: this.widget.foregroundColor),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   buildSubmitButton(BuildContext context) {
     var vm = Provider.of<LoginViewModel>(context);
     return new RaisedButton(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       onPressed: () async {
         String message = "";
-        if (vm.validateEmail(_userIdTextController.text)) {
-          if (vm.mode == SignInScreenMode.register) {
-            message = await _registerClick(vm, context);
-          } else {
-            message = await _loginClick(vm, context);
-          }
+        if (vm.validateUserId(_userIdTextController.text)) {
+          message = await _registerClick(vm, context);
         } else {
           await _buildErrorDialog("$message", "$message");
         }
@@ -230,7 +168,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buildControls(BuildContext context) {
-    var vm = Provider.of<LoginViewModel>(context);
     return Form(
       key: _formKey,
       child: Container(
@@ -319,52 +256,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  _buildRegisterButton(BuildContext context) {
-    var vm = Provider.of<LoginViewModel>(context, listen: false);
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
-      alignment: Alignment.center,
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: FlatButton(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 20.0),
-                  onPressed: () async {
-                    _userIdTextController.text = "";
-                    _passwordTextController.text = "";
-                    vm.toRegisterScreen();
-                  },
-                  child: Text("Einen neuen Account anlegen"))),
-        ],
-      ),
-    );
-  }
-
-  _buildAlreadyHaveAccountButton(BuildContext context) {
-    var vm = Provider.of<LoginViewModel>(context, listen: false);
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 30.0),
-      alignment: Alignment.center,
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: FlatButton(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 20.0),
-                  onPressed: () async {
-                    _userIdTextController.text = "";
-                    _passwordTextController.text = "";
-                    vm.toSignInScreen();
-                  },
-                  child: Text("Ich habe bereits einen Account"))),
         ],
       ),
     );

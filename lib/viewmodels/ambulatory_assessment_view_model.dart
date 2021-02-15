@@ -1,12 +1,12 @@
-import 'package:flutter/widgets.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_item.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
+import 'package:serene/viewmodels/base_view_model.dart';
 
-class AmbulatoryAssessmentViewModel with ChangeNotifier {
+class AmbulatoryAssessmentViewModel extends BaseViewModel {
   String _assessmentType;
 
   UserService _userService;
@@ -312,6 +312,8 @@ class AmbulatoryAssessmentViewModel with ChangeNotifier {
   }
 
   submit() async {
+    if (state == ViewState.busy) return;
+    setState(ViewState.busy);
     var assessmentModel = AssessmentModel(
         _userService.getUsername(), results, _assessmentType, DateTime.now());
 

@@ -27,7 +27,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   Future<String> _nextText;
 
   bool _showToRecallTaskButton = false;
-  bool _showInternalisationTaskButton = false;
 
   @override
   void initState() {
@@ -43,7 +42,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
     if (await experimentService.isTimeForInternalisationTask()) {
       Navigator.pushNamed(context, RouteNames.INTERNALISATION);
-      _showInternalisationTaskButton = true;
       return "";
     }
 

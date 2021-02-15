@@ -10,27 +10,27 @@ class InitSessionViewModel extends BaseViewModel {
   var obstacles = <Obstacle>[
     Obstacle(
         name: "Überforderung",
-        description: "Die Aufgaben sind zu schwer.",
+        description: "Das Vokabellernen fällt mir sehr schwer.",
         iconPath: AppAssetPaths.ICON_MATH),
     Obstacle(
         name: "Konzentration",
-        description: "Ich kann mich nicht auf das Lernen konzentrieren.",
+        description: "Ich kann mich nicht auf das Vokabellernen konzentrieren.",
         iconPath: AppAssetPaths.ICON_BRAIN),
     Obstacle(
         name: "Lustlosigkeit",
-        description: "Ich habe keine Lust zu lernen.",
+        description: "Ich habe keine Lust, Vokabeln zu lernen.",
         iconPath: AppAssetPaths.ICON_COMPUTER),
     Obstacle(
         name: "Ablenkungen",
-        description: "Ich habe zu viele andere Sachen zu tun.",
+        description: "Ich habe keine Zeit, Vokabeln zu lernen.",
         iconPath: AppAssetPaths.ICON_EDUCATION),
     Obstacle(
-        name: "Gesundheit",
-        description: "Ich fühle mich nicht fit genug zum Lernen.",
+        name: "Vergessen",
+        description: "Ich vergesse, dass ich Vokabeln lernen sollte.",
         iconPath: AppAssetPaths.ICON_ANATOMY),
     Obstacle(
-        name: "Lehrer",
-        description: "Mein Lehrer ist immer an allem Schuld!",
+        name: "Multitasking",
+        description: "Ich mache beim Lernen andere Sachen (z.B. Fernsehen).",
         iconPath: AppAssetPaths.ICON_TEACHER),
   ];
 
@@ -38,7 +38,7 @@ class InitSessionViewModel extends BaseViewModel {
 
   var outcomes = <Outcome>[
     Outcome(
-        name: "Stolz anderer Personen",
+        name: "Stolz anderer",
         description:
             "Dann sind andere Personen (z.B. meine Eltern) stolz auf mich.",
         iconPath: AppAssetPaths.ICON_MATH),
@@ -47,8 +47,9 @@ class InitSessionViewModel extends BaseViewModel {
         description: "Dann bin ich selbst stolz auf mich.",
         iconPath: AppAssetPaths.ICON_MEHAPPY),
     Outcome(
-        name: "Fähigkeiten",
-        description: "Dann kann ich mich besser auf Englisch unterhalten.",
+        name: "Kommunikation",
+        description:
+            "Dann kann ich mich besser mit anderen Menschen verständigen.",
         iconPath: AppAssetPaths.ICON_USER),
     Outcome(
         name: "Lieder",
@@ -59,9 +60,9 @@ class InitSessionViewModel extends BaseViewModel {
         description: "Dann kann ich meine Videospiele besser verstehen.",
         iconPath: AppAssetPaths.ICON_GAMEPAD),
     Outcome(
-        name: "Arbeit",
+        name: "Job",
         description:
-            "Dann kriege ich eine bessere Arbeit wenn ich mit der Schule fertig bin.",
+            "Dann kriege ich einen bessere Job, wenn ich mit der Schule fertig bin.",
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
@@ -101,6 +102,10 @@ class InitSessionViewModel extends BaseViewModel {
         step == 4;
   }
 
+  bool canMoveBack() {
+    return (step == 1 || step == 2 || step == 4 || step == 5);
+  }
+
   saveSelected() async {
     await _dataService.saveSelectedOutcomes(selectedOutcomes);
     await _dataService.saveSelectedObstacles(selectedObstacles);
@@ -134,6 +139,18 @@ class InitSessionViewModel extends BaseViewModel {
       var custom = selectedOutcomes.firstWhere((o) => o.name == key);
       custom.description = text;
     }
+  }
+
+  getNextPage() {
+    print("Step is $step");
+
+    if (step == 1 && selectedOutcomes.length <= 1) {
+      return step + 2;
+    }
+    if (step == 4 && selectedObstacles.length <= 1) {
+      return step + 2;
+    }
+    return step + 1;
   }
 
   submit() async {

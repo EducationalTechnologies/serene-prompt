@@ -36,8 +36,8 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.firstLaunch:
-        // nav.navigateAndRemove(RouteNames.LOG_IN);
-        nav.navigateAndRemove(RouteNames.CONSENT);
+        nav.navigateAndRemove(RouteNames.LOG_IN);
+        // nav.navigateAndRemove(RouteNames.CONSENT);
         break;
       case AppStartupMode.postLearningAssessment:
         nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
@@ -66,24 +66,23 @@ class StartupViewModel extends BaseViewModel {
   Future<AppStartupMode> initialize() async {
     await locator<SettingsService>().initialize();
     addDebugText("Initialized Settings Service");
-    await locator<UserService>().initialize();
-    addDebugText("Initialized User Service");
-    await locator<NotificationService>().initialize();
-    addDebugText("Initialized Notification Service");
-    var experimentService = locator<ExperimentService>();
-    await experimentService.initialize();
-    addDebugText("Initialized Experiment Service");
-    locator<RewardService>().initialize();
-    bool userInitialized =
-        locator<UserService>().getUserEmail()?.isNotEmpty ?? false;
+    bool userInitialized = await locator<UserService>().initialize();
     addDebugText("User Initialized: $userInitialized");
-
     if (!userInitialized) {
       return AppStartupMode.firstLaunch;
     }
+
+    await locator<NotificationService>().initialize();
+    addDebugText("Initialized Notification Service");
+    addDebugText("Initialized Experiment Service");
+
     addDebugText("Current User: ${locator<UserService>().getUserEmail()}");
     addDebugText(
         "Waiting for the current start route from the experiment service");
+
+    var experimentService = locator<ExperimentService>();
+    await experimentService.initialize();
+    locator<RewardService>().initialize();
 
     addDebugText("Time For Internalisation Task?");
     if (await experimentService.isTimeForInternalisationTask()) {

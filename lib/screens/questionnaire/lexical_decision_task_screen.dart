@@ -90,7 +90,6 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
         children: [
           ...summaryItems,
           FullWidthButton(onPressed: () async {
-            // TODO: Loading screen while submit
             await vm.submit();
             await locator<NavigationService>().navigateTo(RouteNames.NO_TASKS);
           })

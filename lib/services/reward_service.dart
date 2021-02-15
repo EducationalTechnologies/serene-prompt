@@ -1,15 +1,13 @@
 import 'package:serene/services/data_service.dart';
-import 'package:serene/services/experiment_service.dart';
 
 class RewardService {
   int score = 0;
 
   final DataService _dataService;
-  final ExperimentService _experimentService;
 
   Future<bool> initialized;
 
-  RewardService(this._dataService, this._experimentService);
+  RewardService(this._dataService);
 
   Future initialize() async {
     _dataService.getScore().then((s) {
