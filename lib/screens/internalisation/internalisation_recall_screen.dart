@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_recall_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
@@ -106,8 +105,7 @@ class _InternalisationRecallScreenState
         child: FullWidthButton(
           onPressed: () async {
             var recalledText = "Wenn $_ifPart dann $_thenPart";
-            await vm.submit(recalledText);
-            Navigator.pushNamed(context, RouteNames.NO_TASKS);
+            vm.submit(recalledText);
           },
         ));
   }

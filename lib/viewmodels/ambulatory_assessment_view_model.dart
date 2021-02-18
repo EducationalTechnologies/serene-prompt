@@ -1,16 +1,17 @@
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_item.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class AmbulatoryAssessmentViewModel extends BaseViewModel {
-  String _assessmentType;
+  final AssessmentType _assessmentType;
 
   UserService _userService;
-  DataService _dataService;
+  final ExperimentService _experimentService;
   List<AssessmentItemModel> _currentAssessment = [];
   get currentAssessment => _currentAssessment;
   String title;
@@ -18,33 +19,16 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
   Map<String, String> results = {};
 
   AmbulatoryAssessmentViewModel(
-      this._assessmentType, this._userService, this._dataService) {
+      this._assessmentType, this._userService, this._experimentService) {
     if (this._assessmentType == AssessmentType.preImplementationIntention) {
       title = "";
       this._currentAssessment = getPreLearningList();
-    } else if (this._assessmentType == AssessmentType.postLearning) {
-      title = "";
-      this._dataService.getLastGoalShield().then((shield) {
-        var stillManageString =
-            getDidYouStillManageInsertForHindrance(shield.hindrance);
-        var whereYouString = getWhereYouInsertForHindrance(shield.hindrance);
-        this._currentAssessment =
-            getAfterLearningQuestionnaire(whereYouString, stillManageString);
-
-        this.preText = "Du wolltest an folgenden Aufgaben arbeiten:";
-        this.preText += "\n";
-        this.preText += "\n";
-        this.preText +=
-            shield.goalsToShield.reduce((val1, val2) => val1 + "\n" + val2);
-        this.preText += "\n";
-        notifyListeners();
-      });
     } else if (this._assessmentType == AssessmentType.postTest) {
       title = "";
       this._currentAssessment = getPostTest();
-    } else if (this._assessmentType == AssessmentType.srl) {
+    } else if (this._assessmentType == AssessmentType.usability) {
       title = "";
-      this._currentAssessment = _getSrlQuestionnaire();
+      this._currentAssessment = _getUsabilityQuestionnaire();
     } else if (this._assessmentType == AssessmentType.dailyQuestion) {
       title = "Tägliche Lernabfrage";
       _currentAssessment = _getDailyQuestionList();
@@ -105,132 +89,32 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
     return _afterLearning;
   }
 
-  _getSrlQuestionnaire() {
-    var itemCount = 5;
-    List<AssessmentItemModel> _preGoal = [
+  _getUsabilityQuestionnaire() {
+    List<AssessmentItemModel> _usability = [
       AssessmentItemModel(
-          "Ich habe feste Ziele im Leben", itemCount, null, "srl[SQ001]"),
+          "Wie viel **Spaß** hat es dir gemacht, dir die Pläne so einzuprägen?",
+          5,
+          {
+            1: "Sehr viel Spaß",
+            2: "Eher Spaß",
+            3: "Weder noch",
+            4: "Eher keinen Spaß",
+            5: "Gar keinen Spaß"
+          },
+          "usabilityFun"),
       AssessmentItemModel(
-          "Ich kann überprüfen, ob ich meine Ziele erreicht habe",
-          itemCount,
-          null,
-          "srl[SQ002]"),
-      AssessmentItemModel(
-          "Ich wähle meine Ziele so, dass sie eine Herausforderung für mich sind",
-          itemCount,
-          null,
-          "srl[SQ003]"),
-      AssessmentItemModel(
-          "Ich versuche, meine eigene Leistung von Mal zu Mal zu steigern",
-          itemCount,
-          null,
-          "srl[SQ004]"),
-      AssessmentItemModel(
-          "Ich setze mir feste Zeitpunkte, zu denen ich meine Ziele erreichen will",
-          itemCount,
-          null,
-          "srl[SQ005]"),
-      AssessmentItemModel(
-          "Wenn ich viel zu lernen habe, mache ich mir einen Zeitplan, was ich wann lerne",
-          itemCount,
-          null,
-          "srl[SQ006]"),
-      AssessmentItemModel("Ich lerne immer zu gleich bleibenden Zeiten",
-          itemCount, null, "srl[SQ007]"),
-      AssessmentItemModel(
-          "Alle wichtigen Termine und Aufgaben schreibe ich mir auf",
-          itemCount,
-          null,
-          "srl[SQ008]"),
-      AssessmentItemModel(
-          "Ich denke an frühere Erfolge zurück, um mein Selbstbewusstsein zu stärken",
-          itemCount,
-          null,
-          "srl[SQ009]"),
-      AssessmentItemModel(
-          "Um mich zu motivieren, rufe ich mir vor Augen, wie schön es sein wird, wenn ich ein Ziel erreicht haben werde",
-          itemCount,
-          null,
-          "srl[SQ010]"),
-      AssessmentItemModel(
-          "Ich suche mir Erfolgserlebnisse, um mich für schwierige Aufgaben zu motivieren",
-          itemCount,
-          null,
-          "srl[SQ011]"),
-      AssessmentItemModel(
-          "Wenn mein Durchhaltevermögen nachlässt, weiß ich meist genau, wie ich meine Lust an der Sache verstärken kann",
-          itemCount,
-          null,
-          "srl[SQ012]"),
-      AssessmentItemModel(
-          "Ich kann es schaffen, einer anfangs unangenehmen Tätigkeit zunehmend angenehme Seiten abzugewinnen",
-          itemCount,
-          null,
-          "srl[SQ013]"),
-      AssessmentItemModel(
-          "Ich kann meine Stimmung so verändern, dass mir dann alles leichter von der Hand geht",
-          itemCount,
-          null,
-          "srl[SQ014]"),
-      AssessmentItemModel(
-          "Ich kann mich beim Lernen gut in die Stimmung hineinbringen, die ich im Moment am besten gebrauchen kann",
-          itemCount,
-          null,
-          "srl[SQ015]"),
-      AssessmentItemModel(
-          "Ich versuche, Beziehungen zu den Inhalten verwandter Fächer bzw. Lehrveranstaltungen herzustellen",
-          itemCount,
-          null,
-          "srl[SQ016]"),
-      AssessmentItemModel(
-          "Zu neuen Konzepten stelle ich mir praktische Anwendungen vor",
-          itemCount,
-          null,
-          "srl[SQ017]"),
-      AssessmentItemModel(
-          "Ich versuche in Gedanken, das Gelernte mit dem zu verbinden, was ich schon darüber weiß",
-          itemCount,
-          null,
-          "srl[SQ018]"),
-      AssessmentItemModel(
-          "Ich beginne erst mit dem Lernen, wenn ich mir die notwendigen Einzelschritte klargemacht habe",
-          itemCount,
-          null,
-          "srl[SQ019]"),
-      AssessmentItemModel("Ich denke regelmäßig über mein Lernen nach",
-          itemCount, null, "srl[SQ020]"),
-      AssessmentItemModel(
-          "Ich mache mir Aufzeichnungen über mein Lernverhalten",
-          itemCount,
-          null,
-          "srl[SQ021]"),
-      AssessmentItemModel(
-          "Ich notiere mir Strategien, die ich beim Lernen ausprobieren möchte",
-          itemCount,
-          null,
-          "srl[SQ022]"),
-      AssessmentItemModel(
-          "Nach einer Lernwoche überlege ich, was ich alles gelernt habe",
-          itemCount,
-          null,
-          "srl[SQ023]"),
-      AssessmentItemModel(
-          "Am Ende des Tages frage ich mich, ob ich zufrieden bin mit meiner Leistung",
-          itemCount,
-          null,
-          "srl[SQ024]"),
-      AssessmentItemModel(
-          "Wenn ich ein Thema gelernt habe, überlege ich, was ich beim Lernen für das nächste Thema anders machen möchte",
-          itemCount,
-          null,
-          "srl[SQ025]"),
-      AssessmentItemModel(
-          "Am Ende einer Woche denke ich darüber nach, welche Themen ich gekonnt habe und welche nicht",
-          itemCount,
-          null,
-          "srl[SQ026]"),
+          "Wie **schwierig** fandest du es, dir die Pläne so einzuprägen?",
+          5,
+          {
+            1: "Sehr schwierig",
+            2: "Eher schwierig",
+            3: "Weder noch",
+            4: "Eher einfach",
+            5: "Sehr einfach"
+          },
+          "usabilityFun"),
     ];
-    return _preGoal;
+    return _usability;
   }
 
   getPostTest() {
@@ -314,10 +198,12 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
   submit() async {
     if (state == ViewState.busy) return;
     setState(ViewState.busy);
-    var assessmentModel = AssessmentModel(
-        _userService.getUsername(), results, _assessmentType, DateTime.now());
+    var assessmentModel = AssessmentModel(_userService.getUsername(), results,
+        _assessmentType.toString(), DateTime.now());
 
-    await this._dataService.saveAssessment(assessmentModel);
+    await this
+        ._experimentService
+        .submitAssessment(assessmentModel, _assessmentType);
   }
 
   getNextRoute() {

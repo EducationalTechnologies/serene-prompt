@@ -15,7 +15,6 @@ import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
-import 'package:serene/services/reward_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -56,9 +55,7 @@ class AppRouter {
                 ChangeNotifierProvider<InternalisationViewModel>(
                     create: (_) => InternalisationViewModel(
                         locator.get<DataService>(),
-                        locator.get<NavigationService>(),
-                        locator.get<ExperimentService>(),
-                        locator.get<RewardService>()),
+                        locator.get<ExperimentService>()),
                     child: InternalisationScreen()));
 
       case RouteNames.EMOJI_STORY:
@@ -80,11 +77,11 @@ class AppRouter {
 
       case RouteNames.RECALL_TASK:
         return MaterialPageRoute(
-            builder: (context) => ChangeNotifierProvider<
-                    InternalisationRecallViewModel>(
-                create: (_) =>
-                    InternalisationRecallViewModel(locator.get<DataService>()),
-                child: InternalisationRecallScreen()));
+            builder: (context) =>
+                ChangeNotifierProvider<InternalisationRecallViewModel>(
+                    create: (_) => InternalisationRecallViewModel(
+                        locator.get<ExperimentService>()),
+                    child: InternalisationRecallScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT:
         final AssessmentScreenArguments assessmentArgs = settings.arguments;
@@ -94,17 +91,17 @@ class AppRouter {
                     create: (_) => AmbulatoryAssessmentViewModel(
                         assessmentArgs.assessmentType,
                         locator.get<UserService>(),
-                        locator.get<DataService>()),
+                        locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
-      case RouteNames.AMBULATORY_ASSESSMENT_DAILY:
+      case RouteNames.AMBULATORY_ASSESSMENT_USABILITY:
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentType.dailyQuestion,
+                        AssessmentType.usability,
                         locator.get<UserService>(),
-                        locator.get<DataService>()),
+                        locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST:
@@ -114,27 +111,7 @@ class AppRouter {
                     create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentType.preLearning,
                         locator.get<UserService>(),
-                        locator.get<DataService>()),
-                    child: AmbulatoryAssessmentScreen()));
-
-      case RouteNames.AMBULATORY_ASSESSMENT_SRL:
-        return MaterialPageRoute(
-            builder: (_) =>
-                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                    create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentType.srl,
-                        locator.get<UserService>(),
-                        locator.get<DataService>()),
-                    child: AmbulatoryAssessmentScreen()));
-
-      case RouteNames.AMBULATORY_ASSESSMENT_POST_TEST:
-        return MaterialPageRoute(
-            builder: (_) =>
-                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                    create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentType.postLearning,
-                        locator.get<UserService>(),
-                        locator.get<DataService>()),
+                        locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION:
@@ -144,7 +121,7 @@ class AppRouter {
                     create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentType.preImplementationIntention,
                         locator.get<UserService>(),
-                        locator.get<DataService>()),
+                        locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
       case RouteNames.CONSENT:

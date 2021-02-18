@@ -57,63 +57,10 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
 
   pressed(int selection) {
     stopwatch.stop();
-    vm.setTrialResult(stopwatch.elapsedMilliseconds, selection);
+    vm.setTrialResult(
+        stopwatch.elapsedMilliseconds, selection, primeDurations.last);
 
     next();
-  }
-
-  buildTrialSummary() {
-    List<Widget> summaryItems = [];
-
-    for (var i = 0; i < vm.ldt.trials.length; i++) {
-      var t = vm.ldt.trials[i];
-      summaryItems.add(Row(
-        children: [
-          Text(
-            "Prime Duration: ${primeDurations[i]} | ",
-            textAlign: TextAlign.left,
-          ),
-          Text(t.target),
-          Text("|"),
-          Text(t.responseTime.toString()),
-          Text("|"),
-          Text(t.status.toString())
-        ],
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-      ));
-    }
-
-    return Container(
-      margin: UIHelper.getContainerMargin(),
-      child: Column(
-        children: [
-          ...summaryItems,
-          FullWidthButton(onPressed: () async {
-            await vm.submit();
-            await locator<NavigationService>().navigateTo(RouteNames.NO_TASKS);
-          })
-        ],
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-      ),
-    );
-  }
-
-  buildBackwardMask() {
-    return Text("##########", style: ldtTextStyle, textAlign: TextAlign.center);
-  }
-
-  buildFixationCross() {
-    return Text("+", style: ldtTextStyle, textAlign: TextAlign.center);
-  }
-
-  buildPrime(String primeText) {
-    return Text(primeText, style: ldtTextStyle, textAlign: TextAlign.center);
-  }
-
-  buildTarget(String targetText) {
-    return Text(targetText, style: ldtTextStyle, textAlign: TextAlign.center);
   }
 
   buildTrial() {
@@ -190,5 +137,58 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
             },
           ),
         ));
+  }
+
+  buildTrialSummary() {
+    List<Widget> summaryItems = [];
+
+    for (var i = 0; i < vm.ldt.trials.length; i++) {
+      var t = vm.ldt.trials[i];
+      summaryItems.add(Row(
+        children: [
+          Text(
+            "Prime Duration: ${vm.ldt.trials[i].primeDuration}| ",
+            textAlign: TextAlign.left,
+          ),
+          Text(t.target),
+          Text("|"),
+          Text(t.responseTime.toString()),
+          Text("|"),
+          Text(t.status.toString())
+        ],
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ));
+    }
+
+    return Container(
+      margin: UIHelper.getContainerMargin(),
+      child: Column(
+        children: [
+          ...summaryItems,
+          FullWidthButton(onPressed: () async {
+            await vm.submit();
+          })
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
+    );
+  }
+
+  buildBackwardMask() {
+    return Text("##########", style: ldtTextStyle, textAlign: TextAlign.center);
+  }
+
+  buildFixationCross() {
+    return Text("+", style: ldtTextStyle, textAlign: TextAlign.center);
+  }
+
+  buildPrime(String primeText) {
+    return Text(primeText, style: ldtTextStyle, textAlign: TextAlign.center);
+  }
+
+  buildTarget(String targetText) {
+    return Text(targetText, style: ldtTextStyle, textAlign: TextAlign.center);
   }
 }

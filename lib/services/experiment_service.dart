@@ -1,13 +1,17 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:serene/models/assessment.dart';
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/ldt_data.dart';
+import 'package:serene/models/recall_task.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/logging_service.dart';
+import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/extensions.dart';
+import 'package:serene/shared/route_names.dart';
 
 class ExperimentService {
   static const int INTERNALISATION_RECALL_BREAK = 6;
@@ -17,38 +21,18 @@ class ExperimentService {
   static const int DAYS_INTERVAL_USABILITY = 3;
   static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
 
-  DataService _dataService;
-  NotificationService _notificationService;
-  LoggingService _loggingService;
-  RewardService _rewardService;
+  final DataService _dataService;
+  final NotificationService _notificationService;
+  final LoggingService _loggingService;
+  final RewardService _rewardService;
+  final NavigationService _navigationService;
 
   ExperimentService(this._dataService, this._notificationService,
-      this._loggingService, this._rewardService);
+      this._loggingService, this._rewardService, this._navigationService);
 
   Future<bool> initialize() async {
     // TODO: Check the current inernalisation condition here and, if necessary, recalculate it
     return await Future.delayed(Duration.zero).then((res) => true);
-  }
-
-  Future<bool> shouldShowPreLearningAssessment() async {
-    var lastPreLearningAssessment = await this
-        ._dataService
-        .getLastSubmittedAssessment(AssessmentType.preLearning);
-
-    if (lastPreLearningAssessment == null) return true;
-    return !lastPreLearningAssessment.submissionDate.isToday();
-  }
-
-  Future<bool> shouldShowPostLearningAssessment() async {
-    var lastPostLearningAssessment = await this
-        ._dataService
-        .getLastSubmittedAssessment(AssessmentType.postLearning);
-
-    if (lastPostLearningAssessment == null) return true;
-    var diff =
-        DateTime.now().difference(lastPostLearningAssessment.submissionDate);
-
-    return diff.inHours > 24;
   }
 
   Future<bool> shouldShowSRLSurvey() {
@@ -118,22 +102,16 @@ class ExperimentService {
 
     var ldt = LdtData();
     for (var data in ldtList) {
-      for (var w in data["words"]) ldt.words.add(w);
-      for (var nw in data["nonwords"]) ldt.nonWords.add(nw);
+      for (var w in data["targets"]) ldt.targets.add(w);
       for (var prm in data["primes"]) ldt.primes.add(prm);
     }
 
     //initialize the trial data now so that less objects have to be created during the trial
     ldt.trials = [];
 
-    for (var word in ldt.words) {
-      var ldtTrialWord = LdtTrial(condition: "word", target: word);
+    for (var word in ldt.targets) {
+      var ldtTrialWord = LdtTrial(condition: "", target: word);
       ldt.trials.add(ldtTrialWord);
-    }
-
-    for (var nonword in ldt.nonWords) {
-      var ldtTrialNonWord = LdtTrial(condition: "nonword", target: nonword);
-      ldt.trials.add(ldtTrialNonWord);
     }
 
     return ldt;
@@ -218,7 +196,6 @@ class ExperimentService {
   }
 
   Future<void> updateInternalisationConditionGroup() async {
-    // TODO
     var userData = await _dataService.getUserData();
     var newCondition = await getNextInternalisationCondition(
         userData.internalisationCondition);
@@ -227,17 +204,42 @@ class ExperimentService {
     }
   }
 
-  // Future<void> saveNewI
-
   Future<void> submitInternalisation(Internalisation internalisation) async {
     await this._dataService.saveInternalisation(internalisation);
-
-    await this._rewardService.addPoints(1);
 
     this.scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
 
     this.updateInternalisationConditionGroup();
 
+    _navigationService.navigateTo(RouteNames.NO_TASKS);
+  }
+
+  Future<void> submitRecallTask(RecallTask recallTask) async {
+    await this._rewardService.addPoints(4);
+    _dataService.saveRecallTask(recallTask);
+
+    if (await lastThreeConditionsWereTheSame()) {
+      _navigationService.navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
+    } else {
+      _navigationService.navigateTo(RouteNames.NO_TASKS);
+    }
+  }
+
+  Future<void> submitAssessment(
+      AssessmentModel assessment, AssessmentType type) async {
+    await this._dataService.saveAssessment(assessment);
+
+    if (type == AssessmentType.usability) {
+      _navigationService.navigateTo(RouteNames.LDT);
+      return;
+    }
+
+    _navigationService.navigateTo(RouteNames.NO_TASKS);
+  }
+
+  Future<void> submitLDT(LdtData ldtData) async {
+    await _dataService.saveLdtData(ldtData);
+    _navigationService.navigateTo(RouteNames.NO_TASKS);
     return;
   }
 }

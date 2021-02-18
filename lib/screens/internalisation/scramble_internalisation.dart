@@ -86,7 +86,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       });
 
       if (widget.showText) {
-        Timer(Duration(seconds: 15), () {
+        Timer(Duration(seconds: 5), () {
           setState(() {
             _showPlan = false;
             _showPuzzle = true;

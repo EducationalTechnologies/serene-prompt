@@ -1,126 +1,407 @@
 [
     {
-        "sentence": "Wenn mir langweilig ist, dann denke ich an eine Belohnung.",
+        "implementationIntention": "Wenn ich vom Lernen **genervt** bin, dann denke ich an den **Nutzen**.",
         "primes": [
-            "langweilig",
-            "frosch",
-            "wurzel"
+            "genervt",
+            "erfüllt",
+            "genervt",
+            "erfüllt"
         ],
-        "words": [
-            "belohnung",
-            "konstant",
-            "schlafen"
-        ],
-        "nonwords": [
-            "bulenhung",
-            "kantsont",
-            "schulfon"
+        "targets": [
+            "Nutzen",
+            "Glatze",
+            "nonword",
+            "nonword"
         ]
     },
     {
-        "sentence": "Wenn ich interessiert bin, dann kann ich viel entdecken.",
+        "implementationIntention": "Wenn ich **neugierig** bleibe, dann kann ich viel **entdecken**.",
         "primes": [
-            "interessiert",
-            "elastisch",
-            "links"
+            "neugierig",
+            "gemeinsam",
+            "neugierig",
+            "gemeinsam"
         ],
-        "words": [
+        "targets": [
             "entdecken",
-            "blaubeere",
-            "pony"
-        ],
-        "nonwords": [
-            "amtducken",
-            "bullbare",
-            "penti"
+            "entkommen",
+            "nonword",
+            "nonword"
         ]
     },
     {
-        "sentence": "Wenn ich wütend bin, dann werde ich in die Luft boxen.",
+        "implementationIntention": "Wenn ich **erfolgreich** bin, dann werden mich andere **bewundern**.",
         "primes": [
-            "wütend",
-            "trennen",
-            "angemessen"
+            "erfolgreich",
+            "argwöhnisch",
+            "erfolgreich",
+            "argwöhnisch"
         ],
-        "words": [
-            "boxen",
-            "höflich",
-            "drama"
-        ],
-        "nonwords": [
-            "baxen",
-            "helflich",
-            "droma"
+        "targets": [
+            "bewundern",
+            "verbieten",
+            "nonword",
+            "nonword"
         ]
     },
     {
-        "sentence": "Wenn mich mein Handy ablenkt, dann werde ich es weglegen.",
+        "implementationIntention": " Wenn ich **traurig** werde, dann denke ich an einen guten **Witz**.",
         "primes": [
-            "handy",
-            "rolltreppe",
-            "krank"
+            "traurig",
+            "wichtig",
+            "traurig",
+            "wichtig"
         ],
-        "words": [
-            "weglegen",
-            "export",
-            "maschine"
-        ],
-        "nonwords": [
-            "warglagen",
-            "axtpart",
-            "meschina"
+        "targets": [
+            "Witz",
+            "Baby",
+            "nonword",
+            "nonword"
         ]
     },
     {
-        "sentence": "Wenn ich aufgeregt bin, dann denke ich an meinen Plan.",
+        "implementationIntention": "Wenn ich **sauer** bin, dann werde ich in die Luft **treten**.",
         "primes": [
-            "aufgeregt",
-            "allianz",
-            "gemütlich"
+            "sauer",
+            "eilig",
+            "sauer",
+            "eilig"
         ],
-        "words": [
-            "plan",
-            "projekt",
-            "kohlenstoff"
-        ],
-        "nonwords": [
-            "plun"
+        "targets": [
+            "treten",
+            "warnen",
+            "nonword",
+            "nonword"
         ]
     },
     {
-        "sentence": "Wenn ich ängstlich bin, dann versuche ich mich zu beruhigen.",
+        "implementationIntention": "Wenn ich **gegessen** habe, dann mache ich **Hausaufgaben**.",
+        "primes": [
+            "gegessen",
+            "gelandet",
+            "gegessen",
+            "gelandet"
+        ],
+        "targets": [
+            "Hausaufgaben",
+            "Entscheidung",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **verträumt** bin, dann werde ich einmal **klatschen**.",
+        "primes": [
+            "verspätet",
+            "verträumt",
+            "verspätet",
+            "verträumt"
+        ],
+        "targets": [
+            "klatschen",
+            "ausdenken",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **erfolgreich** bin, dann werden mich andere **bewundern**.",
+        "primes": [
+            "erfolgreich",
+            "argwöhnisch",
+            "erfolgreich",
+            "argwöhnisch"
+        ],
+        "targets": [
+            "bewundern",
+            "verbieten",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich eine **Nachricht** kriege, dann werde ich sie **ignorieren**.",
+        "primes": [
+            "Nachricht",
+            "Gesichter",
+            "Nachricht",
+            "Gesichter"
+        ],
+        "targets": [
+            "ignorieren",
+            "streicheln",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **aufmerksam** bin, dann kann ich mich gut **erinnern**.",
+        "primes": [
+            "aufmerksam",
+            "merkwürdig",
+            "aufmerksam",
+            "merkwürdig"
+        ],
+        "targets": [
+            "erinnern",
+            "erklären",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.",
+        "primes": [
+            "lustlos",
+            "wertlos",
+            "lustlos",
+            "wertlos"
+        ],
+        "targets": [
+            "Ziel",
+            "Band",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **spielen** will, dann lerne ich erst **Vokabeln**.",
+        "primes": [
+            "spielen",
+            "treffen",
+            "spielen",
+            "treffen"
+        ],
+        "targets": [
+            "Vokabeln",
+            "Schranke",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **ängstlich** bin, dann versuche ich mich zu **beruhigen**.",
         "primes": [
             "ängstlich",
-            "elastisch",
-            "links"
+            "schwierig",
+            "ängstlich",
+            "schwierig"
         ],
-        "words": [
+        "targets": [
             "beruhigen",
-            "blaubeere",
-            "pony"
-        ],
-        "nonwords": [
-            "bäreigen",
-            "bullbare",
-            "penti"
+            "behaupten",
+            "nonword",
+            "nonword"
         ]
     },
     {
-        "sentence": "Wenn ich nervös bin, dann werde ich ganz tief durchatmen.",
+        "implementationIntention": "Wenn ich **nervös** bin, dann werde ich ganz tief **atmen**.",
         "primes": [
             "nervös",
-            "frosch",
-            "wurzel"
+            "dunkel",
+            "nervös",
+            "dunkel"
         ],
-        "words": [
-            "durchatmen",
-            "konstant",
-            "schlafen"
+        "targets": [
+            "atmen",
+            "bauen",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **verwirrt** bin, dann bitte ich andere um **Hilfe**.",
+        "primes": [
+            "verwirrt",
+            "gelassen",
+            "verwirrt",
+            "gelassen"
         ],
-        "nonwords": [
-            "dorchetman",
-            "kantsont",
-            "schulfon"
+        "targets": [
+            "Hilfe",
+            "Grund",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn mein **Handy** hinderlich ist, dann werde ich es **umdrehen**.",
+        "primes": [
+            "Handy",
+            "Reihe",
+            "Handy",
+            "Reihe"
+        ],
+        "targets": [
+            "umdrehen",
+            "bewachen",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **aufgeregt** bin, dann denke ich an meinen **Plan**.",
+        "primes": [
+            "aufgeregt",
+            "geschafft",
+            "aufgeregt",
+            "geschafft"
+        ],
+        "targets": [
+            "Plan",
+            "Höhe",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn mir **langweilig** ist, dann denke ich an eine **Belohnung**.",
+        "primes": [
+            "langweilig",
+            "freiwillig",
+            "langweilig",
+            "freiwillig"
+        ],
+        "targets": [
+            "Belohnung",
+            "Durchgang",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **abgelenkt** bin, dann werde ich viel **verpassen**.",
+        "primes": [
+            "abgelenkt",
+            "entspannt",
+            "abgelenkt",
+            "entspannt"
+        ],
+        "targets": [
+            "verpassen",
+            "aufstehen",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **nachdenken** will, dann werde ich mich **konzentrieren**.",
+        "primes": [
+            "nachdenken",
+            "verwandeln",
+            "nachdenken",
+            "verwandeln"
+        ],
+        "targets": [
+            "konzentrieren",
+            "interessieren",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **starten** will, dann mache ich mich an die **Arbeit**.",
+        "primes": [
+            "starten",
+            "bereuen",
+            "starten",
+            "bereuen"
+        ],
+        "targets": [
+            "Arbeit",
+            "Pferde",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **geduldig** bin, dann kann ich alles gut **verstehen**.",
+        "primes": [
+            "geduldig",
+            "gebunden",
+            "geduldig",
+            "gebunden"
+        ],
+        "targets": [
+            "verstehen",
+            "verlassen",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **müde** werde, dann werde ich einmal kurz **lüften**.",
+        "primes": [
+            "müde",
+            "frei",
+            "müde",
+            "frei"
+        ],
+        "targets": [
+            "lüften",
+            "messen",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn es eine **Störung** gibt, dann werde ich sie **beseitigen**.",
+        "primes": [
+            "Störung",
+            "Fremder",
+            "Störung",
+            "Fremder"
+        ],
+        "targets": [
+            "beseitigen",
+            "beschatten",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich mich **unwohl** fühle, dann mache ich eine **Pause**.",
+        "primes": [
+            "unwohl",
+            "schick",
+            "unwohl",
+            "schick"
+        ],
+        "targets": [
+            "Pause",
+            "Regen",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **Zuhause** bin, dann werde ich zuerst **aufräumen**.",
+        "primes": [
+            "Zuhause",
+            "Geister",
+            "Zuhause",
+            "Geister"
+        ],
+        "targets": [
+            "aufräumen",
+            "schmelzen",
+            "nonword",
+            "nonword"
+        ]
+    },
+    {
+        "implementationIntention": "Wenn ich **fleißig** lerne, dann bin ich zu Recht sehr **selbstbewusst**.",
+        "primes": [
+            "fleißig",
+            "freudig",
+            "fleißig",
+            "freudig"
+        ],
+        "targets": [
+            "selbstbewusst",
+            "eindrucksvoll",
+            "nonword",
+            "nonword"
         ]
     }
 ]

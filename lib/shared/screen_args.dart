@@ -1,4 +1,5 @@
 import 'package:serene/models/goal.dart';
+import 'package:serene/shared/enums.dart';
 
 class GoalScreenArguments {
   final Goal goal;
@@ -7,7 +8,7 @@ class GoalScreenArguments {
 }
 
 class AssessmentScreenArguments {
-  final String assessmentType;
+  final AssessmentType assessmentType;
 
   AssessmentScreenArguments(this.assessmentType);
 }

@@ -17,15 +17,6 @@ class GoalScreenMode {
   static const String edit = "edit";
 }
 
-class AssessmentType {
-  static const String dailyQuestion = "dailyQuestion";
-  static const String postTest = "postTest";
-  static const String preLearning = "preLearning";
-  static const String postLearning = "postLearning";
-  static const String srl = "srlSurvey";
-  static const String preImplementationIntention = "preImplementationIntention";
-}
-
 class ResourceType {
   static const String book = "book";
   static const String link = "link";
@@ -76,4 +67,13 @@ enum AppStartupMode {
   internalisationTask,
   recallTask,
   lexicalDecisionTask
+}
+
+enum AssessmentType {
+  dailyQuestion,
+  postTest,
+  preLearning,
+  postLearning,
+  usability,
+  preImplementationIntention,
 }

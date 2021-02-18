@@ -4,14 +4,18 @@ class UserData {
   int internalisationCondition;
   DateTime registrationDate;
 
-  UserData({this.userId, this.email, this.internalisationCondition});
+  UserData(
+      {this.userId,
+      this.email,
+      this.internalisationCondition,
+      this.registrationDate});
 
   Map<String, dynamic> toMap() {
     return {
       "userId": this.userId,
       "email": this.email,
       "internalisationCondition": this.internalisationCondition,
-      // "registrationDate": this.registrationDate?.toIso8601String()
+      "registrationDate": this.registrationDate?.toIso8601String()
     };
   }
 
@@ -19,6 +23,6 @@ class UserData {
     email = json["email"];
     userId = json["userId"];
     internalisationCondition = json["internalisationCondition"];
-    // registrationDate = DateTime.parse(json["registrationDate"]);
+    registrationDate = DateTime.parse(json["registrationDate"]);
   }
 }

@@ -1,19 +1,13 @@
-import 'dart:math';
-
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
-import 'package:serene/services/navigation_service.dart';
-import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class InternalisationViewModel extends BaseViewModel {
   final DataService _dataService;
-  final NavigationService _navigationService;
   final ExperimentService _experimentService;
-  final RewardService _rewardService;
+
   String implementationIntention = "";
   Future<bool> initialized;
   InternalisationCondition internalisationCondition =
@@ -21,8 +15,7 @@ class InternalisationViewModel extends BaseViewModel {
   Duration waitingDuration = Duration(seconds: 15);
   Internalisation _currentInternalisation = Internalisation();
 
-  InternalisationViewModel(this._dataService, this._navigationService,
-      this._experimentService, this._rewardService) {
+  InternalisationViewModel(this._dataService, this._experimentService) {
     _currentInternalisation.startDate = DateTime.now();
 
     initialized = init();
@@ -47,9 +40,9 @@ class InternalisationViewModel extends BaseViewModel {
     _currentInternalisation.input = input;
     _currentInternalisation.implementationIntention = implementationIntention;
     _currentInternalisation.condition = condition.toString();
-    this._experimentService.submitInternalisation(_currentInternalisation);
-
-    await _navigationService.navigateTo(RouteNames.NO_TASKS, arguments: this);
+    await this
+        ._experimentService
+        .submitInternalisation(_currentInternalisation);
     return true;
   }
 }

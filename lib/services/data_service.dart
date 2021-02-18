@@ -7,6 +7,7 @@ import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/internalisation.dart';
+import 'package:serene/models/ldt_data.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/models/recall_task.dart';
@@ -174,7 +175,7 @@ class DataService {
     if (_planCache.length == 0) {
       String data = await rootBundle.loadString("assets/config/ldt_ii.json");
       for (var plan in jsonDecode(data)) {
-        _planCache.add(plan["sentence"]);
+        _planCache.add(plan["implementationIntention"]);
       }
     }
     var userData = await getUserData();
@@ -192,18 +193,6 @@ class DataService {
     }
 
     return _ldtTaskListCache;
-  }
-
-  getLexicalDecisionTaskListStrings() async {
-    if (this._ldtListStrings.length == 0) {
-      String data =
-          await rootBundle.loadString("assets/config/ldt_strings.json");
-      for (var ldtTask in jsonDecode(data)) {
-        _ldtListStrings.add(ldtTask);
-      }
-    }
-
-    return _ldtListStrings;
   }
 
   saveInternalisation(Internalisation internalisation) async {
@@ -255,6 +244,10 @@ class DataService {
 
   saveConsent(bool consented) async {
     await _databaseService.saveConsent(_userService.getUserEmail(), consented);
+  }
+
+  saveLdtData(LdtData ldtData) async {
+    await _databaseService.saveLdt(_userService.getUserEmail(), ldtData);
   }
 
   saveEmojiInternalisation(Internalisation internalisation) async {

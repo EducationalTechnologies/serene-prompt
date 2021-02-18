@@ -25,7 +25,7 @@ void main() {
     });
 
     test("LDT index calculation should be 0, 1, 2", () {
-      var xps = ExperimentService(null, null, null, null);
+      var xps = ExperimentService(null, null, null, null, null);
 
       var dateOfFirst = DateTime.now().subtract(Duration(days: 2));
 
@@ -36,7 +36,7 @@ void main() {
   });
 
   group("Scheduling of notifications", () {
-    var expService = ExperimentService(null, null, null, null);
+    var expService = ExperimentService(null, null, null, null, null);
     var now = DateTime.now();
 
     test("Schedule of recall task should be postponed to the same day at four",

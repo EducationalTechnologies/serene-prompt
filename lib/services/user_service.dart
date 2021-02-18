@@ -59,8 +59,6 @@ class UserService {
     }
   }
 
-  Future<bool> userInitialized() async {}
-
   saveRandomUser() async {
     var uid = _getRandomUsername();
     return await registerUser("$uid@edutec.science", "123456");

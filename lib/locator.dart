@@ -40,5 +40,6 @@ void setupLocator() {
       locator.get<DataService>(),
       locator.get<NotificationService>(),
       locator.get<LoggingService>(),
-      locator.get<RewardService>()));
+      locator.get<RewardService>(),
+      locator.get<NavigationService>()));
 }

@@ -1,12 +1,12 @@
 import 'package:serene/models/recall_task.dart';
-import 'package:serene/services/data_service.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class InternalisationRecallViewModel extends BaseViewModel {
-  DataService _dataService;
+  final ExperimentService _experimentService;
   RecallTask _recallTask = RecallTask();
-  InternalisationRecallViewModel(this._dataService) {
+  InternalisationRecallViewModel(this._experimentService) {
     _recallTask.startDate = DateTime.now();
   }
 
@@ -15,6 +15,6 @@ class InternalisationRecallViewModel extends BaseViewModel {
     setState(ViewState.busy);
     _recallTask.completionDate = DateTime.now();
     _recallTask.recalledSentence = text;
-    _dataService.saveRecallTask(_recallTask);
+    _experimentService.submitRecallTask(_recallTask);
   }
 }

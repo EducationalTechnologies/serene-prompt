@@ -6,6 +6,7 @@ import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/internalisation.dart';
+import 'package:serene/models/ldt_data.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/models/recall_task.dart';
@@ -41,6 +42,7 @@ class FirebaseService {
       "emojiInternalisations";
   static const String COLLECTION_SCORES = "scores";
   static const String COLLECTION_LOGS = "logs";
+  static const String COLLECTION_LDT = "ldt";
 
   void handleError(Object e) {
     locator.get<LoggingService>().logEvent("Firestore error: ${e.toString()}");
@@ -162,6 +164,7 @@ class FirebaseService {
       var userData = UserData(
           userId: result.user.uid,
           email: result.user.email,
+          registrationDate: DateTime.now(),
           internalisationCondition: internalisationCondition);
 
       await insertUserData(userData);
@@ -414,6 +417,12 @@ class FirebaseService {
     var score = scores.data()["score"];
     if (score == null) return 0;
     return score;
+  }
+
+  Future<void> saveLdt(String userid, LdtData ldtData) async {
+    var ldtMap = ldtData.toMap();
+    ldtMap["user"] = userid;
+    return await _databaseReference.collection(COLLECTION_LDT).add(ldtMap);
   }
 
   logEvent(String userid, dynamic data) async {

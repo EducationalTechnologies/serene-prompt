@@ -1,5 +1,6 @@
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/experiment_service.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 import 'package:serene/shared/extensions.dart';
 
@@ -35,7 +36,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   Future<bool> init() async {
     ldt = await this._experimentService.getLdtData();
 
-    ldt.trials = ldt.trials.randomizeList();
+    ldt.startDate = DateTime.now();
 
     return true;
   }
@@ -65,12 +66,16 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     return curr;
   }
 
-  setTrialResult(int msResponseTime, selection) {
+  setTrialResult(int msResponseTime, int selection, int primeDuration) {
+    ldt.trials[currenTargetIndex].primeDuration = primeDuration;
     ldt.trials[currenTargetIndex].responseTime = msResponseTime;
     ldt.trials[currenTargetIndex].status = selection;
   }
 
   submit() async {
-    // TODO: Submit the trial
+    if (state == ViewState.busy) return;
+    setState(ViewState.busy);
+    ldt.completionDate = DateTime.now();
+    _experimentService.submitLDT(ldt);
   }
 }
