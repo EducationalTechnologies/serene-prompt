@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/ldt_data.dart';
@@ -19,6 +20,7 @@ class ExperimentService {
   static const int NUM_CONDITIONS = 3;
   static const int DAYS_INTERVAL_LDT = 3;
   static const int DAYS_INTERVAL_USABILITY = 3;
+  static const int STUDY_DURATION = 27;
   static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
 
   final DataService _dataService;
@@ -166,7 +168,22 @@ class ExperimentService {
   }
 
   Future<bool> isTimeForLexicalDecisionTask() async {
-    return await lastThreeConditionsWereTheSame();
+    // TODO: Also check if the LDT was alread done!
+
+    if (await lastThreeConditionsWereTheSame()) {
+      DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
+
+      if (lastLdtDate == null) {
+        return true;
+      }
+
+      var lastInternalisation = await _dataService.getLastInternalisation();
+
+      if (lastLdtDate.isAfter(lastInternalisation.completionDate)) {
+        return false;
+      }
+    }
+    return false;
   }
 
   // TODO: Implement
@@ -207,21 +224,35 @@ class ExperimentService {
   Future<void> submitInternalisation(Internalisation internalisation) async {
     await this._dataService.saveInternalisation(internalisation);
 
+    _notificationService.deleteScheduledInternalisationReminder();
+
     this.scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
 
     this.updateInternalisationConditionGroup();
 
+    _notificationService.scheduleInternalisationReminder(new Time(6, 30, 0));
+
     _navigationService.navigateTo(RouteNames.NO_TASKS);
   }
 
+  Future<bool> isFinalTask() async {
+    var completed = await _dataService.getNumberOfCompletedInternalisations();
+    return completed == STUDY_DURATION;
+  }
+
   Future<void> submitRecallTask(RecallTask recallTask) async {
-    await this._rewardService.addPoints(4);
     _dataService.saveRecallTask(recallTask);
 
     if (await lastThreeConditionsWereTheSame()) {
+      this._rewardService.onRecallTaskThird();
       _navigationService.navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
     } else {
+      this._rewardService.onRecallTaskRegular();
       _navigationService.navigateTo(RouteNames.NO_TASKS);
+    }
+
+    if (await isFinalTask()) {
+      this._rewardService.onFinalTask();
     }
   }
 
@@ -229,12 +260,15 @@ class ExperimentService {
       AssessmentModel assessment, AssessmentType type) async {
     await this._dataService.saveAssessment(assessment);
 
+    var nextRoute = RouteNames.NO_TASKS;
+
     if (type == AssessmentType.usability) {
-      _navigationService.navigateTo(RouteNames.LDT);
-      return;
+      nextRoute = RouteNames.LDT;
+    } else if (type == AssessmentType.preImplementationIntention) {
+      nextRoute = RouteNames.INTERNALISATION;
     }
 
-    _navigationService.navigateTo(RouteNames.NO_TASKS);
+    _navigationService.navigateTo(nextRoute);
   }
 
   Future<void> submitLDT(LdtData ldtData) async {

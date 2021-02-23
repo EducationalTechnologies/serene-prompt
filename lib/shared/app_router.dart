@@ -4,6 +4,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
+import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/internalisation/emoji_story_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_recall_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
@@ -164,6 +165,9 @@ class AppRouter {
 
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());
+
+      case RouteNames.INIT_VIDEO:
+        return MaterialPageRoute(builder: (_) => VideoScreen());
 
       case RouteNames.NO_TASKS:
         return MaterialPageRoute(builder: (_) => NoTasksScreen());

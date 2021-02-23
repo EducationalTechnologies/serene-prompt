@@ -100,10 +100,10 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           ListTile(
-              title: Text("Log In"),
+              title: Text("Video"),
               onTap: () async {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.LOG_IN);
+                Navigator.pushNamed(context, RouteNames.INIT_VIDEO);
               }),
           Divider(),
           ListTile(

@@ -31,13 +31,22 @@ class _SereneAppBarState extends State<SereneAppBar> {
             future: rewardService.initialized,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(
-                  "$rewardBaseSymbol ${rewardService.score.toString()}",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.yellow[800]),
+                return Row(
+                  children: [
+                    Image(
+                        image: AssetImage("assets/rewards/crown_12.png"),
+                        width: 34,
+                        height: 34,
+                        fit: BoxFit.scaleDown),
+                    Text(
+                      "${rewardService.score.toString()}",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.yellow[800]),
+                    ),
+                  ],
                 );
               } else {
                 return Text("");

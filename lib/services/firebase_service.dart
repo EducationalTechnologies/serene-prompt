@@ -218,13 +218,6 @@ class FirebaseService {
     }
   }
 
-  test() async {
-    await _databaseReference
-        .collection(COLLECTION_USERS)
-        .doc("daniel")
-        .set({"hans": "cool"});
-  }
-
   saveFcmToken(String userId, String token) async {
     var tokens = _databaseReference
         .collection(COLLECTION_USERS)
@@ -317,6 +310,25 @@ class FirebaseService {
         .add(map);
   }
 
+  Future<DateTime> getLastLdtTaskDate(String userid) async {
+    var doc = await _databaseReference
+        .collection(COLLECTION_LDT)
+        .where("user", isEqualTo: userid)
+        .orderBy("completionDate", descending: true)
+        .limit(1)
+        .get()
+        .timeout(Duration(seconds: 10), onTimeout: () {
+      handleTimeout("LDT Task");
+      return null;
+    }).catchError((handleError));
+
+    if (doc == null) return null;
+    if (doc.docs.length == 0) return null;
+    var last = doc.docs[0];
+
+    return DateTime.parse(last["completionDate"]);
+  }
+
   Future<List<Internalisation>> getLastInternalisations(
       String userid, int number) async {
     var doc = await _databaseReference
@@ -379,11 +391,20 @@ class FirebaseService {
     return RecallTask.fromDocument(doc.docs[0]);
   }
 
+  Future<int> getNumberOfInternalisations(String email) async {
+    var count = await _databaseReference
+        .collection(COLLECTION_INTERNALISATION)
+        .where("user", isEqualTo: email)
+        .get();
+
+    return count.docs.length;
+  }
+
   saveConsent(String userid, bool consentValue) async {
     return await _databaseReference
         .collection(COLLECTION_USERS)
         .doc(userid)
-        .set({"consented": consentValue});
+        .set({"consented": consentValue}, SetOptions(merge: true));
   }
 
   saveEmojiInternalisation(
@@ -405,7 +426,7 @@ class FirebaseService {
     return await _databaseReference
         .collection(COLLECTION_USERS)
         .doc(userid)
-        .set({"internalisationCondition": group});
+        .set({"internalisationCondition": group}, SetOptions(merge: true));
   }
 
   Future<int> getScore(String userid) async {
@@ -414,6 +435,7 @@ class FirebaseService {
         .doc(userid)
         .get();
 
+    if (!scores.exists) return 0;
     var score = scores.data()["score"];
     if (score == null) return 0;
     return score;

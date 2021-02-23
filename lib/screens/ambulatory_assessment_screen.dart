@@ -8,8 +8,6 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
   _submit(BuildContext context) async {
     var vm = Provider.of<AmbulatoryAssessmentViewModel>(context, listen: false);
     await vm.submit();
-    var nextRoute = vm.getNextRoute();
-    Navigator.pushNamed(context, nextRoute);
   }
 
   _buildAssessmentList(BuildContext context) {

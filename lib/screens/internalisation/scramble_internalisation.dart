@@ -79,7 +79,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     super.initState();
     Future.delayed(Duration.zero, () {
       var vm = Provider.of<InternalisationViewModel>(context, listen: false);
-      _correctSentence = vm.implementationIntention;
+      _correctSentence = _cleanInputString(vm.implementationIntention);
       setState(() {
         _scrambledSentence = ScrambleText.randomizeList(
             ScrambleText.scrambleTextListFromString(_correctSentence, 1));
@@ -94,6 +94,10 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         });
       }
     });
+  }
+
+  String _cleanInputString(String input) {
+    return input.replaceAll("**", "").replaceAll("#", "");
   }
 
   _isDone() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 typedef void IntervalScaleCallback(String val);
 
@@ -39,7 +40,7 @@ class _IntervalScaleState extends State<IntervalScale> {
       text = value.toString();
     }
     return InkWell(
-      child: Column(
+      child: Row(
         children: <Widget>[
           Radio(
             groupValue: _groupValue,
@@ -51,8 +52,8 @@ class _IntervalScaleState extends State<IntervalScale> {
               widget.callback(val.toString());
             },
           ),
-          Text(
-            text,
+          MarkdownBody(
+            data: text,
           )
         ],
       ),
@@ -76,11 +77,10 @@ class _IntervalScaleState extends State<IntervalScale> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Text(
-        widget.title,
-        style: Theme.of(context).textTheme.subtitle1,
+      MarkdownBody(
+        data: "### " + widget.title,
       ),
-      Row(
+      Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           for (var i = 1; i <= widget.itemCount; i++) buildItem(i, getLabel(i)),

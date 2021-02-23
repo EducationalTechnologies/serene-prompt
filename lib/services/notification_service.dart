@@ -50,6 +50,15 @@ class NotificationService {
     return true;
   }
 
+  deleteScheduledInternalisationReminder() async {
+    var pendingNotifications = await getPendingNotifications();
+    var taskReminderExists = pendingNotifications
+        .firstWhere((n) => n.id == ID_INTERNALISATION, orElse: () => null);
+    if (taskReminderExists == null) {
+      localNotifications.cancel(ID_INTERNALISATION);
+    }
+  }
+
   deleteScheduledRecallReminderTask() async {
     var pendingNotifications = await getPendingNotifications();
     var taskReminderExists = pendingNotifications

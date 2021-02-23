@@ -17,6 +17,8 @@ import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/materialized_path.dart';
 
+enum CachedValues { goals, internalisations }
+
 class DataService {
   List<Goal> _goalsCache = [];
   List<Goal> _openGoalsCache = [];
@@ -28,9 +30,25 @@ class DataService {
   FirebaseService _databaseService;
   int score;
 
+  Map<CachedValues, bool> _dirtyFlags = {
+    CachedValues.goals: true,
+    CachedValues.internalisations: true
+  };
+
   UserData _userDataCache;
 
   DataService(this._databaseService, this._userService);
+
+  getCachedValue(CachedValues value) {
+    switch (value) {
+      case CachedValues.goals:
+        // TODO: Handle this case.
+        break;
+      case CachedValues.internalisations:
+        // TODO: Handle this case.
+        break;
+    }
+  }
 
   get goals {
     return UnmodifiableListView(_goalsCache);
@@ -171,6 +189,11 @@ class DataService {
         obstacles, _userService.getUserEmail());
   }
 
+  Future<int> getNumberOfCompletedInternalisations() async {
+    return await _databaseService
+        .getNumberOfInternalisations(_userService.getUserEmail());
+  }
+
   getCurrentImplementationIntention() async {
     if (_planCache.length == 0) {
       String data = await rootBundle.loadString("assets/config/ldt_ii.json");
@@ -178,9 +201,9 @@ class DataService {
         _planCache.add(plan["implementationIntention"]);
       }
     }
-    var userData = await getUserData();
-    var condition = userData.internalisationCondition;
-    var plan = _planCache[condition];
+    var index =
+        await getNumberOfCompletedInternalisations() % (_planCache.length - 1);
+    var plan = _planCache[index];
     return plan;
   }
 
@@ -272,5 +295,9 @@ class DataService {
     await _databaseService.updateInternalisationConditionGroup(
         _userService.getUserEmail(), group);
     _userDataCache.internalisationCondition = group;
+  }
+
+  getDateOfLastLDT() async {
+    await _databaseService.getLastLdtTaskDate(_userService.getUserEmail());
   }
 }

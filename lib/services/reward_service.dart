@@ -2,6 +2,7 @@ import 'package:serene/services/data_service.dart';
 
 class RewardService {
   int score = 0;
+  int gems = 0;
 
   final DataService _dataService;
 
@@ -24,6 +25,20 @@ class RewardService {
       initialized = Future.value(true);
     });
   }
+
+  onRecallTaskRegular() async {
+    await addPoints(4);
+  }
+
+  onRecallTaskThird() async {
+    await addPoints(8);
+  }
+
+  onFinalTask() async {
+    await addPoints(10);
+  }
+
+  onRecallTaskEverythingCompleted() async {}
 
   addPoints(int points) async {
     score += points;
