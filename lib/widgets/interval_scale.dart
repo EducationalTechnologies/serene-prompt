@@ -81,7 +81,7 @@ class _IntervalScaleState extends State<IntervalScale> {
         data: "### " + widget.title,
       ),
       Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           for (var i = 1; i <= widget.itemCount; i++) buildItem(i, getLabel(i)),
         ],

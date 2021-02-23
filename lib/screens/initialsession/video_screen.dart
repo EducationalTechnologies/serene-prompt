@@ -13,8 +13,6 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   YoutubePlayerController _controller;
 
-  double _volume = 100;
-  bool _muted = false;
   bool _isPlayerReady = false;
 
   void listener() {

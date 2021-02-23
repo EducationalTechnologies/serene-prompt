@@ -23,7 +23,7 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
 
   getScreenForCondition(InternalisationCondition condition) {
     var vm = Provider.of<InternalisationViewModel>(context);
-
+    return EmojiStoryScreen();
     switch (condition) {
       case InternalisationCondition.waiting:
         return WaitingInternalisationScreen(vm.waitingDuration);
