@@ -35,6 +35,13 @@ class _IntervalScaleState extends State<IntervalScale> {
     _groupValue = widget.groupValue;
   }
 
+  _onChanged(int value) {
+    setState(() {
+      _groupValue = value;
+    });
+    widget.callback(value.toString());
+  }
+
   buildItem(int value, String text) {
     if (text == null) {
       text = value.toString();
@@ -45,12 +52,7 @@ class _IntervalScaleState extends State<IntervalScale> {
           Radio(
             groupValue: _groupValue,
             value: value,
-            onChanged: (val) {
-              setState(() {
-                _groupValue = val;
-              });
-              widget.callback(val.toString());
-            },
+            onChanged: _onChanged,
           ),
           MarkdownBody(
             data: text,
@@ -61,6 +63,7 @@ class _IntervalScaleState extends State<IntervalScale> {
         setState(() {
           _groupValue = value;
         });
+        widget.callback(value.toString());
       },
     );
   }

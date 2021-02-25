@@ -73,39 +73,30 @@ class ExperimentService {
     }
   }
 
-  List<int> getTrialIndices(DateTime dateOfFirstInternalization) {
+  int getTrialIndexForDate(DateTime dateOfFirstInternalization) {
     var daysSinceFirstDate =
         DateTime.now().weekDaysAgo(dateOfFirstInternalization);
 
-    List<int> indices = [];
-
     // Division WITH remainder to get the start offset
     var startIndex = daysSinceFirstDate ~/ DAYS_INTERVAL_LDT;
-    for (var i = 0; i < DAYS_INTERVAL_LDT; i++) {
-      indices.add(startIndex + i);
-    }
-    return indices;
+
+    //Index calculates zero-based, but the files start with 1, which is why we add the 1
+    return startIndex + 1;
   }
 
-  Future<LdtData> getLdtData() async {
-    var ldtListAll = await this._dataService.getLexicalDecisionTaskListII();
-    var ldtList = [];
+  getCurrentTrialIndex() async {
     var first = await this._dataService.getFirstInternalisation();
 
-    var trialIndices = getTrialIndices(first.completionDate);
-    for (var index in trialIndices) {
-      // If the index is higher than there are elements in the LDT list, we start
-      // again at the front of the list.
-      if (index > ldtListAll.length - 1) {
-        index = (ldtListAll.length - 1) % index;
-      }
-      ldtList.add(ldtListAll[index]);
-    }
+    return getTrialIndexForDate(first.completionDate);
+  }
+
+  Future<LdtData> getLdtData(String trialName) async {
+    var trialData = await _dataService.getLdtTrials(trialName);
 
     var ldt = LdtData();
-    for (var data in ldtList) {
-      for (var w in data["targets"]) ldt.targets.add(w);
-      for (var prm in data["primes"]) ldt.primes.add(prm);
+    for (var primeTarget in trialData) {
+      ldt.primes.add(primeTarget[0]);
+      ldt.targets.add(primeTarget[1]);
     }
 
     //initialize the trial data now so that less objects have to be created during the trial
@@ -199,10 +190,6 @@ class ExperimentService {
     return InternalisationCondition.values[ud.internalisationCondition];
   }
 
-  Future<List<dynamic>> getLdtTask() async {
-    var allTasks = await this._dataService.getLexicalDecisionTaskListII();
-  }
-
   Future<int> getNextInternalisationCondition(int current) async {
     // var max = await _dataService.
     var next = current;
@@ -261,6 +248,7 @@ class ExperimentService {
     await this._dataService.saveAssessment(assessment);
 
     var nextRoute = RouteNames.NO_TASKS;
+    dynamic args = null;
 
     if (type == AssessmentType.usability) {
       nextRoute = RouteNames.LDT;
@@ -268,7 +256,7 @@ class ExperimentService {
       nextRoute = RouteNames.INTERNALISATION;
     }
 
-    _navigationService.navigateTo(nextRoute);
+    _navigationService.navigateTo(nextRoute, arguments: args);
   }
 
   Future<void> submitLDT(LdtData ldtData) async {

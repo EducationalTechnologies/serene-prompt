@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
+import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/interval_scale.dart';
 import 'package:provider/provider.dart';
 
@@ -44,11 +45,8 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
           SizedBox(
               width: double.infinity,
               height: 60,
-              child: RaisedButton(
+              child: FullWidthButton(
                 onPressed: canSubmit ? () async => _submit(context) : null,
-                shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10.0)),
-                child: Text("Speichern", style: TextStyle(fontSize: 20)),
               )),
         ],
       ),

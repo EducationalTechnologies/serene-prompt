@@ -189,11 +189,12 @@ class AppRouter {
                 ));
 
       case RouteNames.LDT:
+        final String trialName = settings.arguments;
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<LexicalDecisionTaskViewModel>(
                   create: (_) => LexicalDecisionTaskViewModel(
-                      locator.get<ExperimentService>()),
+                      trialName, locator.get<ExperimentService>()),
                   child: LexicalDecisionTaskScren(),
                 ));
 

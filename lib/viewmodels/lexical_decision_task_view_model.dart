@@ -2,7 +2,6 @@ import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
-import 'package:serene/shared/extensions.dart';
 
 class LexicalDecisionTaskViewModel extends BaseViewModel {
   final int durationFixationCross = 1000;
@@ -16,13 +15,14 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   Future<bool> initialized;
 
   final ExperimentService _experimentService;
+  final String _trialName;
 
   LdtData ldt = LdtData();
 
   int currenTargetIndex = 0;
   int currentPrimeIndex = 0;
 
-  LexicalDecisionTaskViewModel(this._experimentService) {
+  LexicalDecisionTaskViewModel(this._trialName, this._experimentService) {
     phaseDurations = [
       durationFixationCross,
       durationPrime,
@@ -34,7 +34,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   }
 
   Future<bool> init() async {
-    ldt = await this._experimentService.getLdtData();
+    ldt = await this._experimentService.getLdtData(this._trialName);
 
     ldt.startDate = DateTime.now();
 

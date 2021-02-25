@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
             title: Text(title),
             content: Text(content),
             actions: <Widget>[
-              new FlatButton(
+              new ElevatedButton(
                 child: new Text("Okay"),
                 onPressed: () async {
                   Navigator.of(context).pop(true);
@@ -147,8 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   buildSubmitButton(BuildContext context) {
     var vm = Provider.of<LoginViewModel>(context);
-    return new RaisedButton(
-      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+    return new ElevatedButton(
       onPressed: () async {
         String message = "";
         if (vm.validateUserId(_userIdTextController.text)) {
@@ -240,10 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // await vm.progressWithoutUsername();
                 // Navigator.pushNamed(context, RouteNames.MAIN);
               },
-              child: new FlatButton(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 20.0, horizontal: 20.0),
-                color: Colors.transparent,
+              child: new ElevatedButton(
                 onPressed: () async {
                   await vm.progressWithoutUsername();
                   Navigator.pushNamed(context, RouteNames.INIT_START);

@@ -174,13 +174,11 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       child: SizedBox(
           width: double.infinity,
           height: 60,
-          child: RaisedButton(
+          child: ElevatedButton(
             onPressed: () async {
               var condition = InternalisationCondition.scrambleWithHint;
               vm.submit(condition, "");
             },
-            shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10.0)),
             child: Text("Abschicken", style: TextStyle(fontSize: 20)),
           )),
     );

@@ -24,14 +24,24 @@ void main() {
       expect(conditionValue, 2);
     });
 
-    test("LDT index calculation should be 0, 1, 2", () {
+    test("LDT index calculation should be 0", () {
       var xps = ExperimentService(null, null, null, null, null);
 
       var dateOfFirst = DateTime.now().subtract(Duration(days: 2));
 
-      var indices = xps.getTrialIndices(dateOfFirst);
-      print(indices);
-      expect(listEquals(indices, [0, 1, 2]), true);
+      var index = xps.getTrialIndexForDate(dateOfFirst);
+
+      expect(index, 0);
+    });
+
+    test("LDT index calculation should be 1", () {
+      var xps = ExperimentService(null, null, null, null, null);
+
+      var dateOfFirst = DateTime.now().subtract(Duration(days: 5));
+
+      var index = xps.getTrialIndexForDate(dateOfFirst);
+
+      expect(index, 1);
     });
   });
 

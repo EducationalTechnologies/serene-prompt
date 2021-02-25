@@ -20,11 +20,8 @@ class SettingsScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).backgroundColor,
           elevation: 0.0,
           actions: <Widget>[
-            FlatButton(
-                // textColor: Colors.white,
-                // icon: const Icon(Icons.save),
-                child: Text("Speichern"),
-                onPressed: () async => _submit(vm))
+            ElevatedButton(
+                child: Text("Speichern"), onPressed: () async => _submit(vm))
           ],
         ),
         drawer: SereneDrawer(),

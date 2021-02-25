@@ -16,6 +16,7 @@ import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/materialized_path.dart';
+import 'package:csv/csv.dart';
 
 enum CachedValues { goals, internalisations }
 
@@ -147,16 +148,6 @@ class DataService {
     await _databaseService.deleteGoal(goal, _userService.getUserEmail());
   }
 
-  getGoalShields() async {
-    String data = await rootBundle.loadString("assets/hindrances.json");
-    _goalShields = [];
-    var decoded = jsonDecode(data);
-    for (var s in decoded) {
-      _goalShields.add(GoalShield.fromJson(s));
-    }
-    return _goalShields;
-  }
-
   saveAssessment(AssessmentModel assessment) async {
     await _databaseService.saveAssessment(
         assessment, _userService.getUserEmail());
@@ -166,6 +157,15 @@ class DataService {
       String assessmentType) async {
     return await _databaseService.getLastSubmittedAssessment(
         assessmentType, _userService.getUserEmail());
+  }
+
+  getLdtTrials(String trial) async {
+    String data = await rootBundle.loadString("assets/ldt/$trial.csv");
+
+    var values = CsvToListConverter().convert(data);
+    // var rowList = CsvToLis
+    print(values);
+    return values;
   }
 
   saveShielding(GoalShield shield) async {
@@ -205,17 +205,6 @@ class DataService {
         await getNumberOfCompletedInternalisations() % (_planCache.length - 1);
     var plan = _planCache[index];
     return plan;
-  }
-
-  getLexicalDecisionTaskListII() async {
-    if (this._ldtTaskListCache.length == 0) {
-      String data = await rootBundle.loadString("assets/config/ldt_ii.json");
-      for (var ldtTask in jsonDecode(data)) {
-        _ldtTaskListCache.add(ldtTask);
-      }
-    }
-
-    return _ldtTaskListCache;
   }
 
   saveInternalisation(Internalisation internalisation) async {

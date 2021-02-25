@@ -9,7 +9,7 @@ import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
 class DailyLearningQuestionScreen extends StatelessWidget {
   _buildReasonButton(BuildContext context, String reason) {
     var vm = Provider.of<DailyLearningQuestionViewModel>(context);
-    return RaisedButton(
+    return ElevatedButton(
       child: Text("Kein Bock"),
       onPressed: () {
         vm.selectedReason = "Keine Lust";
@@ -42,7 +42,7 @@ class DailyLearningQuestionScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 child: Container(
                     padding: EdgeInsets.all(10),
                     child: Column(children: [Icon(Icons.check), Text("Ja")])),
@@ -53,7 +53,7 @@ class DailyLearningQuestionScreen extends StatelessWidget {
                           AssessmentType.preLearning));
                 },
               ),
-              RaisedButton(
+              ElevatedButton(
                 child: Container(
                     padding: EdgeInsets.all(10),
                     child: Column(children: [Icon(Icons.clear), Text("Nein")])),

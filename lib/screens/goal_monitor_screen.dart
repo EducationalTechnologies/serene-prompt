@@ -79,13 +79,13 @@ class _GoalMonitorScreenState extends State<GoalMonitorScreen> {
             title: Text("Löschen bestätigen"),
             content: Text("Möchtest du dieses Ziel wirklich löschen?"),
             actions: <Widget>[
-              FlatButton(
+              ElevatedButton(
                 child: Text("Abbrechen"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-              FlatButton(
+              ElevatedButton(
                 child: Text("Löschen"),
                 onPressed: () async {
                   _deleteGoal(goal);

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import 'base_emoji.dart';
 import 'all_emojis.dart';
 import 'package:device_info/device_info.dart';
@@ -39,16 +41,18 @@ Future<bool> _getCompatibleEmojis(
     String systemVersion, bool useDiversity) async {
   final _deviceInfoPlugin = DeviceInfoPlugin();
 
-  Compatible isCompatible;
+  Compatible isCompatible = Emoji.isAndroidCompatible;
 
-  if (Platform.isAndroid) {
-    systemVersion ??= (await _deviceInfoPlugin.androidInfo).version.release;
-    isCompatible = Emoji.isAndroidCompatible;
-  } else if (Platform.isIOS) {
-    systemVersion ??= (await _deviceInfoPlugin.iosInfo).systemVersion;
-    isCompatible = Emoji.isIOSCompatible;
-  } else {
-    isCompatible = (_, __) => true;
+  if (!kIsWeb) {
+    if (Platform.isAndroid) {
+      systemVersion ??= (await _deviceInfoPlugin.androidInfo).version.release;
+      isCompatible = Emoji.isAndroidCompatible;
+    } else if (Platform.isIOS) {
+      systemVersion ??= (await _deviceInfoPlugin.iosInfo).systemVersion;
+      isCompatible = Emoji.isIOSCompatible;
+    } else {
+      isCompatible = (_, __) => true;
+    }
   }
 
   for (final emoji in emojiList) {

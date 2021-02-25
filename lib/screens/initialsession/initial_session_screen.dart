@@ -62,7 +62,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainState: true,
             visible:
                 vm.canMoveBack(), // _index > 1 && _index < _pages.length - 1,
-            child: FlatButton(
+            child: TextButton(
               child: Row(
                 children: <Widget>[
                   Icon(Icons.navigate_before),
@@ -82,7 +82,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainAnimation: true,
             maintainState: true,
             visible: vm.canMoveNext(),
-            child: FlatButton(
+            child: ElevatedButton(
               child: Row(
                 children: <Widget>[
                   Text(

@@ -295,10 +295,8 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
     return SizedBox(
         width: double.infinity,
         height: 60,
-        child: RaisedButton(
+        child: ElevatedButton(
           onPressed: () => _submitGoal(),
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10.0)),
           child: vm.state == ViewState.idle
               ? Text("Speichern", style: TextStyle(fontSize: 20))
               : CircularProgressIndicator(),
@@ -315,9 +313,9 @@ class _AddGoalScreenState extends State<AddGoalScreen> {
         elevation: 0.0,
         actions: <Widget>[
           if (vm.mode == GoalScreenMode.edit)
-            FlatButton(
+            TextButton(
                 child: Text("Löschen"), onPressed: () async => _deleteGoal()),
-          FlatButton(
+          TextButton(
               child: Text("Speichern"), onPressed: () async => _submitGoal())
         ],
       ),

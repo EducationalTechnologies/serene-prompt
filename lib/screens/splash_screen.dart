@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
         color: Colors.white,
         child: ListView(
           children: [
-            RaisedButton(
+            ElevatedButton(
                 child: Text("Zum Log Screen"),
                 onPressed: () {
                   Navigator.of(context).pushNamed(RouteNames.TEST);

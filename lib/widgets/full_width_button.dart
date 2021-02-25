@@ -16,10 +16,12 @@ class FullWidthButton extends StatelessWidget {
     return SizedBox(
         width: double.infinity,
         height: this.height,
-        child: RaisedButton(
+        child: ElevatedButton(
           onPressed: onPressed,
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(15.0)),
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(15.0)),
+          ),
           child: Text(this.text, style: TextStyle(fontSize: 20)),
         ));
   }

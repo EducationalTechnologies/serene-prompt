@@ -113,7 +113,7 @@ class _TextHighlightState extends State<TextHighlight>
         child: SizedBox(
             width: double.infinity,
             height: 80,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () {},
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

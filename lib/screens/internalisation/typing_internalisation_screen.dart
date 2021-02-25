@@ -67,13 +67,11 @@ class _TypingInternalisationScreenState
     return SizedBox(
         width: double.infinity,
         height: 60,
-        child: RaisedButton(
+        child: ElevatedButton(
           onPressed: () => {
             Navigator.pushNamed(
                 context, RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST)
           },
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10.0)),
           child: Text("Abschicken", style: TextStyle(fontSize: 20)),
         ));
   }
