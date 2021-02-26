@@ -168,6 +168,8 @@ class ExperimentService {
         return true;
       }
 
+      // TODO: Also check if the recall task was done for the day
+
       var lastInternalisation = await _dataService.getLastInternalisation();
 
       if (lastLdtDate.isAfter(lastInternalisation.completionDate)) {
@@ -251,6 +253,8 @@ class ExperimentService {
     dynamic args = null;
 
     if (type == AssessmentType.usability) {
+      var index = await getCurrentTrialIndex();
+      args = index.toString();
       nextRoute = RouteNames.LDT;
     } else if (type == AssessmentType.preImplementationIntention) {
       nextRoute = RouteNames.INTERNALISATION;

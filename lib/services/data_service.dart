@@ -166,7 +166,7 @@ class DataService {
     String data = await rootBundle.loadString("assets/ldt/$trial.csv");
 
     var values = CsvToListConverter(csvSettingsDetector: csvSettingsDetector)
-        .convert(data);
+        .convert(data, fieldDelimiter: ",");
     // var rowList = CsvToLis
     print(values);
     return values;

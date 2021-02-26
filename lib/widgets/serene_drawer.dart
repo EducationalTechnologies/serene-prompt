@@ -126,10 +126,11 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           ListTile(
-              title: Text("Video"),
+              title: Text("Usability"),
               onTap: () async {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.INIT_VIDEO);
+                Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
               }),
           Divider(),
           ListTile(
