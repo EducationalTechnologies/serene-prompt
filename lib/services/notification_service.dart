@@ -56,8 +56,10 @@ class NotificationService {
     return true;
   }
 
-  onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {}
+  Future<dynamic> onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    print("Received Local Notification");
+  }
 
   deleteScheduledInternalisationReminder() async {
     var pendingNotifications = await getPendingNotifications();
