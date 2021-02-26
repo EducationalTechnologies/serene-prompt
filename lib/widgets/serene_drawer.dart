@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
@@ -22,6 +23,24 @@ class SereneDrawer extends StatelessWidget {
       ),
       onTap: onTap,
     );
+  }
+
+  buildLDTSelection(BuildContext context) {
+    List trials = ["0_1", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    return AlertDialog(content: Text("Trial auswählen"), actions: [
+      for (var t in trials)
+        TextButton(
+          child: Text(
+            t,
+            style: TextStyle(color: Colors.black),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, RouteNames.LDT, arguments: t);
+          },
+        )
+    ]);
   }
 
   @override
@@ -84,10 +103,11 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.receipt,
-              text: "Zum Log Screen",
+              text: "Notification Anzeigen",
               onTap: () {
-                Navigator.pushNamed(context, RouteNames.TEST);
-                // locator<DataService>().saveScore(2);
+                // Navigator.pushNamed(context, RouteNames.TEST);
+                // // locator<DataService>().saveScore(2);
+                locator<NotificationService>().sendDebugReminder();
               }),
           Divider(),
           ListTile(
@@ -95,8 +115,14 @@ class SereneDrawer extends StatelessWidget {
                 "Lexical Decision Task",
               ),
               onTap: () async {
-                Navigator.pop(context);
-                await Navigator.pushNamed(context, RouteNames.LDT);
+                // Navigator.pop(context);
+                //await Navigator.pushNamed(context, RouteNames.LDT);
+                // await buildLDTSelection(context);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return buildLDTSelection(context);
+                    });
               }),
           Divider(),
           ListTile(
