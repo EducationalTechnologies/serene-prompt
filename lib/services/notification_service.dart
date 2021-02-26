@@ -38,7 +38,13 @@ class NotificationService {
   Future initialize() async {
     var initSettingsAndroid =
         new AndroidInitializationSettings('ic_notification');
-    var initSettings = InitializationSettings(android: initSettingsAndroid);
+    var initSettingsIOS = new IOSInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    var initSettings = InitializationSettings(
+        android: initSettingsAndroid, iOS: initSettingsIOS);
 
     await _configureLocalTimeZone();
 
@@ -49,6 +55,9 @@ class NotificationService {
 
     return true;
   }
+
+  onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {}
 
   deleteScheduledInternalisationReminder() async {
     var pendingNotifications = await getPendingNotifications();
