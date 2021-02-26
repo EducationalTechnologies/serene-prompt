@@ -203,7 +203,7 @@ class NotificationService {
 
     var now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month,
-        now.day, now.hour, now.minute, now.second + 5);
+        now.day, now.hour, now.minute, now.second + 20);
 
     await localNotifications.zonedSchedule(
         123123123,
