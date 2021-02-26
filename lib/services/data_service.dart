@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/goal.dart';
@@ -160,9 +161,12 @@ class DataService {
   }
 
   getLdtTrials(String trial) async {
+    var csvSettingsDetector =
+        new FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']);
     String data = await rootBundle.loadString("assets/ldt/$trial.csv");
 
-    var values = CsvToListConverter().convert(data);
+    var values = CsvToListConverter(csvSettingsDetector: csvSettingsDetector)
+        .convert(data);
     // var rowList = CsvToLis
     print(values);
     return values;
