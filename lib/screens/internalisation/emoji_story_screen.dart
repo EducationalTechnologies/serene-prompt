@@ -29,6 +29,12 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
 
   TextEditingController _activeController;
 
+  @override
+  void initState() {
+    super.initState();
+    _activeController = _controllerLeft;
+  }
+
   void _checkIfIsDone() {
     // _done = _emojiStoryIf.isNotEmpty && _emojiStoryThen.isNotEmpty;
     _done = _controllerLeft.text.isNotEmpty && _controllerRight.text.isNotEmpty;

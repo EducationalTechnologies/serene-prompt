@@ -24,6 +24,7 @@ class StartupViewModel extends BaseViewModel {
    * Navigate with replacement to prevent back navigation to the splash screen
    */
   Future<void> startApp(AppStartupMode appStartupMode) async {
+    print("Navigating to ${appStartupMode.toString()}");
     var nav = locator<NavigationService>();
     switch (appStartupMode) {
       case AppStartupMode.normal:
@@ -54,7 +55,7 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.NO_TASKS);
         break;
       case AppStartupMode.lexicalDecisionTask:
-        nav.navigateAndRemove(RouteNames.LDT);
+        nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
     }
   }
 
