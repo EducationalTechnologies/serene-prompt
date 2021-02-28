@@ -1,0 +1,27 @@
+{
+    "title": "Lernen mit Cabuu",
+    "questions": [
+        {
+            "id": "cabuulearn_1",
+            "questionText": "Wie viele der Vokabeln, die du lernst, lernst du mit Cabuu?",
+            "labels": {
+                "1": "Alle",
+                "2": "Die meisten",
+                "3": "Ungefähr die Hälfte",
+                "4": "Die wenigsten",
+                "5": "Gar keine"
+            }
+        },
+        {
+            "id": "cabuulearn_2",
+            "questionText": "Bereitest du dich aktuell mit Hilfe von cabuu aktuell für einen anstehenden Vokabeltest oder eine Englischarbeit vor?",
+            "labels": {
+                "1": "Alle",
+                "2": "Die meisten",
+                "3": "Ungefähr die Hälfte",
+                "4": "Die wenigsten",
+                "5": "Gar keine"
+            }
+        }
+    ]
+}

@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:serene/shared/route_names.dart';
 // import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoScreen extends StatefulWidget {
-  const VideoScreen({Key key}) : super(key: key);
+  final String videoURL;
+
+  const VideoScreen(this.videoURL, {Key key}) : super(key: key);
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
 }
 
 class _VideoScreenState extends State<VideoScreen> {
-  // YoutubePlayerController _controller;
-
-  bool _isPlayerReady = false;
-
   void listener() {
     // if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
     //   setState(() {});
@@ -39,12 +36,11 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        Navigator.pushNamed(context, RouteNames.LOG_IN);
-      },
-      tooltip: 'Weiter',
-      child: Icon(Icons.add),
+    return Container(
+      child: Text(
+        "Hier Instruktionsvideo ${widget.videoURL}",
+        style: Theme.of(context).textTheme.headline4,
+      ),
     );
     // YoutubePlayerBuilder(
     //     player: YoutubePlayer(

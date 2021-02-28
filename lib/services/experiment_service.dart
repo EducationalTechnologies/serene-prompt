@@ -33,7 +33,6 @@ class ExperimentService {
       this._loggingService, this._rewardService, this._navigationService);
 
   Future<bool> initialize() async {
-    // TODO: Check the current inernalisation condition here and, if necessary, recalculate it
     return await Future.delayed(Duration.zero).then((res) => true);
   }
 

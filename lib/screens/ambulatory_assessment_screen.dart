@@ -32,7 +32,6 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
               padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
               child: IntervalScale(
                 title: assessment[index].title,
-                itemCount: assessment[index].itemCount,
                 labels: assessment[index].labels,
                 id: assessment[index].id,
                 groupValue: vm.getResultForIndex(index),

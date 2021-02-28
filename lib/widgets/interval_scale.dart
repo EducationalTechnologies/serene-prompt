@@ -9,7 +9,6 @@ class IntervalScale extends StatefulWidget {
   _IntervalScaleState createState() => _IntervalScaleState();
 
   final String title;
-  final int itemCount;
   final Map<int, String> labels;
   final String id;
   final IntervalScaleCallback callback;
@@ -18,7 +17,6 @@ class IntervalScale extends StatefulWidget {
   IntervalScale(
       {Key key,
       this.title,
-      this.itemCount = 5,
       this.labels,
       this.groupValue,
       this.id,
@@ -86,7 +84,8 @@ class _IntervalScaleState extends State<IntervalScale> {
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          for (var i = 1; i <= widget.itemCount; i++) buildItem(i, getLabel(i)),
+          for (var i = 1; i <= widget.labels.keys.length; i++)
+            buildItem(i, getLabel(i)),
         ],
       )
     ]);

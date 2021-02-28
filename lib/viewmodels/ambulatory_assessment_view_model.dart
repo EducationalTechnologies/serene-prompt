@@ -1,10 +1,8 @@
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_item.dart';
-import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class AmbulatoryAssessmentViewModel extends BaseViewModel {
@@ -35,29 +33,18 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
     }
   }
 
-  getPreText(String assessmentType) {
-    if (assessmentType == AssessmentType.postLearning) {
-    } else {
-      return "";
-    }
-  }
-
   getPreLearningList() {
-    var itemCount = 5;
     List<AssessmentItemModel> _preGoal = [
       AssessmentItemModel(
           "Wie verpflichtet fühlst du dich, deine Ziele heute zu erreichen?",
-          itemCount,
           {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
           "preLearning1"),
       AssessmentItemModel(
           "Wie schwierig wird es heute, deine Ziele zu erreichen?",
-          itemCount,
           {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
           "preLearning2"),
       AssessmentItemModel(
           "Wie sehr freust du dich auf diese Aufgaben?",
-          5,
           {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
           "preLearning3"),
     ];
@@ -65,10 +52,9 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
   }
 
   _getDailyQuestionList() {
-    var itemCount = 2;
     List<AssessmentItemModel> _dailyQuestion = [
-      AssessmentItemModel("Hast du heute vor zu lernen?", itemCount,
-          {1: "Ja", 2: "Nein"}, "dailyQuestion1")
+      AssessmentItemModel("Hast du heute vor zu lernen?", {1: "Ja", 2: "Nein"},
+          "dailyQuestion1")
     ];
     return _dailyQuestion;
   }
@@ -77,12 +63,11 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
       String whereYouString, String stillManageString) {
     List<AssessmentItemModel> _afterLearning = [
       AssessmentItemModel(
-          "$whereYouString", 2, {1: "Ja", 2: "Nein"}, "postLearning1"),
+          "$whereYouString", {1: "Ja", 2: "Nein"}, "postLearning1"),
       AssessmentItemModel(
-          "$stillManageString", 2, {1: "Ja", 2: "Nein"}, "postLearning2"),
+          "$stillManageString", {1: "Ja", 2: "Nein"}, "postLearning2"),
       AssessmentItemModel(
           "Wie zufrieden bist du mit deinem Lerntag?",
-          5,
           {1: "1: Gar nicht", 2: "2", 3: "3", 4: "4", 5: "5: Sehr"},
           "postLearning3"),
     ];
@@ -93,7 +78,6 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
     List<AssessmentItemModel> _usability = [
       AssessmentItemModel(
           "Wie viel **Spaß** hat es dir gemacht, dir die Pläne so einzuprägen?",
-          5,
           {
             1: "Sehr viel Spaß",
             2: "Eher Spaß",
@@ -104,7 +88,6 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
           "usabilityFun"),
       AssessmentItemModel(
           "Wie **schwierig** fandest du es, dir die Pläne so einzuprägen?",
-          5,
           {
             1: "Sehr schwierig",
             2: "Eher schwierig",
@@ -128,22 +111,18 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
     List<AssessmentItemModel> _postTest = [
       AssessmentItemModel(
           "Ich habe mir Mühe gegeben, meinen Plan für den Tag zu verinnerlichen",
-          5,
           labels,
           "postTest1"),
       AssessmentItemModel(
           "Ich habe gedacht: 'So ein Plan bringt doch gar nichts!'",
-          5,
           labels,
           "postTest2"),
       AssessmentItemModel(
           "Ich habe während des Lernens immer wieder bewusst an meinen Plan gedacht.",
-          5,
           labels,
           "postTest3"),
       AssessmentItemModel(
           "Der Plan hat mir geholfen, meine Lernziele besser zu erreichen",
-          5,
           labels,
           "postTest4")
     ];
@@ -204,16 +183,5 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
     await this
         ._experimentService
         .submitAssessment(assessmentModel, _assessmentType);
-  }
-
-  getNextRoute() {
-    if (_assessmentType == AssessmentType.dailyQuestion) {
-      if (results["dailyQuestion1"] == "1") {
-        return RouteNames.INTERNALISATION;
-      }
-    } else if (_assessmentType == AssessmentType.preImplementationIntention) {
-      return RouteNames.INTERNALISATION;
-    }
-    return RouteNames.NO_TASKS;
   }
 }

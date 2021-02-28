@@ -8,6 +8,9 @@ import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
 import 'package:serene/screens/initialsession/outcome_enter_screen.dart';
 import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
 import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
+import 'package:serene/screens/initialsession/video_screen.dart';
+import 'package:serene/screens/initialsession/welcome_screen.dart';
+import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
@@ -25,13 +28,16 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   final _kCurve = Curves.ease;
 
   final List<Widget> _pages = [
+    WelcomeScreen(), // 0
+    VideoScreen("Erstes Video"),
+    CabuuLinkScreen(),
     OutcomeSelectionScreen(),
     OutcomeEnterScreen(),
     OutcomeSortingScreen(),
     ObstacleSelectionScreen(),
     ObstacleEnterScreen(),
     ObstacleSortingScreen(),
-    InitialExplanationScreen()
+    InitialExplanationScreen(),
   ];
 
   @override

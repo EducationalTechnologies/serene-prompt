@@ -6,6 +6,7 @@ import 'package:serene/viewmodels/base_view_model.dart';
 
 class InitSessionViewModel extends BaseViewModel {
   int step = 0;
+  bool consented = false;
 
   var obstacles = <Obstacle>[
     Obstacle(
@@ -144,13 +145,19 @@ class InitSessionViewModel extends BaseViewModel {
   getNextPage() {
     print("Step is $step");
 
-    if (step == 1 && selectedOutcomes.length <= 1) {
-      return step + 2;
-    }
-    if (step == 4 && selectedObstacles.length <= 1) {
-      return step + 2;
-    }
+    // if (step == 1 && selectedOutcomes.length <= 1) {
+    //   return step + 2;
+    // }
+    // if (step == 4 && selectedObstacles.length <= 1) {
+    //   return step + 2;
+    // }
     return step + 1;
+  }
+
+  setAssessmentResult(String id, String value) {
+    // TODO: SET ASSESSMENT RESULT
+    // results[id] = value;
+    notifyListeners();
   }
 
   submit() async {

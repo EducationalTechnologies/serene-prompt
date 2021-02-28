@@ -166,9 +166,6 @@ class AppRouter {
       case RouteNames.TEST:
         return MaterialPageRoute(builder: (_) => TestScreen());
 
-      case RouteNames.INIT_VIDEO:
-        return MaterialPageRoute(builder: (_) => VideoScreen());
-
       case RouteNames.NO_TASKS:
         return MaterialPageRoute(builder: (_) => NoTasksScreen());
 

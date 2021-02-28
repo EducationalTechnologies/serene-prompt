@@ -100,51 +100,6 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
     );
   }
 
-  buildEmojiFieldsVertical() {
-    return Column(children: [
-      Text("Wenn ich..."),
-      Center(
-          child: TextField(
-        minLines: 1,
-        maxLines: 2,
-        autofocus: true,
-        autocorrect: false,
-        enableSuggestions: false,
-        style: Theme.of(context).textTheme.headline6,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-        ),
-        onChanged: (text) {
-          setState(() {
-            _emojiStoryIf = text;
-            _checkIfIsDone();
-          });
-        },
-      )),
-      Text("dann..."),
-      Center(
-          child: TextField(
-        minLines: 1,
-        maxLines: 2,
-        autofocus: true,
-        autocorrect: false,
-        enableSuggestions: false,
-        style: Theme.of(context).textTheme.headline6,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-        ),
-        onChanged: (text) {
-          setState(() {
-            _emojiStoryThen = text;
-            _checkIfIsDone();
-          });
-        },
-      )),
-    ]);
-  }
-
   @override
   Widget build(BuildContext context) {
     var vm = Provider.of<InternalisationViewModel>(context);

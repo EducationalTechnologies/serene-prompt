@@ -29,7 +29,8 @@ class EmojiKeyboard extends StatelessWidget {
   final Color color;
 
   final contentKey = UniqueKey();
-  final List<GlobalKey> categoryKeyStore = List(8);
+  final List<GlobalKey> categoryKeyStore =
+      List.filled(8, GlobalKey()); // List(8);
 
   /// Creates a emoji keyboard widget.
   ///

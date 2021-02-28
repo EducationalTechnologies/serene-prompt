@@ -40,6 +40,7 @@ dependencies:
   flutter_native_timezone: ^1.0.4
   google_fonts: ^1.1.1
   csv: ^4.1.0
+  app_usage: ^1.2.0
   
 dev_dependencies:
   flutter_test:
