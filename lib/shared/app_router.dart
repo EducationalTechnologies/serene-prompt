@@ -100,7 +100,7 @@ class AppRouter {
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentType.usability,
+                        Assessments.usability,
                         locator.get<UserService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
@@ -110,7 +110,7 @@ class AppRouter {
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentType.preLearning,
+                        Assessments.preLearning,
                         locator.get<UserService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
@@ -120,7 +120,7 @@ class AppRouter {
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentType.preImplementationIntention,
+                        Assessments.preImplementationIntention,
                         locator.get<UserService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
@@ -180,8 +180,9 @@ class AppRouter {
       case RouteNames.INIT_START:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<InitSessionViewModel>(
-                  create: (_) =>
-                      InitSessionViewModel(locator.get<DataService>()),
+                  create: (_) => InitSessionViewModel(
+                      locator.get<DataService>(),
+                      locator.get<ExperimentService>()),
                   child: InitialSessionScreen(),
                 ));
 

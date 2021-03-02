@@ -1,6 +1,6 @@
 class AssessmentItemModel {
   String title;
-  Map<int, String> labels;
+  Map<String, String> labels;
   String id;
 
   AssessmentItemModel(this.title, this.labels, this.id);

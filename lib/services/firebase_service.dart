@@ -325,8 +325,9 @@ class FirebaseService {
     if (doc == null) return null;
     if (doc.docs.length == 0) return null;
     var last = doc.docs[0];
-
-    return DateTime.parse(last["completionDate"]);
+    var lastDateString = last["completionDate"];
+    var lastDate = DateTime.parse(lastDateString);
+    return lastDate;
   }
 
   Future<List<Internalisation>> getLastInternalisations(

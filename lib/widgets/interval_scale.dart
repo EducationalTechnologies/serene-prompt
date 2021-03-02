@@ -9,7 +9,7 @@ class IntervalScale extends StatefulWidget {
   _IntervalScaleState createState() => _IntervalScaleState();
 
   final String title;
-  final Map<int, String> labels;
+  final Map<String, String> labels;
   final String id;
   final IntervalScaleCallback callback;
   final int groupValue;

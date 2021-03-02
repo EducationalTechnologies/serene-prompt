@@ -69,11 +69,16 @@ enum AppStartupMode {
   lexicalDecisionTask
 }
 
-enum AssessmentType {
+enum Assessments {
   dailyQuestion,
   postTest,
   preLearning,
   postLearning,
   usability,
   preImplementationIntention,
+  cabuuLearn,
+  regulation,
+  selfEfficacy,
+  goals,
+  screen19
 }

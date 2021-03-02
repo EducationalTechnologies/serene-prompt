@@ -1,0 +1,325 @@
+{
+    "title": "Gib an, wie oft folgende Aussagen auf dich zutreffen.",
+    "id": "screen19",
+    "questions": [
+        {
+            "id": "screen19_1",
+            "questionText": "Wann ich mit cabuu lerne, lege ich vorher fest.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_2",
+            "questionText": "Beim Lernen mit cabuu bin ich ängstlich und nervös.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_3",
+            "questionText": "Ich vergesse, mit cabuu zu lernen, obwohl ich es eigentlich vorhatte.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_4",
+            "questionText": "Ich will mit cabuu lernen, aber dann kommt mir etwas dazwischen.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_5",
+            "questionText": "Beim Lernen mit cabuu ist mir langweilig.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_6",
+            "questionText": "Beim Lernen mit cabuu kann ich mich nur schlecht konzentrieren.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_7",
+            "questionText": "Ich verspreche mir oft selbst, mit cabuu zu lernen, lege dann aber meine Füße hoch.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_8",
+            "questionText": "Wenn ich keine Lust habe, gelingt es mir, mich trotzdem zum Vokabellernen zu überwinden.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_9",
+            "questionText": "Zum Lernen mit cabuu suche ich mir einen ruhigen Ort.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_10",
+            "questionText": "Ich entscheide ganz spontan, wann ich mit cabuu lerne.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_11",
+            "questionText": "Beim Lernen mit cabuu bin ich frustriert.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_12",
+            "questionText": "Ich nehme mir vor, mit cabuu zu lernen, vergesse es dann aber.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_13",
+            "questionText": "Ich habe so viel anderes zu tun, dass ich gar nicht zum Lernen mit cabuu komme.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_14",
+            "questionText": "Ich denke während des Lernens mit cabuu an andere Dinge.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_15",
+            "questionText": "Beim Lernen mit cabuu mache ich mir Sorgen.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_16",
+            "questionText": "Während ich mit cabuu lerne, mache ich nebenbei andere Dinge (z.B. Fernsehen, Musik hören).",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_17",
+            "questionText": "Auch wenn ich es hasse, dass ich mit dem Lernen mit cabuu nicht in die Gänge komme, kann ich es nicht ändern.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_18",
+            "questionText": "Wenn mir beim Lernen mit cabuu langweilig ist, höre ich auf oder gebe mir keine Mühe mehr.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_19",
+            "questionText": "Ich sorge dafür, dass beim Lernen mit cabuu so wenige Ablenkungen wie möglich auftreten.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_20",
+            "questionText": "Beim Lernen mit cabuu ärgere ich mich.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_21",
+            "questionText": "Ich weiß genau, wie oft oder an welchen Tagen ich mit cabuu lernen will.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_22",
+            "questionText": "Ich denke einfach nicht daran, mit cabuu zu lernen.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_23",
+            "questionText": "Zum Lernen mit cabuu fehlt mir die Zeit.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_24",
+            "questionText": "Beim Lernen mit cabuu habe ich Spaß",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_25",
+            "questionText": "Während ich mit cabuu lerne, schweifen meine Gedanken ab.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_26",
+            "questionText": "Ich schiebe das Lernen mit cabuu auf, sogar wenn es mir wichtig ist.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_27",
+            "questionText": "Wenn ich beim Lernen mit cabuu die Lust verliere, fällt es mir schwer, weiterzumachen.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_28",
+            "questionText": "Nachdem ich mit cabuu gelernt habe, bin ich stolz auf mich.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        },
+        {
+            "id": "screen19_29",
+            "questionText": "Ich sehe zu, dass ich alle möglichen Ablenkungen beseitige, bevor ich anfange, mit cabuu zu lernen.",
+            "labels": {
+                "1": "(Fast) nie",
+                "2": "Selten",
+                "3": "Hin und wieder",
+                "4": "Oft",
+                "5": "(Fast) immer"
+            }
+        }
+    ]
+}

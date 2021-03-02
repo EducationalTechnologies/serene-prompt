@@ -83,30 +83,14 @@ class ExperimentService {
     return startIndex + 1;
   }
 
+  getLdtData(String trialName) async {
+    return _dataService.getLdtData(trialName);
+  }
+
   getCurrentTrialIndex() async {
     var first = await this._dataService.getFirstInternalisation();
 
     return getTrialIndexForDate(first.completionDate);
-  }
-
-  Future<LdtData> getLdtData(String trialName) async {
-    var trialData = await _dataService.getLdtTrials(trialName);
-
-    var ldt = LdtData();
-    for (var primeTarget in trialData) {
-      ldt.primes.add(primeTarget[0]);
-      ldt.targets.add(primeTarget[1]);
-    }
-
-    //initialize the trial data now so that less objects have to be created during the trial
-    ldt.trials = [];
-
-    for (var word in ldt.targets) {
-      var ldtTrialWord = LdtTrial(condition: "", target: word);
-      ldt.trials.add(ldtTrialWord);
-    }
-
-    return ldt;
   }
 
   Future<bool> isTimeForInternalisationTask() async {
@@ -167,6 +151,9 @@ class ExperimentService {
         return true;
       }
 
+      if (lastLdtDate.daysAgo() < 2) {
+        return false;
+      }
       // TODO: Also check if the recall task was done for the day
 
       var lastInternalisation = await _dataService.getLastInternalisation();
@@ -245,17 +232,17 @@ class ExperimentService {
   }
 
   Future<void> submitAssessment(
-      AssessmentModel assessment, AssessmentType type) async {
+      AssessmentModel assessment, Assessments type) async {
     await this._dataService.saveAssessment(assessment);
 
     var nextRoute = RouteNames.NO_TASKS;
     dynamic args = null;
 
-    if (type == AssessmentType.usability) {
+    if (type == Assessments.usability) {
       var index = await getCurrentTrialIndex();
       args = index.toString();
       nextRoute = RouteNames.LDT;
-    } else if (type == AssessmentType.preImplementationIntention) {
+    } else if (type == Assessments.preImplementationIntention) {
       nextRoute = RouteNames.INTERNALISATION;
     }
 

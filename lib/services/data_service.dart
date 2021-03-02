@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
+import 'package:serene/models/assessment_item.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/internalisation.dart';
@@ -160,7 +161,7 @@ class DataService {
         assessmentType, _userService.getUserEmail());
   }
 
-  getLdtTrials(String trial) async {
+  _getLdtTrialByName(String trial) async {
     var csvSettingsDetector =
         new FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']);
     String data = await rootBundle.loadString("assets/ldt/$trial.csv");
@@ -170,6 +171,26 @@ class DataService {
     // var rowList = CsvToLis
     print(values);
     return values;
+  }
+
+  Future<LdtData> getLdtData(String trialName) async {
+    var trialData = await _getLdtTrialByName(trialName);
+
+    var ldt = LdtData();
+    for (var primeTarget in trialData) {
+      ldt.primes.add(primeTarget[0]);
+      ldt.targets.add(primeTarget[1]);
+    }
+
+    //initialize the trial data now so that less objects have to be created during the trial
+    ldt.trials = [];
+
+    for (var word in ldt.targets) {
+      var ldtTrialWord = LdtTrial(condition: "", target: word);
+      ldt.trials.add(ldtTrialWord);
+    }
+
+    return ldt;
   }
 
   saveShielding(GoalShield shield) async {
@@ -271,7 +292,7 @@ class DataService {
         _userService.getUserEmail(), internalisation);
   }
 
-  getScore() async {
+  Future<int> getScore() async {
     return await _databaseService.getScore(_userService.getUserEmail());
   }
 
@@ -290,7 +311,21 @@ class DataService {
     _userDataCache.internalisationCondition = group;
   }
 
-  getDateOfLastLDT() async {
-    await _databaseService.getLastLdtTaskDate(_userService.getUserEmail());
+  Future<DateTime> getDateOfLastLDT() async {
+    return await _databaseService
+        .getLastLdtTaskDate(_userService.getUserEmail());
+  }
+
+  getAssessment(String name) async {
+    String data =
+        await rootBundle.loadString("assets/assessments/assessment_$name.json");
+    var json = jsonDecode(data);
+    var title = json["title"];
+    var id = json["id"];
+    var questions = [];
+    for (var question in json["questions"]) {
+      questions.add(AssessmentItemModel(
+          question["questionText"], question["labels"], question["id"]));
+    }
   }
 }

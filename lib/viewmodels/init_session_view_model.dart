@@ -1,12 +1,22 @@
+import 'package:serene/models/assessment_item.dart';
+import 'package:serene/models/ldt_data.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/app_asset_paths.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
+import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 
 class InitSessionViewModel extends BaseViewModel {
   int step = 0;
   bool consented = false;
+  final DataService _dataService;
+  final ExperimentService _experimentService;
+  LexicalDecisionTaskViewModel ldtvm;
+
+  List<AssessmentItemModel> _cabuuLearnQuestions = [];
 
   var obstacles = <Obstacle>[
     Obstacle(
@@ -67,9 +77,7 @@ class InitSessionViewModel extends BaseViewModel {
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
-  DataService _dataService;
-
-  InitSessionViewModel(this._dataService);
+  InitSessionViewModel(this._dataService, this._experimentService);
 
   var selectedOutcomes = <Outcome>[];
 
@@ -81,6 +89,45 @@ class InitSessionViewModel extends BaseViewModel {
     }
 
     notifyListeners();
+  }
+
+  List<AssessmentItemModel> getAssessment(Assessments assessmentName) {
+    switch (assessmentName) {
+      case Assessments.dailyQuestion:
+        // TODO: Handle this case.
+        break;
+      case Assessments.postTest:
+        // TODO: Handle this case.
+        break;
+      case Assessments.preLearning:
+        // TODO: Handle this case.
+        break;
+      case Assessments.postLearning:
+        // TODO: Handle this case.
+        break;
+      case Assessments.usability:
+        // TODO: Handle this case.
+        break;
+      case Assessments.preImplementationIntention:
+        // TODO: Handle this case.
+        break;
+      case Assessments.cabuuLearn:
+        // TODO: Handle this case.
+        break;
+      case Assessments.regulation:
+        // TODO: Handle this case.
+        break;
+      case Assessments.selfEfficacy:
+        // TODO: Handle this case.
+        break;
+      case Assessments.goals:
+        // TODO: Handle this case.
+        break;
+      case Assessments.screen19:
+        // TODO: Handle this case.
+        break;
+    }
+    return _cabuuLearnQuestions;
   }
 
   obstacleSelected(Obstacle obstacle) {
@@ -164,4 +211,12 @@ class InitSessionViewModel extends BaseViewModel {
     await _dataService.saveObstacles(obstacles);
     await _dataService.saveOutcomes(outcomes);
   }
+
+  Future<bool> initTrial(String trialName) async {
+    ldtvm = new LexicalDecisionTaskViewModel(trialName, _experimentService);
+    await ldtvm.init();
+    return true;
+  }
+
+  String getTrialMessage() {}
 }

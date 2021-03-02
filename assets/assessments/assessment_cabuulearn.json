@@ -1,8 +1,9 @@
 {
     "title": "Lernen mit Cabuu",
+    "id": "cabuuLearn",
     "questions": [
         {
-            "id": "cabuulearn_1",
+            "id": "cabuuLearn_1",
             "questionText": "Wie viele der Vokabeln, die du lernst, lernst du mit Cabuu?",
             "labels": {
                 "1": "Alle",
@@ -13,7 +14,7 @@
             }
         },
         {
-            "id": "cabuulearn_2",
+            "id": "cabuuLearn_2",
             "questionText": "Bereitest du dich aktuell mit Hilfe von cabuu aktuell für einen anstehenden Vokabeltest oder eine Englischarbeit vor?",
             "labels": {
                 "1": "Alle",

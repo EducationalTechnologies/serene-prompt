@@ -141,8 +141,8 @@ class SereneDrawer extends StatelessWidget {
                 //   MaterialPageRoute(builder: (context) => StartupScreen()),
                 // );
                 await Navigator.pushNamed(context, RouteNames.INIT_START,
-                    arguments: AssessmentScreenArguments(
-                        AssessmentType.dailyQuestion));
+                    arguments:
+                        AssessmentScreenArguments(Assessments.dailyQuestion));
               }),
           // VersionInfo()
         ],

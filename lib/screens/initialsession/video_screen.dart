@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoScreen extends StatefulWidget {
   final String videoURL;
@@ -17,6 +17,9 @@ class _VideoScreenState extends State<VideoScreen> {
     // }
   }
 
+  YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: 'QTSUm9LId7k',
+  );
   @override
   void initState() {
     super.initState();
@@ -36,6 +39,10 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+    );
     return Container(
       child: Text(
         "Hier Instruktionsvideo ${widget.videoURL}",

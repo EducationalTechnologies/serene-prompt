@@ -8,7 +8,7 @@ class GoalScreenArguments {
 }
 
 class AssessmentScreenArguments {
-  final AssessmentType assessmentType;
+  final Assessments assessmentType;
 
   AssessmentScreenArguments(this.assessmentType);
 }

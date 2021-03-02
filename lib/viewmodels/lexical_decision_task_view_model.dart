@@ -12,8 +12,6 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
 
   bool done = false;
 
-  Future<bool> initialized;
-
   final ExperimentService _experimentService;
   final String _trialName;
 
@@ -29,16 +27,14 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
       durationBackwardMask,
       durationIntertrialScreen
     ];
-
-    initialized = init();
   }
 
-  Future<bool> init() async {
+  Future<LdtData> init() async {
     ldt = await this._experimentService.getLdtData(this._trialName);
 
     ldt.startDate = DateTime.now();
 
-    return true;
+    return ldt;
   }
 
   getCurrentPrime() {

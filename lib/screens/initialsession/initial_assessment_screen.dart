@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:serene/models/assessment_item.dart';
+import 'package:provider/provider.dart';
+import 'package:serene/shared/enums.dart';
+import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/widgets/interval_scale.dart';
 
 class InitialAssessmentScreen extends StatelessWidget {
-  final List<AssessmentItemModel> assessment;
+  final Assessments assessment;
 
   const InitialAssessmentScreen(this.assessment, {Key key}) : super(key: key);
 
@@ -13,6 +15,8 @@ class InitialAssessmentScreen extends StatelessWidget {
   }
 
   _buildAssessmentList(BuildContext context) {
+    var questions =
+        Provider.of<InitSessionViewModel>(context).getAssessment(assessment);
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -24,14 +28,14 @@ class InitialAssessmentScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: (TextStyle(fontSize: 18)),
                   ))),
-          for (var index = 0; index < assessment.length; index++)
+          for (var index = 0; index < questions.length; index++)
             Card(
                 child: Padding(
               padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
               child: IntervalScale(
-                title: assessment[index].title,
-                labels: assessment[index].labels,
-                id: assessment[index].id,
+                title: questions[index].title,
+                labels: questions[index].labels,
+                id: questions[index].id,
                 // groupValue: vm.getResultForIndex(index),
                 // callback: (val) {
                 //   print("Changed Assessment value to: $val");

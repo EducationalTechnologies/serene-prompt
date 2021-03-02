@@ -46,5 +46,7 @@
 		<string>This application needs to access your microphone</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>This application needs speech recongition permission</string>
+		<key>io.flutter.embedded_views_preview</key>
+		<true/>
 	</dict>
 </plist>

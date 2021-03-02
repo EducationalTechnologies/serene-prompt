@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/screens/initialsession/initial_assessment_screen.dart';
 import 'package:serene/screens/initialsession/initial_explanation_screen.dart';
+import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
 import 'package:serene/screens/initialsession/outcome_enter_screen.dart';
 import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
+import 'package:serene/screens/initialsession/text_explanation_screen.dart';
 import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
 import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/initialsession/welcome_screen.dart';
 import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
+import 'package:serene/screens/questionnaire/lexical_decision_task_screen.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
@@ -28,16 +33,33 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   final _kCurve = Curves.ease;
 
   final List<Widget> _pages = [
-    WelcomeScreen(), // 0
     VideoScreen("Erstes Video"),
-    CabuuLinkScreen(),
-    OutcomeSelectionScreen(),
-    OutcomeEnterScreen(),
-    OutcomeSortingScreen(),
-    ObstacleSelectionScreen(),
-    ObstacleEnterScreen(),
-    ObstacleSortingScreen(),
-    InitialExplanationScreen(),
+    WelcomeScreen(), // 0
+    VideoScreen("Zweites Videeo"),
+    InitialLdtScreen("0_0"),
+    // CabuuLinkScreen(),
+    // InitialAssessmentScreen(Assessments.cabuuLearn),
+    // InitialAssessmentScreen(Assessments.regulation),
+    // VideoScreen("Zweites Videeo"),
+    // InitialAssessmentScreen(Assessments.selfEfficacy),
+    // TextExplanationScreen(
+    //     "Denke jetzt einmal darüber nach, was für dich persönlich das Beste daran wäre, wenn du es schaffen würdest, an X Tagen pro Woche Vokabeln zu lernen. Auf der nächsten Seite siehst du ein paar Vorschläge von uns. Wähle alles aus der Liste aus, was auf dich  zutrifft Sollte nichts darunter sein oder noch etwas Wichtiges fehlen, kannst du es auf der übernächsten Seite ergänzen."),
+    // TextExplanationScreen(
+    //     "TODO: [Anzeige des Outcomes auf Platz 1 der Sortierliste] Nimm dir jetzt einen kurzen Moment Zeit, um dir dieses beste Ergebnis so lebhaft wie möglich vorzustellen. Wie fühlt es sich an? Versetze dich ganz in die Situation hinein. Du kannst dafür auch kurz die Augen schließen. Wenn du fertig bist, drücke auf “Weiter”."),
+    // OutcomeSelectionScreen(),
+    // OutcomeEnterScreen(),
+    // OutcomeSortingScreen(),
+    // ObstacleSelectionScreen(),
+    // ObstacleEnterScreen(),
+    // ObstacleSortingScreen(),
+    // TextExplanationScreen(
+    //     "TODO: [Anzeige des Obstacles auf Platz 1 der Sortierliste] Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen.  [freie Texteingabe, ]"),
+    // InitialAssessmentScreen(Assessments.goals),
+    // TextExplanationScreen(
+    //     "Danke für deine Mitarbeit bis hierhin! Du hast dir damit deine ersten 6 Punkte verdient! [anzeigen] Jetzt haben wir noch ein paar Fragen und eine Aufgabe für dich, dann hast du es geschafft"),
+    // InitialAssessmentScreen(Assessments.screen19),
+    // VideoScreen("Instruktionsvideo LDT"),
+    // InitialExplanationScreen(),
   ];
 
   @override
