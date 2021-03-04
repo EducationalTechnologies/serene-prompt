@@ -37,7 +37,7 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.firstLaunch:
-        nav.navigateAndRemove(RouteNames.INIT_VIDEO);
+        nav.navigateAndRemove(RouteNames.INIT_START);
         // nav.navigateAndRemove(RouteNames.CONSENT);
         break;
       case AppStartupMode.postLearningAssessment:
