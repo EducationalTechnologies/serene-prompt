@@ -103,7 +103,7 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
           Text("|"),
           Text(t.responseTime.toString()),
           Text("|"),
-          Text(t.status.toString())
+          Text(t.selection.toString())
         ],
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,

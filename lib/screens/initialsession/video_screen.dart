@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -39,16 +41,15 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(
+    return Container(
+        child: YoutubePlayer(
       controller: _controller,
       showVideoProgressIndicator: true,
-    );
-    return Container(
-      child: Text(
-        "Hier Instruktionsvideo ${widget.videoURL}",
-        style: Theme.of(context).textTheme.headline4,
-      ),
-    );
+      onEnded: (endedData) {
+        Provider.of<InitSessionViewModel>(context)
+            .onVideoCompleted(this.widget.videoURL);
+      },
+    ));
     // YoutubePlayerBuilder(
     //     player: YoutubePlayer(
     //       controller: _controller,

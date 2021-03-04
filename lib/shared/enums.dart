@@ -66,7 +66,7 @@ enum AppStartupMode {
   noTasks,
   internalisationTask,
   recallTask,
-  lexicalDecisionTask
+  lexicalDecisionTask,
 }
 
 enum Assessments {
@@ -80,5 +80,7 @@ enum Assessments {
   regulation,
   selfEfficacy,
   goals,
-  screen19
+  srl,
+  learningGoals1,
+  learningGoals2
 }

@@ -1,5 +1,5 @@
-import 'package:serene/models/assessment_item.dart';
-import 'package:serene/models/ldt_data.dart';
+import 'package:flutter/foundation.dart';
+import 'package:serene/models/assessment.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/data_service.dart';
@@ -10,13 +10,22 @@ import 'package:serene/viewmodels/base_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 
 class InitSessionViewModel extends BaseViewModel {
-  int step = 0;
-  bool consented = false;
-  final DataService _dataService;
   final ExperimentService _experimentService;
+  final DataService _dataService;
   LexicalDecisionTaskViewModel ldtvm;
 
-  List<AssessmentItemModel> _cabuuLearnQuestions = [];
+  int step = 0;
+  bool consented = false;
+  String cabuuLinkUserName = "";
+  bool videoOneCompleted = false;
+  bool videoTwoCompleted = false;
+  bool videoThreeCompleted = false;
+  String numberOfDaysLearningGoal;
+  String overcomeObstacleText;
+  Map<String, Map<String, String>> assessmentResults = {};
+
+  List<Obstacle> selectedObstacles = <Obstacle>[];
+  List<Outcome> selectedOutcomes = <Outcome>[];
 
   var obstacles = <Obstacle>[
     Obstacle(
@@ -44,8 +53,6 @@ class InitSessionViewModel extends BaseViewModel {
         description: "Ich mache beim Lernen andere Sachen (z.B. Fernsehen).",
         iconPath: AppAssetPaths.ICON_TEACHER),
   ];
-
-  var selectedObstacles = <Obstacle>[];
 
   var outcomes = <Outcome>[
     Outcome(
@@ -77,9 +84,13 @@ class InitSessionViewModel extends BaseViewModel {
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
-  InitSessionViewModel(this._dataService, this._experimentService);
-
-  var selectedOutcomes = <Outcome>[];
+  InitSessionViewModel(this._dataService, this._experimentService) {
+    assessmentResults[describeEnum(Assessments.cabuuLearn)] = {};
+    assessmentResults[describeEnum(Assessments.regulation)] = {};
+    assessmentResults[describeEnum(Assessments.learningGoals1)] = {};
+    assessmentResults[describeEnum(Assessments.srl)] = {};
+    assessmentResults[describeEnum(Assessments.learningGoals2)] = {};
+  }
 
   outcomeSelected(Outcome outcome) {
     if (selectedOutcomes.contains(outcome)) {
@@ -91,43 +102,21 @@ class InitSessionViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List<AssessmentItemModel> getAssessment(Assessments assessmentName) {
-    switch (assessmentName) {
-      case Assessments.dailyQuestion:
-        // TODO: Handle this case.
-        break;
-      case Assessments.postTest:
-        // TODO: Handle this case.
-        break;
-      case Assessments.preLearning:
-        // TODO: Handle this case.
-        break;
-      case Assessments.postLearning:
-        // TODO: Handle this case.
-        break;
-      case Assessments.usability:
-        // TODO: Handle this case.
-        break;
-      case Assessments.preImplementationIntention:
-        // TODO: Handle this case.
-        break;
-      case Assessments.cabuuLearn:
-        // TODO: Handle this case.
-        break;
-      case Assessments.regulation:
-        // TODO: Handle this case.
-        break;
-      case Assessments.selfEfficacy:
-        // TODO: Handle this case.
-        break;
-      case Assessments.goals:
-        // TODO: Handle this case.
-        break;
-      case Assessments.screen19:
-        // TODO: Handle this case.
-        break;
+  insertLearningGoalIntoAssessment(Assessment assessment, replacementValue) {
+    if (replacementValue == null) return;
+    for (var item in assessment.items) {
+      item.title = item.title.replaceAll("X", replacementValue);
     }
-    return _cabuuLearnQuestions;
+  }
+
+  Future<Assessment> getAssessment(Assessments assessmentName) async {
+    String name = describeEnum(assessmentName);
+    Assessment assessment = await _dataService.getAssessment(name);
+    if (assessmentName == Assessments.learningGoals1 ||
+        assessmentName == Assessments.learningGoals2) {
+      insertLearningGoalIntoAssessment(assessment, numberOfDaysLearningGoal);
+    }
+    return assessment;
   }
 
   obstacleSelected(Obstacle obstacle) {
@@ -148,6 +137,10 @@ class InitSessionViewModel extends BaseViewModel {
         (step == 2 && selectedOutcomes.length > 0) ||
         (step == 3 && selectedOutcomes.length > 0) ||
         step == 4;
+  }
+
+  bool canMoveNextCabuuLink() {
+    return consented && cabuuLinkUserName.isNotEmpty;
   }
 
   bool canMoveBack() {
@@ -201,9 +194,10 @@ class InitSessionViewModel extends BaseViewModel {
     return step + 1;
   }
 
-  setAssessmentResult(String id, String value) {
+  setAssessmentResult(String assessmentId, String itemId, String value) {
     // TODO: SET ASSESSMENT RESULT
     // results[id] = value;
+
     notifyListeners();
   }
 
@@ -218,5 +212,31 @@ class InitSessionViewModel extends BaseViewModel {
     return true;
   }
 
-  String getTrialMessage() {}
+  String getTrialMessage() {
+    var results = ldtvm.ldt.trials;
+
+    for (var i = 0; i < results.length; i++) {
+      var result = results[i];
+      if (result.selection == -1) {
+        return "Da warst du leider nicht immer schnell genug. Denk daran, dass du die richtige Taste so schnell wie möglich drücken sollst! Wir üben das noch einmal.";
+      }
+      if (result.selection != ldtvm.ldt.correctValues[i]) {
+        return "Da hast leider nicht immer richtig gedrückt. Denk daran, dass du bei einem echten Wort die Taste 'ja' drücken sollst und bei einem unechten Wort die Taste 'nein' Wir üben das noch einmal.";
+      }
+    }
+
+    return "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
+  }
+
+  onVideoCompleted(String url) {}
+
+  setConsentedValue(bool value) {
+    consented = value;
+    notifyListeners();
+  }
+
+  setNumberOfDaysLearningGoal(String value) {
+    numberOfDaysLearningGoal = value;
+    notifyListeners();
+  }
 }

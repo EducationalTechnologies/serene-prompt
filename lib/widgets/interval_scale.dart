@@ -66,13 +66,13 @@ class _IntervalScaleState extends State<IntervalScale> {
     );
   }
 
-  getLabel(int index) {
+  String getLabel(String key) {
     if (widget.labels != null) {
-      if (widget.labels.containsKey(index)) {
-        return widget.labels[index];
+      if (widget.labels.containsKey(key)) {
+        return widget.labels[key];
       }
     }
-    return index.toString();
+    return "MISSING LABEL";
   }
 
   @override
@@ -85,7 +85,7 @@ class _IntervalScaleState extends State<IntervalScale> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           for (var i = 1; i <= widget.labels.keys.length; i++)
-            buildItem(i, getLabel(i)),
+            buildItem(i, getLabel(i.toString())),
         ],
       )
     ]);

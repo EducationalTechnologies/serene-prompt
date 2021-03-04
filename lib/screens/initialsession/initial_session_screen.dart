@@ -3,7 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/screens/initialsession/initial_assessment_screen.dart';
 import 'package:serene/screens/initialsession/initial_explanation_screen.dart';
+import 'package:serene/screens/initialsession/initial_obstacle_display_screen.dart';
+import 'package:serene/screens/initialsession/initial_outcome_display_screen.dart';
+import 'package:serene/screens/initialsession/initial_obstacle_explanation_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
+import 'package:serene/screens/initialsession/initial_outcome_explanation_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
@@ -14,11 +18,13 @@ import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
 import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/initialsession/welcome_screen.dart';
 import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
-import 'package:serene/screens/questionnaire/lexical_decision_task_screen.dart';
+import 'package:serene/screens/initialsession/initial_daily_learning_goal_screen.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
+import 'package:serene/widgets/serene_appbar.dart';
+import 'package:serene/widgets/serene_drawer.dart';
 
 class InitialSessionScreen extends StatefulWidget {
   InitialSessionScreen({Key key}) : super(key: key);
@@ -33,11 +39,33 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   final _kCurve = Curves.ease;
 
   final List<Widget> _pages = [
-    VideoScreen("Erstes Video"),
-    WelcomeScreen(), // 0
-    VideoScreen("Zweites Videeo"),
+    WelcomeScreen(), // Screen 1
+    VideoScreen("QTSUm9LId7k"), // Screen 2
+    CabuuLinkScreen(), // Screen 3
+    InitialAssessmentScreen(Assessments.cabuuLearn), // Screen 4
+    InitialAssessmentScreen(Assessments.regulation), // Screen 4
+    VideoScreen("NfaDCzxoXGw"), // Screen 5
+    InitialDailyLearningGoalScreen(), // Screen 6
+    InitialAssessmentScreen(Assessments.learningGoals1), // Screen 6
+    InitialOutcomeExplanationScreen(), // Screen 7
+    OutcomeSelectionScreen(), // Screen 8
+    OutcomeEnterScreen(), // Screen 9
+    OutcomeSortingScreen(), // Screen 10
+    InitialOutcomeDisplayScreen(), // Screen 11
+    InitialObstacleExplanationScreen(), // Screen 12
+    ObstacleSelectionScreen(), // Screen 13
+    ObstacleEnterScreen(), // Screen 14
+    ObstacleSortingScreen(), // Screen 15
+    InitialObstacleDisplayScreen(), // Screen 16
+    InitialAssessmentScreen(Assessments.srl),
+    TextExplanationScreen("Reward krams"),
+    InitialAssessmentScreen(Assessments.learningGoals2),
+    TextExplanationScreen("Drittes Video"),
     InitialLdtScreen("0_0"),
-    // CabuuLinkScreen(),
+    InitialLdtScreen("0_1"),
+    InitialLdtScreen("0_2"),
+    TextExplanationScreen("Viertes Video"),
+    TextExplanationScreen("Reward krams"),
     // InitialAssessmentScreen(Assessments.cabuuLearn),
     // InitialAssessmentScreen(Assessments.regulation),
     // VideoScreen("Zweites Videeo"),
@@ -102,6 +130,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
               ),
               onPressed: () {
                 _controller.previousPage(duration: _kDuration, curve: _kCurve);
+                FocusScope.of(context).unfocus();
               },
             ),
           ),
@@ -128,6 +157,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
                   // _controller.nextPage(duration: _kDuration, curve: _kCurve);
                 }
                 setState(() {});
+                FocusScope.of(context).unfocus();
               },
             ),
           ),
@@ -171,6 +201,9 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async => false,
-        child: Scaffold(body: Container(child: buildPageView())));
+        child: Scaffold(
+            appBar: SereneAppBar(),
+            drawer: SereneDrawer(),
+            body: Container(child: buildPageView())));
   }
 }

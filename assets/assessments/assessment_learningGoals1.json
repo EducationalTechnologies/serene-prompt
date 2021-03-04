@@ -1,9 +1,9 @@
 {
-    "title": "Wie sehr treffen folgende Aussagen auf dich zu?",
-    "id": "goals",
+    "title": "",
+    "id": "learningGoals1",
     "questions": [
         {
-            "id": "goals_1",
+            "id": "learningGoals1_1",
             "questionText": "Wie wahrscheinlich ist es, dass du es schaffst, an X Tagen pro Woche mit cabuu zu lernen?",
             "labels": {
                 "1": "Sehr wahrscheinlich",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "id": "goals_2",
+            "id": "learningGoals1_2",
             "questionText": "Wie wichtig ist es dir persönlich, dass du es schaffst, an X Tagen pro Woche mit cabuu zu lernen?",
             "labels": {
                 "1": "Sehr wichtig",
@@ -25,7 +25,7 @@
             }
         },
         {
-            "id": "goals_3",
+            "id": "learningGoals1_3",
             "questionText": "Wie sehr verpasst du andere Dinge, wenn du an X Tagen pro Woche mit cabuu lernst?",
             "labels": {
                 "1": "Gar nicht",
@@ -36,7 +36,7 @@
             }
         },
         {
-            "id": "goals_4",
+            "id": "learningGoals1_4",
             "questionText": "Wie verpflichtet fühlst du dich, an X Tagen pro Woche mit cabuu zu lernen?",
             "labels": {
                 "1": "Gar nicht",
@@ -47,7 +47,7 @@
             }
         },
         {
-            "id": "goals_5",
+            "id": "learningGoals1_5",
             "questionText": "Wie enttäuscht würdest du sein, wenn du es nicht schaffen würdest, an X Tagen pro Woche mit cabuu zu lernen?",
             "labels": {
                 "1": "Gar nicht",
@@ -58,7 +58,7 @@
             }
         },
         {
-            "id": "goals_5",
+            "id": "learningGoals1_6",
             "questionText": "Wie schlecht wäre es für dich, wenn du es nicht schaffen würdest, an X Tagen pro Woche mit cabuu zu lernen?",
             "labels": {
                 "1": "Gar nicht",

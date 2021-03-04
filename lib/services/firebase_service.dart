@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/models/assessment.dart';
+import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/internalisation.dart';
@@ -228,7 +228,7 @@ class FirebaseService {
     await tokens.set({'token': token});
   }
 
-  saveAssessment(AssessmentModel assessment, String email) async {
+  saveAssessment(AssessmentResult assessment, String email) async {
     await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
         .doc(email)
@@ -236,7 +236,7 @@ class FirebaseService {
         .add(assessment.toMap());
   }
 
-  Future<AssessmentModel> getLastSubmittedAssessment(
+  Future<AssessmentResult> getLastSubmittedAssessment(
       String assessmentType, String email) async {
     try {
       var doc = await _databaseReference
@@ -248,7 +248,7 @@ class FirebaseService {
           .get();
 
       if (doc.docs.length == 0) return null;
-      return AssessmentModel.fromDocument(doc.docs[0]);
+      return AssessmentResult.fromDocument(doc.docs[0]);
     } catch (e) {
       print("Error trying to get the last submitted assessment: $e");
       return null;

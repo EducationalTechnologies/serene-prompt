@@ -7,7 +7,7 @@ typedef String StringCallback();
 
 class IdGenerator {
   static String _toPushIdBase64(int value, int numChars) {
-    List<String> chars = new List<String>(numChars);
+    List<String> chars = List.filled(numChars, "a");
     for (int i = numChars - 1; i >= 0; i -= 1) {
       chars[i] = _kPushChars[value % _kPushChars.length];
       value = (value / _kPushChars.length).floor();
@@ -18,7 +18,7 @@ class IdGenerator {
 
   static String generatePushId() {
     int lastPushTime = 0;
-    final List<int> randomSuffix = new List<int>(12);
+    final List<int> randomSuffix = List.filled(12, 1);
     final Random random = new Random.secure();
 
     final int now = new DateTime.now().toUtc().millisecondsSinceEpoch;

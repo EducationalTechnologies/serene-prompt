@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
-import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/speech_bubble.dart';
 
@@ -155,7 +153,7 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
     var message = vm.getTrialMessage();
     return Container(
       child: SpeechBubble(
-        text: "Supergut!",
+        text: message,
       ),
     );
   }

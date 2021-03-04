@@ -10,22 +10,30 @@ class CabuuLinkScreen extends StatelessWidget {
     var vm = Provider.of<InitSessionViewModel>(context);
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Checkbox(
                   tristate: false,
                   onChanged: (value) {
-                    vm.consented = value;
+                    vm.setConsentedValue(value);
                   },
                   value: vm.consented),
               Flexible(
-                child: Text("Ja, ich möchte an der Studie Teilnehmen"),
+                child: Text(
+                  "Ja, ich möchte an der Studie Teilnehmen",
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
               ),
             ],
           ),
           Text(
-              "Gib hier die Email Adresse oder den Benutzernamen oder die Benutzernamin ein, mit der du bei Cabuu registriert bist"),
+            "Gib hier die Email Adresse oder den Benutzernamen ein, mit der du bei Cabuu registriert bist",
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
           buildUserIdField(context)
         ],
       ),
@@ -33,6 +41,7 @@ class CabuuLinkScreen extends StatelessWidget {
   }
 
   buildUserIdField(BuildContext context) {
+    var vm = Provider.of<InitSessionViewModel>(context);
     return new Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0),
@@ -54,6 +63,7 @@ class CabuuLinkScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               onChanged: (text) {
                 // Provider.of<LoginState>(context).userId =
+                vm.cabuuLinkUserName = text;
               },
               validator: (String arg) {
                 if (arg.length < 3) {
@@ -66,7 +76,7 @@ class CabuuLinkScreen extends StatelessWidget {
                 // labelText: "Email",
                 // alignLabelWithHint: true,
                 border: InputBorder.none,
-                hintText: 'Nutzernamen eingeben',
+                hintText: 'Email oder Nutzername',
               ),
             ),
           ),

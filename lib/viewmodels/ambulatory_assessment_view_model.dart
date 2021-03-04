@@ -1,4 +1,4 @@
-import 'package:serene/models/assessment.dart';
+import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/assessment_item.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
@@ -93,7 +93,7 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
   submit() async {
     if (state == ViewState.busy) return;
     setState(ViewState.busy);
-    var assessmentModel = AssessmentModel(_userService.getUsername(), results,
+    var assessmentModel = AssessmentResult(_userService.getUsername(), results,
         _assessmentType.toString(), DateTime.now());
 
     await this

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
+import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/assessment_item.dart';
 import 'package:serene/models/goal.dart';
 import 'package:serene/models/goal_shield.dart';
@@ -150,12 +151,12 @@ class DataService {
     await _databaseService.deleteGoal(goal, _userService.getUserEmail());
   }
 
-  saveAssessment(AssessmentModel assessment) async {
+  saveAssessment(AssessmentResult assessment) async {
     await _databaseService.saveAssessment(
         assessment, _userService.getUserEmail());
   }
 
-  Future<AssessmentModel> getLastSubmittedAssessment(
+  Future<AssessmentResult> getLastSubmittedAssessment(
       String assessmentType) async {
     return await _databaseService.getLastSubmittedAssessment(
         assessmentType, _userService.getUserEmail());
@@ -180,6 +181,7 @@ class DataService {
     for (var primeTarget in trialData) {
       ldt.primes.add(primeTarget[0]);
       ldt.targets.add(primeTarget[1]);
+      ldt.correctValues.add(primeTarget[2]);
     }
 
     //initialize the trial data now so that less objects have to be created during the trial
@@ -320,12 +322,16 @@ class DataService {
     String data =
         await rootBundle.loadString("assets/assessments/assessment_$name.json");
     var json = jsonDecode(data);
-    var title = json["title"];
-    var id = json["id"];
-    var questions = [];
+
+    var ass = Assessment();
+    ass.id = json["id"];
+    ass.title = json["title"];
+    ass.items = [];
     for (var question in json["questions"]) {
-      questions.add(AssessmentItemModel(
-          question["questionText"], question["labels"], question["id"]));
+      ass.items.add(AssessmentItemModel(question["questionText"],
+          Map<String, String>.from(question["labels"]), question["id"]));
     }
+
+    return ass;
   }
 }

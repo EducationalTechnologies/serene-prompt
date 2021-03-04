@@ -1,6 +1,7 @@
 class LdtData {
   List<String> targets = [];
   List<String> primes = [];
+  List<int> correctValues = [];
   int durationFixationCross = 1000;
   int durationPrime = 50;
   int durationBackwardMask = 700;
@@ -30,7 +31,7 @@ class LdtTrial {
   String target;
   String condition;
   int responseTime;
-  int status;
+  int selection;
   int primeDuration = 0;
 
   Map<String, dynamic> toMap() {
@@ -38,11 +39,14 @@ class LdtTrial {
       "target": target,
       "condition": condition,
       "responseTime": responseTime,
-      "status": status,
+      "selection": selection,
       "primeDuration": primeDuration
     };
   }
 
   LdtTrial(
-      {this.target, this.condition, this.responseTime = -1, this.status = -1});
+      {this.target,
+      this.condition,
+      this.responseTime = -1,
+      this.selection = -1});
 }

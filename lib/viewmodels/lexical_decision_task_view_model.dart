@@ -65,7 +65,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   setTrialResult(int msResponseTime, int selection, int primeDuration) {
     ldt.trials[currenTargetIndex].primeDuration = primeDuration;
     ldt.trials[currenTargetIndex].responseTime = msResponseTime;
-    ldt.trials[currenTargetIndex].status = selection;
+    ldt.trials[currenTargetIndex].selection = selection;
   }
 
   submit() async {

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:serene/models/assessment.dart';
+import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/models/recall_task.dart';
@@ -232,7 +232,7 @@ class ExperimentService {
   }
 
   Future<void> submitAssessment(
-      AssessmentModel assessment, Assessments type) async {
+      AssessmentResult assessment, Assessments type) async {
     await this._dataService.saveAssessment(assessment);
 
     var nextRoute = RouteNames.NO_TASKS;

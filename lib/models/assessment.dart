@@ -1,23 +1,7 @@
-class AssessmentModel {
-  String userId;
-  Map<String, String> results;
-  String assessmentType;
-  DateTime submissionDate;
+import 'package:serene/models/assessment_item.dart';
 
-  AssessmentModel(
-      this.userId, this.results, this.assessmentType, this.submissionDate);
-
-  Map<String, dynamic> toMap() {
-    return {
-      "userId": this.userId,
-      "results": this.results,
-      "assessmentType": this.assessmentType,
-      "submissionDate": this.submissionDate.toIso8601String()
-    };
-  }
-
-  AssessmentModel.fromDocument(dynamic document) {
-    this.submissionDate = DateTime.parse(document["submissionDate"]);
-    this.assessmentType = document["assessmentType"];
-  }
+class Assessment {
+  String id;
+  List<AssessmentItemModel> items;
+  String title;
 }
