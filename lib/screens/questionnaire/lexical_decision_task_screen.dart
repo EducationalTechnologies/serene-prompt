@@ -149,6 +149,8 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
         margin: UIHelper.getContainerMargin(),
         child: Column(
             children: [
+              UIHelper.verticalSpaceLarge(),
+              UIHelper.verticalSpaceLarge(),
               currentPhaseWidget,
               Visibility(
                 maintainSize: true,
@@ -163,7 +165,7 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
                         },
                         text: "Ja",
                         height: 140),
-                    UIHelper.verticalSpaceLarge(),
+                    UIHelper.verticalSpaceMedium(),
                     FullWidthButton(
                         onPressed: () {
                           pressed(0);

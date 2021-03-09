@@ -67,8 +67,8 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         // });
       } else {
         //If the recall task is in less than
-        DateTime nextTime = lastInternalisation.completionDate.add(
-            Duration(hours: ExperimentService.INTERNALISATION_RECALL_BREAK));
+        DateTime nextTime =
+            experimentService.getScheduleTimeForRecallTask(DateTime.now());
 
         if (nextTime.isToday()) {
           if (lastRecall != null) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/screens/initialsession/initial_assessment_screen.dart';
-import 'package:serene/screens/initialsession/initial_explanation_screen.dart';
 import 'package:serene/screens/initialsession/initial_obstacle_display_screen.dart';
 import 'package:serene/screens/initialsession/initial_outcome_display_screen.dart';
 import 'package:serene/screens/initialsession/initial_obstacle_explanation_screen.dart';
