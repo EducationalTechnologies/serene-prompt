@@ -24,18 +24,18 @@ dependencies:
   intl: ^0.16.1
   sqflite: ^2.0.0
   device_info: ^1.0.0
-  flutter_markdown: ^0.5.2
+  flutter_markdown: ^0.6.0
   # Firebase stuff
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.20.0
-  firebase_crashlytics: ^0.4.0
-  cloud_firestore: ^0.16.0
+  firebase_core: ^1.0.0
+  firebase_auth: ^1.0.0
+  firebase_crashlytics: ^1.0.0
+  cloud_firestore: ^1.0.0
   animated_text_kit: ^3.1.0
   path_provider: ^1.6.27
   package_info: ^0.4.3
-  flutter_local_notifications: ^3.0.3
+  flutter_local_notifications: ^4.0.1
   http: ^0.12.00
-  get_it: ^5.0.4
+  get_it: ^6.0.0
   email_validator: ^1.0.6
   flutter_native_timezone: ^1.0.4
   google_fonts: ^1.1.1
