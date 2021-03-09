@@ -236,7 +236,7 @@ class ExperimentService {
     await this._dataService.saveAssessment(assessment);
 
     var nextRoute = RouteNames.NO_TASKS;
-    dynamic args = null;
+    dynamic args;
 
     if (type == Assessments.usability) {
       var index = await getCurrentTrialIndex();

@@ -128,10 +128,10 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                "assets/illustrations/mascot_schild.png"),
-                            fit: BoxFit.contain,
-                            scale: 2.0,
-                            alignment: Alignment.bottomLeft)),
+                                "assets/illustrations/mascot_bare.png"),
+                            fit: BoxFit.none,
+                            scale: 7.0,
+                            alignment: Alignment.bottomCenter)),
                     child: Align(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

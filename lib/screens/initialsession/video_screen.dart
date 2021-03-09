@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 class VideoScreen extends StatefulWidget {
   final String videoURL;
@@ -20,8 +20,8 @@ class _VideoScreenState extends State<VideoScreen> {
   }
 
   YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: 'QTSUm9LId7k',
-  );
+      initialVideoId: 'QTSUm9LId7k',
+      params: YoutubePlayerParams(autoPlay: true, showControls: true));
   @override
   void initState() {
     super.initState();
@@ -42,13 +42,13 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: YoutubePlayer(
+        child: YoutubePlayerIFrame(
       controller: _controller,
-      showVideoProgressIndicator: true,
-      onEnded: (endedData) {
-        Provider.of<InitSessionViewModel>(context)
-            .onVideoCompleted(this.widget.videoURL);
-      },
+
+      // showVideoProgressIndicator: true,
+      // onEnded: (endedData) {
+      //   Provider.of<InitSessionViewModel>(context)
+      //       .onVideoCompleted(this.widget.videoURL);
     ));
     // YoutubePlayerBuilder(
     //     player: YoutubePlayer(
