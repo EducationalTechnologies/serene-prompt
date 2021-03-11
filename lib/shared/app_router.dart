@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
-import 'package:serene/screens/goal_monitor_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
 import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/internalisation/emoji_story_screen.dart';
@@ -19,17 +18,13 @@ import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:serene/viewmodels/add_goal_view_model.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
 import 'package:serene/viewmodels/consent_view_model.dart';
-import 'package:serene/screens/add_goal_screen.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/consent_screen.dart';
-import 'package:serene/screens/main_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
 import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
-import 'package:serene/viewmodels/goal_monitoring_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/viewmodels/internalisation_recall_view_model.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
@@ -41,15 +36,6 @@ import 'package:serene/viewmodels/settings_view_model.dart';
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case RouteNames.MAIN:
-        return MaterialPageRoute(
-            builder: (context) =>
-                ChangeNotifierProvider<GoalMonitoringVielModel>(
-                    create: (_) =>
-                        GoalMonitoringVielModel(locator.get<DataService>()),
-                    child: MainScreen()));
-      // return MaterialPageRoute(builder: (_) => MainScreen());
-
       case RouteNames.INTERNALISATION:
         return MaterialPageRoute(
             builder: (context) =>
@@ -65,16 +51,6 @@ class AppRouter {
             builder: (context) =>
                 ChangeNotifierProvider<InternalisationViewModel>(
                     create: (_) => vm, child: EmojiStoryScreen()));
-
-      case RouteNames.ADD_GOAL:
-        final GoalScreenArguments goalArgs = settings.arguments;
-        return MaterialPageRoute(
-            maintainState: false,
-            builder: (context) => ChangeNotifierProvider<AddGoalViewModel>(
-                create: (_) => AddGoalViewModel(
-                    goal: goalArgs?.goal,
-                    dataService: locator.get<DataService>()),
-                child: AddGoalScreen()));
 
       case RouteNames.RECALL_TASK:
         return MaterialPageRoute(
@@ -133,14 +109,6 @@ class AppRouter {
                     locator.get<UserService>(),
                     locator.get<NavigationService>()),
                 child: ConsentScreen()));
-
-      case RouteNames.OPEN_GOALS:
-        return MaterialPageRoute(
-            builder: (context) => MultiProvider(providers: [
-                  ChangeNotifierProvider<GoalMonitoringVielModel>(
-                      create: (_) =>
-                          GoalMonitoringVielModel(Provider.of(context))),
-                ], child: GoalMonitorScreen()));
 
       case RouteNames.LOG_IN:
         return MaterialPageRoute(

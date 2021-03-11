@@ -79,14 +79,24 @@ class SereneDrawer extends StatelessWidget {
           //     }),
           _buildDrawerItem(
               icon: Icons.question_answer,
-              text: "Recall",
+              text: "Schritt 1",
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, RouteNames.RECALL_TASK);
               }),
+          Divider(),
           _buildDrawerItem(
               icon: Icons.security,
-              text: "Internalisierung",
+              text: "Schritt 2",
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context,
+                    RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION);
+              }),
+          Divider(),
+          _buildDrawerItem(
+              icon: Icons.security,
+              text: "Schritt 3",
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context,

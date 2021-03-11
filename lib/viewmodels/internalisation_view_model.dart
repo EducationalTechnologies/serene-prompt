@@ -15,7 +15,7 @@ class InternalisationViewModel extends BaseViewModel {
   Duration waitingDuration = Duration(seconds: 15);
   Internalisation _currentInternalisation = Internalisation();
 
-  InternalisationViewModel(this._dataService, this._experimentService) {
+  InternalisationViewModel(this._dataService, this._experimentService, ) {
     _currentInternalisation.startDate = DateTime.now();
 
     initialized = init();

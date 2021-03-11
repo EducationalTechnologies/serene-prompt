@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:serene/models/goal.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -118,89 +117,6 @@ class LocalDatabaseService {
     await db.delete(TABLE_SETTINGS, where: "key = ?", whereArgs: [key]);
   }
 
-  insertGoal(Goal goal) async {
-    final Database db = await database;
-
-    await db.insert(TABLE_GOALS, goal.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  getGoalListFromMap(List<Map<String, dynamic>> map) {
-    return List.generate(map.length, (i) {
-      DateTime deadline;
-      var progressIndicator = GoalProgressIndicator.checkbox;
-      if (map[i]["deadline"] != "") {
-        deadline = DateTime.parse(map[i]["deadline"]);
-      }
-      if (map[i].containsKey("progressIndicator")) {
-        progressIndicator = map[i]["progressIndicator"];
-      }
-
-      return Goal(
-          deadline: deadline,
-          id: map[i]["id"],
-          goalText: (map[i]["goalText"]).toString(),
-          progressIndicator: progressIndicator,
-          difficulty: map[i]["difficulty"],
-          userId: map[i]["userId"],
-          progress: map[i]["progress"]);
-    });
-  }
-
-  getOpenGoals() async {
-    print("Fetching OPEN goals from database");
-    final db = await database;
-
-    // var result = await db.query(TABLE_GOALS, where: whereString);
-
-    var result =
-        await db.rawQuery("select * from $TABLE_GOALS where progress < 100");
-
-    return getGoalListFromMap(result);
-  }
-
-  getGoals() async {
-    print("OBTAINING GOALS FROM DATABASE");
-    final db = await database;
-    var maps = await db.query(TABLE_GOALS);
-
-    return List.generate(maps.length, (i) {
-      DateTime deadline;
-      var progressIndicator = GoalProgressIndicator.checkbox;
-      var goalDifficulty = GoalDifficulty.medium;
-      if (maps[i]["deadline"] != "") {
-        deadline = DateTime.parse(maps[i]["deadline"]);
-      }
-      if (maps[i].containsKey("progressIndicator")) {
-        progressIndicator = maps[i]["progressIndicator"];
-      }
-      if (maps[i].containsKey("difficulty")) {
-        goalDifficulty = maps[i]["difficulty"];
-      }
-
-      return Goal(
-          deadline: deadline,
-          id: maps[i]["id"],
-          goalText: maps[i]["goalText"].toString(),
-          progressIndicator: progressIndicator,
-          difficulty: goalDifficulty,
-          progress: maps[i]["progress"]);
-    });
-  }
-
-  updateGoal(Goal goal) async {
-    final db = await database;
-
-    await db.update(TABLE_GOALS, goal.toMap(),
-        where: "id = ?", whereArgs: [goal.id]);
-  }
-
-  deleteGoal(Goal goal) async {
-    final Database db = await database;
-
-    await db.delete(TABLE_GOALS, where: "id = ?", whereArgs: [goal.id]);
-  }
-
   clearDatabase() async {
     final Database db = await database;
 
@@ -211,32 +127,5 @@ class LocalDatabaseService {
     // final Database db = await database;
 
     // await db.delete(TABLE_GOALS, where: "id = ?", whereArgs: [goal.id]);
-  }
-
-  insertSampleData() async {
-    List<Goal> _goals = [
-      Goal(
-          id: "0",
-          goalText: "Fix the audio recording issue",
-          progressIndicator: GoalProgressIndicator.checkbox,
-          deadline: DateTime.now(),
-          progress: 40),
-      Goal(
-          id: "1",
-          goalText: "Create the informed consent screen",
-          progressIndicator: GoalProgressIndicator.slider,
-          deadline: DateTime.now(),
-          progress: 5),
-      Goal(
-          id: "2",
-          goalText: "Ethikantrag ausfüllen",
-          progressIndicator: GoalProgressIndicator.checkbox,
-          deadline: DateTime.now(),
-          progress: 20),
-    ];
-
-    for (var goal in _goals) {
-      await insertGoal(goal);
-    }
   }
 }

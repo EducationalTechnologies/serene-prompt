@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:serene/services/data_service.dart';
 
 class LoggingService {
@@ -11,7 +10,6 @@ class LoggingService {
   }
 
   logData(String data) {
-    FirebaseCrashlytics.instance.log("Higgs-Boson detected! Bailing out");
   }
 
   logEvent(String eventName) {

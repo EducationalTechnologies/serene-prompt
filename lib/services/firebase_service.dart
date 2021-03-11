@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/models/assessment_result.dart';
-import 'package:serene/models/goal.dart';
-import 'package:serene/models/goal_shield.dart';
 import 'package:serene/models/internalisation.dart';
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/models/obstacle.dart';
@@ -50,97 +48,6 @@ class FirebaseService {
 
   void handleTimeout(String function) {
     locator.get<LoggingService>().logEvent("Firetore Timeout: $function");
-  }
-
-  Future<List<DocumentSnapshot>> getGoals(String email) async {
-    var goals = await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .doc(email)
-        .collection(COLLECTION_GOALS_OPEN)
-        .get();
-
-    return goals.docs;
-  }
-
-  /// Adds a goal to the database and returns its id
-  Future<String> createGoal(Goal goal, String email) async {
-    return await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .doc(email)
-        .collection(COLLECTION_GOALS_OPEN)
-        .doc(goal.id)
-        .set(goal.toMap())
-        .then((val) {
-      return null;
-    }).catchError((error) {
-      print("Error trying to submit a new goal: $error");
-      return null;
-    });
-  }
-
-  Future<List<DocumentSnapshot>> retrieveAllGoals(String email) async {
-    try {
-      var goals = await _databaseReference
-          .collection(COLLECTION_GOALS)
-          .doc(email)
-          .collection(COLLECTION_GOALS_OPEN)
-          .get();
-
-      return goals.docs;
-    } on PlatformException catch (e) {
-      print("Error trying to retrieve goals: $e");
-      lastError = e.code;
-      return [];
-    }
-  }
-
-  retrieveOpenGoals(String userId) async {
-    var goals = await retrieveAllGoals(userId);
-    List<Goal> mappedGoals = [];
-
-    if (goals != null) {
-      if (goals.length > 0) {
-        mappedGoals = goals.where((goal) {
-          if (goal["progress"] != null) {
-            return goal["progress"] < 100;
-          }
-          return false;
-        }).map((openGoal) {
-          return Goal.fromDocument(openGoal);
-        }).toList();
-      }
-    }
-
-    return mappedGoals;
-  }
-
-  updateGoal(Goal goal, String email) async {
-    await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .doc(email)
-        .collection(COLLECTION_GOALS_OPEN)
-        .doc(goal.id)
-        .update(goal.toMap());
-  }
-
-  /// Deletes a goal and at the same time adds it to the list of deleted goals
-  deleteGoal(Goal goal, String email) async {
-    goal.completionDate = DateTime.now();
-    await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .doc(email)
-        .collection(COLLECTION_GOALS_DELETED)
-        .doc(goal.id)
-        .set(goal.toMap());
-    await _databaseReference
-        .collection(COLLECTION_GOALS)
-        .doc(email)
-        .collection(COLLECTION_GOALS_OPEN)
-        .doc(goal.id)
-        .delete()
-        .catchError((e) {
-      print(e);
-    });
   }
 
   Future<bool> isNameAvailable(String userId) async {
@@ -255,21 +162,6 @@ class FirebaseService {
     }
   }
 
-  saveShielding(GoalShield shield, String email) async {
-    var key = DateTime.now().toIso8601String();
-    try {
-      await _databaseReference
-          .collection(COLLECTION_SHIELDS)
-          .doc(email)
-          .collection(COLLECTION_SHIELDS)
-          .doc(key)
-          .set(shield.toMap());
-    } catch (e) {
-      print("Error trying to save the goal shielding: $e");
-      return null;
-    }
-  }
-
   saveOutcomes(List<Outcome> outcomes, String email) async {
     var dynamicList = outcomes.map((outcome) => outcome.toMap()).toList();
 
@@ -286,19 +178,6 @@ class FirebaseService {
         .collection(COLLECTION_OBSTACLES)
         .doc(email)
         .set({"obstacles": dynamicList});
-  }
-
-  Future<GoalShield> getLastSubmittedGoalShield(String email) async {
-    var doc = await _databaseReference
-        .collection(COLLECTION_SHIELDS)
-        .doc(email)
-        .collection(COLLECTION_SHIELDS)
-        .orderBy("submissionDate", descending: true)
-        .limit(1)
-        .get();
-
-    if (doc.docs.length == 0) return null;
-    return GoalShield.fromDocument(doc.docs[0]);
   }
 
   saveInternalisation(Internalisation internalisation, String email) async {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
 class VideoScreen extends StatefulWidget {
