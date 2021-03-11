@@ -35,6 +35,8 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   }
 
   Future<String> getNextText() async {
+    return "Vielen Dank, dass du mitmachst!";
+
     var dataService = locator<DataService>();
     var experimentService = locator<ExperimentService>();
     String nextText = "";
