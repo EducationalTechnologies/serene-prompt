@@ -17,9 +17,7 @@ class _VideoScreenState extends State<VideoScreen> {
     // }
   }
 
-  YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: 'QTSUm9LId7k',
-      params: YoutubePlayerParams(autoPlay: true, showControls: true));
+  YoutubePlayerController _controller;
   @override
   void initState() {
     super.initState();
@@ -35,6 +33,15 @@ class _VideoScreenState extends State<VideoScreen> {
     //     enableCaption: true,
     //   ),
     // )..addListener(listener);
+    _controller = YoutubePlayerController(
+        initialVideoId: widget.videoURL,
+        params: YoutubePlayerParams(autoPlay: true, showControls: true));
+  }
+
+  @override
+  void dispose() {
+    _controller.close();
+    super.dispose();
   }
 
   @override

@@ -31,6 +31,8 @@ class _SereneAppBarState extends State<SereneAppBar> {
             future: rewardService.initialized,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                // TODO: Usability STuff
+                return Text("");
                 return Row(
                   children: [
                     Image(

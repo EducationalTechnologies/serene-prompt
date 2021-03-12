@@ -242,6 +242,8 @@ class ExperimentService {
       var index = await getCurrentTrialIndex();
       args = index.toString();
       nextRoute = RouteNames.LDT;
+      // TODO: USABILITY STUFF: REMOVE
+      nextRoute = RouteNames.NO_TASKS;
     } else if (type == Assessments.preImplementationIntention) {
       nextRoute = RouteNames.INTERNALISATION;
     }

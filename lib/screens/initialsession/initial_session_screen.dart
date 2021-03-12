@@ -7,6 +7,8 @@ import 'package:serene/screens/initialsession/initial_outcome_display_screen.dar
 import 'package:serene/screens/initialsession/initial_obstacle_explanation_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/initial_outcome_explanation_screen.dart';
+import 'package:serene/screens/initialsession/initial_reward_screen_first.dart';
+import 'package:serene/screens/initialsession/initial_reward_screen_second.dart';
 import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
@@ -57,14 +59,14 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     ObstacleSortingScreen(), // Screen 15
     InitialObstacleDisplayScreen(), // Screen 16
     InitialAssessmentScreen(Assessments.srl),
-    TextExplanationScreen("Reward krams"),
+    // InitialRewardScreenFirst(),
     InitialAssessmentScreen(Assessments.learningGoals2),
     VideoScreen("9CHA1RpTgRM"),
     InitialLdtScreen("0_0"),
     InitialLdtScreen("0_1"),
     InitialLdtScreen("0_2"),
     VideoScreen("chZNcG-sLAM"),
-    TextExplanationScreen("Reward krams"),
+    // InitialRewardScreenSecond()
     // InitialAssessmentScreen(Assessments.cabuuLearn),
     // InitialAssessmentScreen(Assessments.regulation),
     // VideoScreen("Zweites Videeo"),

@@ -154,10 +154,19 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.filter_6,
-              text: "LDT",
+              text: "Abschlussfragen",
               onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.LDT, arguments: "1");
+                var routeWidget =
+                    ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
+                        create: (_) => AmbulatoryAssessmentViewModel(
+                            Assessments.usability,
+                            locator.get<UserService>(),
+                            locator.get<DataService>(),
+                            locator.get<ExperimentService>()),
+                        child: AmbulatoryAssessmentScreen());
+
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => routeWidget));
               }),
           // VersionInfo()
         ],
