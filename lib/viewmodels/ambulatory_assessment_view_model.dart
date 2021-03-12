@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
+import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/assessment_item.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -9,70 +12,26 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
   final Assessments _assessmentType;
 
   UserService _userService;
+  DataService _dataService;
   final ExperimentService _experimentService;
-  List<AssessmentItemModel> _currentAssessment = [];
-  get currentAssessment => _currentAssessment;
+  Assessment _currentAssessment;
+  Assessment get currentAssessment => _currentAssessment;
   String title;
   String preText = "";
   Map<String, String> results = {};
 
-  AmbulatoryAssessmentViewModel(
-      this._assessmentType, this._userService, this._experimentService) {
-    if (this._assessmentType == Assessments.preImplementationIntention) {
-      title = "";
-      this._currentAssessment = getPreLearningList();
-    } else if (this._assessmentType == Assessments.usability) {
-      title = "";
-      this._currentAssessment = _getUsabilityQuestionnaire();
-    }
-  }
+  AmbulatoryAssessmentViewModel(this._assessmentType, this._userService,
+      this._dataService, this._experimentService);
 
-  getPreLearningList() {
-    List<AssessmentItemModel> _preGoal = [
-      AssessmentItemModel(
-          "Wie verpflichtet fühlst du dich, deine Ziele heute zu erreichen?",
-          {"1": "Gar nicht", "2": "2", "3": "3", "4": "4", "5": "Sehr"},
-          "preLearning1"),
-      AssessmentItemModel(
-          "Wie schwierig wird es heute, deine Ziele zu erreichen?",
-          {"1": "Gar nicht", "2": "2", "3": "3", "4": "4", "5": "Sehr"},
-          "preLearning2"),
-      AssessmentItemModel(
-          "Wie sehr freust du dich auf diese Aufgaben?",
-          {"1": "Gar nicht", "2": "2", "3": "3", "4": "4", "5": "Sehr"},
-          "preLearning3"),
-    ];
-    return _preGoal;
-  }
-
-  _getUsabilityQuestionnaire() {
-    List<AssessmentItemModel> _usability = [
-      AssessmentItemModel(
-          "Wie viel **Spaß** hat es dir gemacht, dir die Pläne so einzuprägen?",
-          {
-            "1": "Sehr viel Spaß",
-            "2": "Eher Spaß",
-            "3": "Weder noch",
-            "4": "Eher keinen Spaß",
-            "5": "Gar keinen Spaß"
-          },
-          "usabilityFun"),
-      AssessmentItemModel(
-          "Wie **schwierig** fandest du es, dir die Pläne so einzuprägen?",
-          {
-            "1": "Sehr schwierig",
-            "2": "Eher schwierig",
-            "3": "Weder noch",
-            "4": "Eher einfach",
-            "5": "Sehr einfach"
-          },
-          "usabilityFun"),
-    ];
-    return _usability;
+  Future<Assessment> getAssessment() async {
+    String name = describeEnum(_assessmentType);
+    Assessment assessment = await _dataService.getAssessment(name);
+    this._currentAssessment = assessment;
+    return assessment;
   }
 
   getResultForIndex(int index) {
-    var key = this._currentAssessment[index].id;
+    var key = this._currentAssessment.items[index].id;
     if (results.containsKey(key)) return int.parse(results[key]);
     return null;
   }
@@ -84,7 +43,7 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
 
   canSubmit() {
     bool canSubmit = true;
-    for (var assessmentItem in currentAssessment) {
+    for (var assessmentItem in currentAssessment.items) {
       if (!results.containsKey(assessmentItem.id)) canSubmit = false;
     }
     return canSubmit;

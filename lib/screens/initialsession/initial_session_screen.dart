@@ -39,11 +39,11 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
 
   final List<Widget> _pages = [
     WelcomeScreen(), // Screen 1
-    VideoScreen("QTSUm9LId7k"), // Screen 2
+    VideoScreen("45q_GRrlQ04"), // Screen 2
     CabuuLinkScreen(), // Screen 3
     InitialAssessmentScreen(Assessments.cabuuLearn), // Screen 4
     InitialAssessmentScreen(Assessments.regulation), // Screen 4
-    VideoScreen("NfaDCzxoXGw"), // Screen 5
+    VideoScreen("d0PSrCMoTpk"), // Screen 5
     InitialDailyLearningGoalScreen(), // Screen 6
     InitialAssessmentScreen(Assessments.learningGoals1), // Screen 6
     InitialOutcomeExplanationScreen(), // Screen 7
@@ -59,11 +59,11 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     InitialAssessmentScreen(Assessments.srl),
     TextExplanationScreen("Reward krams"),
     InitialAssessmentScreen(Assessments.learningGoals2),
-    TextExplanationScreen("Drittes Video"),
+    VideoScreen("9CHA1RpTgRM"),
     InitialLdtScreen("0_0"),
     InitialLdtScreen("0_1"),
     InitialLdtScreen("0_2"),
-    TextExplanationScreen("Viertes Video"),
+    VideoScreen("chZNcG-sLAM"),
     TextExplanationScreen("Reward krams"),
     // InitialAssessmentScreen(Assessments.cabuuLearn),
     // InitialAssessmentScreen(Assessments.regulation),

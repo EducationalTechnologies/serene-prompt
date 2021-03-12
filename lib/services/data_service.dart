@@ -222,4 +222,9 @@ class DataService {
 
     return ass;
   }
+
+  getInitSessionSteps() async {
+    return await _databaseService
+        .getInitSessionSteps(_userService.getUserEmail());
+  }
 }

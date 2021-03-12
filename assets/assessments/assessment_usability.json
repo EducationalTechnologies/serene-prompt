@@ -1,0 +1,28 @@
+{
+    "title": "",
+    "id": "usability",
+    "questions": [
+        {
+            "id": "usability_1",
+            "questionText": "Wie viel **Spaß** hat es dir gemacht, dir die Pläne so einzuprägen?",
+            "labels": {
+                "1": "Sehr viel Spaß",
+                "2": "Eher Spaß",
+                "3": "Weder noch",
+                "4": "Eher keinen Spaß",
+                "5": "Gar keinen Spaß"
+            }
+        },
+        {
+            "id": "usability_2",
+            "questionText": "Wie **schwierig** fandest du es, dir die Pläne so einzuprägen?",
+            "labels": {
+                "1": "Sehr schwierig",
+                "2": "Eher schwierig",
+                "3": "Weder noch",
+                "4": "Eher einfach",
+                "5": "Sehr einfach"
+            }
+        }
+    ]
+}

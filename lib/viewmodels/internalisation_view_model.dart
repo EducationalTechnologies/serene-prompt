@@ -15,11 +15,25 @@ class InternalisationViewModel extends BaseViewModel {
   Duration waitingDuration = Duration(seconds: 15);
   Internalisation _currentInternalisation = Internalisation();
 
-  InternalisationViewModel(this._dataService, this._experimentService, ) {
+  InternalisationViewModel(
+    this._dataService,
+    this._experimentService,
+  ) {
     _currentInternalisation.startDate = DateTime.now();
 
     initialized = init();
     waitingDuration = ExperimentService.WAITING_TIMER_DURATION;
+  }
+
+  InternalisationViewModel.forUsability(InternalisationCondition condition,
+      this._dataService, this._experimentService) {
+    _currentInternalisation.startDate = DateTime.now();
+    this.implementationIntention =
+        "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.";
+
+    this.internalisationCondition = condition;
+
+    this.initialized = Future.delayed(Duration.zero).then((value) => true);
   }
 
   Future<bool> init() async {

@@ -41,6 +41,7 @@ class FirebaseService {
   static const String COLLECTION_SCORES = "scores";
   static const String COLLECTION_LOGS = "logs";
   static const String COLLECTION_LDT = "ldt";
+  static const String COLLECTION_INITSESSION = "initSession";
 
   void handleError(Object e) {
     locator.get<LoggingService>().logEvent("Firestore error: ${e.toString()}");
@@ -329,5 +330,18 @@ class FirebaseService {
 
   logEvent(String userid, dynamic data) async {
     return await _databaseReference.collection(COLLECTION_LOGS).add(data);
+  }
+
+  Future<Map<String, String>> getInitSessionSteps(String userid) async {
+    var initSessionData = await _databaseReference
+        .collection(COLLECTION_INITSESSION)
+        .where("user", isEqualTo: userid)
+        .get();
+
+    if (initSessionData.docs.length == null) {
+      return null;
+    }
+    // TODO: Implement?
+    return null;
   }
 }

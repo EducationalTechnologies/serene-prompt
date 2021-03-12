@@ -1,29 +1,23 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:serene/services/data_service.dart';
+import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
-
-enum SignInScreenMode { signIn, register }
 
 class LoginViewModel extends BaseViewModel {
   String _email;
   String get email => _email;
 
-  SignInScreenMode mode;
-
   UserService _userService;
+  DataService _dataService;
+  NavigationService _navigationService;
 
   String defaultPassword = "Hasselhoernchen";
 
-  LoginViewModel(this._userService) {
-    this._email = this._userService.getUserEmail();
-
-    if (this._email == null) {
-      mode = SignInScreenMode.register;
-    } else {
-      mode = SignInScreenMode.signIn;
-    }
-  }
+  LoginViewModel(
+      this._userService, this._dataService, this._navigationService) {}
 
   Future<String> register(String email, String password) async {
     if (!validateEmail(email)) {
@@ -53,6 +47,17 @@ class LoginViewModel extends BaseViewModel {
     return signin;
   }
 
+  submit() async {
+    // TODO: Implement
+    bool userHasCreatedSession0 = false;
+
+    if (userHasCreatedSession0) {
+      _navigationService.navigateTo(RouteNames.NO_TASKS);
+    } else {
+      _navigationService.navigateTo(RouteNames.INIT_START);
+    }
+  }
+
   progressWithoutUsername() async {
     await _userService.saveRandomUser();
   }
@@ -64,17 +69,5 @@ class LoginViewModel extends BaseViewModel {
   validateUserId(String value) {
     return true;
     // TODO: Create new validation function to check if user id is valid
-  }
-
-  toRegisterScreen() {
-    this._email = "";
-    this.mode = SignInScreenMode.register;
-    notifyListeners();
-  }
-
-  toSignInScreen() {
-    this._email = "";
-    this.mode = SignInScreenMode.signIn;
-    notifyListeners();
   }
 }

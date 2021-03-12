@@ -21,8 +21,7 @@ class NoTasksScreen extends StatefulWidget {
 
 class _NoTasksScreenState extends State<NoTasksScreen> {
   String _textNext = "";
-  String _textNotification =
-      "Sobald es weitergeht, wird dich die App benachrichtigen";
+  String _textNotification = "Vielen Dank, dass du mitmachst!";
 
   Future<String> _nextText;
 

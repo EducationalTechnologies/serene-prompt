@@ -71,6 +71,7 @@ enum AppStartupMode {
 
 enum Assessments {
   dailyQuestion,
+  dailyQuestionsAll,
   postTest,
   preLearning,
   postLearning,

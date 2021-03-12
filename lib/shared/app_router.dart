@@ -45,13 +45,6 @@ class AppRouter {
                         locator.get<ExperimentService>()),
                     child: InternalisationScreen()));
 
-      case RouteNames.EMOJI_STORY:
-        final InternalisationViewModel vm = settings.arguments;
-        return MaterialPageRoute(
-            builder: (context) =>
-                ChangeNotifierProvider<InternalisationViewModel>(
-                    create: (_) => vm, child: EmojiStoryScreen()));
-
       case RouteNames.RECALL_TASK:
         return MaterialPageRoute(
             builder: (context) =>
@@ -68,6 +61,7 @@ class AppRouter {
                     create: (_) => AmbulatoryAssessmentViewModel(
                         assessmentArgs.assessmentType,
                         locator.get<UserService>(),
+                        locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
@@ -78,6 +72,7 @@ class AppRouter {
                     create: (_) => AmbulatoryAssessmentViewModel(
                         Assessments.usability,
                         locator.get<UserService>(),
+                        locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
@@ -88,6 +83,7 @@ class AppRouter {
                     create: (_) => AmbulatoryAssessmentViewModel(
                         Assessments.preLearning,
                         locator.get<UserService>(),
+                        locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
@@ -98,6 +94,7 @@ class AppRouter {
                     create: (_) => AmbulatoryAssessmentViewModel(
                         Assessments.preImplementationIntention,
                         locator.get<UserService>(),
+                        locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
@@ -115,7 +112,10 @@ class AppRouter {
             builder: (_) => MultiProvider(
                     providers: [
                       ChangeNotifierProvider<LoginViewModel>.value(
-                          value: LoginViewModel(locator.get<UserService>())),
+                          value: LoginViewModel(
+                              locator.get<UserService>(),
+                              locator.get<DataService>(),
+                              locator.get<NavigationService>())),
                     ],
                     child: LoginScreen(
                       backgroundColor1: Colors.orange[50],

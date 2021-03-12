@@ -120,14 +120,14 @@ class _LoginScreenState extends State<LoginScreen> {
           new Expanded(
             child: TextFormField(
               controller: _userIdTextController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
               onChanged: (text) {
                 // Provider.of<LoginState>(context).userId =
               },
               validator: (String arg) {
                 if (arg.length < 3) {
-                  return "Please use 3 or more characters";
+                  return "Bitte nutze drei oder mehr Zeichen";
                 } else {
                   return null;
                 }
@@ -157,11 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       child: vm.state == ViewState.idle
-          ? Text(
-              vm.mode == SignInScreenMode.register
-                  ? "Registrieren"
-                  : "Anmelden",
-            )
+          ? Text("Anmelden")
           : CircularProgressIndicator(),
     );
   }
@@ -194,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     new Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: new Text(
-                        "Serene",
+                        "PROMPT",
                         style: TextStyle(color: this.widget.foregroundColor),
                       ),
                     )
@@ -220,39 +216,6 @@ class _LoginScreenState extends State<LoginScreen> {
             //   _buildAlreadyHaveAccountButton(context),
           ],
         ),
-      ),
-    );
-  }
-
-  buildUseWithoutAccountControls() {
-    var vm = Provider.of<LoginViewModel>(context);
-    return new Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(
-          left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
-      alignment: Alignment.center,
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-            child: InkWell(
-              onTap: () async {
-                // await vm.progressWithoutUsername();
-                // Navigator.pushNamed(context, RouteNames.MAIN);
-              },
-              child: new ElevatedButton(
-                onPressed: () async {
-                  await vm.progressWithoutUsername();
-                  Navigator.pushNamed(context, RouteNames.INIT_START);
-                },
-                child: Text(
-                  "Ohne Account verwenden",
-                  style: TextStyle(
-                      color: this.widget.foregroundColor.withOpacity(0.8)),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

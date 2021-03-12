@@ -26,6 +26,10 @@ class StartupViewModel extends BaseViewModel {
   Future<void> startApp(AppStartupMode appStartupMode) async {
     print("Navigating to ${appStartupMode.toString()}");
     var nav = locator<NavigationService>();
+
+    // TODO: CHANGE BACK AFTER USABILITY STUDY
+    nav.navigateAndRemove(RouteNames.NO_TASKS);
+    return;
     switch (appStartupMode) {
       case AppStartupMode.normal:
         nav.navigateAndRemove(RouteNames.MAIN);
@@ -34,7 +38,8 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.LOG_IN);
         break;
       case AppStartupMode.preInternalisationAssessment:
-        nav.navigateAndRemove(RouteNames.INTERNALISATION);
+        nav.navigateAndRemove(RouteNames.LOG_IN);
+        // nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.firstLaunch:
         nav.navigateAndRemove(RouteNames.INIT_START);
@@ -67,23 +72,17 @@ class StartupViewModel extends BaseViewModel {
   Future<AppStartupMode> initialize() async {
     await locator<SettingsService>().initialize();
     addDebugText("Initialized Settings Service");
+    await locator<NotificationService>().initialize();
+    addDebugText("Initialized Notification Service");
+    var experimentService = locator<ExperimentService>();
+    await experimentService.initialize();
+    locator<RewardService>().initialize();
+
     bool userInitialized = await locator<UserService>().initialize();
     addDebugText("User Initialized: $userInitialized");
     if (!userInitialized) {
       return AppStartupMode.firstLaunch;
     }
-
-    await locator<NotificationService>().initialize();
-    addDebugText("Initialized Notification Service");
-    addDebugText("Initialized Experiment Service");
-
-    addDebugText("Current User: ${locator<UserService>().getUserEmail()}");
-    addDebugText(
-        "Waiting for the current start route from the experiment service");
-
-    var experimentService = locator<ExperimentService>();
-    await experimentService.initialize();
-    locator<RewardService>().initialize();
 
     addDebugText("Time For Internalisation Task?");
     if (await experimentService.isTimeForInternalisationTask()) {

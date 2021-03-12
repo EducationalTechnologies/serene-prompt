@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:serene/models/assessment.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/interval_scale.dart';
@@ -11,9 +12,9 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
     await vm.submit();
   }
 
-  _buildAssessmentList(BuildContext context) {
+  _buildAssessmentList(BuildContext context, Assessment assessment) {
     var vm = Provider.of<AmbulatoryAssessmentViewModel>(context);
-    var assessment = vm.currentAssessment;
+    // var assessment = vm.currentAssessment;
     var canSubmit = vm.canSubmit();
     return SingleChildScrollView(
       child: Column(
@@ -26,18 +27,18 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: (TextStyle(fontSize: 18)),
                   ))),
-          for (var index = 0; index < assessment.length; index++)
+          for (var index = 0; index < assessment.items.length; index++)
             Card(
                 child: Padding(
               padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
               child: IntervalScale(
-                title: assessment[index].title,
-                labels: assessment[index].labels,
-                id: assessment[index].id,
+                title: assessment.items[index].title,
+                labels: assessment.items[index].labels,
+                id: assessment.items[index].id,
                 groupValue: vm.getResultForIndex(index),
                 callback: (val) {
                   print("Changed Assessment value to: $val");
-                  vm.setResult(assessment[index].id, val);
+                  vm.setResult(assessment.items[index].id, val);
                 },
               ),
             )),
@@ -58,12 +59,19 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(vm.title),
+        title: Text(""),
       ),
       body: Container(
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: _buildAssessmentList(context)),
+        child: FutureBuilder(
+            future: vm.getAssessment(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                Assessment ass = snapshot.data;
+                return _buildAssessmentList(context, ass);
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
       ),
     );
   }

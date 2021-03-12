@@ -77,3 +77,5 @@ android/key.properties
 .flutter-plugins-dependencies
 pubspec.lock
 ios/Flutter/flutter_export_environment.sh
+ios/Flutter/flutter_export_environment.sh
+.gitignore
