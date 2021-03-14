@@ -165,13 +165,6 @@ class ExperimentService {
     return false;
   }
 
-  // TODO: Implement
-  Future<bool> isTimeForUsabilityTask() async {
-    return await Future.delayed(Duration.zero).then((value) {
-      return false;
-    });
-  }
-
   Future<InternalisationCondition> getTodaysInternalisationCondition() async {
     var ud = await this._dataService.getUserData();
 
