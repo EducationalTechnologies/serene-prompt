@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -17,8 +19,13 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
 
   LdtData ldt = LdtData();
 
-  int currenTargetIndex = 0;
-  int currentPrimeIndex = 0;
+  Stopwatch _primeStopwatch = Stopwatch();
+  Stopwatch _stopwatch;
+  List<int> primeDurations = [];
+  int phase = 0;
+  int currentStep = 0;
+  int currenTargetIndex = -1;
+  int currentPrimeIndex = -1;
 
   LexicalDecisionTaskViewModel(this._trialName, this._experimentService) {
     phaseDurations = [
@@ -27,6 +34,39 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
       durationBackwardMask,
       durationIntertrialScreen
     ];
+
+    _stopwatch = Stopwatch();
+    _primeStopwatch = Stopwatch();
+  }
+
+  change() {
+    int duration = phaseDurations[phase];
+    Timer(Duration(milliseconds: duration), () {
+      next();
+      if (!done) {
+        change();
+      }
+    });
+  }
+
+  next() {
+    _stopwatch.reset();
+    _stopwatch.start();
+    currentStep += 1;
+    phase = currentStep % phaseDurations.length;
+    notifyListeners();
+  }
+
+  dispose() {
+    _stopwatch.stop();
+    _primeStopwatch.stop();
+  }
+
+  pressed(int selection) {
+    _stopwatch.stop();
+    setTrialResult(
+        _stopwatch.elapsedMilliseconds, selection, primeDurations.last);
+    next();
   }
 
   Future<LdtData> init() async {
@@ -34,31 +74,48 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
 
     ldt.startDate = DateTime.now();
 
+    change();
+
     return ldt;
   }
 
-  getCurrentPrime() {
-    var curr = ldt.primes[currentPrimeIndex];
-    currentPrimeIndex += 1;
-    // Overflow should not happen, but if it does we prefer not to crash
-    if (currentPrimeIndex == ldt.primes.length) {
-      currentPrimeIndex = 0;
+  getNextPrime() {
+    if (currentPrimeIndex + 1 == ldt.targets.length) {
+      finish();
+    } else {
+      currentPrimeIndex += 1;
     }
+
+    var curr = ldt.primes[currentPrimeIndex];
+
     return curr;
   }
 
   finish() {
+    _stopwatch.stop();
+    _primeStopwatch.stop();
     done = true;
   }
 
-  getCurrentTarget() {
-    var curr = ldt.trials[currenTargetIndex].target;
-    currenTargetIndex += 1;
-    // Overflow should not happen, but if it does we prefer not to crash
-    if (currenTargetIndex == ldt.trials.length) {
+  startPrimeStopwatch() {
+    _primeStopwatch.reset();
+    _primeStopwatch.start();
+  }
+
+  stopPrimeStopwatch() {
+    _primeStopwatch.stop();
+    primeDurations.add(_primeStopwatch.elapsedMilliseconds);
+  }
+
+  getNextTarget() {
+    if (currenTargetIndex + 1 == ldt.targets.length) {
       finish();
-      currenTargetIndex = 0;
+    } else {
+      currenTargetIndex += 1;
     }
+
+    var curr = ldt.trials[currenTargetIndex].target;
+
     return curr;
   }
 

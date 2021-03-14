@@ -17,52 +17,25 @@ class LexicalDecisionTaskScren extends StatefulWidget {
 
 class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   LexicalDecisionTaskViewModel vm;
-  int phase = 0;
-  int currentStep = 0;
-
   Future<bool> ldtLoaded;
 
   final TextStyle ldtTextStyle = TextStyle(fontSize: 40, color: Colors.black);
 
   bool isTextState = true;
-  Stopwatch _primeStopwatch = Stopwatch();
-  Stopwatch stopwatch;
-  List<int> primeDurations = [];
+
   @override
   void initState() {
     super.initState();
     vm = Provider.of<LexicalDecisionTaskViewModel>(context, listen: false);
-    stopwatch = Stopwatch();
-    currentStep = 0;
     ldtLoaded = vm.init().then((value) {
-      change();
       return true;
     });
   }
 
-  change() {
-    int duration = vm.phaseDurations[phase];
-    Timer(Duration(milliseconds: duration), () {
-      next();
-      change();
-    });
-  }
-
-  next() {
-    stopwatch.reset();
-    stopwatch.start();
-    setState(() {
-      currentStep += 1;
-      phase = currentStep % vm.phaseDurations.length;
-    });
-  }
-
-  pressed(int selection) {
-    stopwatch.stop();
-    vm.setTrialResult(
-        stopwatch.elapsedMilliseconds, selection, primeDurations.last);
-
-    next();
+  @override
+  void dispose() {
+    vm.dispose();
+    super.dispose();
   }
 
   @override
@@ -130,19 +103,17 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
 
     isTextState = false;
 
-    if (phase == 0) {
+    if (vm.phase == 0) {
       currentPhaseWidget = buildFixationCross();
-    } else if (phase == 1) {
-      _primeStopwatch.reset();
-      _primeStopwatch.start();
-      currentPhaseWidget = buildPrime(vm.getCurrentPrime());
-    } else if (phase == 2) {
-      _primeStopwatch.stop();
-      primeDurations.add(_primeStopwatch.elapsedMilliseconds);
+    } else if (vm.phase == 1) {
+      vm.startPrimeStopwatch();
+      currentPhaseWidget = buildPrime(vm.getNextPrime());
+    } else if (vm.phase == 2) {
+      vm.stopPrimeStopwatch();
       currentPhaseWidget = buildBackwardMask();
-    } else if (phase == 3) {
+    } else if (vm.phase == 3) {
       isTextState = true;
-      currentPhaseWidget = buildTarget(vm.getCurrentTarget());
+      currentPhaseWidget = buildTarget(vm.getNextTarget());
     }
 
     return Container(
@@ -161,14 +132,14 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
                   children: [
                     FullWidthButton(
                         onPressed: () {
-                          pressed(1);
+                          vm.pressed(1);
                         },
                         text: "Ja",
                         height: 140),
                     UIHelper.verticalSpaceMedium(),
                     FullWidthButton(
                         onPressed: () {
-                          pressed(0);
+                          vm.pressed(0);
                         },
                         text: "Nein",
                         height: 140),
