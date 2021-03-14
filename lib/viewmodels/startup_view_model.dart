@@ -96,8 +96,6 @@ class StartupViewModel extends BaseViewModel {
     if (await experimentService.isTimeForLexicalDecisionTask()) {
       return AppStartupMode.lexicalDecisionTask;
     }
-    addDebugText("Time For Usability Task?");
-    if (await experimentService.isTimeForUsabilityTask()) {}
 
     addDebugText("No Tasks!");
     return AppStartupMode.noTasks;

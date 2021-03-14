@@ -154,6 +154,14 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.filter_6,
+              text: "Erinnerung",
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, RouteNames.RECALL_TASK);
+              }),
+          Divider(),
+          _buildDrawerItem(
+              icon: Icons.filter_7,
               text: "Abschlussfragen",
               onTap: () {
                 var routeWidget =

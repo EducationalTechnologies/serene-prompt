@@ -1,7 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
+import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
+import 'package:serene/screens/initialsession/video_screen.dart';
+import 'package:serene/screens/initialsession/welcome_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/app_asset_paths.dart';
@@ -13,6 +17,8 @@ class InitSessionViewModel extends BaseViewModel {
   final ExperimentService _experimentService;
   final DataService _dataService;
   LexicalDecisionTaskViewModel ldtvm;
+
+  Type currentPageType;
 
   int step = 0;
   bool consented = false;
@@ -131,7 +137,20 @@ class InitSessionViewModel extends BaseViewModel {
 
   bool canMoveNext() {
     // TODO: Use actual logic
-    return true;
+    if (currentPageType == WelcomeScreen) {
+      return true;
+    }
+    if (currentPageType == VideoScreen) {
+      return false;
+    }
+    if (currentPageType == InitialLdtScreen) {
+      if (ldtvm != null) {
+        return ldtvm.done;
+      } else {
+        return false;
+      }
+    }
+
     return (step == 0 && selectedObstacles.length > 0) ||
         (step == 1 && selectedObstacles.length > 0) ||
         (step == 2 && selectedOutcomes.length > 0) ||
@@ -144,7 +163,8 @@ class InitSessionViewModel extends BaseViewModel {
   }
 
   bool canMoveBack() {
-    return (step == 1 || step == 2 || step == 4 || step == 5);
+    return false;
+    // return (step == 1 || step == 2 || step == 4 || step == 5);
   }
 
   saveSelected() async {
@@ -197,6 +217,7 @@ class InitSessionViewModel extends BaseViewModel {
   setAssessmentResult(String assessmentId, String itemId, String value) {
     // TODO: SET ASSESSMENT RESULT
     // results[id] = value;
+    assessmentResults[assessmentId][itemId] = value;
 
     notifyListeners();
   }
@@ -238,5 +259,10 @@ class InitSessionViewModel extends BaseViewModel {
   setNumberOfDaysLearningGoal(String value) {
     numberOfDaysLearningGoal = value;
     notifyListeners();
+  }
+
+  setCurrentPageType(Type current) {
+    currentPageType = current;
+    print(current);
   }
 }
