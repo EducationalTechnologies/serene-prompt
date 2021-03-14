@@ -9,8 +9,10 @@ import 'package:serene/widgets/speech_bubble.dart';
 
 class InitialLdtScreen extends StatefulWidget {
   final String trialName;
+  final VoidCallback onFinished;
 
-  InitialLdtScreen(this.trialName, {Key key}) : super(key: key);
+  InitialLdtScreen(this.trialName, this.onFinished, {Key key})
+      : super(key: key);
 
   @override
   _InitialLdtScreenState createState() => _InitialLdtScreenState();
@@ -45,12 +47,15 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          if (vm.done) {widget.onFinished()}
+        });
+
     return FutureBuilder(
       future: ldtLoaded,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
           if (vm.done) {
-            // _stopwatch.stop();
             return buildTrialSummary();
           } else {
             return buildTrial();

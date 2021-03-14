@@ -57,7 +57,9 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  @override
   dispose() {
+    super.dispose();
     _stopwatch.stop();
     _primeStopwatch.stop();
   }
@@ -82,10 +84,9 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   getNextPrime() {
     if (currentPrimeIndex + 1 == ldt.targets.length) {
       finish();
-    } else {
-      currentPrimeIndex += 1;
+      return "";
     }
-
+    currentPrimeIndex += 1;
     var curr = ldt.primes[currentPrimeIndex];
 
     return curr;

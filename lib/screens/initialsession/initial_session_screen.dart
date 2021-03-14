@@ -38,72 +38,86 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   final _controller = new PageController();
   final _kDuration = const Duration(milliseconds: 300);
   final _kCurve = Curves.ease;
-
-  final List<Widget> _pages = [
-    WelcomeScreen(), // Screen 1
-    VideoScreen("45q_GRrlQ04"), // Screen 2
-    CabuuLinkScreen(), // Screen 3
-    InitialAssessmentScreen(Assessments.cabuuLearn), // Screen 4
-    InitialAssessmentScreen(Assessments.regulation), // Screen 4
-    VideoScreen("d0PSrCMoTpk"), // Screen 5
-    InitialDailyLearningGoalScreen(), // Screen 6
-    InitialAssessmentScreen(Assessments.learningGoals1), // Screen 6
-    InitialOutcomeExplanationScreen(), // Screen 7
-    OutcomeSelectionScreen(), // Screen 8
-    OutcomeEnterScreen(), // Screen 9
-    OutcomeSortingScreen(), // Screen 10
-    InitialOutcomeDisplayScreen(), // Screen 11
-    InitialObstacleExplanationScreen(), // Screen 12
-    ObstacleSelectionScreen(), // Screen 13
-    ObstacleEnterScreen(), // Screen 14
-    ObstacleSortingScreen(), // Screen 15
-    InitialObstacleDisplayScreen(), // Screen 16
-    InitialAssessmentScreen(Assessments.srl),
-    // InitialRewardScreenFirst(),
-    InitialAssessmentScreen(Assessments.learningGoals2),
-    VideoScreen("9CHA1RpTgRM"),
-    InitialLdtScreen("0_0"),
-    InitialLdtScreen("0_1"),
-    InitialLdtScreen("0_2"),
-    VideoScreen("chZNcG-sLAM"),
-    // InitialRewardScreenSecond()
-    // InitialAssessmentScreen(Assessments.cabuuLearn),
-    // InitialAssessmentScreen(Assessments.regulation),
-    // VideoScreen("Zweites Videeo"),
-    // InitialAssessmentScreen(Assessments.selfEfficacy),
-    // TextExplanationScreen(
-    //     "Denke jetzt einmal darüber nach, was für dich persönlich das Beste daran wäre, wenn du es schaffen würdest, an X Tagen pro Woche Vokabeln zu lernen. Auf der nächsten Seite siehst du ein paar Vorschläge von uns. Wähle alles aus der Liste aus, was auf dich  zutrifft Sollte nichts darunter sein oder noch etwas Wichtiges fehlen, kannst du es auf der übernächsten Seite ergänzen."),
-    // TextExplanationScreen(
-    //     "TODO: [Anzeige des Outcomes auf Platz 1 der Sortierliste] Nimm dir jetzt einen kurzen Moment Zeit, um dir dieses beste Ergebnis so lebhaft wie möglich vorzustellen. Wie fühlt es sich an? Versetze dich ganz in die Situation hinein. Du kannst dafür auch kurz die Augen schließen. Wenn du fertig bist, drücke auf “Weiter”."),
-    // OutcomeSelectionScreen(),
-    // OutcomeEnterScreen(),
-    // OutcomeSortingScreen(),
-    // ObstacleSelectionScreen(),
-    // ObstacleEnterScreen(),
-    // ObstacleSortingScreen(),
-    // TextExplanationScreen(
-    //     "TODO: [Anzeige des Obstacles auf Platz 1 der Sortierliste] Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen.  [freie Texteingabe, ]"),
-    // InitialAssessmentScreen(Assessments.goals),
-    // TextExplanationScreen(
-    //     "Danke für deine Mitarbeit bis hierhin! Du hast dir damit deine ersten 6 Punkte verdient! [anzeigen] Jetzt haben wir noch ein paar Fragen und eine Aufgabe für dich, dann hast du es geschafft"),
-    // InitialAssessmentScreen(Assessments.screen19),
-    // VideoScreen("Instruktionsvideo LDT"),
-    // InitialExplanationScreen(),
-  ];
+  List<Widget> _pages = [];
 
   @override
   void initState() {
     super.initState();
+    _pages = [
+      WelcomeScreen(), // Screen 1
+      InitialLdtScreen("0_0", _onLdtFinished),
+      VideoScreen("45q_GRrlQ04"), // Screen 2
+      CabuuLinkScreen(), // Screen 3
+      InitialAssessmentScreen(Assessments.cabuuLearn), // Screen 4
+      InitialAssessmentScreen(Assessments.regulation), // Screen 4
+      VideoScreen("d0PSrCMoTpk"), // Screen 5
+      InitialDailyLearningGoalScreen(), // Screen 6
+      InitialAssessmentScreen(Assessments.learningGoals1), // Screen 6
+      InitialOutcomeExplanationScreen(), // Screen 7
+      OutcomeSelectionScreen(), // Screen 8
+      OutcomeEnterScreen(), // Screen 9
+      OutcomeSortingScreen(), // Screen 10
+      InitialOutcomeDisplayScreen(), // Screen 11
+      InitialObstacleExplanationScreen(), // Screen 12
+      ObstacleSelectionScreen(), // Screen 13
+      ObstacleEnterScreen(), // Screen 14
+      ObstacleSortingScreen(), // Screen 15
+      InitialObstacleDisplayScreen(), // Screen 16
+      InitialAssessmentScreen(Assessments.srl),
+      // InitialRewardScreenFirst(),
+      InitialAssessmentScreen(Assessments.learningGoals2),
+      VideoScreen("9CHA1RpTgRM"),
+      InitialLdtScreen("0_0", _onLdtFinished),
+      InitialLdtScreen("0_1", _onLdtFinished),
+      InitialLdtScreen("0_2", _onLdtFinished),
+      VideoScreen("chZNcG-sLAM"),
+      // InitialRewardScreenSecond()
+      // InitialAssessmentScreen(Assessments.cabuuLearn),
+      // InitialAssessmentScreen(Assessments.regulation),
+      // VideoScreen("Zweites Videeo"),
+      // InitialAssessmentScreen(Assessments.selfEfficacy),
+      // TextExplanationScreen(
+      //     "Denke jetzt einmal darüber nach, was für dich persönlich das Beste daran wäre, wenn du es schaffen würdest, an X Tagen pro Woche Vokabeln zu lernen. Auf der nächsten Seite siehst du ein paar Vorschläge von uns. Wähle alles aus der Liste aus, was auf dich  zutrifft Sollte nichts darunter sein oder noch etwas Wichtiges fehlen, kannst du es auf der übernächsten Seite ergänzen."),
+      // TextExplanationScreen(
+      //     "TODO: [Anzeige des Outcomes auf Platz 1 der Sortierliste] Nimm dir jetzt einen kurzen Moment Zeit, um dir dieses beste Ergebnis so lebhaft wie möglich vorzustellen. Wie fühlt es sich an? Versetze dich ganz in die Situation hinein. Du kannst dafür auch kurz die Augen schließen. Wenn du fertig bist, drücke auf “Weiter”."),
+      // OutcomeSelectionScreen(),
+      // OutcomeEnterScreen(),
+      // OutcomeSortingScreen(),
+      // ObstacleSelectionScreen(),
+      // ObstacleEnterScreen(),
+      // ObstacleSortingScreen(),
+      // TextExplanationScreen(
+      //     "TODO: [Anzeige des Obstacles auf Platz 1 der Sortierliste] Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen.  [freie Texteingabe, ]"),
+      // InitialAssessmentScreen(Assessments.goals),
+      // TextExplanationScreen(
+      //     "Danke für deine Mitarbeit bis hierhin! Du hast dir damit deine ersten 6 Punkte verdient! [anzeigen] Jetzt haben wir noch ein paar Fragen und eine Aufgabe für dich, dann hast du es geschafft"),
+      // InitialAssessmentScreen(Assessments.screen19),
+      // VideoScreen("Instruktionsvideo LDT"),
+      // InitialExplanationScreen(),
+    ];
+
+    var vm = Provider.of<InitSessionViewModel>(context, listen: false);
+    vm.setCurrentPageType(_pages[0].runtimeType);
 
     /// Attach a listener which will update the state and refresh the page index
     _controller.addListener(() {
-      var vm = Provider.of<InitSessionViewModel>(context, listen: false);
-      if (_controller.page.round() != vm.step) {
-        setState(() {
-          vm.step = _controller.page.round();
-        });
-      }
+      _setCurrentPage();
     });
+  }
+
+  _setCurrentPage() {
+    var vm = Provider.of<InitSessionViewModel>(context, listen: false);
+    // if (_controller.page.round() != vm.step) {
+    setState(() {
+      vm.step = _controller.page.round();
+      var type = _pages[_controller.page.round()].runtimeType;
+      vm.setCurrentPageType(type);
+    });
+    // }
+  }
+
+  _onLdtFinished() {
+    setState(() {});
   }
 
   _buildBottomNavigation() {
