@@ -149,11 +149,16 @@ class _LoginScreenState extends State<LoginScreen> {
     var vm = Provider.of<LoginViewModel>(context);
     return new ElevatedButton(
       onPressed: () async {
-        String message = "";
-        if (vm.validateUserId(_userIdTextController.text)) {
-          message = await _registerClick(vm, context);
+        if (vm.state != ViewState.idle) return;
+        if (_userIdTextController.text.length < 3) {
+          _buildErrorDialog("Bitte mindestens drei Zahlen eingeben", "");
         } else {
-          await _buildErrorDialog("$message", "$message");
+          String message = "";
+          if (vm.validateUserId(_userIdTextController.text)) {
+            message = await _registerClick(vm, context);
+          } else {
+            await _buildErrorDialog("$message", "$message");
+          }
         }
       },
       child: vm.state == ViewState.idle
