@@ -34,17 +34,6 @@ class DataService {
 
   DataService(this._databaseService, this._userService);
 
-  getCachedValue(CachedValues value) {
-    switch (value) {
-      case CachedValues.goals:
-        // TODO: Handle this case.
-        break;
-      case CachedValues.internalisations:
-        // TODO: Handle this case.
-        break;
-    }
-  }
-
   clearCache() {
     this._planCache.clear();
     this._ldtTaskListCache.clear();
