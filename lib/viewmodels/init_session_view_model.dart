@@ -3,7 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
+import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
+import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
+import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
 import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/initialsession/welcome_screen.dart';
 import 'package:serene/services/data_service.dart';
@@ -21,8 +24,24 @@ class InitSessionViewModel extends BaseViewModel {
   Type currentPageType;
 
   int step = 0;
-  bool consented = false;
-  String cabuuLinkUserName = "";
+  bool _consented = false;
+
+  bool get consented => _consented;
+
+  set consented(bool consented) {
+    _consented = consented;
+    notifyListeners();
+  }
+
+  String _cabuuLinkUserName = "";
+
+  String get cabuuLinkUserName => _cabuuLinkUserName;
+
+  set cabuuLinkUserName(String cabuuLinkUserName) {
+    _cabuuLinkUserName = cabuuLinkUserName;
+    notifyListeners();
+  }
+
   bool videoOneCompleted = false;
   bool videoTwoCompleted = false;
   bool videoThreeCompleted = false;
@@ -141,7 +160,7 @@ class InitSessionViewModel extends BaseViewModel {
       return true;
     }
     if (currentPageType == VideoScreen) {
-      return false;
+      return true;
     }
     if (currentPageType == InitialLdtScreen) {
       if (ldtvm != null) {
@@ -150,16 +169,18 @@ class InitSessionViewModel extends BaseViewModel {
         return false;
       }
     }
+    if (currentPageType == OutcomeSelectionScreen) {
+      return selectedOutcomes.length > 0;
+    }
+    if (currentPageType == ObstacleSelectionScreen) {
+      return selectedObstacles.length > 0;
+    }
 
-    return (step == 0 && selectedObstacles.length > 0) ||
-        (step == 1 && selectedObstacles.length > 0) ||
-        (step == 2 && selectedOutcomes.length > 0) ||
-        (step == 3 && selectedOutcomes.length > 0) ||
-        step == 4;
-  }
+    if (currentPageType == CabuuLinkScreen) {
+      return consented && cabuuLinkUserName.isNotEmpty;
+    }
 
-  bool canMoveNextCabuuLink() {
-    return consented && cabuuLinkUserName.isNotEmpty;
+    return true;
   }
 
   bool canMoveBack() {

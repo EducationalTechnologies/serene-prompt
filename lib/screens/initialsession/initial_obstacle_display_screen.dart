@@ -9,6 +9,9 @@ class InitialObstacleDisplayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var vm = Provider.of<InitSessionViewModel>(context);
+    var text = vm.selectedObstacles.length > 0
+        ? vm.selectedObstacles[0].description
+        : "";
     return Container(
       child: Column(
         children: [

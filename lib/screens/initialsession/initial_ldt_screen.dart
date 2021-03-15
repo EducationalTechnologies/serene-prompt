@@ -47,9 +47,15 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => {
-          if (vm.done) {widget.onFinished()}
-        });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (vm.done) {
+        if (widget != null) {
+          if (widget.onFinished != null) {
+            widget.onFinished();
+          }
+        }
+      }
+    });
 
     return FutureBuilder(
       future: ldtLoaded,

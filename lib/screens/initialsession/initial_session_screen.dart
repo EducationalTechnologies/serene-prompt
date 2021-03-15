@@ -45,7 +45,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     super.initState();
     _pages = [
       WelcomeScreen(), // Screen 1
-      InitialLdtScreen("0_0", _onLdtFinished),
       VideoScreen("45q_GRrlQ04"), // Screen 2
       CabuuLinkScreen(), // Screen 3
       InitialAssessmentScreen(Assessments.cabuuLearn), // Screen 4
