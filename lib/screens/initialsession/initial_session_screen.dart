@@ -184,7 +184,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     var vm = Provider.of<InitSessionViewModel>(context, listen: false);
     return FullWidthButton(onPressed: () async {
       await vm.submit();
-      Navigator.pushNamed(context, RouteNames.INTERNALISATION);
+      Navigator.pushNamed(context, RouteNames.NO_TASKS);
     });
   }
 
