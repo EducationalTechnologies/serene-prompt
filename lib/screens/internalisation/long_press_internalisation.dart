@@ -140,7 +140,7 @@ class _TextHighlightState extends State<TextHighlight>
         SizedBox(
           child: AnimatedBuilder(
             animation: _animation,
-            builder: (BuildContext context, Widget child) {
+            builder: (context, child) {
               var partialText = widget.text.substring(0, _animation.value);
               return Stack(
                 children: <Widget>[

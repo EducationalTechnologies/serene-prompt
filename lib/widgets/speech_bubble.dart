@@ -3,7 +3,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 class SpeechBubble extends StatelessWidget {
   final String text;
-  SpeechBubble({this.text});
+  SpeechBubble({this.text = ""});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 class Internalisation {
   DateTime startDate;
-  DateTime completionDate;
+  DateTime completionDate = DateTime.now();
   String implementationIntention;
   String condition;
   String input;
@@ -8,9 +8,9 @@ class Internalisation {
   Internalisation(
       {this.startDate,
       this.completionDate,
-      this.implementationIntention,
-      this.condition,
-      this.input});
+      this.implementationIntention = "",
+      this.condition = "",
+      this.input = ""});
 
   Internalisation.fromDocument(dynamic document) {
     this.completionDate = DateTime.parse(document["completionDate"]);
@@ -22,8 +22,8 @@ class Internalisation {
 
   Map<String, dynamic> toMap() {
     return {
-      "startDate": this.startDate.toIso8601String(),
-      "completionDate": this.completionDate.toIso8601String(),
+      "startDate": this.startDate?.toIso8601String(),
+      "completionDate": this.completionDate?.toIso8601String(),
       "implementationIntention": this.implementationIntention,
       "condition": this.condition,
       "input": this.input

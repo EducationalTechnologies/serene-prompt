@@ -125,7 +125,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Container(
-                    margin: UIHelper.getContainerMargin(),
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(

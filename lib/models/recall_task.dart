@@ -1,6 +1,6 @@
 class RecallTask {
-  DateTime startDate;
-  DateTime completionDate;
+  DateTime startDate = DateTime.now();
+  DateTime completionDate = DateTime.now();
   String recalledSentence;
   String implementationIntention;
   String condition;

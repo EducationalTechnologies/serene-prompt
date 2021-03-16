@@ -17,7 +17,10 @@ import 'package:serene/widgets/version_info.dart';
 class SereneDrawer extends StatelessWidget {
   SereneDrawer();
 
-  _buildDrawerItem({IconData icon, String text, GestureTapCallback onTap}) {
+  _buildDrawerItem(
+      {IconData icon = Icons.ac_unit,
+      String text = "",
+      GestureTapCallback onTap}) {
     return ListTile(
       title: Row(
         children: <Widget>[

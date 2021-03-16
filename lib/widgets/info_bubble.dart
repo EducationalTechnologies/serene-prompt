@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class InfoBubble extends StatelessWidget {
   final String text;
-  const InfoBubble({Key key, this.text}) : super(key: key);
+  const InfoBubble({Key key, this.text = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -16,16 +16,16 @@ class IntervalScale extends StatefulWidget {
 
   IntervalScale(
       {Key key,
-      this.title,
-      this.labels,
-      this.groupValue,
-      this.id,
-      this.callback})
+      this.title = "",
+      @required this.labels,
+      this.groupValue = 0,
+      this.id = "",
+      @required this.callback})
       : super(key: key);
 }
 
 class _IntervalScaleState extends State<IntervalScale> {
-  int _groupValue;
+  int _groupValue = 0;
 
   @override
   void initState() {
@@ -37,7 +37,9 @@ class _IntervalScaleState extends State<IntervalScale> {
     setState(() {
       _groupValue = value;
     });
-    widget.callback(value.toString());
+    if (widget.callback != null) {
+      widget.callback(value.toString());
+    }
   }
 
   buildItem(int value, String text) {

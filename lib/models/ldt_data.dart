@@ -6,8 +6,8 @@ class LdtData {
   int durationPrime = 50;
   int durationBackwardMask = 700;
   int durationInterTrialScreen = 2000;
-  DateTime startDate;
-  DateTime completionDate;
+  DateTime startDate = DateTime.now();
+  DateTime completionDate = DateTime.now();
   List<LdtTrial> trials = [];
 
   Map<String, dynamic> toMap() {
@@ -45,8 +45,8 @@ class LdtTrial {
   }
 
   LdtTrial(
-      {this.target,
-      this.condition,
+      {this.target = "",
+      this.condition = "",
       this.responseTime = -1,
       this.selection = -1});
 }

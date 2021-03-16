@@ -7,9 +7,9 @@ class Obstacle {
   String iconPath;
 
   Obstacle(
-      {@required this.name,
-      this.description,
-      this.iconPath,
+      {@required this.name = "",
+      this.description = "",
+      this.iconPath = "",
       this.isSelected = false});
 
   Obstacle.fromDocument(dynamic document) {

@@ -1,8 +1,8 @@
 class AssessmentResult {
-  String userId;
+  String userId = "";
   Map<String, String> results;
-  String assessmentType;
-  DateTime submissionDate;
+  String assessmentType = "";
+  DateTime submissionDate = DateTime.now();
 
   AssessmentResult(
       this.userId, this.results, this.assessmentType, this.submissionDate);
