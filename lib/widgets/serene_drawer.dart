@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
+import 'package:serene/screens/rewards/reward_selection_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/notification_service.dart';
@@ -10,6 +11,7 @@ import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
+import 'package:serene/screens/rewards/reward_selection_screen.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/version_info.dart';
@@ -176,6 +178,7 @@ class SereneDrawer extends StatelessWidget {
                             locator.get<ExperimentService>()),
                         child: AmbulatoryAssessmentScreen());
 
+                // var rewardWidget = RewardSelectionScreen();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => routeWidget));
               }),
