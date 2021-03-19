@@ -5,7 +5,7 @@
       location = "group:Runner.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:GoogleService-Info.plist">
+      location = "group:/Users/danielbiedermann/Repositories/serene-prompt/ios/GoogleService-Info.plist">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
