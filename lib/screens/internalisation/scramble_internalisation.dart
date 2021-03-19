@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
+import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/speech_bubble.dart';
 
 class ScrambleText {
@@ -112,22 +113,68 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     return selectedScramble == null;
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                UIHelper.verticalSpaceMedium(),
+                _buildCorrectText(_correctSentence),
+                UIHelper.verticalSpaceMedium(),
+                Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  child: Wrap(
+                    children: <Widget>[
+                      for (var s in _builtSentence)
+                        if (s.isSelected) buildWordBox(s),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  visible: _builtSentence.length > 0,
+                  child: _buildDeleteButton(),
+                ),
+
+                // _buildDragDrop(),
+                if (_allChunksUsed() && !_isDone()) _buildIncorrectWarning(),
+
+                Visibility(
+                  visible: _showPuzzle,
+                  child: Wrap(
+                    children: <Widget>[
+                      for (var s in _scrambledSentence)
+                        if (!s.isSelected)
+                          Stack(children: [
+                            buildEmptyWord(s.text),
+                            buildWordBox(s)
+                          ])
+                        else
+                          buildEmptyWord(s.text)
+                    ],
+                  ),
+                ),
+                UIHelper.verticalSpaceLarge(),
+              ],
+            ),
+          ),
+          if (_isDone()) _buildSubmitButton()
+        ],
+      ),
+    );
+  }
+
   buildWordBox(ScrambleText scramble) {
     return GestureDetector(
       onTap: () {
         // _builtSentence.add(scramble);
-        setState(() {
-          scramble.isSelected = !scramble.isSelected;
-          if (scramble.isSelected) {
-            _builtSentence.add(scramble);
-            print(scramble.isSelected);
-            setState(() {
-              _done = _isDone();
-            });
-          } else {
-            _builtSentence.remove(scramble);
-          }
-        });
+        _scrambleTextClick(scramble);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -144,6 +191,21 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         padding: EdgeInsets.all(6.0),
       ),
     );
+  }
+
+  _scrambleTextClick(ScrambleText scramble) {
+    setState(() {
+      scramble.isSelected = !scramble.isSelected;
+      if (scramble.isSelected) {
+        _builtSentence.add(scramble);
+        print(scramble.isSelected);
+        setState(() {
+          _done = _isDone();
+        });
+      } else {
+        _builtSentence.remove(scramble);
+      }
+    });
   }
 
   buildEmptyWord(String text) {
@@ -165,7 +227,30 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     );
   }
 
-  buildSelectStack() {}
+  _buildDeleteButton() {
+    return Container(
+      width: 90,
+      child: OutlinedButton(
+          child: Row(
+            children: [
+              Icon(Icons.backspace),
+              UIHelper.horizontalSpaceMedium(),
+              Text(
+                "Letzte Eingabe Löschen",
+                style: TextStyle(color: Colors.black),
+              )
+            ],
+          ),
+          onPressed: () {
+            setState(() {
+              if (_builtSentence.length > 0) {
+                var last = _builtSentence.last;
+                _scrambleTextClick(last);
+              }
+            });
+          }),
+    );
+  }
 
   _buildSubmitButton() {
     var vm = Provider.of<InternalisationViewModel>(context, listen: false);
@@ -222,53 +307,6 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           else
             buildEmptyWord(s.text)
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(5, 10, 5, 20),
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                UIHelper.verticalSpaceMedium(),
-                _buildCorrectText(_correctSentence),
-                UIHelper.verticalSpaceMedium(),
-                Container(
-                  height: MediaQuery.of(context).size.height / 3,
-                  child: Wrap(
-                    children: <Widget>[
-                      for (var s in _builtSentence)
-                        if (s.isSelected) buildWordBox(s),
-                    ],
-                  ),
-                ),
-                // _buildDragDrop(),
-                if (_allChunksUsed() && !_isDone()) _buildIncorrectWarning(),
-                Visibility(
-                  visible: _showPuzzle,
-                  child: Wrap(
-                    children: <Widget>[
-                      for (var s in _scrambledSentence)
-                        if (!s.isSelected)
-                          Stack(children: [
-                            buildEmptyWord(s.text),
-                            buildWordBox(s)
-                          ])
-                        else
-                          buildEmptyWord(s.text)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (_done) _buildSubmitButton()
-        ],
-      ),
     );
   }
 }
