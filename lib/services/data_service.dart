@@ -172,6 +172,9 @@ class DataService {
   }
 
   Future<int> getScore() async {
+    if (_userService.getUserEmail() == null) return 0;
+    if (_userService.getUserEmail().isEmpty) return 0;
+
     return await _databaseService.getScore(_userService.getUserEmail());
   }
 
