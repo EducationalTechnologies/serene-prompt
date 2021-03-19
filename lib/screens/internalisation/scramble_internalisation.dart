@@ -127,19 +127,23 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
                 UIHelper.verticalSpaceMedium(),
                 Container(
                   height: MediaQuery.of(context).size.height / 4,
-                  child: Wrap(
-                    children: <Widget>[
-                      for (var s in _builtSentence)
-                        if (s.isSelected) buildWordBox(s),
+                  child: Column(
+                    children: [
+                      Wrap(
+                        children: <Widget>[
+                          for (var s in _builtSentence)
+                            if (s.isSelected) buildWordBox(s),
+                        ],
+                      ),
+                      Visibility(
+                        maintainSize: true,
+                        maintainAnimation: true,
+                        maintainState: true,
+                        visible: _builtSentence.length > 0,
+                        child: _buildDeleteButton(),
+                      ),
                     ],
                   ),
-                ),
-                Visibility(
-                  maintainSize: true,
-                  maintainAnimation: true,
-                  maintainState: true,
-                  visible: _builtSentence.length > 0,
-                  child: _buildDeleteButton(),
                 ),
 
                 // _buildDragDrop(),
@@ -229,7 +233,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
 
   _buildDeleteButton() {
     return Container(
-      width: 90,
+      width: 250,
       child: OutlinedButton(
           child: Row(
             children: [
@@ -287,10 +291,10 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
 
   _buildIncorrectWarning() {
     return Container(
-      color: Colors.red[200],
+      color: Colors.red[100],
       child: Center(
           child: (Text(
-        "Der gebaute Satz ist leider nicht richtig",
+        "Der Satz ist so leider nicht richtig.",
         style: TextStyle(fontSize: 20),
       ))),
       margin: EdgeInsets.fromLTRB(2, 10, 2, 20),
