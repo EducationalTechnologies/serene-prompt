@@ -105,7 +105,7 @@ class InitSessionViewModel extends BaseViewModel {
     Outcome(
         name: "Job",
         description:
-            "Dann kriege ich einen bessere Job, wenn ich mit der Schule fertig bin.",
+            "Dann kriege ich einen besseren Job, wenn ich mit der Schule fertig bin.",
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
