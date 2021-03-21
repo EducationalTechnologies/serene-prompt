@@ -69,7 +69,7 @@ enum AppStartupMode {
   lexicalDecisionTask,
 }
 
-enum Assessments {
+enum AssessmentTypes {
   dailyQuestion,
   dailyQuestionsAll,
   postTest,

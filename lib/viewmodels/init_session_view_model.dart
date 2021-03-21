@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
+import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
 import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
+import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
 import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/initialsession/welcome_screen.dart';
 import 'package:serene/services/data_service.dart';
@@ -45,9 +46,10 @@ class InitSessionViewModel extends BaseViewModel {
   bool videoOneCompleted = false;
   bool videoTwoCompleted = false;
   bool videoThreeCompleted = false;
+  AssessmentTypes lastAssessment = AssessmentTypes.cabuuLearn;
   String numberOfDaysLearningGoal;
   String overcomeObstacleText;
-  Map<String, Map<String, String>> assessmentResults = {};
+  Map<AssessmentTypes, Map<String, String>> assessmentResults = {};
 
   List<Obstacle> selectedObstacles = <Obstacle>[];
   List<Outcome> selectedOutcomes = <Outcome>[];
@@ -110,11 +112,11 @@ class InitSessionViewModel extends BaseViewModel {
   ];
 
   InitSessionViewModel(this._dataService, this._experimentService) {
-    assessmentResults[describeEnum(Assessments.cabuuLearn)] = {};
-    assessmentResults[describeEnum(Assessments.regulation)] = {};
-    assessmentResults[describeEnum(Assessments.learningGoals1)] = {};
-    assessmentResults[describeEnum(Assessments.srl)] = {};
-    assessmentResults[describeEnum(Assessments.learningGoals2)] = {};
+    assessmentResults[AssessmentTypes.cabuuLearn] = {};
+    assessmentResults[AssessmentTypes.regulation] = {};
+    assessmentResults[AssessmentTypes.learningGoals1] = {};
+    assessmentResults[AssessmentTypes.srl] = {};
+    assessmentResults[AssessmentTypes.learningGoals2] = {};
   }
 
   outcomeSelected(Outcome outcome) {
@@ -134,11 +136,11 @@ class InitSessionViewModel extends BaseViewModel {
     }
   }
 
-  Future<Assessment> getAssessment(Assessments assessmentName) async {
+  Future<Assessment> getAssessment(AssessmentTypes assessmentName) async {
     String name = describeEnum(assessmentName);
     Assessment assessment = await _dataService.getAssessment(name);
-    if (assessmentName == Assessments.learningGoals1 ||
-        assessmentName == Assessments.learningGoals2) {
+    if (assessmentName == AssessmentTypes.learningGoals1 ||
+        assessmentName == AssessmentTypes.learningGoals2) {
       insertLearningGoalIntoAssessment(assessment, numberOfDaysLearningGoal);
     }
     return assessment;
@@ -232,21 +234,26 @@ class InitSessionViewModel extends BaseViewModel {
     // if (step == 4 && selectedObstacles.length <= 1) {
     //   return step + 2;
     // }
+    if (currentPageType == ObstacleSortingScreen) {
+      _dataService.saveObstacles(obstacles);
+    }
+    if (currentPageType == OutcomeSortingScreen) {
+      _dataService.saveOutcomes(outcomes);
+    }
+    _dataService.saveInitialSessionStepCompleted(step);
     return step + 1;
   }
 
-  setAssessmentResult(String assessmentId, String itemId, String value) {
+  setAssessmentResult(
+      AssessmentTypes assessmentType, String itemId, String value) {
     // TODO: SET ASSESSMENT RESULT
     // results[id] = value;
-    assessmentResults[assessmentId][itemId] = value;
+    assessmentResults[assessmentType][itemId] = value;
 
     notifyListeners();
   }
 
-  submit() async {
-    await _dataService.saveObstacles(obstacles);
-    await _dataService.saveOutcomes(outcomes);
-  }
+  submit() async {}
 
   Future<bool> initTrial(String trialName) async {
     ldtvm = new LexicalDecisionTaskViewModel(trialName, _experimentService);

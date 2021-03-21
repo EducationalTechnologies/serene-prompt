@@ -5,9 +5,10 @@ import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/widgets/interval_scale.dart';
 
 class InitialAssessmentScreen extends StatelessWidget {
-  final Assessments assessment;
+  final AssessmentTypes assessmentType;
 
-  const InitialAssessmentScreen(this.assessment, {Key key}) : super(key: key);
+  const InitialAssessmentScreen(this.assessmentType, {Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class InitialAssessmentScreen extends StatelessWidget {
   _buildAssessmentList(BuildContext context) {
     var vm = Provider.of<InitSessionViewModel>(context);
     return FutureBuilder(
-        future: vm.getAssessment(assessment),
+        future: vm.getAssessment(assessmentType),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var questions = snapshot.data.items;
@@ -51,8 +52,8 @@ class InitialAssessmentScreen extends StatelessWidget {
                             // groupValue: vm.getResultForIndex(index),
                             callback: (val) {
                               print("Changed Assessment value to: $val");
-                              vm.setAssessmentResult(
-                                  assessmentId, questions[index].id, val);
+                              vm.setAssessmentResult(this.assessmentType,
+                                  questions[index].id, val);
                               // vm.setResult(assessment[index].id, val);
                             },
                           ),

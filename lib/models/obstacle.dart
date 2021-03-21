@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class Obstacle {
   String name;
   String description;
@@ -7,7 +5,7 @@ class Obstacle {
   String iconPath;
 
   Obstacle(
-      {@required this.name = "",
+      {this.name = "",
       this.description = "",
       this.iconPath = "",
       this.isSelected = false});

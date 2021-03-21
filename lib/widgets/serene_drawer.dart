@@ -105,7 +105,7 @@ class SereneDrawer extends StatelessWidget {
                 var routeWidget =
                     ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                         create: (_) => AmbulatoryAssessmentViewModel(
-                            Assessments.dailyQuestionsAll,
+                            AssessmentTypes.dailyQuestionsAll,
                             locator.get<UserService>(),
                             locator.get<DataService>(),
                             locator.get<ExperimentService>()),
@@ -172,7 +172,7 @@ class SereneDrawer extends StatelessWidget {
                 var routeWidget =
                     ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                         create: (_) => AmbulatoryAssessmentViewModel(
-                            Assessments.usability,
+                            AssessmentTypes.usability,
                             locator.get<UserService>(),
                             locator.get<DataService>(),
                             locator.get<ExperimentService>()),

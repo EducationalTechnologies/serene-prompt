@@ -225,19 +225,19 @@ class ExperimentService {
   }
 
   Future<void> submitAssessment(
-      AssessmentResult assessment, Assessments type) async {
+      AssessmentResult assessment, AssessmentTypes type) async {
     await this._dataService.saveAssessment(assessment);
 
     var nextRoute = RouteNames.NO_TASKS;
     dynamic args;
 
-    if (type == Assessments.usability) {
+    if (type == AssessmentTypes.usability) {
       var index = await getCurrentTrialIndex();
       args = index.toString();
       nextRoute = RouteNames.LDT;
       // TODO: USABILITY STUFF: REMOVE
       nextRoute = RouteNames.NO_TASKS;
-    } else if (type == Assessments.preImplementationIntention) {
+    } else if (type == AssessmentTypes.preImplementationIntention) {
       nextRoute = RouteNames.INTERNALISATION;
     }
 

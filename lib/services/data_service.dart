@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/services.dart';
 import 'package:serene/models/assessment.dart';
@@ -12,6 +13,7 @@ import 'package:serene/models/outcome.dart';
 import 'package:serene/models/recall_task.dart';
 import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
+import 'package:serene/services/local_database_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:csv/csv.dart';
 
@@ -21,8 +23,9 @@ class DataService {
   List<dynamic> _ldtTaskListCache = [];
   List<dynamic> _ldtListStrings = [];
   List<String> _planCache = [];
-  UserService _userService;
-  FirebaseService _databaseService;
+  final UserService _userService;
+  final FirebaseService _databaseService;
+  final LocalDatabaseService _localDatabaseService;
   int score;
 
   Map<CachedValues, bool> _dirtyFlags = {
@@ -32,7 +35,21 @@ class DataService {
 
   UserData _userDataCache;
 
-  DataService(this._databaseService, this._userService);
+  DataService(
+      this._databaseService, this._userService, this._localDatabaseService);
+
+  Future<bool> checkInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+
+    return true;
+  }
 
   clearCache() {
     this._planCache.clear();
@@ -218,5 +235,15 @@ class DataService {
   getInitSessionSteps() async {
     return await _databaseService
         .getInitSessionSteps(_userService.getUserEmail());
+  }
+
+  void saveInitialSessionStepCompleted(int step) async {
+    _localDatabaseService.upsertSetting("initSessionStep", step.toString());
+  }
+
+  Future<int> getCompletedInitialSessionStep() async {
+    var step = _localDatabaseService.getSettingsValue("initSessionStep");
+    if (step == null) return 0;
+    return step;
   }
 }

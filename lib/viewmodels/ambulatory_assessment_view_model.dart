@@ -9,7 +9,7 @@ import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class AmbulatoryAssessmentViewModel extends BaseViewModel {
-  final Assessments _assessmentType;
+  final AssessmentTypes _assessmentType;
 
   UserService _userService;
   DataService _dataService;
