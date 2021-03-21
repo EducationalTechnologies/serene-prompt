@@ -11,8 +11,7 @@ class InitialLdtScreen extends StatefulWidget {
   final String trialName;
   final VoidCallback onFinished;
 
-  InitialLdtScreen(this.trialName, this.onFinished, {Key key})
-      : super(key: key);
+  InitialLdtScreen(this.trialName, this.onFinished) : super();
 
   @override
   _InitialLdtScreenState createState() => _InitialLdtScreenState();
