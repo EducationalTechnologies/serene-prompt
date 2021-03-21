@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:serene/models/assessment.dart';
+import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
+import 'package:serene/screens/initialsession/initial_assessment_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
@@ -46,10 +48,11 @@ class InitSessionViewModel extends BaseViewModel {
   bool videoOneCompleted = false;
   bool videoTwoCompleted = false;
   bool videoThreeCompleted = false;
-  AssessmentTypes lastAssessment = AssessmentTypes.cabuuLearn;
+  Assessment lastAssessment = Assessment();
+  Map<String, String> currentAssessmentResults = {};
   String numberOfDaysLearningGoal;
   String overcomeObstacleText;
-  Map<AssessmentTypes, Map<String, String>> assessmentResults = {};
+  // Map<AssessmentTypes, Map<String, String>> assessmentResults = {};
 
   List<Obstacle> selectedObstacles = <Obstacle>[];
   List<Outcome> selectedOutcomes = <Outcome>[];
@@ -112,11 +115,11 @@ class InitSessionViewModel extends BaseViewModel {
   ];
 
   InitSessionViewModel(this._dataService, this._experimentService) {
-    assessmentResults[AssessmentTypes.cabuuLearn] = {};
-    assessmentResults[AssessmentTypes.regulation] = {};
-    assessmentResults[AssessmentTypes.learningGoals1] = {};
-    assessmentResults[AssessmentTypes.srl] = {};
-    assessmentResults[AssessmentTypes.learningGoals2] = {};
+    // assessmentResults[AssessmentTypes.cabuuLearn] = {};
+    // assessmentResults[AssessmentTypes.regulation] = {};
+    // assessmentResults[AssessmentTypes.learningGoals1] = {};
+    // assessmentResults[AssessmentTypes.srl] = {};
+    // assessmentResults[AssessmentTypes.learningGoals2] = {};
   }
 
   outcomeSelected(Outcome outcome) {
@@ -136,13 +139,15 @@ class InitSessionViewModel extends BaseViewModel {
     }
   }
 
-  Future<Assessment> getAssessment(AssessmentTypes assessmentName) async {
-    String name = describeEnum(assessmentName);
+  Future<Assessment> getAssessment(AssessmentTypes assessmentType) async {
+    String name = describeEnum(assessmentType);
     Assessment assessment = await _dataService.getAssessment(name);
-    if (assessmentName == AssessmentTypes.learningGoals1 ||
-        assessmentName == AssessmentTypes.learningGoals2) {
+    if (assessmentType == AssessmentTypes.learningGoals1 ||
+        assessmentType == AssessmentTypes.learningGoals2) {
       insertLearningGoalIntoAssessment(assessment, numberOfDaysLearningGoal);
     }
+    lastAssessment = assessment;
+    currentAssessmentResults = {};
     return assessment;
   }
 
@@ -171,6 +176,9 @@ class InitSessionViewModel extends BaseViewModel {
         return false;
       }
     }
+    if (currentPageType == InitialAssessmentScreen) {
+      return isAssessmentFilledOut(lastAssessment);
+    }
     if (currentPageType == OutcomeSelectionScreen) {
       return selectedOutcomes.length > 0;
     }
@@ -187,7 +195,15 @@ class InitSessionViewModel extends BaseViewModel {
 
   bool canMoveBack() {
     return false;
-    // return (step == 1 || step == 2 || step == 4 || step == 5);
+  }
+
+  isAssessmentFilledOut(Assessment assessment) {
+    bool canSubmit = true;
+    for (var assessmentItem in assessment.items) {
+      if (!currentAssessmentResults.containsKey(assessmentItem.id))
+        canSubmit = false;
+    }
+    return canSubmit;
   }
 
   saveSelected() async {
@@ -240,15 +256,18 @@ class InitSessionViewModel extends BaseViewModel {
     if (currentPageType == OutcomeSortingScreen) {
       _dataService.saveOutcomes(outcomes);
     }
+    if (currentPageType == InitialAssessmentScreen) {
+      var result = AssessmentResult(_dataService.getUsername(),
+          currentAssessmentResults, lastAssessment.id, DateTime.now());
+      _dataService.saveAssessment(result);
+    }
     _dataService.saveInitialSessionStepCompleted(step);
     return step + 1;
   }
 
   setAssessmentResult(
       AssessmentTypes assessmentType, String itemId, String value) {
-    // TODO: SET ASSESSMENT RESULT
-    // results[id] = value;
-    assessmentResults[assessmentType][itemId] = value;
+    currentAssessmentResults[itemId] = value;
 
     notifyListeners();
   }

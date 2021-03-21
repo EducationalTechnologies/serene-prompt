@@ -53,8 +53,12 @@ class FirebaseService {
 
   Future<bool> isNameAvailable(String userId) async {
     try {
-      var availableMethods =
-          await _firebaseAuth.fetchSignInMethodsForEmail(userId);
+      var availableMethods = await _firebaseAuth
+          .fetchSignInMethodsForEmail(userId)
+          .onError((error, stackTrace) {
+        handleError(error);
+      });
+      if (availableMethods == null) return false;
       return (availableMethods.length == 0);
     } on PlatformException catch (e) {
       print("Error trying to get the email availabiltiy: $e");

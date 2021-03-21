@@ -56,15 +56,19 @@ class DataService {
     this._ldtTaskListCache.clear();
   }
 
+  getUsername() {
+    return _userService.getUsername();
+  }
+
   saveAssessment(AssessmentResult assessment) async {
     await _databaseService.saveAssessment(
-        assessment, _userService.getUserEmail());
+        assessment, _userService.getUsername());
   }
 
   Future<AssessmentResult> getLastSubmittedAssessment(
       String assessmentType) async {
     return await _databaseService.getLastSubmittedAssessment(
-        assessmentType, _userService.getUserEmail());
+        assessmentType, _userService.getUsername());
   }
 
   _getLdtTrialByName(String trial) async {
@@ -102,17 +106,17 @@ class DataService {
 
   saveSelectedOutcomes(List<Outcome> outcomes) async {
     return await _databaseService.saveOutcomes(
-        outcomes, _userService.getUserEmail());
+        outcomes, _userService.getUsername());
   }
 
   saveSelectedObstacles(List<Obstacle> obstacles) async {
     return await _databaseService.saveObstacles(
-        obstacles, _userService.getUserEmail());
+        obstacles, _userService.getUsername());
   }
 
   Future<int> getNumberOfCompletedInternalisations() async {
     return await _databaseService
-        .getNumberOfInternalisations(_userService.getUserEmail());
+        .getNumberOfInternalisations(_userService.getUsername());
   }
 
   getCurrentImplementationIntention() async {
@@ -130,89 +134,87 @@ class DataService {
 
   saveInternalisation(Internalisation internalisation) async {
     return await _databaseService.saveInternalisation(
-        internalisation, _userService.getUserEmail());
+        internalisation, _userService.getUsername());
   }
 
   saveRecallTask(RecallTask recallTask) async {
     return await _databaseService.saveRecallTask(
-        recallTask, _userService.getUserEmail());
+        recallTask, _userService.getUsername());
   }
 
   Future<Internalisation> getFirstInternalisation() async {
     return await _databaseService
-        .getFirstInternalisation(_userService.getUserEmail());
+        .getFirstInternalisation(_userService.getUsername());
   }
 
   Future<Internalisation> getLastInternalisation() async {
     return await _databaseService
-        .getLastInternalisation(_userService.getUserEmail());
+        .getLastInternalisation(_userService.getUsername());
   }
 
   Future<List<Internalisation>> getLastInternalisations(int number) async {
     return await _databaseService.getLastInternalisations(
-        _userService.getUserEmail(), number);
+        _userService.getUsername(), number);
   }
 
   Future<RecallTask> getLastRecallTask() async {
-    return await _databaseService
-        .getLastRecallTask(_userService.getUserEmail());
+    return await _databaseService.getLastRecallTask(_userService.getUsername());
   }
 
   Future<UserData> getUserData() async {
     if (_userDataCache == null) {
       _userDataCache =
-          await _databaseService.getUserData(_userService.getUserEmail());
+          await _databaseService.getUserData(_userService.getUsername());
     }
     return _userDataCache;
   }
 
   saveObstacles(List<Obstacle> obstacles) async {
-    await _databaseService.saveObstacles(
-        obstacles, _userService.getUserEmail());
+    await _databaseService.saveObstacles(obstacles, _userService.getUsername());
   }
 
   saveOutcomes(List<Outcome> outcomes) async {
-    await _databaseService.saveOutcomes(outcomes, _userService.getUserEmail());
+    await _databaseService.saveOutcomes(outcomes, _userService.getUsername());
   }
 
   saveConsent(bool consented) async {
-    await _databaseService.saveConsent(_userService.getUserEmail(), consented);
+    await _databaseService.saveConsent(_userService.getUsername(), consented);
   }
 
   saveLdtData(LdtData ldtData) async {
-    await _databaseService.saveLdt(_userService.getUserEmail(), ldtData);
+    await _databaseService.saveLdt(_userService.getUsername(), ldtData);
   }
 
   saveEmojiInternalisation(Internalisation internalisation) async {
     await _databaseService.saveEmojiInternalisation(
-        _userService.getUserEmail(), internalisation);
+        _userService.getUsername(), internalisation);
   }
 
   Future<int> getScore() async {
-    if (_userService.getUserEmail() == null) return 0;
-    if (_userService.getUserEmail().isEmpty) return 0;
+    if (_userService.getUsername() == null) return 0;
+    if (_userService.getUsername().isEmpty) return 0;
 
-    return await _databaseService.getScore(_userService.getUserEmail());
+    return await _databaseService.getScore(_userService.getUsername());
   }
 
   saveScore(int score) async {
-    await _databaseService.saveScore(_userService.getUserEmail(), score);
+    await _databaseService.saveScore(_userService.getUsername(), score);
   }
 
   logData(dynamic data) async {
-    data["user"] = _userService.getUserEmail();
-    await _databaseService.logEvent(_userService.getUserEmail(), data);
+    data["user"] = _userService.getUsername();
+    await _databaseService.logEvent(_userService.getUsername(), data);
   }
 
   updateInternalisationConditionGroup(int group) async {
     await _databaseService.updateInternalisationConditionGroup(
-        _userService.getUserEmail(), group);
+        _userService.getUsername(), group);
     _userDataCache.internalisationCondition = group;
   }
 
   Future<DateTime> getDateOfLastLDT() async {
     return await _databaseService
-        .getLastLdtTaskDate(_userService.getUserEmail());
+        .getLastLdtTaskDate(_userService.getUsername());
   }
 
   getAssessment(String name) async {
@@ -234,7 +236,7 @@ class DataService {
 
   getInitSessionSteps() async {
     return await _databaseService
-        .getInitSessionSteps(_userService.getUserEmail());
+        .getInitSessionSteps(_userService.getUsername());
   }
 
   void saveInitialSessionStepCompleted(int step) async {
