@@ -1,7 +1,7 @@
 import 'package:serene/shared/enums.dart';
 
 class AssessmentScreenArguments {
-  final Assessments assessmentType;
+  final AssessmentTypes assessmentType;
 
   AssessmentScreenArguments(this.assessmentType);
 }

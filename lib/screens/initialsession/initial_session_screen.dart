@@ -47,11 +47,14 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       WelcomeScreen(), // Screen 1
       VideoScreen("45q_GRrlQ04"), // Screen 2
       CabuuLinkScreen(), // Screen 3
-      InitialAssessmentScreen(Assessments.cabuuLearn), // Screen 4
-      InitialAssessmentScreen(Assessments.regulation), // Screen 4
+      InitialAssessmentScreen(
+          AssessmentTypes.cabuuLearn, _onSubscreenFinished), // Screen 4
+      InitialAssessmentScreen(
+          AssessmentTypes.regulation, _onSubscreenFinished), // Screen 4
       VideoScreen("d0PSrCMoTpk"), // Screen 5
       InitialDailyLearningGoalScreen(), // Screen 6
-      InitialAssessmentScreen(Assessments.learningGoals1), // Screen 6
+      InitialAssessmentScreen(
+          AssessmentTypes.learningGoals1, _onSubscreenFinished), // Screen 6
       InitialOutcomeExplanationScreen(), // Screen 7
       OutcomeSelectionScreen(), // Screen 8
       OutcomeEnterScreen(), // Screen 9
@@ -62,13 +65,14 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       ObstacleEnterScreen(), // Screen 14
       ObstacleSortingScreen(), // Screen 15
       InitialObstacleDisplayScreen(), // Screen 16
-      InitialAssessmentScreen(Assessments.srl),
+      InitialAssessmentScreen(AssessmentTypes.srl, _onSubscreenFinished),
       // InitialRewardScreenFirst(),
-      InitialAssessmentScreen(Assessments.learningGoals2),
+      InitialAssessmentScreen(
+          AssessmentTypes.learningGoals2, _onSubscreenFinished),
       VideoScreen("9CHA1RpTgRM"),
-      InitialLdtScreen("0_0", _onLdtFinished),
-      InitialLdtScreen("0_1", _onLdtFinished),
-      InitialLdtScreen("0_2", _onLdtFinished),
+      InitialLdtScreen("0_0", _onSubscreenFinished),
+      InitialLdtScreen("0_1", _onSubscreenFinished),
+      InitialLdtScreen("0_2", _onSubscreenFinished),
       VideoScreen("chZNcG-sLAM"),
       // InitialRewardScreenSecond()
       // InitialAssessmentScreen(Assessments.cabuuLearn),
@@ -115,7 +119,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     // }
   }
 
-  _onLdtFinished() {
+  _onSubscreenFinished() {
     setState(() {});
   }
 

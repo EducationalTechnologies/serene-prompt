@@ -11,7 +11,7 @@ class UserService {
   String userId = "";
 
   Future<bool> initialize() async {
-    var id = getUserEmail();
+    var id = getUsername();
     if (id == null) return false;
     if (id.isEmpty) return false;
     return !await FirebaseService().isNameAvailable(id);
@@ -23,10 +23,6 @@ class UserService {
 
   saveUsername(String username) async {
     await _settings.setSetting(SettingsKeys.userId, username);
-  }
-
-  saveUserEmail(String email) async {
-    await _settings.setSetting(SettingsKeys.email, email);
   }
 
   int _getInternalisationCondition() {
@@ -41,7 +37,6 @@ class UserService {
         await FirebaseService().registerUser(email, password, treatmentGroup);
     if (userData != null) {
       await saveUsername(userData.userId);
-      await saveUserEmail(userData.email);
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
@@ -52,7 +47,6 @@ class UserService {
     var userData = await FirebaseService().signInUser(email, password);
     if (userData != null) {
       await saveUsername(userData.userId);
-      await saveUserEmail(userData.email);
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
@@ -76,9 +70,5 @@ class UserService {
 
   String getUsername() {
     return _settings.getSetting(SettingsKeys.userId);
-  }
-
-  String getUserEmail() {
-    return _settings.getSetting(SettingsKeys.email);
   }
 }

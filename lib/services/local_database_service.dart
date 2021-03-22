@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:serene/shared/enums.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,7 +12,8 @@ final String columnHindrance = 'hindrance';
 
 const String TABLE_GOALS = "goals";
 const String TABLE_SETTINGS = "settings";
-const int DB_VERSION = 4;
+const String TABLE_CACHE = "cache";
+const int DB_VERSION = 5;
 
 class LocalDatabaseService {
   LocalDatabaseService._();
@@ -34,45 +34,33 @@ class LocalDatabaseService {
     return await openDatabase(path,
         version: DB_VERSION,
         onOpen: (db) {},
-        onUpgrade: _onUpgrade, onCreate: (Database db, int version) async {
-      await db.execute(
-          "CREATE TABLE $TABLE_GOALS(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-              "goalText STRING, " +
-              "deadline STRING, " +
-              "documentId STRING, " +
-              "difficulty STRING, " +
-              "userId STRING, " +
-              "progressIndicator STRING, " +
-              "progress INTEGER"
-                  ")");
+        onUpgrade: _onUpgrade,
+        onCreate: _onCreate);
+  }
 
-      await db.execute("CREATE TABLE $TABLE_SETTINGS(key STRING PRIMARY KEY, " +
-          // "key STRING, " +
-          "value STRING " +
-          ")");
-    });
+  _onCreate(Database db, int version) async {
+    await db.execute("CREATE TABLE $TABLE_SETTINGS(key STRING PRIMARY KEY, " +
+        // "key STRING, " +
+        "value STRING " +
+        ")");
+
+    await db.execute("CREATE TABLE $TABLE_CACHE(key STRING PRIMARY KEY, " +
+        "data STRING " +
+        ")");
   }
 
 //TODO: Write a better migration script
   _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion != newVersion) {
-      await db.execute("DROP TABLE IF EXISTS $TABLE_GOALS");
-      await db.execute(
-          "CREATE TABLE IF NOT EXISTS $TABLE_GOALS(id STRING PRIMARY KEY, " +
-              "goalText STRING, " +
-              "deadline STRING, " +
-              "documentId STRING, " +
-              "difficulty STRING, " +
-              "userId STRING, " +
-              "progressIndicator STRING, " +
-              "progress INTEGER"
-                  ")");
-
-      await db.execute("DROP TABLE IF EXISTS $TABLE_SETTINGS");
       await db.execute(
           "CREATE TABLE IF NOT EXISTS $TABLE_SETTINGS(key STRING PRIMARY KEY, " +
               // "key STRING, " +
               "value STRING " +
+              ")");
+
+      await db.execute(
+          "CREATE TABLE IF NOT EXISTS $TABLE_CACHE(key STRING PRIMARY KEY, " +
+              "data STRING " +
               ")");
     }
   }
@@ -81,16 +69,6 @@ class LocalDatabaseService {
     final db = await database;
     await db.insert(TABLE_SETTINGS, {"key": key, "value": value},
         conflictAlgorithm: ConflictAlgorithm.replace);
-    // var existing =
-    //     await db.rawQuery("select * from $TABLE_SETTINGS where key = $key");
-    // // var result = await db.query(TABLE_GOALS, where: whereString);
-
-    // if (existing.length == 0) {
-    //   await db.insert(TABLE_SETTINGS, {"key": key, "value": value},
-    //       conflictAlgorithm: ConflictAlgorithm.replace);
-    // } else {
-    //   await db.update(TABLE_SETTINGS, {"key": key, "value": value});
-    // }
   }
 
   Future<List<Map<String, dynamic>>> getAllSettings() async {
@@ -101,7 +79,7 @@ class LocalDatabaseService {
     return existing;
   }
 
-  getSettingsValue(String key) async {
+  dynamic getSettingsValue(String key) async {
     final db = await database;
 
     var existing =

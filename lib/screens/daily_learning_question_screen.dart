@@ -49,8 +49,8 @@ class DailyLearningQuestionScreen extends StatelessWidget {
                 onPressed: () {
                   vm.willLearnToday = true;
                   Navigator.pushNamed(context, RouteNames.AMBULATORY_ASSESSMENT,
-                      arguments:
-                          AssessmentScreenArguments(Assessments.preLearning));
+                      arguments: AssessmentScreenArguments(
+                          AssessmentTypes.preLearning));
                 },
               ),
               ElevatedButton(

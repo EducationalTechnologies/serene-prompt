@@ -70,7 +70,7 @@ class AppRouter {
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        Assessments.usability,
+                        AssessmentTypes.usability,
                         locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),
@@ -81,7 +81,7 @@ class AppRouter {
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        Assessments.preLearning,
+                        AssessmentTypes.preLearning,
                         locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),
@@ -92,7 +92,7 @@ class AppRouter {
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        Assessments.preImplementationIntention,
+                        AssessmentTypes.preImplementationIntention,
                         locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),

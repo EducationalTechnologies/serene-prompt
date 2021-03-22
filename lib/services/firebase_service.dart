@@ -53,8 +53,12 @@ class FirebaseService {
 
   Future<bool> isNameAvailable(String userId) async {
     try {
-      var availableMethods =
-          await _firebaseAuth.fetchSignInMethodsForEmail(userId);
+      var availableMethods = await _firebaseAuth
+          .fetchSignInMethodsForEmail(userId)
+          .onError((error, stackTrace) {
+        handleError(error);
+      });
+      if (availableMethods == null) return false;
       return (availableMethods.length == 0);
     } on PlatformException catch (e) {
       print("Error trying to get the email availabiltiy: $e");
@@ -314,7 +318,8 @@ class FirebaseService {
     var scores = await _databaseReference
         .collection(COLLECTION_SCORES)
         .doc(userid)
-        .get();
+        .get()
+        .catchError(handleError);
 
     if (!scores.exists) return 0;
     var score = scores.data()["score"];
@@ -336,12 +341,20 @@ class FirebaseService {
     var initSessionData = await _databaseReference
         .collection(COLLECTION_INITSESSION)
         .where("user", isEqualTo: userid)
-        .get();
+        .get()
+        .catchError(handleError);
 
     if (initSessionData.docs.length == null) {
       return null;
     }
     // TODO: Implement?
     return null;
+  }
+
+  Future<void> saveInitSessionStepCompleted(String userid, int step) async {
+    return await _databaseReference
+        .collection(COLLECTION_INITSESSION)
+        .doc(userid)
+        .set({"step": step});
   }
 }
