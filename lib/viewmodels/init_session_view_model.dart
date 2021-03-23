@@ -19,6 +19,8 @@ import 'package:serene/shared/app_asset_paths.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class InitSessionViewModel extends BaseViewModel {
   final ExperimentService _experimentService;
@@ -263,6 +265,13 @@ class InitSessionViewModel extends BaseViewModel {
           {"goal": numberOfDaysLearningGoal},
           "daily_learning_goal",
           DateTime.now());
+      _dataService.saveAssessment(result);
+    }
+    if (currentPageType == CabuuLinkScreen) {
+      var hashedUsername =
+          md5.convert(utf8.encode(_cabuuLinkUserName)).toString();
+      var result = AssessmentResult(_dataService.getUsername(),
+          {"cabuu_username": hashedUsername}, "cabuu_data", DateTime.now());
       _dataService.saveAssessment(result);
     }
     _dataService.saveInitialSessionStepCompleted(step);
