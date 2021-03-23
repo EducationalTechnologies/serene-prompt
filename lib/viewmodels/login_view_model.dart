@@ -16,8 +16,7 @@ class LoginViewModel extends BaseViewModel {
 
   String defaultPassword = "Hasselhoernchen";
 
-  LoginViewModel(
-      this._userService, this._dataService, this._navigationService) {}
+  LoginViewModel(this._userService, this._dataService, this._navigationService);
 
   Future<String> register(String email, String password) async {
     if (!validateEmail(email)) {

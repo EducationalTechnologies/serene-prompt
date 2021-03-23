@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_result.dart';
-import 'package:serene/models/assessment_item.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';

@@ -5,6 +5,7 @@ import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
 import 'package:serene/screens/initialsession/initial_assessment_screen.dart';
+import 'package:serene/screens/initialsession/initial_daily_learning_goal_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
@@ -50,7 +51,7 @@ class InitSessionViewModel extends BaseViewModel {
   bool videoThreeCompleted = false;
   Assessment lastAssessment = Assessment();
   Map<String, String> currentAssessmentResults = {};
-  String numberOfDaysLearningGoal;
+  String numberOfDaysLearningGoal = "";
   String overcomeObstacleText;
   // Map<AssessmentTypes, Map<String, String>> assessmentResults = {};
 
@@ -114,13 +115,7 @@ class InitSessionViewModel extends BaseViewModel {
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
-  InitSessionViewModel(this._dataService, this._experimentService) {
-    // assessmentResults[AssessmentTypes.cabuuLearn] = {};
-    // assessmentResults[AssessmentTypes.regulation] = {};
-    // assessmentResults[AssessmentTypes.learningGoals1] = {};
-    // assessmentResults[AssessmentTypes.srl] = {};
-    // assessmentResults[AssessmentTypes.learningGoals2] = {};
-  }
+  InitSessionViewModel(this._dataService, this._experimentService);
 
   outcomeSelected(Outcome outcome) {
     if (selectedOutcomes.contains(outcome)) {
@@ -162,7 +157,6 @@ class InitSessionViewModel extends BaseViewModel {
   }
 
   bool canMoveNext() {
-    // TODO: Use actual logic
     if (currentPageType == WelcomeScreen) {
       return true;
     }
@@ -185,9 +179,11 @@ class InitSessionViewModel extends BaseViewModel {
     if (currentPageType == ObstacleSelectionScreen) {
       return selectedObstacles.length > 0;
     }
-
     if (currentPageType == CabuuLinkScreen) {
       return consented && cabuuLinkUserName.isNotEmpty;
+    }
+    if (currentPageType == InitialDailyLearningGoalScreen) {
+      return numberOfDaysLearningGoal.isNotEmpty;
     }
 
     return true;
@@ -259,6 +255,14 @@ class InitSessionViewModel extends BaseViewModel {
     if (currentPageType == InitialAssessmentScreen) {
       var result = AssessmentResult(_dataService.getUsername(),
           currentAssessmentResults, lastAssessment.id, DateTime.now());
+      _dataService.saveAssessment(result);
+    }
+    if (currentPageType == InitialDailyLearningGoalScreen) {
+      var result = AssessmentResult(
+          _dataService.getUsername(),
+          {"goal": numberOfDaysLearningGoal},
+          "daily_learning_goal",
+          DateTime.now());
       _dataService.saveAssessment(result);
     }
     _dataService.saveInitialSessionStepCompleted(step);

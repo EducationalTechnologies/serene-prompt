@@ -36,7 +36,7 @@ class UserService {
     var userData =
         await FirebaseService().registerUser(email, password, treatmentGroup);
     if (userData != null) {
-      await saveUsername(userData.userId);
+      await saveUsername(email);
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
@@ -46,7 +46,7 @@ class UserService {
   Future<String> signInUser(String email, String password) async {
     var userData = await FirebaseService().signInUser(email, password);
     if (userData != null) {
-      await saveUsername(userData.userId);
+      await saveUsername(email);
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
