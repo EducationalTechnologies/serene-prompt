@@ -355,6 +355,13 @@ class FirebaseService {
     return await _databaseReference
         .collection(COLLECTION_INITSESSION)
         .doc(userid)
-        .set({"step": step});
+        .set({"step": step}, SetOptions(merge: true));
+  }
+
+  saveInitialSessionValue(String username, String key, dynamic value) async {
+    return await _databaseReference
+        .collection(COLLECTION_INITSESSION)
+        .doc(username)
+        .set({key: value}, SetOptions(merge: true));
   }
 }

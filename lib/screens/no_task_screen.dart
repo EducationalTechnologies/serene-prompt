@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
+import 'package:serene/screens/rewards/reward_selection_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/route_names.dart';
@@ -128,21 +129,61 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                "assets/illustrations/mascot_bare.png"),
+                                "assets/illustrations/mascot_ocean.png"),
                             fit: BoxFit.none,
-                            scale: 7.0,
+                            // scale: 7.0,
                             alignment: Alignment.bottomCenter)),
                     child: Align(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(_textNext,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline5),
-                            UIHelper.verticalSpaceLarge(),
+                            // Text(_textNext,
+                            //     textAlign: TextAlign.center,
+                            //     style: Theme.of(context).textTheme.headline5),
+                            // UIHelper.verticalSpaceLarge(),
                             Text(_textNotification,
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline5),
+                                style: Theme.of(context).textTheme.bodyText1),
+                            UIHelper.verticalSpaceSmall(),
+                            Text(
+                                "Du hast heute am 5. Tag in Folge teilgenommen.",
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText1),
+                            UIHelper.verticalSpaceSmall(),
+                            Text("Dafür kriegst du 10💎 und 5💎 als Bonus.",
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText1),
+                            UIHelper.verticalSpaceMedium(),
+                            // Text("Du kriegst für deine Teilnahme 15💎.",
+                            //     textAlign: TextAlign.center,
+                            //     style: Theme.of(context).textTheme.headline5),
+                            Container(
+                                width: 250,
+                                height: 40,
+                                child: OutlinedButton(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.shopping_cart),
+                                        UIHelper.horizontalSpaceMedium(),
+                                        Text(
+                                          "Punkte einlösen",
+                                          style: TextStyle(color: Colors.black),
+                                        )
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        var rewardWidget =
+                                            RewardSelectionScreen();
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    rewardWidget));
+                                      });
+                                    })),
                             if (_showToRecallTaskButton)
                               _buildToRecallTaskButton(),
                           ],

@@ -31,8 +31,13 @@ class _SereneAppBarState extends State<SereneAppBar> {
             future: rewardService.initialized,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                // TODO: Usability STuff
-                return Text("");
+                return Text(
+                  "${rewardService.score}💎",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow[800]),
+                );
                 return Row(
                   children: [
                     Image(
@@ -51,7 +56,11 @@ class _SereneAppBarState extends State<SereneAppBar> {
                   ],
                 );
               } else {
-                return Text("");
+                return Text("0💎",
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.yellow[800]));
               }
             }),
         UIHelper.horizontalSpaceMedium()

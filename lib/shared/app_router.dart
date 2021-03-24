@@ -92,7 +92,7 @@ class AppRouter {
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentTypes.preImplementationIntention,
+                        AssessmentTypes.affect,
                         locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),

@@ -27,9 +27,6 @@ class StartupViewModel extends BaseViewModel {
     print("Navigating to ${appStartupMode.toString()}");
     var nav = locator<NavigationService>();
 
-    // TODO: CHANGE BACK AFTER USABILITY STUDY
-    nav.navigateAndRemove(RouteNames.NO_TASKS);
-    return;
     switch (appStartupMode) {
       case AppStartupMode.normal:
         nav.navigateAndRemove(RouteNames.MAIN);

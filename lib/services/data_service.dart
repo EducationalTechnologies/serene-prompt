@@ -87,17 +87,17 @@ class DataService {
     var trialData = await _getLdtTrialByName(trialName);
 
     var ldt = LdtData();
-    for (var primeTarget in trialData) {
-      ldt.primes.add(primeTarget[0]);
-      ldt.targets.add(primeTarget[1]);
-      ldt.correctValues.add(primeTarget[2]);
-    }
 
     //initialize the trial data now so that less objects have to be created during the trial
     ldt.trials = [];
 
-    for (var word in ldt.targets) {
-      var ldtTrialWord = LdtTrial(condition: "", target: word);
+    for (var primeTarget in trialData) {
+      ldt.primes.add(primeTarget[0]);
+      ldt.targets.add(primeTarget[1]);
+      ldt.correctValues.add(primeTarget[2]);
+
+      var ldtTrialWord = LdtTrial(
+          condition: primeTarget[2].toString(), target: primeTarget[1]);
       ldt.trials.add(ldtTrialWord);
     }
 
@@ -241,6 +241,11 @@ class DataService {
 
   void saveInitialSessionStepCompleted(int step) async {
     _localDatabaseService.upsertSetting("initSessionStep", step.toString());
+  }
+
+  Future<void> saveInitialSessionValue(String key, dynamic value) async {
+    await _databaseService.saveInitialSessionValue(
+        _userService.getUsername(), key, value);
   }
 
   Future<int> getCompletedInitialSessionStep() async {

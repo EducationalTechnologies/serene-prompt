@@ -76,7 +76,7 @@ enum AssessmentTypes {
   preLearning,
   postLearning,
   usability,
-  preImplementationIntention,
+  affect,
   cabuuLearn,
   regulation,
   selfEfficacy,

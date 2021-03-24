@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/models/assessment.dart';
+import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/interval_scale.dart';
@@ -27,6 +28,9 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: (TextStyle(fontSize: 18)),
                   ))),
+          UIHelper.verticalSpaceMedium(),
+          Text("Bitte beantworte die folgenden Fragen: "),
+          UIHelper.verticalSpaceMedium(),
           for (var index = 0; index < assessment.items.length; index++)
             Card(
                 child: Padding(
@@ -57,10 +61,10 @@ class AmbulatoryAssessmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var vm = Provider.of<AmbulatoryAssessmentViewModel>(context);
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(""),
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: Text("Bitte beantworte die folgenden Fragen:"),
+      // ),
       body: Container(
         child: FutureBuilder(
             future: vm.getAssessment(),

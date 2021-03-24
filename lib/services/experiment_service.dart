@@ -237,7 +237,7 @@ class ExperimentService {
       nextRoute = RouteNames.LDT;
       // TODO: USABILITY STUFF: REMOVE
       nextRoute = RouteNames.NO_TASKS;
-    } else if (type == AssessmentTypes.preImplementationIntention) {
+    } else if (type == AssessmentTypes.affect) {
       nextRoute = RouteNames.INTERNALISATION;
     }
 
@@ -246,7 +246,12 @@ class ExperimentService {
 
   Future<void> submitLDT(LdtData ldtData) async {
     await _dataService.saveLdtData(ldtData);
-    _navigationService.navigateTo(RouteNames.NO_TASKS);
-    return;
+  }
+
+  Future<void> nextScreen(String currentScreen) async {
+    if (currentScreen == RouteNames.LDT) {
+      _navigationService.navigateTo(RouteNames.NO_TASKS);
+      return;
+    }
   }
 }

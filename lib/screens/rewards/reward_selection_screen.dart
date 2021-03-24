@@ -30,17 +30,17 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
                     crossAxisCount: 2,
                     children: [
                       _buildPreviewItem("Weltraum",
-                          "assets/illustrations/mascot_space_preview.png"),
+                          "assets/illustrations/mascot_space_preview.png", 10),
                       _buildPreviewItem("Unter Wasser",
-                          "assets/illustrations/mascot_ocean_preview.png"),
+                          "assets/illustrations/mascot_ocean_preview.png", 20),
                       _buildPreviewItem("Weltraum",
-                          "assets/illustrations/mascot_space_preview.png"),
+                          "assets/illustrations/mascot_space_preview.png", 30),
                       _buildPreviewItem("Unter Wasser",
-                          "assets/illustrations/mascot_ocean_preview.png"),
+                          "assets/illustrations/mascot_ocean_preview.png", 40),
                       _buildPreviewItem("Weltraum",
-                          "assets/illustrations/mascot_space_preview.png"),
+                          "assets/illustrations/mascot_space_preview.png", 50),
                       _buildPreviewItem("Unter Wasser",
-                          "assets/illustrations/mascot_ocean_preview.png"),
+                          "assets/illustrations/mascot_ocean_preview.png", 60),
                     ],
                   ),
                 ),
@@ -50,7 +50,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
         ));
   }
 
-  _buildPreviewItem(String header, String path) {
+  _buildPreviewItem(String header, String path, int price) {
     return Container(
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(boxShadow: [
@@ -72,7 +72,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
           ),
           Divider(),
           Text(
-            "55 🥇",
+            "${price.toString()} 🥇",
           )
         ],
       ),

@@ -1,0 +1,71 @@
+{
+    "title": "",
+    "id": "preInternalisation",
+    "questions": [
+        {
+            "id": "affect_1",
+            "questionText": "Hast du vor, heute mit cabuu zu lernen?",
+            "labels": {
+                "1": "Ja",
+                "2": "Nein",
+                "3": "Weiß noch nicht",
+                "4": "Ich habe heute schon mit cabuu gelernt"
+            }
+        },
+        {
+            "id": "affect_2",
+            "questionText": "Ich fühle mich gerade ängstlich.",
+            "labels": {
+                "1": "Gar nicht",
+                "2": "Wenig",
+                "3": "teils / teils",
+                "4": "Etwas",
+                "5": "Sehr"
+            }
+        },
+        {
+            "id": "affect_3",
+            "questionText": "Ich fühle mich gerade toll.",
+            "labels": {
+                "1": "Gar nicht",
+                "2": "Wenig",
+                "3": "teils / teils",
+                "4": "Etwas",
+                "5": "Sehr"
+            }
+        },
+        {
+            "id": "affect_4",
+            "questionText": "Ich fühle mich gerade unglücklich.",
+            "labels": {
+                "1": "Gar nicht",
+                "2": "Wenig",
+                "3": "teils / teils",
+                "4": "Etwas",
+                "5": "Sehr"
+            }
+        },
+        {
+            "id": "affect_5",
+            "questionText": "Ich fühle mich gerade zufrieden.",
+            "labels": {
+                "1": "Gar nicht",
+                "2": "Wenig",
+                "3": "teils / teils",
+                "4": "Etwas",
+                "5": "Sehr"
+            }
+        },
+        {
+            "id": "affect_6",
+            "questionText": "Ich fühle mich gerade schlecht.",
+            "labels": {
+                "1": "Gar nicht",
+                "2": "Wenig",
+                "3": "teils / teils",
+                "4": "Etwas",
+                "5": "Sehr"
+            }
+        }
+    ]
+}

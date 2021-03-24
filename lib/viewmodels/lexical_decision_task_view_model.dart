@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:serene/models/ldt_data.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class LexicalDecisionTaskViewModel extends BaseViewModel {
@@ -96,6 +97,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     _stopwatch.stop();
     _primeStopwatch.stop();
     done = true;
+    _experimentService.submitLDT(ldt);
   }
 
   startPrimeStopwatch() {
@@ -130,6 +132,6 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     if (state == ViewState.busy) return;
     setState(ViewState.busy);
     ldt.completionDate = DateTime.now();
-    _experimentService.submitLDT(ldt);
+    _experimentService.nextScreen(RouteNames.LDT);
   }
 }

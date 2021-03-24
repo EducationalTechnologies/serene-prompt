@@ -45,6 +45,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     super.initState();
     _pages = [
       WelcomeScreen(), // Screen 1
+      InitialLdtScreen("0_0", _onSubscreenFinished),
       VideoScreen("45q_GRrlQ04"), // Screen 2
       CabuuLinkScreen(), // Screen 3
       InitialAssessmentScreen(
@@ -70,7 +71,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       InitialAssessmentScreen(
           AssessmentTypes.learningGoals2, _onSubscreenFinished),
       VideoScreen("9CHA1RpTgRM"),
-      InitialLdtScreen("0_0", _onSubscreenFinished),
       InitialLdtScreen("0_1", _onSubscreenFinished),
       InitialLdtScreen("0_2", _onSubscreenFinished),
       VideoScreen("chZNcG-sLAM"),

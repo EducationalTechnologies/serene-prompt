@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
+import 'package:serene/widgets/countdown.dart';
 import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
@@ -27,8 +29,8 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
   void initState() {
     super.initState();
     vm = Provider.of<LexicalDecisionTaskViewModel>(context, listen: false);
-    ldtLoaded = vm.init().then((value) {
-      return true;
+    vm.addListener(() {
+      setState(() {});
     });
   }
 
@@ -38,13 +40,19 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
     super.dispose();
   }
 
+  void _onCountdownFinished() {
+    ldtLoaded = vm.init().then((value) {
+      return true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          appBar: vm.done ? AppBar() : null,
-          drawer: vm.done ? SereneDrawer() : null,
+          appBar: AppBar(),
+          drawer: SereneDrawer(),
           body: FutureBuilder(
             future: ldtLoaded,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -55,7 +63,7 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
                   return buildTrial();
                 }
               }
-              return CircularProgressIndicator();
+              return _buildCountDown();
             },
           ),
         ));
@@ -87,12 +95,19 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
       margin: UIHelper.getContainerMargin(),
       child: Column(
         children: [
-          ...summaryItems,
+          Text(
+            "Gut gemacht!",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Text(
+            "Drücke jetzt auf 'Abschicken', um die Aufgabe abzuschließen",
+            style: Theme.of(context).textTheme.headline6,
+          ),
           FullWidthButton(onPressed: () async {
             await vm.submit();
           })
         ],
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
       ),
     );
@@ -149,6 +164,24 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
             ],
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center));
+  }
+
+  _buildCountDown() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "Mach dich bereit, gleich geht die Wortaufgabe los",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        CountDown(
+          5,
+          onFinished: _onCountdownFinished,
+        ),
+      ],
+    );
   }
 
   buildBackwardMask() {

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
+import 'package:serene/screens/rewards/reward_selection_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
@@ -163,20 +164,9 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.filter_7,
-              text: "Abschlussfragen",
+              text: "LDT",
               onTap: () {
-                var routeWidget =
-                    ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                        create: (_) => AmbulatoryAssessmentViewModel(
-                            AssessmentTypes.usability,
-                            locator.get<UserService>(),
-                            locator.get<DataService>(),
-                            locator.get<ExperimentService>()),
-                        child: AmbulatoryAssessmentScreen());
-
-                // var rewardWidget = RewardSelectionScreen();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => routeWidget));
+                Navigator.pushNamed(context, RouteNames.LDT, arguments: "1");
               }),
           // VersionInfo()
         ],

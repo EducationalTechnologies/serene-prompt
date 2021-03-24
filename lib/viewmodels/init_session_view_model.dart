@@ -40,11 +40,16 @@ class InitSessionViewModel extends BaseViewModel {
   }
 
   String _cabuuLinkUserName = "";
-
   String get cabuuLinkUserName => _cabuuLinkUserName;
-
   set cabuuLinkUserName(String cabuuLinkUserName) {
     _cabuuLinkUserName = cabuuLinkUserName;
+    notifyListeners();
+  }
+
+  String _cabuuLinkEmail = "";
+  String get cabuuLinkEmail => _cabuuLinkEmail;
+  set cabuuLinkEmail(String cabuuLinkEmail) {
+    _cabuuLinkEmail = cabuuLinkEmail;
     notifyListeners();
   }
 
@@ -249,10 +254,10 @@ class InitSessionViewModel extends BaseViewModel {
     //   return step + 2;
     // }
     if (currentPageType == ObstacleSortingScreen) {
-      _dataService.saveObstacles(obstacles);
+      _dataService.saveObstacles(selectedObstacles);
     }
     if (currentPageType == OutcomeSortingScreen) {
-      _dataService.saveOutcomes(outcomes);
+      _dataService.saveOutcomes(selectedOutcomes);
     }
     if (currentPageType == InitialAssessmentScreen) {
       var result = AssessmentResult(_dataService.getUsername(),
@@ -260,20 +265,20 @@ class InitSessionViewModel extends BaseViewModel {
       _dataService.saveAssessment(result);
     }
     if (currentPageType == InitialDailyLearningGoalScreen) {
-      var result = AssessmentResult(
-          _dataService.getUsername(),
-          {"goal": numberOfDaysLearningGoal},
-          "daily_learning_goal",
-          DateTime.now());
-      _dataService.saveAssessment(result);
+      _dataService.saveInitialSessionValue(
+          "dailyLearningGoal", numberOfDaysLearningGoal);
+    }
+    if (currentPageType == InitialLdtScreen) {
+      _dataService.saveLdtData(ldtvm.ldt);
     }
     if (currentPageType == CabuuLinkScreen) {
       var hashedUsername =
           md5.convert(utf8.encode(_cabuuLinkUserName)).toString();
-      var result = AssessmentResult(_dataService.getUsername(),
-          {"cabuu_username": hashedUsername}, "cabuu_data", DateTime.now());
-      _dataService.saveAssessment(result);
+      _dataService.saveInitialSessionValue("cabuuUsername", hashedUsername);
+      var hashedEmail = md5.convert(utf8.encode(_cabuuLinkEmail)).toString();
+      _dataService.saveInitialSessionValue("cabuuMail", hashedEmail);
     }
+
     _dataService.saveInitialSessionStepCompleted(step);
     return step + 1;
   }
