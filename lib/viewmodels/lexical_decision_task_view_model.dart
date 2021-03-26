@@ -27,6 +27,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   int currentStep = 0;
   int currenTargetIndex = -1;
   int currentPrimeIndex = -1;
+  Timer _ldtTimer;
 
   LexicalDecisionTaskViewModel(this._trialName, this._experimentService) {
     phaseDurations = [
@@ -42,15 +43,15 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
 
   change() {
     int duration = phaseDurations[phase];
-    Timer(Duration(milliseconds: duration), () {
-      next();
+    _ldtTimer = Timer(Duration(milliseconds: duration), () {
+      nextStep();
       if (!done) {
         change();
       }
     });
   }
 
-  next() {
+  nextStep() {
     _stopwatch.reset();
     _stopwatch.start();
     currentStep += 1;
@@ -69,7 +70,9 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     _stopwatch.stop();
     setTrialResult(
         _stopwatch.elapsedMilliseconds, selection, primeDurations.last);
-    next();
+    _ldtTimer.cancel();
+    nextStep();
+    change();
   }
 
   Future<LdtData> init() async {
