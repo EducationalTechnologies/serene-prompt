@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
+import 'package:serene/widgets/countdown.dart';
 import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/speech_bubble.dart';
 
@@ -19,23 +20,13 @@ class InitialLdtScreen extends StatefulWidget {
 
 class _InitialLdtScreenState extends State<InitialLdtScreen> {
   LexicalDecisionTaskViewModel vm;
+  InitSessionViewModel initVm;
   Future<bool> ldtLoaded;
   final TextStyle ldtTextStyle = TextStyle(fontSize: 40, color: Colors.black);
 
   @override
   void initState() {
     super.initState();
-
-    ldtLoaded = Provider.of<InitSessionViewModel>(context, listen: false)
-        .initTrial(this.widget.trialName)
-        .then((value) {
-      return true;
-    }).then((value) => true);
-
-    vm = Provider.of<InitSessionViewModel>(context, listen: false).ldtvm;
-    vm.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -47,10 +38,12 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (vm.done) {
-        if (widget != null) {
-          if (widget.onFinished != null) {
-            widget.onFinished();
+      if (vm != null) {
+        if (vm.done) {
+          if (widget != null) {
+            if (widget.onFinished != null) {
+              widget.onFinished();
+            }
           }
         }
       }
@@ -66,7 +59,7 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
             return buildTrial();
           }
         }
-        return CircularProgressIndicator();
+        return _buildCountDown();
       },
     );
   }
@@ -116,6 +109,10 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
                   ],
                 ),
               ),
+              LinearProgressIndicator(
+                value: vm.getProgress(),
+                minHeight: 8,
+              )
             ],
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center));
@@ -145,5 +142,35 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
         text: message,
       ),
     );
+  }
+
+  _buildCountDown() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "Mach dich bereit, gleich geht die Wortaufgabe los",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        CountDown(
+          5,
+          onFinished: _onCountdownFinished,
+        ),
+      ],
+    );
+  }
+
+  void _onCountdownFinished() {
+    ldtLoaded = Provider.of<InitSessionViewModel>(context, listen: false)
+        .initTrial(this.widget.trialName)
+        .then((value) {
+      vm = Provider.of<InitSessionViewModel>(context, listen: false).ldtvm;
+      vm.addListener(() {
+        setState(() {});
+      });
+      return true;
+    }).then((value) => true);
   }
 }

@@ -3,8 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/screens/daily_learning_question_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
-import 'package:serene/screens/initialsession/video_screen.dart';
-import 'package:serene/screens/internalisation/emoji_story_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_recall_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
 import 'package:serene/screens/login_screen.dart';

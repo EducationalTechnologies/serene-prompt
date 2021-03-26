@@ -13,6 +13,11 @@ class CabuuLinkScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            "Verknüpfung mit cabuu",
+            style: Theme.of(context).textTheme.headline5,
+            textAlign: TextAlign.center,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -31,12 +36,12 @@ class CabuuLinkScreen extends StatelessWidget {
             ],
           ),
           Text(
-            "Gib hier die Email Adresse ein, mit der du bei Cabuu registriert bist",
+            "Falls du bei 'cabuu' mit deiner Email Adresse angemeldet bist, gib diese bitte hier ein",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           buildEmailField(context),
           Text(
-            "Gib hier den Benutzernamen ein, mit der du bei Cabuu registriert bist",
+            "Falls du bei 'cabuu' mit einem Benutzernamen angemeldet bist, gib diesen bitte hier ein",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           buildUserIdField(context),

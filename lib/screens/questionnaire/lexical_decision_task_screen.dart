@@ -161,6 +161,10 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
                   ],
                 ),
               ),
+              LinearProgressIndicator(
+                value: vm.getProgress(),
+                minHeight: 5,
+              )
             ],
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center));

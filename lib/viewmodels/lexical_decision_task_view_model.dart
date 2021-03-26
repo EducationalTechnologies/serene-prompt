@@ -10,7 +10,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   final int durationFixationCross = 1000;
   final int durationPrime = 40;
   final int durationBackwardMask = 700;
-  final int durationIntertrialScreen = 2000;
+  final int durationIntertrialScreen = 5000;
   List<int> phaseDurations;
 
   bool done = false;
@@ -76,21 +76,18 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     ldt = await this._experimentService.getLdtData(this._trialName);
 
     ldt.startDate = DateTime.now();
+    ldt.durationBackwardMask = this.durationBackwardMask;
+    ldt.durationFixationCross = this.durationFixationCross;
+    ldt.durationInterTrialScreen = this.durationIntertrialScreen;
+    ldt.durationPrime = this.durationPrime;
 
     change();
 
     return ldt;
   }
 
-  getNextPrime() {
-    if (currentPrimeIndex + 1 == ldt.targets.length) {
-      finish();
-      return "";
-    }
-    currentPrimeIndex += 1;
-    var curr = ldt.primes[currentPrimeIndex];
-
-    return curr;
+  getProgress() {
+    return currenTargetIndex / ldt.targets.length;
   }
 
   finish() {
@@ -118,6 +115,17 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     }
 
     var curr = ldt.trials[currenTargetIndex].target;
+
+    return curr;
+  }
+
+  getNextPrime() {
+    if (currentPrimeIndex + 1 == ldt.primes.length) {
+      finish();
+      return "";
+    }
+    currentPrimeIndex += 1;
+    var curr = ldt.primes[currentPrimeIndex];
 
     return curr;
   }

@@ -187,7 +187,8 @@ class InitSessionViewModel extends BaseViewModel {
       return selectedObstacles.length > 0;
     }
     if (currentPageType == CabuuLinkScreen) {
-      return consented && cabuuLinkUserName.isNotEmpty;
+      return consented &&
+          (cabuuLinkUserName.isNotEmpty || cabuuLinkEmail.isNotEmpty);
     }
     if (currentPageType == InitialDailyLearningGoalScreen) {
       return numberOfDaysLearningGoal.isNotEmpty;
