@@ -26,7 +26,7 @@ class StartupViewModel extends BaseViewModel {
   Future<void> startApp(AppStartupMode appStartupMode) async {
     print("Navigating to ${appStartupMode.toString()}");
     var nav = locator<NavigationService>();
-
+    return nav.navigateAndRemove(RouteNames.NO_TASKS);
     switch (appStartupMode) {
       case AppStartupMode.normal:
         nav.navigateAndRemove(RouteNames.MAIN);

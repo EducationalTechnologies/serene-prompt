@@ -21,19 +21,14 @@ enum CachedValues { goals, internalisations }
 
 class DataService {
   List<dynamic> _ldtTaskListCache = [];
-  List<dynamic> _ldtListStrings = [];
   List<String> _planCache = [];
   final UserService _userService;
   final FirebaseService _databaseService;
   final LocalDatabaseService _localDatabaseService;
   int score;
 
-  Map<CachedValues, bool> _dirtyFlags = {
-    CachedValues.goals: true,
-    CachedValues.internalisations: true
-  };
-
   UserData _userDataCache;
+  RecallTask _lastRecallTask;
 
   DataService(
       this._databaseService, this._userService, this._localDatabaseService);
@@ -138,8 +133,17 @@ class DataService {
   }
 
   saveRecallTask(RecallTask recallTask) async {
+    _lastRecallTask = recallTask;
     return await _databaseService.saveRecallTask(
         recallTask, _userService.getUsername());
+  }
+
+  Future<RecallTask> getLastRecallTask() async {
+    if (_lastRecallTask == null) {
+      _lastRecallTask =
+          await _databaseService.getLastRecallTask(_userService.getUsername());
+    }
+    return _lastRecallTask;
   }
 
   Future<Internalisation> getFirstInternalisation() async {
@@ -155,10 +159,6 @@ class DataService {
   Future<List<Internalisation>> getLastInternalisations(int number) async {
     return await _databaseService.getLastInternalisations(
         _userService.getUsername(), number);
-  }
-
-  Future<RecallTask> getLastRecallTask() async {
-    return await _databaseService.getLastRecallTask(_userService.getUsername());
   }
 
   Future<UserData> getUserData() async {
@@ -194,10 +194,12 @@ class DataService {
     if (_userService.getUsername() == null) return 0;
     if (_userService.getUsername().isEmpty) return 0;
 
-    return await _databaseService.getScore(_userService.getUsername());
+    var userData = await getUserData();
+    return userData.score;
   }
 
   saveScore(int score) async {
+    _userDataCache.score = score;
     await _databaseService.saveScore(_userService.getUsername(), score);
   }
 
@@ -252,5 +254,24 @@ class DataService {
     var step = _localDatabaseService.getSettingsValue("initSessionStep");
     if (step == null) return 0;
     return step;
+  }
+
+  Future<void> setBackgroundImage(String imagePath) async {
+    await _localDatabaseService.upsertSetting("backgroundImage", imagePath);
+  }
+
+  Future<String> getBackgroundImagePath() async {
+    return await _localDatabaseService.getSettingsValue("backgroundImage");
+  }
+
+  Future<int> getStreakDays() async {
+    var userData = await getUserData();
+    return userData.streakDays;
+  }
+
+  Future<void> setStreakDays(int value) async {
+    _userDataCache.streakDays = value;
+    return await _databaseService.setStreakDays(
+        _userService.getUsername(), value);
   }
 }

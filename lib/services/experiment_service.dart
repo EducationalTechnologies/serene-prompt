@@ -208,14 +208,29 @@ class ExperimentService {
     return completed == STUDY_DURATION;
   }
 
+  Future<int> updateAndGetStreakDays() async {
+    var lastRecall = await _dataService.getLastRecallTask();
+    if (lastRecall == null) return 0;
+
+    var streakDays = await _dataService.getStreakDays();
+    if (lastRecall.completionDate.isYesterday()) {
+      streakDays += 1;
+    }
+    await _dataService.setStreakDays(streakDays);
+    return streakDays;
+  }
+
   Future<void> submitRecallTask(RecallTask recallTask) async {
+    // Check the streak BEFORE submitting the recall task
+    int streakDays = await updateAndGetStreakDays();
+
+    await _rewardService.onRecallTask(streakDays);
+
     _dataService.saveRecallTask(recallTask);
 
     if (await lastThreeConditionsWereTheSame()) {
-      this._rewardService.onRecallTaskThird();
       _navigationService.navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
     } else {
-      this._rewardService.onRecallTaskRegular();
       _navigationService.navigateTo(RouteNames.NO_TASKS);
     }
 

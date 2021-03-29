@@ -81,12 +81,24 @@ class LocalDatabaseService {
 
   dynamic getSettingsValue(String key) async {
     final db = await database;
+    var existing;
+    try {
+      existing = await db
+          .rawQuery("SELECT value FROM $TABLE_SETTINGS where key = ?", [key]);
 
-    var existing =
-        await db.rawQuery("select * from $TABLE_SETTINGS where key = $key");
+      // existing.forEach((row) {
+      //   print(row);
+      // });
+      // existing = await db.query(TABLE_SETTINGS,
+      //     columns: ["key", "value"], where: '"key" = ?', whereArgs: [key]);
 
-    if (existing == null) return null;
-    return existing[0][key];
+      if (existing == null) return null;
+      if (existing.length == 0) return null;
+      return existing.first["value"];
+    } on Exception catch (e) {
+      print("Could not retrieve setting $key, error ${e.toString()}");
+      return null;
+    }
   }
 
   deleteSetting(String key) async {

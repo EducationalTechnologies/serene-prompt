@@ -98,11 +98,15 @@ class Timeline extends StatelessWidget {
         ];
 
         return IntrinsicHeight(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children:
-                isLeftAligned ? timelineTile : timelineTile.reversed.toList(),
-          ),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            timelineTile[2],
+            timelineTile[0],
+            timelineTile[1],
+            timelineTile[2]
+          ]
+
+              // isLeftAligned ? timelineTile : timelineTile.reversed.toList(),
+              ),
         );
       },
     );

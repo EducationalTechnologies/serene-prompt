@@ -301,9 +301,9 @@ class FirebaseService {
 
   Future<void> saveScore(String userid, int score) async {
     return await _databaseReference
-        .collection(COLLECTION_SCORES)
+        .collection(COLLECTION_USERS)
         .doc(userid)
-        .set({"score": score});
+        .set({"score": score}, SetOptions(merge: true));
   }
 
   Future<void> updateInternalisationConditionGroup(
@@ -316,7 +316,7 @@ class FirebaseService {
 
   Future<int> getScore(String userid) async {
     var scores = await _databaseReference
-        .collection(COLLECTION_SCORES)
+        .collection(COLLECTION_USERS)
         .doc(userid)
         .get()
         .catchError(handleError);
@@ -358,10 +358,31 @@ class FirebaseService {
         .set({"step": step}, SetOptions(merge: true));
   }
 
-  saveInitialSessionValue(String username, String key, dynamic value) async {
+  Future<void> saveInitialSessionValue(
+      String username, String key, dynamic value) async {
     return await _databaseReference
         .collection(COLLECTION_INITSESSION)
         .doc(username)
         .set({key: value}, SetOptions(merge: true));
+  }
+
+  Future<void> setStreakDays(String username, int value) async {
+    return await _databaseReference
+        .collection(COLLECTION_USERS)
+        .doc(username)
+        .set({"streakDays": value}, SetOptions(merge: true));
+  }
+
+  Future<int> getStreakDays(String username) async {
+    var resultDocuments = await _databaseReference
+        .collection(COLLECTION_USERS)
+        .where("email", isEqualTo: username)
+        .get()
+        .catchError(handleError);
+
+    if (resultDocuments == null) return 0;
+    if (!resultDocuments.docs[0].data().containsKey("streakDays")) return 0;
+    int days = resultDocuments.docs[0].data()["streakDays"];
+    return days;
   }
 }

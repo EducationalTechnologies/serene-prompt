@@ -4,6 +4,7 @@ import 'package:serene/locator.dart';
 import 'package:serene/screens/rewards/reward_selection_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/widgets/full_width_button.dart';
@@ -116,6 +117,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var rewardService = locator.get<RewardService>();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -127,10 +129,11 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
               if (snapshot.hasData) {
                 return Container(
                     decoration: BoxDecoration(
+                        // color: Colors.black,
                         image: DecorationImage(
-                            image: AssetImage(
-                                "assets/illustrations/mascot_ocean.png"),
-                            fit: BoxFit.none,
+                            image:
+                                AssetImage(rewardService.backgroundImagePath),
+                            fit: BoxFit.contain,
                             // scale: 7.0,
                             alignment: Alignment.bottomCenter)),
                     child: Align(
@@ -165,24 +168,23 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.shopping_cart),
+                                        Icon(Icons.image),
                                         UIHelper.horizontalSpaceMedium(),
                                         Text(
-                                          "Punkte einlösen",
+                                          "Hintergrund ändern",
                                           style: TextStyle(color: Colors.black),
                                         )
                                       ],
                                     ),
-                                    onPressed: () {
-                                      setState(() {
-                                        var rewardWidget =
-                                            RewardSelectionScreen();
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    rewardWidget));
-                                      });
+                                    onPressed: () async {
+                                      var rewardWidget =
+                                          RewardSelectionScreen();
+                                      await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  rewardWidget));
+                                      setState(() {});
                                     })),
                             if (_showToRecallTaskButton)
                               _buildToRecallTaskButton(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_recall_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
@@ -26,6 +27,7 @@ class _InternalisationRecallScreenState
 
   @override
   Widget build(BuildContext context) {
+    var vm = Provider.of<InternalisationRecallViewModel>(context);
     return Scaffold(
       body: Container(
         margin: UIHelper.getContainerMargin(),
@@ -45,7 +47,8 @@ class _InternalisationRecallScreenState
                 ],
               ),
             ),
-            if (_done) _buildSubmitButton()
+            if (_done) _buildSubmitButton(),
+            if (vm.state == ViewState.busy) CircularProgressIndicator()
           ],
         ),
       ),

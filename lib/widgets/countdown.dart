@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CountDown extends StatefulWidget {
   final int durationSeconds;
-  VoidCallback onFinished;
+  final VoidCallback onFinished;
   CountDown(this.durationSeconds, {key, this.onFinished}) : super(key: key);
 
   @override

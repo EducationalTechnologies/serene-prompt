@@ -3,7 +3,7 @@ import 'package:serene/services/data_service.dart';
 class RewardService {
   int score = 0;
   int gems = 0;
-
+  String backgroundImagePath = "assets/illustrations/mascot_bare.png";
   final DataService _dataService;
 
   Future<bool> initialized;
@@ -15,6 +15,18 @@ class RewardService {
       this.score = s;
       initialized = Future.value(true);
     });
+
+    _dataService.getBackgroundImagePath().then((path) {
+      if (path != null) {
+        this.backgroundImagePath = path;
+      }
+      initialized = Future.value(true);
+    });
+  }
+
+  setBackgroundImagePath(String imagePath) async {
+    this.backgroundImagePath = imagePath;
+    await this._dataService.setBackgroundImage(imagePath);
   }
 
   void getScore() {
@@ -26,7 +38,7 @@ class RewardService {
     });
   }
 
-  onRecallTaskRegular() async {
+  onRecallTask(int streakDays) async {
     await addPoints(4);
   }
 

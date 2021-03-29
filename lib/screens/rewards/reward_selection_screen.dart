@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:serene/locator.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/timeline.dart';
@@ -22,16 +24,12 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
               children: [
             _buildUnlockItem(
                 "Weltraum", "assets/illustrations/mascot_space.png", 1, true),
-            _buildPreviewItem("Unter Wasser",
-                "assets/illustrations/mascot_ocean_preview.png", 20, false),
-            _buildPreviewItem("Weltraum",
-                "assets/illustrations/mascot_space_preview.png", 30, false),
-            _buildPreviewItem("Unter Wasser",
-                "assets/illustrations/mascot_ocean_preview.png", 40, false),
-            _buildPreviewItem("Weltraum",
-                "assets/illustrations/mascot_space_preview.png", 50, false),
-            _buildPreviewItem("Unter Wasser",
-                "assets/illustrations/mascot_ocean_preview.png", 60, false),
+            _buildUnlockItem(
+                "Meer", "assets/illustrations/mascot_ocean.png", 1, true),
+            _buildUnlockItem(
+                "Flugzeug", "assets/illustrations/mascot_plane.png", 1, false),
+            _buildUnlockItem("Pyramiden",
+                "assets/illustrations/mascot_pyramid.png", 1, false),
           ])),
     );
     // return Scaffold(
@@ -73,6 +71,9 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
   }
 
   _buildUnlockItem(String header, String path, int price, bool unlocked) {
+    var rewardService = locator.get<RewardService>();
+
+    var isSelected = rewardService.backgroundImagePath == path;
     return Container(
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(boxShadow: [
@@ -106,10 +107,23 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
               ),
             ),
           Divider(),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text("Aktivieren"),
-          )
+          if (isSelected)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.green[300]),
+              onPressed: () {
+                setState(() {});
+              },
+              child: Text("Ausgewählt"),
+            ),
+          if (!isSelected)
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  rewardService.setBackgroundImagePath(path);
+                });
+              },
+              child: Text("Aktivieren"),
+            )
         ],
       ),
     );
