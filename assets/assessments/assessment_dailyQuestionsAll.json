@@ -69,7 +69,7 @@
             }
         },
         {
-            "id": "expectedValue_1",
+            "id": "success_1",
             "questionText": "Wie wichtig ist es dir, dass du es heute schaffst, mit cabuu zu lernen?",
             "labels": {
                 "1": "Sehr wichtig",
@@ -80,7 +80,7 @@
             }
         },
         {
-            "id": "expectedValue_2",
+            "id": "success_2",
             "questionText": "Wie sehr verpasst du andere Dinge, wenn du heute mit cabuu lernst?",
             "labels": {
                 "1": "Gar nicht",
@@ -91,7 +91,7 @@
             }
         },
         {
-            "id": "expectedValue_3",
+            "id": "success_3",
             "questionText": "Wie wahrscheinlich ist es, dass du heute mit cabuu lernen wirst?",
             "labels": {
                 "1": "Sehr wahrscheinlich",
