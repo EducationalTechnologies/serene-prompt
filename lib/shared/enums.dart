@@ -72,6 +72,7 @@ enum AppStartupMode {
 enum AssessmentTypes {
   dailyQuestion,
   dailyQuestionsAll,
+  dailyLearningIntention,
   postTest,
   preLearning,
   postLearning,
@@ -83,5 +84,9 @@ enum AssessmentTypes {
   goals,
   srl,
   learningGoals1,
-  learningGoals2
+  learningGoals2,
+  success,
+  dailyLearningGoal
 }
+
+enum DailyLearningIntention { yes, no, unsure, alreadyDid }
