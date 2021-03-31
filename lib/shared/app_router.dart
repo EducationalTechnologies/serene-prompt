@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/screens/daily_learning_question_screen.dart';
+import 'package:serene/screens/assessment/daily_learning_question_screen.dart';
+import 'package:serene/screens/assessment/morning_assessment_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_recall_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
@@ -18,7 +19,7 @@ import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
 import 'package:serene/viewmodels/consent_view_model.dart';
-import 'package:serene/screens/ambulatory_assessment_screen.dart';
+import 'package:serene/screens/assessment/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/consent_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
@@ -29,6 +30,7 @@ import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:serene/viewmodels/login_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/viewmodels/morning_assessment_view_model.dart';
 import 'package:serene/viewmodels/settings_view_model.dart';
 
 class AppRouter {
@@ -85,6 +87,13 @@ class AppRouter {
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
 
+      case RouteNames.AMBULATORY_ASSESSMENT_MORNING:
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<MorningAssessmentViewModel>(
+                create: (_) =>
+                    MorningAssessmentViewModel(locator.get<DataService>()),
+                child: MorningAssessmentScreen()));
+
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION:
         return MaterialPageRoute(
             builder: (_) =>
@@ -135,11 +144,15 @@ class AppRouter {
       case RouteNames.NO_TASKS:
         return MaterialPageRoute(builder: (_) => NoTasksScreen());
 
+      // case RouteNames.AMBULATORY_ASSESSMENT_MORNING:
+      //   return MaterialPageRoute(builder: (_) => DailyLearningQuestionScreen());
+
       case RouteNames.DAILY_LEARNING_QUESTIONS:
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<DailyLearningQuestionViewModel>(
-                  create: (_) => DailyLearningQuestionViewModel(),
+                  create: (_) => DailyLearningQuestionViewModel(
+                      locator.get<NavigationService>()),
                   child: DailyLearningQuestionScreen(),
                 ));
 
