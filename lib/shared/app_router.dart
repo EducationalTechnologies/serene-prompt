@@ -90,8 +90,9 @@ class AppRouter {
       case RouteNames.AMBULATORY_ASSESSMENT_MORNING:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<MorningAssessmentViewModel>(
-                create: (_) =>
-                    MorningAssessmentViewModel(locator.get<DataService>()),
+                create: (_) => MorningAssessmentViewModel(
+                    locator.get<DataService>(),
+                    locator.get<ExperimentService>()),
                 child: MorningAssessmentScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION:

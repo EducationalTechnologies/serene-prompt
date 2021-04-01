@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/screens/ambulatory_assessment_screen.dart';
+import 'package:serene/screens/assessment/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
-import 'package:serene/screens/rewards/reward_selection_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
@@ -164,9 +163,11 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.filter_7,
-              text: "LDT",
+              text: "Morgenfragen",
               onTap: () {
-                Navigator.pushNamed(context, RouteNames.LDT, arguments: "1");
+                Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT_MORNING,
+                    arguments: "1");
               }),
           // VersionInfo()
         ],

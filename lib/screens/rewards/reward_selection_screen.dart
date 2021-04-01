@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:serene/locator.dart';
 import 'package:serene/services/reward_service.dart';
-import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/timeline.dart';
 

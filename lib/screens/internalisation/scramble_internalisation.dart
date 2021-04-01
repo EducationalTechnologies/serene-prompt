@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
-import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/speech_bubble.dart';
 
 class ScrambleText {

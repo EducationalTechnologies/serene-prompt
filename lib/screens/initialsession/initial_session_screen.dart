@@ -7,14 +7,11 @@ import 'package:serene/screens/initialsession/initial_outcome_display_screen.dar
 import 'package:serene/screens/initialsession/initial_obstacle_explanation_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/initial_outcome_explanation_screen.dart';
-import 'package:serene/screens/initialsession/initial_reward_screen_first.dart';
-import 'package:serene/screens/initialsession/initial_reward_screen_second.dart';
 import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
 import 'package:serene/screens/initialsession/outcome_enter_screen.dart';
 import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
-import 'package:serene/screens/initialsession/text_explanation_screen.dart';
 import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
 import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/initialsession/welcome_screen.dart';
@@ -26,6 +23,7 @@ import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/serene_drawer.dart';
+import 'package:serene/shared/extensions.dart';
 
 class InitialSessionScreen extends StatefulWidget {
   InitialSessionScreen({Key key}) : super(key: key);
@@ -48,16 +46,16 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       VideoScreen("45q_GRrlQ04"), // Screen 2
       CabuuLinkScreen(), // Screen 3
       InitialAssessmentScreen(
-          AssessmentTypes.cabuuLearn, _onSubscreenFinished), // Screen 4
+          AssessmentTypes.cabuuLearn, _onAssessmentFinished), // Screen 4
       InitialAssessmentScreen(
-          AssessmentTypes.regulation, _onSubscreenFinished), // Screen 4
+          AssessmentTypes.regulation, _onAssessmentFinished), // Screen 4
       InitialAssessmentScreen(
-          AssessmentTypes.learningGoals1, _onSubscreenFinished), // Screen 6
+          AssessmentTypes.learningGoals1, _onAssessmentFinished), // Screen 6
       VideoScreen("9CHA1RpTgRM"),
-      InitialLdtScreen("0_0", _onSubscreenFinished),
-      InitialLdtScreen("0_1", _onSubscreenFinished),
-      InitialLdtScreen("0_2", _onSubscreenFinished),
-      InitialLdtScreen("0_3", _onSubscreenFinished),
+      InitialLdtScreen("0_0", _onLdtFinished),
+      InitialLdtScreen("0_1", _onLdtFinished),
+      InitialLdtScreen("0_2", _onLdtFinished),
+      InitialLdtScreen("0_3", _onLdtFinished),
       VideoScreen("d0PSrCMoTpk"), // Screen 5
       InitialDailyLearningGoalScreen(), // Screen 6
       InitialOutcomeExplanationScreen(), // Screen 7
@@ -70,12 +68,12 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       ObstacleEnterScreen(), // Screen 14
       ObstacleSortingScreen(), // Screen 15
       InitialObstacleDisplayScreen(), // Screen 16
-      InitialLdtScreen("0_4", _onSubscreenFinished),
-      InitialLdtScreen("0_5", _onSubscreenFinished),
-      InitialAssessmentScreen(AssessmentTypes.srl, _onSubscreenFinished),
+      InitialLdtScreen("0_4", _onLdtFinished),
+      InitialLdtScreen("0_5", _onLdtFinished),
+      InitialAssessmentScreen(AssessmentTypes.srl, _onAssessmentFinished),
       // InitialRewardScreenFirst(),
       InitialAssessmentScreen(
-          AssessmentTypes.learningGoals2, _onSubscreenFinished),
+          AssessmentTypes.learningGoals2, _onAssessmentFinished),
       VideoScreen("chZNcG-sLAM"),
       // InitialRewardScreenSecond()
       // InitialAssessmentScreen(Assessments.cabuuLearn),
@@ -116,13 +114,17 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     // if (_controller.page.round() != vm.step) {
     setState(() {
       vm.step = _controller.page.round();
-      var type = _pages[_controller.page.round()].runtimeType;
+      var type = _pages[_controller.currentPageOrZero].runtimeType;
       vm.setCurrentPageType(type);
     });
     // }
   }
 
-  _onSubscreenFinished() {
+  _onAssessmentFinished(AssessmentTypes assessmentType, String id, String val) {
+    setState(() {});
+  }
+
+  _onLdtFinished() {
     setState(() {});
   }
 
@@ -137,8 +139,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible:
-                vm.canMoveBack(), // _index > 1 && _index < _pages.length - 1,
+            visible: vm.canMoveBack(_controller
+                .currentPageOrZero), // _index > 1 && _index < _pages.length - 1,
             child: TextButton(
               child: Row(
                 children: <Widget>[
@@ -159,7 +161,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: vm.canMoveNext(),
+            visible: vm.canMoveNext(_controller.currentPageOrZero),
             child: ElevatedButton(
               child: Row(
                 children: <Widget>[
@@ -171,10 +173,12 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
                 ],
               ),
               onPressed: () {
-                if (vm.canMoveNext()) {
+                if (vm.canMoveNext(_controller.currentPageOrZero)) {
                   // _controller.jumpToPage(vm.getNextPage());
-                  _controller.animateToPage(vm.getNextPage(),
-                      duration: _kDuration, curve: _kCurve);
+                  _controller.animateToPage(
+                      vm.getNextPage(_controller.currentPageOrZero),
+                      duration: _kDuration,
+                      curve: _kCurve);
                   // _controller.nextPage(duration: _kDuration, curve: _kCurve);
                 }
                 setState(() {});
