@@ -18,14 +18,14 @@ class IntervalScale extends StatefulWidget {
       {Key key,
       this.title = "",
       @required this.labels,
-      this.groupValue = 0,
+      this.groupValue = -1,
       this.id = "",
       @required this.callback})
       : super(key: key);
 }
 
 class _IntervalScaleState extends State<IntervalScale> {
-  int _groupValue = 0;
+  int _groupValue = -1;
 
   @override
   void initState() {
@@ -33,26 +33,29 @@ class _IntervalScaleState extends State<IntervalScale> {
     _groupValue = widget.groupValue;
   }
 
-  _onChanged(int value) {
+  _onChanged(int groupValue, String selectedValue) {
     setState(() {
-      _groupValue = value;
+      _groupValue = groupValue;
     });
     if (widget.callback != null) {
-      widget.callback(value.toString());
+      widget.callback(selectedValue);
     }
   }
 
-  buildItem(int value, String text) {
+  buildStaticItem(int groupValue, String text) {
     if (text == null) {
-      text = value.toString();
+      text = groupValue.toString();
     }
     return InkWell(
       child: Row(
         children: <Widget>[
           Radio(
             groupValue: _groupValue,
-            value: value,
-            onChanged: _onChanged,
+            value: groupValue,
+            onChanged: (value) {
+              // FocusScope.of(context).unfocus();
+              _onChanged(value, groupValue.toString());
+            },
           ),
           MarkdownBody(
             data: text,
@@ -60,11 +63,53 @@ class _IntervalScaleState extends State<IntervalScale> {
         ],
       ),
       onTap: () {
-        setState(() {
-          _groupValue = value;
-        });
-        widget.callback(value.toString());
+        _onChanged(groupValue, groupValue.toString());
       },
+    );
+  }
+
+  buildTextInputItem(int groupValue, String text) {
+    if (text == null) {
+      text = groupValue.toString();
+    }
+    return Column(
+      children: [
+        InkWell(
+          child: Row(
+            children: <Widget>[
+              Radio(
+                groupValue: _groupValue,
+                value: groupValue,
+                onChanged: (val) {
+                  _onChanged(val, text);
+                },
+              ),
+              MarkdownBody(
+                data: text,
+              )
+            ],
+          ),
+          onTap: () {
+            // FocusScope.of(context).nextFocus();
+            FocusScope.of(context).nextFocus();
+            _onChanged(groupValue, text);
+          },
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 15.0),
+          child: TextField(
+            decoration: InputDecoration(border: OutlineInputBorder()),
+            onTap: () {
+              setState(() {
+                _groupValue = groupValue;
+              });
+            },
+            onChanged: (text) {
+              _onChanged(groupValue, text);
+            },
+          ),
+        )
+      ],
     );
   }
 
@@ -79,17 +124,23 @@ class _IntervalScaleState extends State<IntervalScale> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> items = [];
+
+    int groupValue = 1;
+    for (var key in widget.labels.keys) {
+      if (key.contains("TEXTINPUT")) {
+        items.add(buildTextInputItem(groupValue, widget.labels[key]));
+      } else {
+        items.add(buildStaticItem(groupValue, widget.labels[key]));
+      }
+      groupValue += 1;
+    }
+
     return Column(children: <Widget>[
       MarkdownBody(
         data: "### " + widget.title,
       ),
-      Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          for (var i = 1; i <= widget.labels.keys.length; i++)
-            buildItem(i, getLabel(i.toString())),
-        ],
-      )
+      Column(mainAxisAlignment: MainAxisAlignment.start, children: items)
     ]);
   }
 }
