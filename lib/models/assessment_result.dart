@@ -1,15 +1,12 @@
 class AssessmentResult {
-  String userId = "";
   Map<String, String> results;
   String assessmentType = "";
   DateTime submissionDate = DateTime.now();
 
-  AssessmentResult(
-      this.userId, this.results, this.assessmentType, this.submissionDate);
+  AssessmentResult(this.results, this.assessmentType, this.submissionDate);
 
   Map<String, dynamic> toMap() {
     return {
-      "userId": this.userId,
       "results": this.results,
       "assessmentType": this.assessmentType,
       "submissionDate": this.submissionDate.toIso8601String()

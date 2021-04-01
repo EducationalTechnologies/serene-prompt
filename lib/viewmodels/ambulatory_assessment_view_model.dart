@@ -51,8 +51,8 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
   submit() async {
     if (state == ViewState.busy) return;
     setState(ViewState.busy);
-    var assessmentModel = AssessmentResult(_userService.getUsername(), results,
-        _assessmentType.toString(), DateTime.now());
+    var assessmentModel =
+        AssessmentResult(results, _assessmentType.toString(), DateTime.now());
 
     await this
         ._experimentService

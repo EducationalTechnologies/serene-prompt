@@ -241,7 +241,7 @@ class ExperimentService {
 
   Future<void> submitAssessment(
       AssessmentResult assessment, AssessmentTypes type) async {
-    await this._dataService.saveAssessment(assessment);
+    this._dataService.saveAssessment(assessment);
 
     var nextRoute = RouteNames.NO_TASKS;
     dynamic args;
@@ -250,8 +250,6 @@ class ExperimentService {
       var index = await getCurrentTrialIndex();
       args = index.toString();
       nextRoute = RouteNames.LDT;
-      // TODO: USABILITY STUFF: REMOVE
-      nextRoute = RouteNames.NO_TASKS;
     } else if (type == AssessmentTypes.affect) {
       nextRoute = RouteNames.INTERNALISATION;
     }
@@ -265,8 +263,10 @@ class ExperimentService {
 
   Future<void> nextScreen(String currentScreen) async {
     if (currentScreen == RouteNames.LDT) {
-      _navigationService.navigateTo(RouteNames.NO_TASKS);
-      return;
+      return await _navigationService.navigateTo(RouteNames.NO_TASKS);
+    }
+    if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_MORNING) {
+      return await _navigationService.navigateTo(RouteNames.INTERNALISATION);
     }
   }
 }

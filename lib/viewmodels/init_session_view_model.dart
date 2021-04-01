@@ -22,12 +22,12 @@ import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-class InitSessionViewModel extends BaseViewModel {
+import 'package:serene/viewmodels/multi_step_assessment_view_model.dart';
+
+class InitSessionViewModel extends MultiStepAssessmentViewModel {
   final ExperimentService _experimentService;
   final DataService _dataService;
   LexicalDecisionTaskViewModel ldtvm;
-
-  Type currentPageType;
 
   int step = 0;
   bool _consented = false;
@@ -163,7 +163,8 @@ class InitSessionViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  bool canMoveNext() {
+  @override
+  bool canMoveNext(int currentStep) {
     if (currentPageType == WelcomeScreen) {
       return true;
     }
@@ -197,7 +198,8 @@ class InitSessionViewModel extends BaseViewModel {
     return true;
   }
 
-  bool canMoveBack() {
+  @override
+  bool canMoveBack(int currentStep) {
     return false;
   }
 
@@ -245,7 +247,7 @@ class InitSessionViewModel extends BaseViewModel {
     }
   }
 
-  getNextPage() {
+  getNextPage(int currentStep) {
     print("Step is $step");
 
     // if (step == 1 && selectedOutcomes.length <= 1) {
@@ -261,7 +263,7 @@ class InitSessionViewModel extends BaseViewModel {
       _dataService.saveOutcomes(selectedOutcomes);
     }
     if (currentPageType == InitialAssessmentScreen) {
-      var result = AssessmentResult(_dataService.getUsername(),
+      var result = AssessmentResult(
           currentAssessmentResults, lastAssessment.id, DateTime.now());
       _dataService.saveAssessment(result);
     }
@@ -284,8 +286,7 @@ class InitSessionViewModel extends BaseViewModel {
     return step + 1;
   }
 
-  setAssessmentResult(
-      AssessmentTypes assessmentType, String itemId, String value) {
+  setAssessmentResult(String assessmentType, String itemId, String value) {
     currentAssessmentResults[itemId] = value;
 
     notifyListeners();

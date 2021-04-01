@@ -44,11 +44,11 @@ class FirebaseService {
   static const String COLLECTION_INITSESSION = "initSession";
 
   void handleError(Object e) {
-    locator.get<LoggingService>().logEvent("Firestore error: ${e.toString()}");
+    locator.get<LoggingService>().logError("Firestore error: ${e.toString()}");
   }
 
   void handleTimeout(String function) {
-    locator.get<LoggingService>().logEvent("Firetore Timeout: $function");
+    locator.get<LoggingService>().logError("Firetore Timeout: $function");
   }
 
   Future<bool> isNameAvailable(String userId) async {
@@ -140,12 +140,13 @@ class FirebaseService {
     await tokens.set({'token': token});
   }
 
-  saveAssessment(AssessmentResult assessment, String email) async {
+  saveAssessment(AssessmentResult assessment, String userid) async {
+    var assessmentMap = assessment.toMap();
+    assessmentMap["userid"] = userid;
     await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
-        .doc(email)
-        .collection(assessment.assessmentType)
-        .add(assessment.toMap());
+        .add(assessmentMap)
+        .catchError(handleError);
   }
 
   Future<AssessmentResult> getLastSubmittedAssessment(

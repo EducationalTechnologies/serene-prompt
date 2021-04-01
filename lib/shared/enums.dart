@@ -86,7 +86,8 @@ enum AssessmentTypes {
   learningGoals1,
   learningGoals2,
   success,
-  dailyLearningGoal
+  dailyLearningGoal,
+  dailyObstacle
 }
 
 enum DailyLearningIntention { yes, no, unsure, alreadyDid }
