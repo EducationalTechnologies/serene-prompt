@@ -45,7 +45,7 @@
         ]
     },
     {
-        "implementationIntention": " Wenn ich **traurig** werde, dann denke ich an einen guten **Witz**.",
+        "implementationIntention": "Wenn ich **traurig** werde, dann denke ich an einen guten **Witz**.",
         "primes": [
             "traurig",
             "wichtig",
