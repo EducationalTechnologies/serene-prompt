@@ -2,6 +2,19 @@ import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 
+extension PageControllerExtension on PageController {
+  int get currentPageOrZero {
+    if (this.hasClients) {
+      return this.page.toInt();
+    } else {
+      if (this.initialPage == null)
+        return 0;
+      else
+        return this.initialPage;
+    }
+  }
+}
+
 extension GlobalKeyExtension on GlobalKey {
   Rect get globalPaintBounds {
     final renderObject = currentContext?.findRenderObject();
