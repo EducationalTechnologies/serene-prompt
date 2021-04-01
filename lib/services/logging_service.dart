@@ -9,12 +9,23 @@ class LoggingService {
     return DateTime.now().toIso8601String();
   }
 
-  logData(String data) {
-  }
+  logData(String data) {}
 
   logEvent(String eventName) {
     Map<String, String> event = {
       "type": "event",
+      "time": getTimestamp(),
+      "name": eventName
+    };
+    // TODO: Submit logs batched in the no task screen
+    logs.add(event);
+    _dataService.logData(event);
+  }
+
+  logError(String eventName) {
+    print("ERROR: $eventName");
+    Map<String, String> event = {
+      "type": "error",
       "time": getTimestamp(),
       "name": eventName
     };
