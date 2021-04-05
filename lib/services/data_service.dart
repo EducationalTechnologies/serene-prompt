@@ -195,6 +195,7 @@ class DataService {
     if (_userService.getUsername().isEmpty) return 0;
 
     var userData = await getUserData();
+    if (userData == null) return 0;
     return userData.score;
   }
 

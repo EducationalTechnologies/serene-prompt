@@ -8,11 +8,15 @@ import 'package:serene/widgets/countdown.dart';
 import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/speech_bubble.dart';
 
+typedef void OnLoadedCallback(String trialName);
+
 class InitialLdtScreen extends StatefulWidget {
   final String trialName;
   final VoidCallback onFinished;
+  final OnLoadedCallback onLoaded;
 
-  InitialLdtScreen(this.trialName, this.onFinished) : super();
+  InitialLdtScreen(this.trialName, this.onFinished, {this.onLoaded, key})
+      : super(key: key);
 
   @override
   _InitialLdtScreenState createState() => _InitialLdtScreenState();
@@ -22,6 +26,7 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
   LexicalDecisionTaskViewModel vm;
   InitSessionViewModel initVm;
   Future<bool> ldtLoaded;
+
   final TextStyle ldtTextStyle = TextStyle(fontSize: 40, color: Colors.black);
 
   @override
@@ -136,7 +141,7 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
 
   buildTrialSummary() {
     var message = Provider.of<InitSessionViewModel>(context, listen: false)
-        .getTrialMessage();
+        .getTrialMessage(this.widget.key);
     return Container(
       child: SpeechBubble(
         text: message,
@@ -170,6 +175,9 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
       vm.addListener(() {
         setState(() {});
       });
+      if (widget.onLoaded != null) {
+        widget.onLoaded(widget.trialName);
+      }
       return true;
     }).then((value) => true);
   }

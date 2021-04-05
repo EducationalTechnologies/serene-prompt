@@ -22,7 +22,7 @@ class InitialAssessmentScreen extends StatelessWidget {
     return Container(child: _buildAssessmentList(context));
   }
 
-  _fetchAssessment(BuildContext context) {
+  Future<Assessment> _fetchAssessment(BuildContext context) {
     var vm = Provider.of<InitSessionViewModel>(context);
     return this._memoizer.runOnce(() async {
       return await vm.getAssessment(assessmentType);

@@ -22,7 +22,6 @@ class _SereneAppBarState extends State<SereneAppBar> {
   @override
   AppBar build(BuildContext context) {
     var rewardService = locator.get<RewardService>();
-    var rewardBaseSymbol = "👑";
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,

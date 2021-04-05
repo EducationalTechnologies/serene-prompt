@@ -57,6 +57,7 @@ class FirebaseService {
           .fetchSignInMethodsForEmail(userId)
           .onError((error, stackTrace) {
         handleError(error);
+        return [];
       });
       if (availableMethods == null) return false;
       return (availableMethods.length == 0);
@@ -77,6 +78,7 @@ class FirebaseService {
           userId: result.user.uid,
           email: result.user.email,
           registrationDate: DateTime.now(),
+          streakDays: 0,
           internalisationCondition: internalisationCondition);
 
       await insertUserData(userData);
@@ -104,6 +106,7 @@ class FirebaseService {
         .where("email", isEqualTo: email)
         .get();
 
+    if (resultDocuments.docs.isEmpty) return null;
     return UserData.fromJson(resultDocuments.docs[0].data());
   }
 
@@ -112,20 +115,24 @@ class FirebaseService {
       var result = await _firebaseAuth.signInWithEmailAndPassword(
           email: userId, password: password);
 
+      if (result == null) return null;
+
       var userData = await getUserData(result.user.email);
 
       if (userData == null) {
-        userData = UserData(userId: result.user.uid, email: result.user.email);
+        userData = UserData(
+            userId: result.user.uid,
+            email: result.user.email,
+            score: 0,
+            registrationDate: DateTime.now());
         await insertUserData(userData);
       }
       return userData;
-    } on PlatformException catch (e) {
-      print("Error trying to sign in the user: $e");
-      lastError = e.code;
-      return null;
-    } on FirebaseAuthException catch (e) {
-      print("Error trying to sign in the user: $e");
-      lastError = e.code;
+    } catch (e) {
+      handleError(e.toString());
+      if (e.code == "wrong-password") {
+        return null;
+      }
       return null;
     }
   }

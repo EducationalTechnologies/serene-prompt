@@ -99,9 +99,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   }
 
   _getDrawer() {
-    // TODO: Reactivate before release
-    // if (kDebugMode) return SereneDrawer();
-
     return SereneDrawer();
   }
 

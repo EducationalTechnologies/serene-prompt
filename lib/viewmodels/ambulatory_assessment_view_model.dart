@@ -3,14 +3,11 @@ import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_result.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
-import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/viewmodels/base_view_model.dart';
 
 class AmbulatoryAssessmentViewModel extends BaseViewModel {
   final AssessmentTypes _assessmentType;
-
-  UserService _userService;
   DataService _dataService;
   final ExperimentService _experimentService;
   Assessment _currentAssessment;
@@ -19,8 +16,8 @@ class AmbulatoryAssessmentViewModel extends BaseViewModel {
   String preText = "";
   Map<String, String> results = {};
 
-  AmbulatoryAssessmentViewModel(this._assessmentType, this._userService,
-      this._dataService, this._experimentService);
+  AmbulatoryAssessmentViewModel(
+      this._assessmentType, this._dataService, this._experimentService);
 
   Future<Assessment> getAssessment() async {
     String name = describeEnum(_assessmentType);

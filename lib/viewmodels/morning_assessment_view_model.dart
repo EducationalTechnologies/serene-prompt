@@ -17,12 +17,12 @@ enum MorningAssessmentPages {
 }
 
 class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
-  static const int STEP_LEARNING_INTENTION = 0;
-  static const int STEP_REASON_NOT_LEARNING = 1;
-  static const int STEP_SUCCESS = 2;
-  static const int STEP_AFFECT = 3;
-  static const int STEP_DAILY_LEARNING_OBSTACLE = 4;
-  static const int STEP_FINISH = 5;
+  final int stepLearningIntention = 0;
+  final int stepReasonNotLearning = 1;
+  final int stepSuccess = 2;
+  final int stepAffect = 3;
+  final int stepDailyObstacle = 4;
+  final int stepFinish = 5;
 
   final DataService _dataService;
   final ExperimentService _experimentService;
@@ -58,9 +58,8 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
   }
 
   submit() {
-    // TODO: SAVE THE ASSESSMENT
     var date = DateTime.now();
-    var type = "morningAA";
+    var type = "morningQuestions";
     Map<String, String> results = {};
     for (var result in allAssessmentResults.values) {
       results.addAll(result);
@@ -72,7 +71,7 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
   }
 
   @override
-  bool canMoveBack(int currentStep) {
+  bool canMoveBack(Key currentStep) {
     return false;
   }
 
@@ -82,47 +81,58 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
   }
 
   @override
-  bool canMoveNext(int currentPage) {
-    if (step == STEP_FINISH) return false;
+  bool canMoveNext(Key currentPage) {
+    var vk = currentPage as ValueKey;
+    if (currentPage == ValueKey(stepLearningIntention) ||
+        currentPage == ValueKey(stepSuccess) ||
+        currentPage == ValueKey(stepAffect) ||
+        currentPage == ValueKey(stepDailyObstacle)) {
+      return isAssessmentFilledOut(lastAssessment);
+    }
 
-    return true;
+    if (vk.value == stepLearningIntention) {
+      return isAssessmentFilledOut(lastAssessment);
+    }
+    return false;
   }
 
   @override
-  int getNextPage(int currentPage) {
-    // TODO: implement getNextPage
+  int getNextPage(Key currentPage) {
     var nextPage = step + 1;
 
-    if (currentPage == STEP_LEARNING_INTENTION) {
+    if (currentPage == ValueKey(stepLearningIntention)) {
       if (currentAssessmentResults.containsKey("dailyLearningIntention_1")) {
         var choice = currentAssessmentResults["dailyLearningIntention_1"];
         if (choice == "1" || choice == "3") {
-          nextPage = STEP_SUCCESS;
+          nextPage = stepSuccess;
         }
         if (choice == "2") {
-          nextPage = STEP_REASON_NOT_LEARNING;
+          nextPage = stepReasonNotLearning;
         }
         if (choice == "4") {
-          nextPage = STEP_AFFECT;
+          nextPage = stepAffect;
         }
       }
     }
-    if (currentPage == STEP_REASON_NOT_LEARNING) {
-      nextPage = STEP_SUCCESS;
+    if (currentPage == ValueKey(stepReasonNotLearning)) {
+      nextPage = stepSuccess;
     }
-    if (currentPage == STEP_SUCCESS) {
+    if (currentPage == ValueKey(stepSuccess)) {
       if (currentAssessmentResults.containsKey("success_3")) {
         var choice = currentAssessmentResults["success_3"];
         if (choice != "1") {
-          nextPage = STEP_DAILY_LEARNING_OBSTACLE;
+          nextPage = stepDailyObstacle;
         } else {
-          nextPage = STEP_FINISH;
+          nextPage = stepFinish;
         }
       }
     }
+    if (currentPage == ValueKey(stepAffect)) {
+      nextPage = stepFinish;
+    }
 
-    if (currentPage == STEP_DAILY_LEARNING_OBSTACLE) {
-      nextPage = STEP_FINISH;
+    if (currentPage == ValueKey(stepDailyObstacle)) {
+      nextPage = stepFinish;
     }
     return nextPage;
   }

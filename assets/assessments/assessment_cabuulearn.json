@@ -15,7 +15,7 @@
         },
         {
             "id": "cabuuLearn_2",
-            "questionText": "Bereitest du dich aktuell mit Hilfe von cabuu auf einen anstehenden Vokabeltest oder eine Englischarbeit vor?",
+            "questionText": "Bereitest du dich aktuell mit Hilfe von cabuu aktuell für einen anstehenden Vokabeltest oder eine Englischarbeit vor?",
             "labels": {
                 "1": "Ja",
                 "2": "Nein"
@@ -34,7 +34,7 @@
         },
         {
             "id": "cabuuLearn_4",
-            "questionText": "Bist du zufrieden damit, wie oft du mit cabuu lernst?",
+            "questionText": "Würdest du es gerne schaffen, häufiger mit cabuu zu lernen oder bist du zufrieden damit, wie oft du mit cabuu lernst?",
             "labels": {
                 "1": "Voll und ganz zufrieden",
                 "2": "Eher zufrieden",

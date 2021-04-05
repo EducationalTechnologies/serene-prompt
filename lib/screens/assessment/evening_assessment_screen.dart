@@ -1,4 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:serene/models/assessment.dart';
+import 'package:serene/screens/assessment/free_text_question.dart';
+import 'package:serene/screens/assessment/multi_step_assessment.dart';
+import 'package:serene/screens/assessment/questionnaire.dart';
+import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/ui_helpers.dart';
+import 'package:serene/viewmodels/evening_assessment_view_model.dart';
+import 'package:serene/widgets/full_width_button.dart';
+import 'package:serene/widgets/serene_appbar.dart';
+import 'package:serene/widgets/serene_drawer.dart';
 
 class EveningAssessmentScreen extends StatefulWidget {
   EveningAssessmentScreen({Key key}) : super(key: key);
@@ -9,39 +21,56 @@ class EveningAssessmentScreen extends StatefulWidget {
 }
 
 class _EveningAssessmentScreenState extends State<EveningAssessmentScreen> {
-  final _controller = new PageController();
-  final _kDuration = const Duration(milliseconds: 100);
-  final _kCurve = Curves.ease;
   List<Widget> _pages = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  //   var vm = Provider.of<MorningAssessmentViewModel>(context, listen: false);
+    var vm = Provider.of<EveningAssessmentViewModel>(context, listen: false);
 
-  //   _pages = [
-  //     _buildAssessmentFuture(AssessmentTypes.dailyObstacle),
-  //     _buildAssessmentFuture(AssessmentTypes.dailyLearningIntention),
-  //     FreeTextQuestion("Warum möchtest du heute nicht mit cabuu lernen?",
-  //         textChanged: vm.onNotLearningReasonChanged),
-  //     _buildAssessmentFuture(AssessmentTypes.affect),
-  //     InitialAssessmentScreen(
-  //         AssessmentTypes.success, _onAssessmentFinished), // Screen 4
-  //   ];
+    _pages = [
+      _buildAssessmentFuture(AssessmentTypes.didLearnToday),
+      FreeTextQuestion("Warum möchtest du heute nicht mit cabuu lernen?",
+          textChanged: vm.whyNotLearnReason),
+      _buildAssessmentFuture(AssessmentTypes.evening),
+      _buildAssessmentFuture(AssessmentTypes.affect),
+      buildFinish(),
+    ];
+  }
 
-  //   vm.currentPageType = _pages[0].runtimeType;
-
-  //   /// Attach a listener which will update the state and refresh the page index
-  //   _controller.addListener(() {
-  //     // _setCurrentPage();
-  //   });
-  // }
+  _buildAssessmentFuture(AssessmentTypes assessmentTypes) {
+    var vm = Provider.of<EveningAssessmentViewModel>(context, listen: false);
+    return FutureProvider<Assessment>(
+        initialData: Assessment(),
+        create: (context) => vm.getAssessment(assessmentTypes),
+        child: Consumer<Assessment>(builder: (context, asssessment, _) {
+          return Questionnaire(asssessment, vm.setAssessmentResult);
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
+    var vm = Provider.of<EveningAssessmentViewModel>(context);
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            appBar: SereneAppBar(),
+            drawer: SereneDrawer(),
+            body: Container(child: MultiStepAssessment(vm, _pages))));
+  }
+
+  buildFinish() {
     return Container(
-      child: Text("FUMPF"),
+      margin: UIHelper.getContainerMargin(),
+      child: Column(
+        children: [
+          Text(
+            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Merkspiel",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+        ],
+      ),
     );
   }
 }

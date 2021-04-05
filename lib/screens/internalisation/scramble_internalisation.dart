@@ -69,7 +69,6 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   List<ScrambleText> _scrambledSentence = [];
   String _correctSentence = "";
   List<ScrambleText> _builtSentence = [];
-  bool _done = false;
   Duration fadeOutDuration = Duration(seconds: 15);
   bool _showPlan = true;
   bool _showPuzzle = false;
@@ -202,9 +201,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       if (scramble.isSelected) {
         _builtSentence.add(scramble);
         print(scramble.isSelected);
-        setState(() {
-          _done = _isDone();
-        });
+        setState(() {});
       } else {
         _builtSentence.remove(scramble);
       }

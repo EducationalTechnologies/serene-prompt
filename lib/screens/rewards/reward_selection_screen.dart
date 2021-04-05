@@ -126,33 +126,4 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
       ),
     );
   }
-
-  _buildPreviewItem(String header, String path, int price, bool unlocked) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            blurRadius: .5,
-            spreadRadius: 1.0,
-            color: Colors.black.withOpacity(.12))
-      ], borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Column(
-        children: [
-          Text(
-            header,
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          Image(
-            image: AssetImage(path),
-            width: 130,
-            height: 110,
-          ),
-          Divider(),
-          Text(
-            "${price.toString()} 🥇",
-          )
-        ],
-      ),
-    );
-  }
 }

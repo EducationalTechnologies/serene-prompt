@@ -68,6 +68,14 @@ class _LoginScreenState extends State<LoginScreen> {
     } else if (registered == RegistrationCodes.WEAK_PASSWORD) {}
   }
 
+  _signInClick(LoginViewModel vm, BuildContext context) async {
+    var registered = await vm.signIn(
+        _userIdTextController.text, _passwordTextController.text);
+    if (registered == RegistrationCodes.SUCCESS) {
+      Navigator.pushNamed(context, RouteNames.INIT_START);
+    } else if (registered == RegistrationCodes.WEAK_PASSWORD) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,13 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          // new Padding(
-          //   padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-          //   child: Icon(
-          //     Icons.handyman,
-          //     color: this.widget.foregroundColor,
-          //   ),
-          // ),
           new Expanded(
             child: TextFormField(
               controller: _userIdTextController,
@@ -126,8 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Provider.of<LoginState>(context).userId =
               },
               validator: (String arg) {
-                if (arg.length < 3) {
-                  return "Bitte nutze drei oder mehr Zeichen";
+                if (arg.length < 5) {
+                  return "Dein Code sollte aus fünf Zeichen bestehen";
                 } else {
                   return null;
                 }
@@ -155,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           String message = "";
           if (vm.validateUserId(_userIdTextController.text)) {
-            message = await _registerClick(vm, context);
+            message = await _signInClick(vm, context);
           } else {
             await _buildErrorDialog("$message", "$message");
           }
@@ -215,10 +216,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            // if (vm.mode == SignInScreenMode.signIn)
-            //   _buildRegisterButton(context),
-            // if (vm.mode == SignInScreenMode.register)
-            //   _buildAlreadyHaveAccountButton(context),
           ],
         ),
       ),

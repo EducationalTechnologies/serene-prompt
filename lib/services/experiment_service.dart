@@ -268,5 +268,8 @@ class ExperimentService {
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_MORNING) {
       return await _navigationService.navigateTo(RouteNames.INTERNALISATION);
     }
+    if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_EVENING) {
+      return await _navigationService.navigateTo(RouteNames.RECALL_TASK);
+    }
   }
 }

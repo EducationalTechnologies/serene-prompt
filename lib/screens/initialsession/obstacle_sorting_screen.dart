@@ -25,7 +25,6 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
     });
   }
 
-// TODO: Move to extensions
   _swapItems(int indexA, int indexB) {
     final vm = Provider.of<InitSessionViewModel>(context, listen: false);
     if (indexA < 0 || indexB < 0) return;

@@ -102,7 +102,6 @@ class SereneDrawer extends StatelessWidget {
                     ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                         create: (_) => AmbulatoryAssessmentViewModel(
                             AssessmentTypes.dailyQuestionsAll,
-                            locator.get<UserService>(),
                             locator.get<DataService>(),
                             locator.get<ExperimentService>()),
                         child: AmbulatoryAssessmentScreen());
@@ -154,15 +153,7 @@ class SereneDrawer extends StatelessWidget {
               }),
           Divider(),
           _buildDrawerItem(
-              icon: Icons.filter_6,
-              text: "Erinnerung",
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.RECALL_TASK);
-              }),
-          Divider(),
-          _buildDrawerItem(
-              icon: Icons.filter_7,
+              icon: Icons.wb_sunny,
               text: "Morgenfragen",
               onTap: () {
                 Navigator.pushNamed(
@@ -170,6 +161,15 @@ class SereneDrawer extends StatelessWidget {
                     arguments: "1");
               }),
           // VersionInfo()
+          Divider(),
+          _buildDrawerItem(
+              icon: Icons.nightlight_round,
+              text: "Abendfragen",
+              onTap: () {
+                Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT_EVENING,
+                    arguments: "1");
+              }),
         ],
       ),
     );

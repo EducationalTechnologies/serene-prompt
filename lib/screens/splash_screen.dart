@@ -12,11 +12,11 @@ class SplashScreen extends StatelessWidget {
         color: Colors.white,
         child: ListView(
           children: [
-            ElevatedButton(
-                child: Text("Zum Log Screen"),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(RouteNames.TEST);
-                }),
+            // ElevatedButton(
+            //     child: Text("Zum Log Screen"),
+            //     onPressed: () {
+            //       Navigator.of(context).pushNamed(RouteNames.TEST);
+            //     }),
             for (var t in vm.debugTexts)
               Text(t, style: TextStyle(fontSize: 14)),
           ],

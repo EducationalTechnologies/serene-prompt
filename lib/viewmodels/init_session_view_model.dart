@@ -3,21 +3,10 @@ import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
-import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
-import 'package:serene/screens/initialsession/initial_assessment_screen.dart';
-import 'package:serene/screens/initialsession/initial_daily_learning_goal_screen.dart';
-import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
-import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
-import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
-import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
-import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
-import 'package:serene/screens/initialsession/video_screen.dart';
-import 'package:serene/screens/initialsession/welcome_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/shared/app_asset_paths.dart';
 import 'package:serene/shared/enums.dart';
-import 'package:serene/viewmodels/base_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
@@ -25,6 +14,35 @@ import 'dart:convert';
 import 'package:serene/viewmodels/multi_step_assessment_view_model.dart';
 
 class InitSessionViewModel extends MultiStepAssessmentViewModel {
+  final int stepWelcomeScreen = 0;
+  final int stepVideo1 = 1;
+  final int stepCabuuLink = 2;
+  final int stepQuestionsCabuuLearn = 3;
+  final int stepQuestionsRegulation = 4;
+  final int stepQuestionsLearningGoals1 = 5;
+  final int stepVideo2 = 6;
+  final int stepLdt00 = 7;
+  final int stepLdt01 = 8;
+  final int stepLdt02 = 9;
+  final int stepLdt03 = 10;
+  final int stepLdt04 = 11;
+  final int stepLdt05 = 12;
+  final int stepVideo3 = 13;
+  final int stepInitialDailyLearningGoal = 14;
+  final int stepOutcomeExplanationScreen = 15;
+  final int stepOutcomeSelectionScreen = 16;
+  final int stepOutcomeEnterScreen = 17;
+  final int stepOutcomeSortingScreen = 18;
+  final int stepOutcomeDisplayScreen = 19;
+  final int stepObstacleExplanationScreen = 20;
+  final int stepObstacleSelectionScreen = 21;
+  final int stepObstacleEnterScreen = 22;
+  final int stepObstacleSortingScreen = 23;
+  final int stepObstacleDisplayScreen = 24;
+  final int stepQuestionsSrl = 25;
+  final int stepQuestionsLearningGoals2 = 26;
+  final int stepVideo4 = 27;
+
   final ExperimentService _experimentService;
   final DataService _dataService;
   LexicalDecisionTaskViewModel ldtvm;
@@ -148,8 +166,6 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
         assessmentType == AssessmentTypes.learningGoals2) {
       insertLearningGoalIntoAssessment(assessment, numberOfDaysLearningGoal);
     }
-    lastAssessment = assessment;
-    currentAssessmentResults = {};
     return assessment;
   }
 
@@ -164,34 +180,46 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   }
 
   @override
-  bool canMoveNext(int currentStep) {
-    if (currentPageType == WelcomeScreen) {
+  bool canMoveNext(Key currentPageKey) {
+    if (currentPageKey == ValueKey(stepVideo1) ||
+        currentPageKey == ValueKey(stepVideo2) ||
+        currentPageKey == ValueKey(stepVideo3) ||
+        currentPageKey == ValueKey(stepVideo4)) {
       return true;
     }
-    if (currentPageType == VideoScreen) {
-      return true;
-    }
-    if (currentPageType == InitialLdtScreen) {
+    if (currentPageKey == ValueKey(stepLdt00) ||
+        currentPageKey == ValueKey(stepLdt01) ||
+        currentPageKey == ValueKey(stepLdt02) ||
+        currentPageKey == ValueKey(stepLdt03) ||
+        currentPageKey == ValueKey(stepLdt04) ||
+        currentPageKey == ValueKey(stepLdt05)) {
       if (ldtvm != null) {
         return ldtvm.done;
       } else {
         return false;
       }
     }
-    if (currentPageType == InitialAssessmentScreen) {
+
+    if (currentPageKey == ValueKey(stepQuestionsCabuuLearn) ||
+        currentPageKey == ValueKey(stepQuestionsRegulation) ||
+        currentPageKey == ValueKey(stepQuestionsLearningGoals1) ||
+        currentPageKey == ValueKey(stepQuestionsSrl) ||
+        currentPageKey == ValueKey(stepQuestionsLearningGoals2)) {
+      print("Last assessment: ${lastAssessment.id}");
       return isAssessmentFilledOut(lastAssessment);
     }
-    if (currentPageType == OutcomeSelectionScreen) {
+
+    if (currentPageKey == ValueKey(stepOutcomeSelectionScreen)) {
       return selectedOutcomes.length > 0;
     }
-    if (currentPageType == ObstacleSelectionScreen) {
+    if (currentPageKey == ValueKey(stepObstacleSelectionScreen)) {
       return selectedObstacles.length > 0;
     }
-    if (currentPageType == CabuuLinkScreen) {
+    if (currentPageKey == ValueKey(stepCabuuLink)) {
       return consented &&
           (cabuuLinkUserName.isNotEmpty || cabuuLinkEmail.isNotEmpty);
     }
-    if (currentPageType == InitialDailyLearningGoalScreen) {
+    if (currentPageKey == ValueKey(stepInitialDailyLearningGoal)) {
       return numberOfDaysLearningGoal.isNotEmpty;
     }
 
@@ -199,17 +227,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   }
 
   @override
-  bool canMoveBack(int currentStep) {
-    return false;
-  }
-
-  isAssessmentFilledOut(Assessment assessment) {
-    bool canSubmit = true;
-    for (var assessmentItem in assessment.items) {
-      if (!currentAssessmentResults.containsKey(assessmentItem.id))
-        canSubmit = false;
-    }
-    return canSubmit;
+  bool canMoveBack(Key currentStep) {
+    return true;
   }
 
   saveSelected() async {
@@ -247,34 +266,41 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     }
   }
 
-  getNextPage(int currentStep) {
+  getNextPage(Key currentPageKey) {
     print("Step is $step");
 
-    // if (step == 1 && selectedOutcomes.length <= 1) {
-    //   return step + 2;
-    // }
-    // if (step == 4 && selectedObstacles.length <= 1) {
-    //   return step + 2;
-    // }
-    if (currentPageType == ObstacleSortingScreen) {
+    if (currentPageKey == ValueKey(stepObstacleSortingScreen)) {
       _dataService.saveObstacles(selectedObstacles);
     }
-    if (currentPageType == OutcomeSortingScreen) {
+    if (currentPageKey == ValueKey(stepOutcomeSortingScreen)) {
       _dataService.saveOutcomes(selectedOutcomes);
     }
-    if (currentPageType == InitialAssessmentScreen) {
+    if (currentPageKey == ValueKey(stepQuestionsCabuuLearn) ||
+        currentPageKey == ValueKey(stepQuestionsRegulation) ||
+        currentPageKey == ValueKey(stepQuestionsLearningGoals1) ||
+        currentPageKey == ValueKey(stepQuestionsSrl) ||
+        currentPageKey == ValueKey(stepQuestionsLearningGoals2)) {
       var result = AssessmentResult(
           currentAssessmentResults, lastAssessment.id, DateTime.now());
       _dataService.saveAssessment(result);
     }
-    if (currentPageType == InitialDailyLearningGoalScreen) {
+
+    if (currentPageKey == ValueKey(stepInitialDailyLearningGoal)) {
       _dataService.saveInitialSessionValue(
           "dailyLearningGoal", numberOfDaysLearningGoal);
     }
-    if (currentPageType == InitialLdtScreen) {
+
+    if (currentPageKey == ValueKey(stepLdt00) ||
+        currentPageKey == ValueKey(stepLdt01) ||
+        currentPageKey == ValueKey(stepLdt02) ||
+        currentPageKey == ValueKey(stepLdt03) ||
+        currentPageKey == ValueKey(stepLdt04) ||
+        currentPageKey == ValueKey(stepLdt05)) {
       _dataService.saveLdtData(ldtvm.ldt);
+      ldtvm = null;
     }
-    if (currentPageType == CabuuLinkScreen) {
+
+    if (currentPageKey == ValueKey(stepCabuuLink)) {
       var hashedUsername =
           md5.convert(utf8.encode(_cabuuLinkUserName)).toString();
       _dataService.saveInitialSessionValue("cabuuUsername", hashedUsername);
@@ -297,23 +323,46 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   Future<bool> initTrial(String trialName) async {
     ldtvm = new LexicalDecisionTaskViewModel(trialName, _experimentService);
     await ldtvm.init();
+    notifyListeners();
     return true;
   }
 
-  String getTrialMessage() {
+  String getTrialMessage(ValueKey ldtKey) {
+    var keyValue = ldtKey.value;
     var results = ldtvm.ldt.trials;
 
-    for (var i = 0; i < results.length; i++) {
-      var result = results[i];
-      if (result.selection == -1) {
-        return "Da warst du leider nicht immer schnell genug. Denk daran, dass du die richtige Taste so schnell wie möglich drücken sollst! Wir üben das noch einmal.";
-      }
-      if (result.selection != ldtvm.ldt.correctValues[i]) {
-        return "Da hast leider nicht immer richtig gedrückt. Denk daran, dass du bei einem echten Wort die Taste 'ja' drücken sollst und bei einem unechten Wort die Taste 'nein' Wir üben das noch einmal.";
-      }
-    }
+    var msgGood = "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
+    var msgSlow =
+        "Da warst du leider nicht immer schnell genug. Denk daran, dass du die richtige Taste so schnell wie möglich drücken sollst! Wir üben das noch einmal.";
+    var msgIncorrect =
+        "Da hast leider nicht immer richtig gedrückt. Denk daran, dass du bei einem echten Wort die Taste 'ja' drücken sollst und bei einem unechten Wort die Taste 'nein' Wir üben das noch einmal.";
 
-    return "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
+    if (keyValue == stepLdt00 || keyValue == stepLdt01) {
+      for (var i = 0; i < results.length; i++) {
+        var result = results[i];
+        if (result.selection == -1) {
+          return msgSlow;
+        }
+        if (result.selection != ldtvm.ldt.correctValues[i]) {
+          return msgIncorrect;
+        }
+      }
+
+      return msgGood;
+    }
+    if (keyValue == stepLdt02) {
+      return "Sehr gut gemacht! Das war der erste richtige Durchlauf. Es kommen noch drei weitere.";
+    }
+    if (keyValue == stepLdt03) {
+      return "Super! Noch zwei mal.";
+    }
+    if (keyValue == stepLdt04) {
+      return "Hervorragend! Einmal musst du die Wortaufgabe noch machen.";
+    }
+    if (keyValue == stepLdt05) {
+      return "Fantastisch! Das war die letzte Wortaufgabe. Die nächsten werden nicht so lange sein, versprochen.";
+    }
+    return "";
   }
 
   onVideoCompleted(String url) {}
@@ -326,10 +375,5 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   setNumberOfDaysLearningGoal(String value) {
     numberOfDaysLearningGoal = value;
     notifyListeners();
-  }
-
-  setCurrentPageType(Type current) {
-    currentPageType = current;
-    print(current);
   }
 }

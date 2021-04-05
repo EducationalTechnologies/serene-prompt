@@ -6,10 +6,14 @@ import 'package:serene/widgets/interval_scale.dart';
 typedef void ItemSelectedCallback(
     String assessment, String itemId, String value);
 
+typedef void OnLoadedCallback(Assessment assessment);
+
 class Questionnaire extends StatefulWidget {
   final Assessment assessment;
   final ItemSelectedCallback onFinished;
-  const Questionnaire(this.assessment, this.onFinished, {Key key})
+  final OnLoadedCallback onLoaded;
+  const Questionnaire(this.assessment, this.onFinished,
+      {this.onLoaded, Key key})
       : super(key: key);
 
   @override
@@ -20,6 +24,19 @@ class _QuestionnaireState extends State<Questionnaire> {
   Map<String, String> _results = {};
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.onLoaded != null) {
+      widget.onLoaded(widget.assessment);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     print(widget.assessment.title);
     if (widget.assessment == null)
@@ -27,17 +44,20 @@ class _QuestionnaireState extends State<Questionnaire> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          Card(
-              child: Container(
-            padding: EdgeInsets.all(10),
-            child: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  widget.assessment.title,
-                  textAlign: TextAlign.center,
-                  style: (TextStyle(fontSize: 18)),
-                )),
-          )),
+          Visibility(
+            visible: widget.assessment.title.isNotEmpty,
+            child: Card(
+                child: Container(
+              padding: EdgeInsets.all(10),
+              child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    widget.assessment.title,
+                    textAlign: TextAlign.center,
+                    style: (TextStyle(fontSize: 18)),
+                  )),
+            )),
+          ),
           for (var index = 0; index < widget.assessment.items.length; index++)
             Card(
                 shape: RoundedRectangleBorder(

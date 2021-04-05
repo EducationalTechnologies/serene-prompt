@@ -41,6 +41,14 @@ extension ListHelpers on List {
 
     return this;
   }
+
+  swapItems(int indexA, indexB) {
+    if (indexA < 0 || indexB < 0) return;
+    if (indexA > (this.length - 1) || indexB > (this.length - 1)) return;
+    var tmpB = this[indexB];
+    this[indexB] = this[indexA];
+    this[indexA] = tmpB;
+  }
 }
 
 extension DateHelpers on DateTime {

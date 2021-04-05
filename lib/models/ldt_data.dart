@@ -1,4 +1,5 @@
 class LdtData {
+  String trialName = "";
   List<String> targets = [];
   List<String> primes = [];
   List<int> correctValues = [];
@@ -22,7 +23,8 @@ class LdtData {
       "durationInterTrialScreen": durationInterTrialScreen,
       "startDate": startDate.toIso8601String(),
       "completionDate": completionDate.toIso8601String(),
-      "trials": trialMap
+      "trials": trialMap,
+      "trialName": trialName
     };
   }
 }

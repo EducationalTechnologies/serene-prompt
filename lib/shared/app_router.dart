@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/screens/assessment/daily_learning_question_screen.dart';
+import 'package:serene/screens/assessment/evening_assessment_screen.dart';
 import 'package:serene/screens/assessment/morning_assessment_screen.dart';
 import 'package:serene/screens/initialsession/initial_session_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_recall_screen.dart';
@@ -23,7 +23,7 @@ import 'package:serene/screens/assessment/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/consent_screen.dart';
 import 'package:serene/shared/route_names.dart';
 import 'package:serene/shared/screen_args.dart';
-import 'package:serene/viewmodels/daily_learning_question_view_model.dart';
+import 'package:serene/viewmodels/evening_assessment_view_model.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/viewmodels/internalisation_recall_view_model.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
@@ -60,7 +60,6 @@ class AppRouter {
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
                         assessmentArgs.assessmentType,
-                        locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
@@ -71,7 +70,6 @@ class AppRouter {
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentTypes.usability,
-                        locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
@@ -82,7 +80,6 @@ class AppRouter {
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentTypes.preLearning,
-                        locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
@@ -95,13 +92,20 @@ class AppRouter {
                     locator.get<ExperimentService>()),
                 child: MorningAssessmentScreen()));
 
+      case RouteNames.AMBULATORY_ASSESSMENT_EVENING:
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<EveningAssessmentViewModel>(
+                create: (_) => EveningAssessmentViewModel(
+                    locator.get<DataService>(),
+                    locator.get<ExperimentService>()),
+                child: EveningAssessmentScreen()));
+
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION:
         return MaterialPageRoute(
             builder: (_) =>
                 ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
                     create: (_) => AmbulatoryAssessmentViewModel(
                         AssessmentTypes.affect,
-                        locator.get<UserService>(),
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),
                     child: AmbulatoryAssessmentScreen()));
@@ -117,20 +121,15 @@ class AppRouter {
 
       case RouteNames.LOG_IN:
         return MaterialPageRoute(
-            builder: (_) => MultiProvider(
-                    providers: [
-                      ChangeNotifierProvider<LoginViewModel>.value(
-                          value: LoginViewModel(
-                              locator.get<UserService>(),
-                              locator.get<DataService>(),
-                              locator.get<NavigationService>())),
-                    ],
-                    child: LoginScreen(
-                      backgroundColor1: Colors.orange[50],
-                      backgroundColor2: Colors.orange[50],
-                      highlightColor: Colors.blue,
-                      foregroundColor: Colors.blue[300],
-                    )));
+            builder: (_) => ChangeNotifierProvider<LoginViewModel>(
+                create: (_) => LoginViewModel(locator.get<UserService>(),
+                    locator.get<NavigationService>()),
+                child: LoginScreen(
+                  backgroundColor1: Colors.orange[50],
+                  backgroundColor2: Colors.orange[50],
+                  highlightColor: Colors.blue,
+                  foregroundColor: Colors.blue[300],
+                )));
 
       case RouteNames.SETTINGS:
         return MaterialPageRoute(
@@ -144,18 +143,6 @@ class AppRouter {
 
       case RouteNames.NO_TASKS:
         return MaterialPageRoute(builder: (_) => NoTasksScreen());
-
-      // case RouteNames.AMBULATORY_ASSESSMENT_MORNING:
-      //   return MaterialPageRoute(builder: (_) => DailyLearningQuestionScreen());
-
-      case RouteNames.DAILY_LEARNING_QUESTIONS:
-        return MaterialPageRoute(
-            builder: (_) =>
-                ChangeNotifierProvider<DailyLearningQuestionViewModel>(
-                  create: (_) => DailyLearningQuestionViewModel(
-                      locator.get<NavigationService>()),
-                  child: DailyLearningQuestionScreen(),
-                ));
 
       case RouteNames.INIT_START:
         return MaterialPageRoute(
