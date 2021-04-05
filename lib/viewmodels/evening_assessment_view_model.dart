@@ -11,10 +11,11 @@ class EveningAssessmentViewModel extends MultiStepAssessmentViewModel {
   final DataService _dataService;
   final ExperimentService _experimentService;
 
-  static const int STEP_DIDLEARNTODAY = 0;
-  static const int STEP_WHYNOTLEARN = 1;
-  static const int STEP_EVENINGASSESSMENT = 2;
-  static const int STEP_FINISH = 3;
+  final int stepDidLearnToday = 0;
+  final int stepWhyNotLearn = 1;
+  final int stepEveningAssessment = 2;
+  final int stepAffect = 3;
+  final int stepFinish = 4;
 
   EveningAssessmentViewModel(this._dataService, this._experimentService);
 
@@ -45,21 +46,24 @@ class EveningAssessmentViewModel extends MultiStepAssessmentViewModel {
   int getNextPage(Key currentPageKey) {
     var nextPage = step + 1;
 
-    if (currentPageKey == ValueKey(STEP_DIDLEARNTODAY)) {
+    if (currentPageKey == ValueKey(stepDidLearnToday)) {
       if (currentAssessmentResults.containsKey("didLearnToday_1")) {
         var choice = currentAssessmentResults["didLearnToday_1"];
         if (choice == "2") {
-          nextPage = STEP_WHYNOTLEARN;
+          nextPage = stepWhyNotLearn;
         } else {
-          nextPage = STEP_EVENINGASSESSMENT;
+          nextPage = stepEveningAssessment;
         }
       }
     }
-    if (currentPageKey == ValueKey(STEP_WHYNOTLEARN)) {
-      nextPage = STEP_EVENINGASSESSMENT;
+    if (currentPageKey == ValueKey(stepWhyNotLearn)) {
+      nextPage = stepAffect;
     }
-    if (currentPageKey == ValueKey(STEP_EVENINGASSESSMENT)) {
-      nextPage = STEP_FINISH;
+    if (currentPageKey == ValueKey(stepEveningAssessment)) {
+      nextPage = stepFinish;
+    }
+    if (currentPageKey == ValueKey(stepAffect)) {
+      nextPage = stepFinish;
     }
 
     return nextPage;

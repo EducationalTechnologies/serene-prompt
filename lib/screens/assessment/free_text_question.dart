@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serene/shared/ui_helpers.dart';
 
 typedef TextChangedCallback(String text);
 
@@ -12,15 +13,18 @@ class FreeTextQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           this.description,
           style: Theme.of(context).textTheme.headline6,
         ),
+        UIHelper.verticalSpaceMedium(),
         TextField(
           onChanged: this.textChanged,
           autofocus: true,
-          decoration: InputDecoration(border: OutlineInputBorder()),
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), focusColor: Colors.white),
         ),
       ],
     ));

@@ -5,8 +5,10 @@ import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
+import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/app_asset_paths.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/route_names.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
@@ -42,9 +44,12 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   final int stepQuestionsSrl = 25;
   final int stepQuestionsLearningGoals2 = 26;
   final int stepVideo4 = 27;
+  final int stepFinish = 28;
 
   final ExperimentService _experimentService;
   final DataService _dataService;
+  final SettingsService _settingsService;
+
   LexicalDecisionTaskViewModel ldtvm;
 
   int step = 0;
@@ -140,7 +145,19 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
-  InitSessionViewModel(this._dataService, this._experimentService);
+  InitSessionViewModel(
+      this._dataService, this._experimentService, this._settingsService);
+
+  int getPreviouslyCompletedStep() {
+    // Add one to the value because we are retrieving the completed step and we want to navigate to the one after that
+    var nextStep = _settingsService.getInitSessionStep() + 1;
+
+    if (step == stepFinish) {
+      // TODO: SKIP TUTORIAL COMPLETELY
+      submit();
+    }
+    return nextStep;
+  }
 
   outcomeSelected(Outcome outcome) {
     if (selectedOutcomes.contains(outcome)) {
@@ -318,7 +335,9 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     notifyListeners();
   }
 
-  submit() async {}
+  submit() async {
+    _experimentService.nextScreen(RouteNames.INIT_START);
+  }
 
   Future<bool> initTrial(String trialName) async {
     ldtvm = new LexicalDecisionTaskViewModel(trialName, _experimentService);

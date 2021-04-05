@@ -49,6 +49,7 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
   // }
 
   onNotLearningReasonChanged(String notLearningReason) {
+    _notLearningReason = notLearningReason;
     this.setAssessmentResult(
         "dailyLearningIntention_2", "0", notLearningReason);
   }
@@ -93,6 +94,10 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
     if (vk.value == stepLearningIntention) {
       return isAssessmentFilledOut(lastAssessment);
     }
+
+    if (vk.value == stepReasonNotLearning) {
+      return _notLearningReason.isNotEmpty;
+    }
     return false;
   }
 
@@ -115,7 +120,7 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
       }
     }
     if (currentPage == ValueKey(stepReasonNotLearning)) {
-      nextPage = stepSuccess;
+      nextPage = stepAffect;
     }
     if (currentPage == ValueKey(stepSuccess)) {
       if (currentAssessmentResults.containsKey("success_3")) {

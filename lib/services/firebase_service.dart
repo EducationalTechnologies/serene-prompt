@@ -101,13 +101,20 @@ class FirebaseService {
   }
 
   Future<UserData> getUserData(String email) async {
-    var resultDocuments = await _databaseReference
+    // var resultDocuments = await _databaseReference
+    //     .collection(COLLECTION_USERS)
+    //     .where("email", isEqualTo: email)
+    //     .get();
+
+    // if (resultDocuments.docs.isEmpty) return null;
+    // return UserData.fromJson(resultDocuments.docs[0].data());
+
+    return _databaseReference
         .collection(COLLECTION_USERS)
         .where("email", isEqualTo: email)
-        .get();
-
-    if (resultDocuments.docs.isEmpty) return null;
-    return UserData.fromJson(resultDocuments.docs[0].data());
+        .get()
+        .then((documents) => UserData.fromJson(documents.docs[0].data()))
+        .catchError(handleError);
   }
 
   Future<UserData> signInUser(String userId, String password) async {
@@ -123,7 +130,9 @@ class FirebaseService {
         userData = UserData(
             userId: result.user.uid,
             email: result.user.email,
+            internalisationCondition: 1,
             score: 0,
+            streakDays: 0,
             registrationDate: DateTime.now());
         await insertUserData(userData);
       }

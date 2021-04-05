@@ -271,5 +271,8 @@ class ExperimentService {
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_EVENING) {
       return await _navigationService.navigateTo(RouteNames.RECALL_TASK);
     }
+    if (currentScreen == RouteNames.INIT_START) {
+      return await _navigationService.navigateTo(RouteNames.NO_TASKS);
+    }
   }
 }

@@ -26,7 +26,7 @@ class StartupViewModel extends BaseViewModel {
   Future<void> startApp(AppStartupMode appStartupMode) async {
     print("Navigating to ${appStartupMode.toString()}");
     var nav = locator<NavigationService>();
-    return nav.navigateAndRemove(RouteNames.NO_TASKS);
+    // return nav.navigateAndRemove(RouteNames.NO_TASKS);
     switch (appStartupMode) {
       case AppStartupMode.normal:
         nav.navigateAndRemove(RouteNames.MAIN);
@@ -39,16 +39,14 @@ class StartupViewModel extends BaseViewModel {
         // nav.navigateAndRemove(RouteNames.INTERNALISATION);
         break;
       case AppStartupMode.firstLaunch:
-        nav.navigateAndRemove(RouteNames.INIT_START);
+        nav.navigateAndRemove(RouteNames.LOG_IN);
         // nav.navigateAndRemove(RouteNames.CONSENT);
         break;
       case AppStartupMode.postLearningAssessment:
         nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
         break;
       case AppStartupMode.internalisationTask:
-        await nav.navigateAndRemove(
-            RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION);
-        nav.navigateAndRemove(RouteNames.INTERNALISATION);
+        await nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_MORNING);
         break;
       case AppStartupMode.recallTask:
         nav.navigateAndRemove(RouteNames.RECALL_TASK);

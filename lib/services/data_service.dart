@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/services.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/models/assessment.dart';
 import 'package:serene/models/assessment_result.dart';
 import 'package:serene/models/assessment_item.dart';
@@ -14,8 +15,10 @@ import 'package:serene/models/recall_task.dart';
 import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/local_database_service.dart';
+import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:csv/csv.dart';
+import 'package:serene/shared/enums.dart';
 
 enum CachedValues { goals, internalisations }
 
@@ -238,12 +241,13 @@ class DataService {
   }
 
   getInitSessionSteps() async {
-    return await _databaseService
-        .getInitSessionSteps(_userService.getUsername());
+    return locator.get<SettingsService>().getInitSessionStep();
   }
 
   void saveInitialSessionStepCompleted(int step) async {
-    _localDatabaseService.upsertSetting("initSessionStep", step.toString());
+    locator
+        .get<SettingsService>()
+        .setSetting(SettingsKeys.initSessionStep, step.toString());
   }
 
   Future<void> saveInitialSessionValue(String key, dynamic value) async {
@@ -252,17 +256,19 @@ class DataService {
   }
 
   Future<int> getCompletedInitialSessionStep() async {
-    var step = _localDatabaseService.getSettingsValue("initSessionStep");
+    var step = await _localDatabaseService.getSettingsValue("initSessionStep");
     if (step == null) return 0;
     return step;
   }
 
   Future<void> setBackgroundImage(String imagePath) async {
-    await _localDatabaseService.upsertSetting("backgroundImage", imagePath);
+    await _localDatabaseService.upsertSetting(
+        SettingsKeys.backGroundImage, imagePath);
   }
 
   Future<String> getBackgroundImagePath() async {
-    return await _localDatabaseService.getSettingsValue("backgroundImage");
+    return await _localDatabaseService
+        .getSettingsValue(SettingsKeys.backGroundImage);
   }
 
   Future<int> getStreakDays() async {

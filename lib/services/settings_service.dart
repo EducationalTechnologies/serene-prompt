@@ -9,7 +9,9 @@ class SettingsService {
     SettingsKeys.userId: "",
     SettingsKeys.email: "",
     SettingsKeys.timerDurationInSeconds: "1500",
-    SettingsKeys.wordsPerMinute: "180"
+    SettingsKeys.wordsPerMinute: "180",
+    SettingsKeys.initSessionStep: "0",
+    SettingsKeys.backGroundImage: "",
   };
 
   SettingsService(this._databaseService);
@@ -39,6 +41,10 @@ class SettingsService {
 
   getSetting(String setting) {
     return _settingsCache[setting];
+  }
+
+  getInitSessionStep() {
+    return int.parse(_settingsCache[SettingsKeys.initSessionStep]);
   }
 
   setSetting(String setting, String value) async {

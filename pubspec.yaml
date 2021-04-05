@@ -30,14 +30,14 @@ dependencies:
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.1
   package_info: ^2.0.0
-  flutter_local_notifications: ^5.0.0-nullsafety.1
+  flutter_local_notifications: ^5.0.0+1
   http: ^0.13.0
   get_it: ^6.0.0
   email_validator: ^1.0.6
   flutter_native_timezone: ^1.0.10
   google_fonts: ^2.0.0
-  csv: ^5.0.0-nullsafety.0
-  youtube_plyr_iframe: ^2.0.0
+  csv: ^5.0.0
+  youtube_plyr_iframe: ^2.0.3
   
 dev_dependencies:
   flutter_test:

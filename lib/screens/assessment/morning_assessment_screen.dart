@@ -6,7 +6,6 @@ import 'package:serene/screens/assessment/questionnaire.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/morning_assessment_view_model.dart';
-import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
@@ -74,9 +73,7 @@ class _MorningAssessmentScreenState extends State<MorningAssessmentScreen> {
       child: Column(
         children: [
           Text(
-            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Merkspiel",
-            style: Theme.of(context).textTheme.headline6,
-          ),
+              "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Merkspiel"),
           // FullWidthButton(
           //     text: "Abschicken",
           //     onPressed: () {

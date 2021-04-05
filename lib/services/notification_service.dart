@@ -153,10 +153,8 @@ class NotificationService {
     var scheduledDate = tz.TZDateTime(
         tz.local, time.year, time.month, time.day, time.hour, time.minute);
 
-    // var textReminder =
-    //     "Klicke hier, um deine Erinnerung an den Wenn-Dann-Plan zu überprüfen";
-    // TODO: Remove the timestamp
-    var textReminder = "Erinnerungserinnerung: ${time.toIso8601String()}";
+    var textReminder =
+        "Überprüfe, wie gut du dich an deinen heutigen Plan erinnern kannst.";
 
     locator.get<LoggingService>().logEvent("TaskReminderNotificationSchedule");
 

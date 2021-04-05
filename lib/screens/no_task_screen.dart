@@ -24,6 +24,8 @@ class NoTasksScreen extends StatefulWidget {
 class _NoTasksScreenState extends State<NoTasksScreen> {
   String _textNext = "";
   String _textNotification = "Vielen Dank, dass du mitmachst!";
+  String _textStreakDays = "";
+  String _textReward = "";
 
   Future<String> _nextText;
 
@@ -36,10 +38,20 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   }
 
   Future<String> getNextText() async {
-    return "Vielen Dank, dass du mitmachst!";
-
     var dataService = locator<DataService>();
     var experimentService = locator<ExperimentService>();
+
+    var lastRecallTask = await dataService.getLastRecallTask();
+
+    if (lastRecallTask.completionDate.isToday()) {
+      var streakDays = await dataService.getStreakDays();
+      if (streakDays > 1) {
+        _textStreakDays = "Du hast jetzt $streakDays Tage in Folge mitgemacht";
+      }
+    }
+
+    return "Vielen Dank, dass du mitmachst!";
+
     String nextText = "";
     var lastInternalisation = await dataService.getLastInternalisation();
 
@@ -145,12 +157,11 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText1),
                             UIHelper.verticalSpaceSmall(),
-                            Text(
-                                "Du hast heute am 5. Tag in Folge teilgenommen.",
+                            Text(_textStreakDays,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText1),
                             UIHelper.verticalSpaceSmall(),
-                            Text("Dafür kriegst du 10💎 und 5💎 als Bonus.",
+                            Text(_textReward,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText1),
                             UIHelper.verticalSpaceMedium(),

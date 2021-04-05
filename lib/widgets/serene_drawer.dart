@@ -86,10 +86,10 @@ class SereneDrawer extends StatelessWidget {
           //     }),
           _buildDrawerItem(
               icon: Icons.filter_1,
-              text: "Einloggen",
+              text: "Initialisierung",
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, RouteNames.LOG_IN);
+                Navigator.pushNamed(context, RouteNames.INIT_START);
               }),
           Divider(),
           _buildDrawerItem(

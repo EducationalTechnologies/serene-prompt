@@ -6,15 +6,17 @@ import 'package:serene/widgets/full_width_button.dart';
 class MultiStepAssessment extends StatefulWidget {
   final MultiStepAssessmentViewModel vm;
   final List<Widget> pages;
+  final int initialStep;
   // final VoidCallback onSubmit;
-  MultiStepAssessment(this.vm, this.pages, {Key key}) : super(key: key);
+  MultiStepAssessment(this.vm, this.pages, {this.initialStep = 0, Key key})
+      : super(key: key);
 
   @override
   _MultiStepAssessmentState createState() => _MultiStepAssessmentState();
 }
 
 class _MultiStepAssessmentState extends State<MultiStepAssessment> {
-  final _controller = new PageController();
+  var _controller = new PageController();
   final _kDuration = const Duration(milliseconds: 100);
   final _kCurve = Curves.ease;
 

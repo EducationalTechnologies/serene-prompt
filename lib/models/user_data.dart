@@ -1,7 +1,7 @@
 class UserData {
   String userId;
   String email;
-  int internalisationCondition;
+  int internalisationCondition = 1;
   DateTime registrationDate;
   int streakDays = 0;
   int score = 0;
@@ -9,10 +9,10 @@ class UserData {
   UserData(
       {this.userId,
       this.email,
-      this.internalisationCondition,
+      this.internalisationCondition = 1,
       this.registrationDate,
-      this.streakDays,
-      this.score});
+      this.streakDays = 0,
+      this.score = 0});
 
   Map<String, dynamic> toMap() {
     return {

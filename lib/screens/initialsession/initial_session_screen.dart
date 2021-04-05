@@ -110,6 +110,11 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
         child: Scaffold(
             appBar: SereneAppBar(),
             drawer: SereneDrawer(),
-            body: Container(child: MultiStepAssessment(vm, _pages))));
+            body: Container(
+                child: MultiStepAssessment(
+              vm,
+              _pages,
+              initialStep: vm.getPreviouslyCompletedStep(),
+            ))));
   }
 }

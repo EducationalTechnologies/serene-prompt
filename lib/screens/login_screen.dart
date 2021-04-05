@@ -60,14 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
         });
   }
 
-  _registerClick(LoginViewModel vm, BuildContext context) async {
-    var registered = await vm.register(
-        _userIdTextController.text, _passwordTextController.text);
-    if (registered == RegistrationCodes.SUCCESS) {
-      Navigator.pushNamed(context, RouteNames.INIT_START);
-    } else if (registered == RegistrationCodes.WEAK_PASSWORD) {}
-  }
-
   _signInClick(LoginViewModel vm, BuildContext context) async {
     var registered = await vm.signIn(
         _userIdTextController.text, _passwordTextController.text);

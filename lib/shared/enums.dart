@@ -28,6 +28,8 @@ class SettingsKeys {
   static const String email = "email";
   static const String timerDurationInSeconds = "timerDurationInSeconds";
   static const String wordsPerMinute = "wordsPerMinute";
+  static const String initSessionStep = "initSessionStep";
+  static const String backGroundImage = "backgroundImage";
 }
 
 class Hindrances {

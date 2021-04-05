@@ -149,7 +149,8 @@ class AppRouter {
             builder: (_) => ChangeNotifierProvider<InitSessionViewModel>(
                   create: (_) => InitSessionViewModel(
                       locator.get<DataService>(),
-                      locator.get<ExperimentService>()),
+                      locator.get<ExperimentService>(),
+                      locator.get<SettingsService>()),
                   child: InitialSessionScreen(),
                 ));
 

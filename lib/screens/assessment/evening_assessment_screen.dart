@@ -8,7 +8,6 @@ import 'package:serene/screens/assessment/questionnaire.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/evening_assessment_view_model.dart';
-import 'package:serene/widgets/full_width_button.dart';
 import 'package:serene/widgets/serene_appbar.dart';
 import 'package:serene/widgets/serene_drawer.dart';
 
@@ -30,18 +29,21 @@ class _EveningAssessmentScreenState extends State<EveningAssessmentScreen> {
     var vm = Provider.of<EveningAssessmentViewModel>(context, listen: false);
 
     _pages = [
-      _buildAssessmentFuture(AssessmentTypes.didLearnToday),
-      FreeTextQuestion("Warum möchtest du heute nicht mit cabuu lernen?",
-          textChanged: vm.whyNotLearnReason),
-      _buildAssessmentFuture(AssessmentTypes.evening),
-      _buildAssessmentFuture(AssessmentTypes.affect),
+      _buildAssessmentFuture(
+          AssessmentTypes.didLearnToday, ValueKey(vm.stepDidLearnToday)),
+      FreeTextQuestion("Warum hast du heute nicht mit cabuu gelernt??",
+          textChanged: vm.whyNotLearnReason, key: ValueKey(vm.stepWhyNotLearn)),
+      _buildAssessmentFuture(
+          AssessmentTypes.evening, ValueKey(vm.stepEveningAssessment)),
+      _buildAssessmentFuture(AssessmentTypes.affect, ValueKey(vm.stepAffect)),
       buildFinish(),
     ];
   }
 
-  _buildAssessmentFuture(AssessmentTypes assessmentTypes) {
+  _buildAssessmentFuture(AssessmentTypes assessmentTypes, Key key) {
     var vm = Provider.of<EveningAssessmentViewModel>(context, listen: false);
     return FutureProvider<Assessment>(
+        key: key,
         initialData: Assessment(),
         create: (context) => vm.getAssessment(assessmentTypes),
         child: Consumer<Assessment>(builder: (context, asssessment, _) {
@@ -66,8 +68,7 @@ class _EveningAssessmentScreenState extends State<EveningAssessmentScreen> {
       child: Column(
         children: [
           Text(
-            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Merkspiel",
-            style: Theme.of(context).textTheme.headline6,
+            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu der Erinnerungsaufgabe",
           ),
         ],
       ),

@@ -11,8 +11,7 @@ class WelcomeScreen extends StatelessWidget {
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/illustrations/mascot_bare.png"),
-              fit: BoxFit.none,
-              scale: 9,
+              fit: BoxFit.fitWidth,
               alignment: Alignment.bottomCenter)),
       child: Column(
         children: [
