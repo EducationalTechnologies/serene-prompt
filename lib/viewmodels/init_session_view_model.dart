@@ -21,6 +21,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   final int stepCabuuLink = 2;
   final int stepQuestionsCabuuLearn = 3;
   final int stepQuestionsRegulation = 4;
+  final int stepInitialDailyLearningGoal = 14;
   final int stepQuestionsLearningGoals1 = 5;
   final int stepVideo2 = 6;
   final int stepLdt00 = 7;
@@ -30,7 +31,6 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   final int stepLdt04 = 11;
   final int stepLdt05 = 12;
   final int stepVideo3 = 13;
-  final int stepInitialDailyLearningGoal = 14;
   final int stepOutcomeExplanationScreen = 15;
   final int stepOutcomeSelectionScreen = 16;
   final int stepOutcomeEnterScreen = 17;
@@ -259,6 +259,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       var custom = Obstacle(
           name: key,
           description: text,
+          isSelected: true,
           iconPath: AppAssetPaths.ICON_PROBLEMSOLVING);
       selectedObstacles.add(custom);
     } else {
@@ -266,7 +267,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       custom.description = text;
     }
 
-    // notifyListeners();
+    notifyListeners();
   }
 
   editCustomOutcome(String key, String text) {
@@ -275,7 +276,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       var custom = Outcome(
           name: key,
           description: text,
-          iconPath: AppAssetPaths.ICON_PROBLEMSOLVING);
+          isSelected: true,
+          iconPath: AppAssetPaths.ICON_MEHAPPY);
       selectedOutcomes.add(custom);
     } else {
       var custom = selectedOutcomes.firstWhere((o) => o.name == key);
@@ -354,8 +356,11 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     var msgSlow =
         "Da warst du leider nicht immer schnell genug. Denk daran, dass du die richtige Taste so schnell wie möglich drücken sollst! Wir üben das noch einmal.";
     var msgIncorrect =
-        "Da hast leider nicht immer richtig gedrückt. Denk daran, dass du bei einem echten Wort die Taste 'ja' drücken sollst und bei einem unechten Wort die Taste 'nein' Wir üben das noch einmal.";
+        "Du hast leider nicht immer richtig gedrückt. Denk daran, dass du bei einem echten Wort die Taste 'ja' drücken sollst und bei einem unechten Wort die Taste 'nein' Wir üben das noch einmal.";
 
+    var slow = false;
+    var incorrect = false;
+    var msg = "";
     if (keyValue == stepLdt00 || keyValue == stepLdt01) {
       for (var i = 0; i < results.length; i++) {
         var result = results[i];
@@ -366,9 +371,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
           return msgIncorrect;
         }
       }
-
-      return msgGood;
     }
+
     if (keyValue == stepLdt02) {
       return "Sehr gut gemacht! Das war der erste richtige Durchlauf. Es kommen noch drei weitere.";
     }
@@ -379,7 +383,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       return "Hervorragend! Einmal musst du die Wortaufgabe noch machen.";
     }
     if (keyValue == stepLdt05) {
-      return "Fantastisch! Das war die letzte Wortaufgabe. Die nächsten werden nicht so lange sein, versprochen.";
+      return "Fantastisch! Das war jetzt erstmal die letzte Wortaufgabe für ein paar Tage. Wenn in ein paar Tagen dann die nächste kommt, wird die auch viel kürzer sein.";
     }
     return "";
   }

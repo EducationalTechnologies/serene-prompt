@@ -73,7 +73,7 @@ class _MorningAssessmentScreenState extends State<MorningAssessmentScreen> {
       child: Column(
         children: [
           Text(
-              "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Merkspiel"),
+              "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Merkspiel."),
           // FullWidthButton(
           //     text: "Abschicken",
           //     onPressed: () {

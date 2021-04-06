@@ -20,7 +20,7 @@ class EveningAssessmentViewModel extends MultiStepAssessmentViewModel {
   EveningAssessmentViewModel(this._dataService, this._experimentService);
 
   void whyNotLearnReason(String reason) {
-    this.setAssessmentResult("didLearnToday_2", "0", reason);
+    this.setAssessmentResult("didLearnToday_2", "didLearnToday_2", reason);
   }
 
   @override

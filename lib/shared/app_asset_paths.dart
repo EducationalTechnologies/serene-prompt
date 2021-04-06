@@ -13,4 +13,5 @@ class AppAssetPaths {
   static const String ICON_TEAMWORK = "assets/icons/teamwork.png";
 
   static const String ICON_PROBLEMSOLVING = "assets/icons/problem-solving.png";
+  static const String ICON_DEFAULT = "assets/icons/icon_256.png";
 }

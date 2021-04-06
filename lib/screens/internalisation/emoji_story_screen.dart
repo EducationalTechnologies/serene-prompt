@@ -35,71 +35,6 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
     _activeController = _controllerLeft;
   }
 
-  void _checkIfIsDone() {
-    // _done = _emojiStoryIf.isNotEmpty && _emojiStoryThen.isNotEmpty;
-    _done = _controllerLeft.text.isNotEmpty && _controllerRight.text.isNotEmpty;
-  }
-
-  buildEmojiFieldsHorizontal() {
-    var width = MediaQuery.of(context).size.width * 0.4;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Column(
-          children: [
-            Text("Wenn..."),
-            Container(
-                width: width,
-                child: TextField(
-                  minLines: 1,
-                  maxLines: 2,
-                  autofocus: true,
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  style: Theme.of(context).textTheme.headline6,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                  ),
-                  onChanged: (text) {
-                    setState(() {
-                      _emojiStoryIf = text;
-                      _checkIfIsDone();
-                    });
-                  },
-                )),
-          ],
-        ),
-        Text("➡", style: Theme.of(context).textTheme.headline6),
-        Column(
-          children: [
-            Text("dann..."),
-            Container(
-                width: width,
-                child: TextField(
-                  minLines: 1,
-                  maxLines: 2,
-                  autofocus: true,
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  style: Theme.of(context).textTheme.headline6,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                  ),
-                  onChanged: (text) {
-                    setState(() {
-                      _emojiStoryThen = text;
-                      _checkIfIsDone();
-                    });
-                  },
-                )),
-          ],
-        )
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     var vm = Provider.of<InternalisationViewModel>(context);
@@ -135,13 +70,14 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
   }
 
   _buildEmojiPickerCompatibleTextInput() {
-    var width = MediaQuery.of(context).size.width * 0.4;
+    var width = MediaQuery.of(context).size.width * 0.45;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Wenn..."),
+            Text("Wenn...", style: Theme.of(context).textTheme.headline6),
             Container(
                 width: width,
                 child: Stack(children: [
@@ -156,6 +92,8 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                     enableInteractiveSelection: false,
                     style: Theme.of(context).textTheme.headline6,
                     decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
@@ -184,10 +122,11 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                 ])),
           ],
         ),
-        Text("➡", style: Theme.of(context).textTheme.headline6),
+        // Text("➡", style: Theme.of(context).textTheme.headline6),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("dann..."),
+            Text("dann...", style: Theme.of(context).textTheme.headline6),
             Container(
                 width: width,
                 child: Stack(children: [
@@ -202,6 +141,8 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                     enableInteractiveSelection: false,
                     style: Theme.of(context).textTheme.headline6,
                     decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
@@ -258,5 +199,9 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
             Navigator.pushNamed(context, RouteNames.NO_TASKS);
           },
         ));
+  }
+
+  void _checkIfIsDone() {
+    _done = _controllerLeft.text.isNotEmpty && _controllerRight.text.isNotEmpty;
   }
 }

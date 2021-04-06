@@ -143,8 +143,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return new ElevatedButton(
       onPressed: () async {
         if (vm.state != ViewState.idle) return;
-        if (_userIdTextController.text.length < 3) {
-          _buildErrorDialog("Bitte mindestens drei Zahlen eingeben", "");
+        if (_userIdTextController.text.length != 5) {
+          _buildErrorDialog("Der Code besteht aus fünf Ziffern", "");
         } else {
           String message = "";
           if (vm.validateUserId(_userIdTextController.text)) {

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/screens/assessment/ambulatory_assessment_screen.dart';
 import 'package:serene/screens/internalisation/internalisation_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
 import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/version_info.dart';
 
@@ -94,20 +92,11 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.filter_2,
-              text: "Fragen",
+              text: "Login",
               onTap: () {
                 Navigator.pop(context);
 
-                var routeWidget =
-                    ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                        create: (_) => AmbulatoryAssessmentViewModel(
-                            AssessmentTypes.dailyQuestionsAll,
-                            locator.get<DataService>(),
-                            locator.get<ExperimentService>()),
-                        child: AmbulatoryAssessmentScreen());
-
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => routeWidget));
+                Navigator.pushNamed(context, RouteNames.LOG_IN);
               }),
           Divider(),
           _buildDrawerItem(

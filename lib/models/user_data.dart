@@ -5,6 +5,7 @@ class UserData {
   DateTime registrationDate;
   int streakDays = 0;
   int score = 0;
+  int daysActive = 0;
 
   UserData(
       {this.userId,
@@ -12,7 +13,8 @@ class UserData {
       this.internalisationCondition = 1,
       this.registrationDate,
       this.streakDays = 0,
-      this.score = 0});
+      this.score = 0,
+      this.daysActive = 0});
 
   Map<String, dynamic> toMap() {
     return {
@@ -21,7 +23,8 @@ class UserData {
       "internalisationCondition": this.internalisationCondition,
       "registrationDate": this.registrationDate?.toIso8601String(),
       "streakDays": this.streakDays,
-      "score": this.score
+      "score": this.score,
+      "daysActive": this.daysActive
     };
   }
 
@@ -33,14 +36,12 @@ class UserData {
 
     if (json.containsKey("score")) {
       score = json["score"];
-    } else {
-      score = 0;
     }
-
     if (json.containsKey("streakDays")) {
       streakDays = json["streakDays"];
-    } else {
-      streakDays = 0;
+    }
+    if (json.containsKey("daysActive")) {
+      daysActive = json["daysActive"];
     }
   }
 }

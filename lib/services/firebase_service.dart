@@ -159,9 +159,10 @@ class FirebaseService {
   saveAssessment(AssessmentResult assessment, String userid) async {
     var assessmentMap = assessment.toMap();
     assessmentMap["user"] = userid;
-    await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
         .add(assessmentMap)
+        .then((res) => res)
         .catchError(handleError);
   }
 
@@ -387,7 +388,9 @@ class FirebaseService {
     _databaseReference
         .collection(COLLECTION_USERS)
         .doc(username)
-        .set({"streakDays": value}, SetOptions(merge: true));
+        .set({"streakDays": value}, SetOptions(merge: true))
+        .then((value) => null)
+        .catchError(handleError);
   }
 
   Future<int> getStreakDays(String username) async {
@@ -403,10 +406,12 @@ class FirebaseService {
     return days;
   }
 
-  Future<void> saveDaysAcive(String username, int daysActive) {
+  Future saveDaysAcive(String username, int daysActive) async {
     _databaseReference
         .collection(COLLECTION_USERS)
         .doc(username)
-        .set({"daysActive": daysActive}, SetOptions(merge: true));
+        .set({"daysActive": daysActive}, SetOptions(merge: true))
+        .then((value) => null)
+        .catchError(handleError);
   }
 }

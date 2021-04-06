@@ -44,23 +44,23 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     super.didChangeDependencies();
     var vm = Provider.of<InitSessionViewModel>(context, listen: false);
     _pages = [
-      WelcomeScreen(key: ValueKey(vm.stepWelcomeScreen)),
-      questionnaireFuture(
-          AssessmentTypes.cabuuLearn, ValueKey(vm.stepQuestionsCabuuLearn)),
-      questionnaireFuture(
-          AssessmentTypes.regulation, ValueKey(vm.stepQuestionsRegulation)),
-      questionnaireFuture(AssessmentTypes.learningGoals1,
-          ValueKey(vm.stepQuestionsLearningGoals1)), // Screen 1
-      VideoScreen("45q_GRrlQ04", key: ValueKey(vm.stepVideo1)), // Screen 2
-      CabuuLinkScreen(key: ValueKey(vm.stepCabuuLink)), // Screen 3
-      VideoScreen("9CHA1RpTgRM", key: ValueKey(vm.stepVideo2)),
-      InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(vm.stepLdt00)),
-      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt01)),
-      InitialLdtScreen("0_2", _onLdtFinished, key: ValueKey(vm.stepLdt02)),
-      InitialLdtScreen("0_3", _onLdtFinished, key: ValueKey(vm.stepLdt03)),
-      VideoScreen("d0PSrCMoTpk", key: ValueKey(vm.stepVideo3)),
+      // VideoScreen("45q_GRrlQ04", key: ValueKey(vm.stepVideo1)), // Screen 2
+      // WelcomeScreen(key: ValueKey(vm.stepWelcomeScreen)),
+      // questionnaireFuture(
+      //     AssessmentTypes.cabuuLearn, ValueKey(vm.stepQuestionsCabuuLearn)),
+      // questionnaireFuture(
+      //     AssessmentTypes.regulation, ValueKey(vm.stepQuestionsRegulation)),
       InitialDailyLearningGoalScreen(
           key: ValueKey(vm.stepInitialDailyLearningGoal)),
+      // questionnaireFuture(AssessmentTypes.learningGoals1,
+      //     ValueKey(vm.stepQuestionsLearningGoals1)), // Screen 1
+      // CabuuLinkScreen(key: ValueKey(vm.stepCabuuLink)), // Screen 3
+      // VideoScreen("9CHA1RpTgRM", key: ValueKey(vm.stepVideo2)),
+      // InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(vm.stepLdt00)),
+      // InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt01)),
+      // InitialLdtScreen("0_2", _onLdtFinished, key: ValueKey(vm.stepLdt02)),
+      // InitialLdtScreen("0_3", _onLdtFinished, key: ValueKey(vm.stepLdt03)),
+      // VideoScreen("d0PSrCMoTpk", key: ValueKey(vm.stepVideo3)),
       InitialOutcomeExplanationScreen(
           key: ValueKey(vm.stepOutcomeExplanationScreen)),
       OutcomeSelectionScreen(key: ValueKey(vm.stepOutcomeSelectionScreen)),

@@ -220,8 +220,13 @@ class ExperimentService {
     return streakDays;
   }
 
+  Future<void> updateDaysActive() async {
+    var daysActive = await _dataService.getDaysActive();
+    await _dataService.saveDaysActive(daysActive + 1);
+  }
+
   Future<void> submitRecallTask(RecallTask recallTask) async {
-    // Check the streak BEFORE submitting the recall task
+    // Checking the streak BEFORE submitting the recall task
     int streakDays = await updateAndGetStreakDays();
 
     await _rewardService.onRecallTask(streakDays);

@@ -38,13 +38,7 @@ class _WaitingInternalisationScreenState
     animation.addListener(() {
       setState(() {});
     });
-    // animation.addStatusListener((status) {
-    //   if (status == AnimationStatus.completed) {
-    //     setState(() {
-    //       _done = true;
-    //     });
-    //   }
-    // });
+
     controller.forward();
   }
 

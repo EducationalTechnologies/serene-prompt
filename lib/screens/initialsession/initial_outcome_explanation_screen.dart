@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
@@ -13,11 +14,13 @@ class InitialOutcomeExplanationScreen extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Text(
-              "Denke jetzt einmal darüber nach, was für dich persönlich das Beste daran wäre, wenn du es schaffen würdest, an $daysOfLearning Tagen pro Woche Vokabeln zu lernen. "),
+          MarkdownBody(
+              data:
+                  "### Denke jetzt einmal darüber nach, was für dich persönlich das **Beste** daran wäre, wenn du es schaffen würdest, an **$daysOfLearning Tagen pro Woche** Vokabeln zu lernen."),
           UIHelper.verticalSpaceMedium(),
-          Text(
-              "Auf der nächsten Seite siehst du ein paar Vorschläge von uns. Wähle alles aus der Liste aus, was auf dich  zutrifft Sollte nichts darunter sein oder noch etwas Wichtiges fehlen, kannst du es auf der übernächsten Seite ergänzen."),
+          MarkdownBody(
+              data:
+                  "### Auf der nächsten Seite siehst du ein paar Vorschläge von uns. Wähle alles aus der Liste aus, was **auf dich zutrifft** Sollte nichts darunter sein oder noch etwas Wichtiges fehlen, kannst du es auf der übernächsten Seite ergänzen."),
           UIHelper.verticalSpaceMedium(),
         ],
       ),

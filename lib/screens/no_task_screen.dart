@@ -22,7 +22,6 @@ class NoTasksScreen extends StatefulWidget {
 }
 
 class _NoTasksScreenState extends State<NoTasksScreen> {
-  String _textNext = "";
   String _textNotification = "Vielen Dank, dass du mitmachst!";
   String _textStreakDays = "";
   String _textReward = "";
@@ -101,7 +100,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         }
       }
     }
-    _textNext = nextText;
     return nextText;
   }
 

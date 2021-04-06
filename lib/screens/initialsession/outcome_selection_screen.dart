@@ -51,11 +51,12 @@ class _OutcomeSelectionScreenState extends State<OutcomeSelectionScreen> {
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
-        UIHelper.verticalSpaceLarge(),
+        UIHelper.verticalSpaceSmall(),
         Text(
           "Was wäre gut daran, wenn du es schaffen würdest, regelmäßig Vokabeln zu lernen? Wähle die Dinge aus, die für dich am wichtigsten sind.",
           style: Theme.of(context).textTheme.subtitle1,
         ),
+        UIHelper.verticalSpaceSmall(),
         for (var o in vm.outcomes) _buildHindranceItem(context, o),
       ],
     );

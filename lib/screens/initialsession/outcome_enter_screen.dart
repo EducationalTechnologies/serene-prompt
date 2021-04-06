@@ -17,7 +17,6 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
   @override
   void initState() {
     super.initState();
-    _customOutcomes.add(buildTextField("0"));
   }
 
   buildTextField(String key) {
@@ -34,11 +33,17 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
   buildAddButton() {
     return ElevatedButton.icon(
         onPressed: () {
+          // Widget only rebuild on assignment, therefore we use a temp list to assign to
+          List<TextField> temp = [];
+          if (_customOutcomes.length <= 3) {
+            _customOutcomes
+                .add(buildTextField((_customOutcomes.length + 1).toString()));
+          }
+          for (var co in _customOutcomes) {
+            temp.add(co);
+          }
           setState(() {
-            if (_customOutcomes.length <= 3) {
-              _customOutcomes
-                  .add(buildTextField((_customOutcomes.length + 1).toString()));
-            }
+            _customOutcomes = temp;
           });
         },
         icon: Icon(Icons.add),
@@ -48,8 +53,7 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: ListView(
         children: [
           Text(
               "Wenn du in der vorherigen Liste nicht die Ziele gefunden hast, die dich am ehesten zum Vokabellernen motivieren, kannst du hier eigene eingeben.",

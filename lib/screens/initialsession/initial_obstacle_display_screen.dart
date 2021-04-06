@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
@@ -13,19 +14,29 @@ class InitialObstacleDisplayScreen extends StatelessWidget {
         ? vm.selectedObstacles[0].description
         : "";
     return Container(
-      child: Column(
+      child: ListView(
         children: [
-          Text("$text"),
+          MarkdownBody(
+              data:
+                  "## Wenn du regelmäßig Vokabeln lernst, dann wäre dein größtes Hindernis:"),
+          MarkdownBody(data: "## $text"),
           UIHelper.verticalSpaceMedium(),
-          Text(
-              "Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen. "),
+          MarkdownBody(
+              data:
+                  "## Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen. "),
           UIHelper.verticalSpaceMedium(),
-          TextField(
-            maxLines: 5,
-            decoration: InputDecoration(hintText: 'Gib hier deinen Text ein'),
-            onChanged: (String text) {
-              vm.overcomeObstacleText = text;
-            },
+          Theme(
+            data: Theme.of(context).copyWith(splashColor: Colors.white),
+            child: TextField(
+              maxLines: 5,
+              decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: 'Gib hier deinen Text ein'),
+              onChanged: (String text) {
+                vm.overcomeObstacleText = text;
+              },
+            ),
           )
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:serene/shared/ui_helpers.dart';
 
 class InitialRewardScreenFirst extends StatelessWidget {
@@ -9,13 +10,11 @@ class InitialRewardScreenFirst extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Text("Danke für deine Mitarbeit bis hierhin!"),
-          Text("Du hast dir damit deine ersten"),
-          Text("6 Punkte"),
-          Text("verdient!"),
+          MarkdownBody(data: "## Danke für deine Mitarbeit bis hierhin!"),
+          MarkdownBody(data: "## Du hast dir damit deine ersten 2💎 verdient"),
           UIHelper.verticalSpaceMedium(),
           Text(
-              "Jezt haben wir noch ein paar Fragen und eine Aufgabe für dich, dann hast du es geschafft!"),
+              "Jeder💎 den du sammelst ist wie ein Losticket, und wenn du die Studie bis zum Ende mitmachst, bekommst du für mehr 💎 bessere Preise."),
         ],
       ),
     );

@@ -207,7 +207,14 @@ class DataService {
     await _databaseService.saveScore(_userService.getUsername(), score);
   }
 
+  Future<int> getDaysActive() async {
+    var userData = await getUserData();
+    if (userData == null) return 0;
+    return userData.daysActive;
+  }
+
   saveDaysActive(int daysActive) async {
+    _userDataCache.daysActive = daysActive;
     await _databaseService.saveDaysAcive(
         _userService.getUsername(), daysActive);
   }

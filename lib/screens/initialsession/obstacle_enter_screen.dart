@@ -17,7 +17,6 @@ class _ObstacleEnterScreenState extends State<ObstacleEnterScreen> {
   @override
   void initState() {
     super.initState();
-    _customObstacles.add(buildTextField("0"));
   }
 
   buildTextField(String key) {
@@ -35,10 +34,18 @@ class _ObstacleEnterScreenState extends State<ObstacleEnterScreen> {
     return ElevatedButton.icon(
         onPressed: () {
           setState(() {
-            if (_customObstacles.length < 3) {
+            // Widget only rebuild on assignment, therefore we use a temp list to assign to
+            List<TextField> temp = [];
+            if (_customObstacles.length <= 3) {
               _customObstacles.add(
                   buildTextField((_customObstacles.length + 1).toString()));
             }
+            for (var co in _customObstacles) {
+              temp.add(co);
+            }
+            setState(() {
+              _customObstacles = temp;
+            });
           });
         },
         icon: Icon(Icons.add),

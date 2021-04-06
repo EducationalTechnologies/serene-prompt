@@ -39,8 +39,8 @@ class _InternalisationRecallScreenState
                 children: [
                   UIHelper.verticalSpaceMedium(),
                   Text(
-                    "Schreibe deinen Wenn-Dann-Plan so auf, wie du dich an ihn erinnerst",
-                    style: Theme.of(context).textTheme.headline5,
+                    "Schreibe deinen Wenn-Dann-Plan so auf, wie du dich an ihn erinnerst.",
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   UIHelper.verticalSpaceMedium(),
                   buildInputBoxes()

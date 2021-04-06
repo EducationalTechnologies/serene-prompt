@@ -50,12 +50,12 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
 
   onNotLearningReasonChanged(String notLearningReason) {
     _notLearningReason = notLearningReason;
-    this.setAssessmentResult(
-        "dailyLearningIntention_2", "0", notLearningReason);
+    this.setAssessmentResult("dailyLearningIntention_2",
+        "dailyLearningIntention_2", notLearningReason);
   }
 
   onLearningObstacleChanged(String obstacle) {
-    this.setAssessmentResult("dailyObstacle_1", "0", obstacle);
+    this.setAssessmentResult("dailyObstacle_1", "dailyObstacle_1", obstacle);
   }
 
   submit() {

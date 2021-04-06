@@ -63,7 +63,7 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
       children: [
         UIHelper.verticalSpaceMedium(),
         Text(
-          "Sortiere die schönen Vorstellungen nach Wichtigkeit, indem du sie an die entsprechende Stelle verschiebst. Das, was dir am wichtigsten ist, sollte ganz oben sein.",
+          "Sortiere das, was für dich am Lernen gut ist, nach Wichtigkeit. Das, was dir am wichtigsten ist, sollte ganz oben sein. Um ein Feld zu verschieben, halte es kurz gedrückt und schiebe es dann an die entsprechende Stelle.",
           style: Theme.of(context).textTheme.subtitle1,
         ),
         UIHelper.verticalSpaceMedium(),
@@ -105,9 +105,10 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
         UIHelper.horizontalSpaceSmall(),
         Image.asset(
           outcome.iconPath,
-          width: 64,
-          height: 64,
+          width: 44,
+          height: 44,
         ),
+        UIHelper.horizontalSpaceSmall(),
         Flexible(child: Text(outcome.description)),
         upDownArrow
       ],

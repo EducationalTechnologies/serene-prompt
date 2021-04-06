@@ -81,10 +81,15 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
         UIHelper.horizontalSpaceSmall(),
         Image.asset(
           obstacle.iconPath,
-          width: 64,
-          height: 64,
+          width: 54,
+          height: 54,
         ),
-        Flexible(child: Text(obstacle.description)),
+        UIHelper.horizontalSpaceSmall(),
+        Flexible(
+            child: Text(
+          obstacle.description,
+          textAlign: TextAlign.left,
+        )),
         upDownArrow
       ],
     ));

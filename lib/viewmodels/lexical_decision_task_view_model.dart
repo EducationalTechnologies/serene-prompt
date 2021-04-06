@@ -97,6 +97,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
     _stopwatch.stop();
     _primeStopwatch.stop();
     done = true;
+    ldt.completionDate = DateTime.now();
     _experimentService.submitLDT(ldt);
   }
 
@@ -142,7 +143,7 @@ class LexicalDecisionTaskViewModel extends BaseViewModel {
   submit() async {
     if (state == ViewState.busy) return;
     setState(ViewState.busy);
-    ldt.completionDate = DateTime.now();
+
     _experimentService.nextScreen(RouteNames.LDT);
   }
 }

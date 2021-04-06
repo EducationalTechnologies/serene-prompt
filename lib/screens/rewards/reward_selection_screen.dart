@@ -14,62 +14,48 @@ class RewardSelectionScreen extends StatefulWidget {
 class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> unlockItems = [];
+    var rewardService = locator<RewardService>();
+    for (var bg in rewardService.backgrounds) {
+      var unlocked = rewardService.daysActive >= bg.requiredDays;
+      unlockItems
+          .add(_buildUnlockItem(bg.name, bg.path, bg.requiredDays, unlocked));
+    }
+
     return Scaffold(
-      appBar: SereneAppBar(),
+      appBar: SereneAppBar(title: "Wähle einen neuen Hintergrud"),
       body: Container(
           child: Timeline(
               indicatorColor: Theme.of(context).primaryColor,
-              children: [
-            _buildUnlockItem(
-                "Weltraum", "assets/illustrations/mascot_space.png", 1, true),
-            _buildUnlockItem(
-                "Meer", "assets/illustrations/mascot_ocean.png", 1, true),
-            _buildUnlockItem(
-                "Flugzeug", "assets/illustrations/mascot_plane.png", 1, false),
-            _buildUnlockItem("Pyramiden",
-                "assets/illustrations/mascot_pyramid.png", 1, false),
-          ])),
+              children: [...unlockItems])),
     );
-    // return Scaffold(
-    //     appBar: SereneAppBar(),
-    //     body: Container(
-    //       child: Container(
-    //         child: Column(
-    //           children: [
-    //             Text(
-    //                 "Hier kannst du deine Punkte gegen Hintergründe einlösen."),
-    //             Text(
-    //                 "Sobald du die Hintergründe gekauft hast, werden sie in voller Pracht auf dem Hauptbildschirm erscheinen."),
-    //             UIHelper.verticalSpaceMedium(),
-    //             Text("Du hast derzeit 120 🥇"),
-    //             UIHelper.verticalSpaceMedium(),
-    //             Expanded(
-    //               child: GridView.count(
-    //                 crossAxisCount: 2,
-    //                 children: [
-    //                   _buildPreviewItem("Weltraum",
-    //                       "assets/illustrations/mascot_space_preview.png", 10),
-    //                   _buildPreviewItem("Unter Wasser",
-    //                       "assets/illustrations/mascot_ocean_preview.png", 20),
-    //                   _buildPreviewItem("Weltraum",
-    //                       "assets/illustrations/mascot_space_preview.png", 30),
-    //                   _buildPreviewItem("Unter Wasser",
-    //                       "assets/illustrations/mascot_ocean_preview.png", 40),
-    //                   _buildPreviewItem("Weltraum",
-    //                       "assets/illustrations/mascot_space_preview.png", 50),
-    //                   _buildPreviewItem("Unter Wasser",
-    //                       "assets/illustrations/mascot_ocean_preview.png", 60),
-    //                 ],
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ));
   }
 
   _buildUnlockItem(String header, String path, int price, bool unlocked) {
     var rewardService = locator.get<RewardService>();
+
+    Widget unlockButton;
+
+    if (unlocked) {
+      unlockButton = ElevatedButton(
+        onPressed: () {
+          setState(() {
+            rewardService.setBackgroundImagePath(path);
+          });
+        },
+        child: Text("Aktivieren"),
+      );
+    } else {
+      unlockButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: Colors.blue[300]),
+        onPressed: () {
+          setState(() {
+            // rewardService.setBackgroundImagePath(path);
+          });
+        },
+        child: Text("Wird nach $price Tagen Aktivität freigeschaltet"),
+      );
+    }
 
     var isSelected = rewardService.backgroundImagePath == path;
     return Container(
@@ -113,15 +99,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
               },
               child: Text("Ausgewählt"),
             ),
-          if (!isSelected)
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  rewardService.setBackgroundImagePath(path);
-                });
-              },
-              child: Text("Aktivieren"),
-            )
+          if (!isSelected) unlockButton
         ],
       ),
     );

@@ -9,6 +9,7 @@ class RewardService {
   final DataService _dataService;
 
   List<UnlockableBackground> backgrounds = [
+    UnlockableBackground("Standard", "assets/illustrations/mascot_bare.png", 0),
     UnlockableBackground(
         "Weltraum", "assets/illustrations/mascot_space.png", 5),
     UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean.png", 10),

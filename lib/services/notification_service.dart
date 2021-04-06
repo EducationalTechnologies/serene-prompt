@@ -123,8 +123,8 @@ class NotificationService {
 
     await localNotifications.zonedSchedule(
         ID_INTERNALISATION,
-        "🧪👩‍🔬👨‍🔬🧪 Zeit für die Wissenschaft!",
-        "Bitte nutze deinen Wenn-Dann-Plan",
+        "Mache jetzt weiter mit PROMPT",
+        "",
         _getNextScheduleTimeFromTime(time),
         notificationDetails,
         uiLocalNotificationDateInterpretation:
@@ -160,7 +160,7 @@ class NotificationService {
 
     await localNotifications.zonedSchedule(
         ID_TASK_REMINDER,
-        "🧪👩‍🔬👨‍🔬🧪 Zeit für die Wissenschaft!",
+        "Mache jetzt weiter mit PROMPT",
         textReminder,
         scheduledDate,
         notificationDetails,
