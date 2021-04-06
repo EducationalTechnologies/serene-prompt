@@ -99,7 +99,7 @@ class Timeline extends StatelessWidget {
 
         return IntrinsicHeight(
           child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            timelineTile[2],
+            // timelineTile[2],
             timelineTile[0],
             timelineTile[1],
             timelineTile[2]

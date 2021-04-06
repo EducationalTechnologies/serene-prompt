@@ -1,10 +1,21 @@
+import 'package:serene/models/unlockable_background.dart';
 import 'package:serene/services/data_service.dart';
 
 class RewardService {
   int score = 0;
   int gems = 0;
+  int daysActive = 0;
   String backgroundImagePath = "assets/illustrations/mascot_bare.png";
   final DataService _dataService;
+
+  List<UnlockableBackground> backgrounds = [
+    UnlockableBackground(
+        "Weltraum", "assets/illustrations/mascot_space.png", 5),
+    UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean.png", 10),
+    UnlockableBackground("Lüfte", "assets/illustrations/mascot_plane.png", 15),
+    UnlockableBackground(
+        "Pyramiden", "assets/illustrations/mascot_pyramid.png", 20),
+  ];
 
   Future<bool> initialized;
 
