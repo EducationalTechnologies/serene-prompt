@@ -1,10 +1,10 @@
 {
-    "title": "Lernen mit Cabuu",
+    "title": "Lernen mit cabuu",
     "id": "cabuuLearn",
     "questions": [
         {
             "id": "cabuuLearn_1",
-            "questionText": "Wie viele der Vokabeln, die du lernst, lernst du mit Cabuu?",
+            "questionText": "Wie viele der Vokabeln, die du lernst, lernst du mit cabuu?",
             "labels": {
                 "1": "Alle",
                 "2": "Die meisten",

@@ -133,6 +133,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
                             if (s.isSelected) buildWordBox(s),
                         ],
                       ),
+                      UIHelper.verticalSpaceMedium(),
                       Visibility(
                         maintainSize: true,
                         maintainAnimation: true,

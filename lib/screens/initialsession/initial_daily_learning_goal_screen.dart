@@ -18,9 +18,9 @@ class _InitialDailyLearningGoalScreenState
   @override
   Widget build(BuildContext context) {
     var vm = Provider.of<InitSessionViewModel>(context);
-    return Column(children: [
+    return ListView(children: [
       Text(
-        "Setze dir hier ein Ziel für das Lernen mit cabuu:",
+        "Setze dir hier ein Ziel für das Lernen mit cabuu.",
         style: Theme.of(context).textTheme.subtitle1,
       ),
       UIHelper.verticalSpaceMedium(),
@@ -28,6 +28,7 @@ class _InitialDailyLearningGoalScreenState
         "Ich will es schaffen, an mindestens",
         style: Theme.of(context).textTheme.subtitle1,
       ),
+      UIHelper.verticalSpaceMedium(),
       ToggleButtons(
         children: [
           Text("1"),
@@ -54,6 +55,7 @@ class _InitialDailyLearningGoalScreenState
           });
         },
       ),
+      UIHelper.verticalSpaceMedium(),
       Text(
         "Tagen pro Woche mit cabuu zu lernen",
         style: Theme.of(context).textTheme.subtitle1,
