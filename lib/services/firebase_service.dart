@@ -158,7 +158,7 @@ class FirebaseService {
 
   saveAssessment(AssessmentResult assessment, String userid) async {
     var assessmentMap = assessment.toMap();
-    assessmentMap["userid"] = userid;
+    assessmentMap["user"] = userid;
     await _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
         .add(assessmentMap)
@@ -303,7 +303,7 @@ class FirebaseService {
   }
 
   saveConsent(String userid, bool consentValue) async {
-    return await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_USERS)
         .doc(userid)
         .set({"consented": consentValue}, SetOptions(merge: true));
@@ -311,13 +311,13 @@ class FirebaseService {
 
   saveEmojiInternalisation(
       String userEmail, Internalisation internalisation) async {
-    return await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_EMOJI_INTERNALISATION)
         .add(internalisation.toMap());
   }
 
   Future<void> saveScore(String userid, int score) async {
-    return await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_USERS)
         .doc(userid)
         .set({"score": score}, SetOptions(merge: true));
@@ -325,7 +325,7 @@ class FirebaseService {
 
   Future<void> updateInternalisationConditionGroup(
       String userid, int group) async {
-    return await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_USERS)
         .doc(userid)
         .set({"internalisationCondition": group}, SetOptions(merge: true));
@@ -347,11 +347,11 @@ class FirebaseService {
   Future<void> saveLdt(String userid, LdtData ldtData) async {
     var ldtMap = ldtData.toMap();
     ldtMap["user"] = userid;
-    return await _databaseReference.collection(COLLECTION_LDT).add(ldtMap);
+    await _databaseReference.collection(COLLECTION_LDT).add(ldtMap);
   }
 
   logEvent(String userid, dynamic data) async {
-    return await _databaseReference.collection(COLLECTION_LOGS).add(data);
+    await _databaseReference.collection(COLLECTION_LOGS).add(data);
   }
 
   Future<Map<String, String>> getInitSessionSteps(String userid) async {
@@ -369,7 +369,7 @@ class FirebaseService {
   }
 
   Future<void> saveInitSessionStepCompleted(String userid, int step) async {
-    return await _databaseReference
+    await _databaseReference
         .collection(COLLECTION_INITSESSION)
         .doc(userid)
         .set({"step": step}, SetOptions(merge: true));
@@ -377,14 +377,14 @@ class FirebaseService {
 
   Future<void> saveInitialSessionValue(
       String username, String key, dynamic value) async {
-    return await _databaseReference
+    await _databaseReference
         .collection(COLLECTION_INITSESSION)
         .doc(username)
         .set({key: value}, SetOptions(merge: true));
   }
 
   Future<void> setStreakDays(String username, int value) async {
-    return await _databaseReference
+    _databaseReference
         .collection(COLLECTION_USERS)
         .doc(username)
         .set({"streakDays": value}, SetOptions(merge: true));
@@ -401,5 +401,12 @@ class FirebaseService {
     if (!resultDocuments.docs[0].data().containsKey("streakDays")) return 0;
     int days = resultDocuments.docs[0].data()["streakDays"];
     return days;
+  }
+
+  Future<void> saveDaysAcive(String username, int daysActive) {
+    _databaseReference
+        .collection(COLLECTION_USERS)
+        .doc(username)
+        .set({"daysActive": daysActive}, SetOptions(merge: true));
   }
 }

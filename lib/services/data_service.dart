@@ -207,8 +207,13 @@ class DataService {
     await _databaseService.saveScore(_userService.getUsername(), score);
   }
 
+  saveDaysActive(int daysActive) async {
+    await _databaseService.saveDaysAcive(
+        _userService.getUsername(), daysActive);
+  }
+
   logData(dynamic data) async {
-    data["user"] = _userService.getUsername();
+    data["userid"] = _userService.getUsername();
     await _databaseService.logEvent(_userService.getUsername(), data);
   }
 
