@@ -17,20 +17,20 @@ import 'package:serene/viewmodels/multi_step_assessment_view_model.dart';
 
 class InitSessionViewModel extends MultiStepAssessmentViewModel {
   final int stepWelcomeScreen = 0;
-  final int stepVideo1 = 1;
+  final int stepVideoWelcome = 1;
   final int stepCabuuLink = 2;
   final int stepQuestionsCabuuLearn = 3;
-  final int stepQuestionsRegulation = 4;
+  final int stepVideoLearning = 13;
   final int stepInitialDailyLearningGoal = 14;
   final int stepQuestionsLearningGoals1 = 5;
-  final int stepVideo2 = 6;
+  final int stepQuestionsRegulation = 4;
+  final int stepVideoLdtInstruction = 6;
   final int stepLdt00 = 7;
   final int stepLdt01 = 8;
   final int stepLdt02 = 9;
   final int stepLdt03 = 10;
   final int stepLdt04 = 11;
   final int stepLdt05 = 12;
-  final int stepVideo3 = 13;
   final int stepOutcomeExplanationScreen = 15;
   final int stepOutcomeSelectionScreen = 16;
   final int stepOutcomeEnterScreen = 17;
@@ -43,8 +43,10 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   final int stepObstacleDisplayScreen = 24;
   final int stepQuestionsSrl = 25;
   final int stepQuestionsLearningGoals2 = 26;
-  final int stepVideo4 = 27;
+  final int stepVideoFinish = 27;
   final int stepFinish = 28;
+  final int stepRewardFirst = 29;
+  final int stepRewardSecond = 30;
 
   final ExperimentService _experimentService;
   final DataService _dataService;
@@ -76,9 +78,30 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     notifyListeners();
   }
 
-  bool videoOneCompleted = false;
-  bool videoTwoCompleted = false;
-  bool videoThreeCompleted = false;
+  bool _videoWelcomeCompleted = false;
+  void videoWelcomeCompleted() {
+    _videoWelcomeCompleted = true;
+    notifyListeners();
+  }
+
+  bool _videoLearningInstructionsCompleted = false;
+  void videoLearningInstructionsCompleted() {
+    _videoLearningInstructionsCompleted = true;
+    notifyListeners();
+  }
+
+  bool _videoLdtCompleted = false;
+  void videoLdtCompleted() {
+    _videoLdtCompleted = true;
+    notifyListeners();
+  }
+
+  bool _videoFinishCompleted = false;
+  void videoFinishCompleted() {
+    _videoFinishCompleted = true;
+    notifyListeners();
+  }
+
   Assessment lastAssessment = Assessment();
   Map<String, String> currentAssessmentResults = {};
   String numberOfDaysLearningGoal = "";
@@ -198,11 +221,17 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
 
   @override
   bool canMoveNext(Key currentPageKey) {
-    if (currentPageKey == ValueKey(stepVideo1) ||
-        currentPageKey == ValueKey(stepVideo2) ||
-        currentPageKey == ValueKey(stepVideo3) ||
-        currentPageKey == ValueKey(stepVideo4)) {
-      return true;
+    if (currentPageKey == ValueKey(stepVideoWelcome)) {
+      return _videoWelcomeCompleted;
+    }
+    if (currentPageKey == ValueKey(stepVideoLdtInstruction)) {
+      return _videoLdtCompleted;
+    }
+    if (currentPageKey == ValueKey(stepVideoLearning)) {
+      return _videoLearningInstructionsCompleted;
+    }
+    if (currentPageKey == ValueKey(stepVideoFinish)) {
+      return _videoFinishCompleted;
     }
     if (currentPageKey == ValueKey(stepLdt00) ||
         currentPageKey == ValueKey(stepLdt01) ||
@@ -371,6 +400,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
           return msgIncorrect;
         }
       }
+      return msgGood;
     }
 
     if (keyValue == stepLdt02) {

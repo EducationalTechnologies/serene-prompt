@@ -9,6 +9,7 @@ import 'package:serene/screens/initialsession/initial_outcome_display_screen.dar
 import 'package:serene/screens/initialsession/initial_obstacle_explanation_screen.dart';
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/initial_outcome_explanation_screen.dart';
+import 'package:serene/screens/initialsession/initial_reward_screen_first.dart';
 import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
@@ -44,23 +45,34 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     super.didChangeDependencies();
     var vm = Provider.of<InitSessionViewModel>(context, listen: false);
     _pages = [
-      // VideoScreen("45q_GRrlQ04", key: ValueKey(vm.stepVideo1)), // Screen 2
-      // WelcomeScreen(key: ValueKey(vm.stepWelcomeScreen)),
-      // questionnaireFuture(
-      //     AssessmentTypes.cabuuLearn, ValueKey(vm.stepQuestionsCabuuLearn)),
-      // questionnaireFuture(
-      //     AssessmentTypes.regulation, ValueKey(vm.stepQuestionsRegulation)),
+      WelcomeScreen(key: ValueKey(vm.stepWelcomeScreen)),
+      VideoScreen(
+        'assets/videos/videoWelcome.mp4',
+        key: ValueKey(vm.stepVideoWelcome),
+        onVideoCompleted: vm.videoWelcomeCompleted,
+      ), // Screen 2
+      CabuuLinkScreen(key: ValueKey(vm.stepCabuuLink)), // Screen 3
+      questionnaireFuture(
+          AssessmentTypes.cabuuLearn, ValueKey(vm.stepQuestionsCabuuLearn)),
+      VideoScreen('assets/videos/videoLearning.mp4',
+          key: ValueKey(vm.stepVideoLearning),
+          onVideoCompleted: vm.videoLearningInstructionsCompleted), //
       InitialDailyLearningGoalScreen(
           key: ValueKey(vm.stepInitialDailyLearningGoal)),
+      questionnaireFuture(
+          AssessmentTypes.regulation, ValueKey(vm.stepQuestionsRegulation)),
       // questionnaireFuture(AssessmentTypes.learningGoals1,
       //     ValueKey(vm.stepQuestionsLearningGoals1)), // Screen 1
-      // CabuuLinkScreen(key: ValueKey(vm.stepCabuuLink)), // Screen 3
-      // VideoScreen("9CHA1RpTgRM", key: ValueKey(vm.stepVideo2)),
-      // InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(vm.stepLdt00)),
-      // InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt01)),
-      // InitialLdtScreen("0_2", _onLdtFinished, key: ValueKey(vm.stepLdt02)),
-      // InitialLdtScreen("0_3", _onLdtFinished, key: ValueKey(vm.stepLdt03)),
-      // VideoScreen("d0PSrCMoTpk", key: ValueKey(vm.stepVideo3)),
+      // VideoScreen('assets/videos/initvideo2.mp4',
+      //     key: ValueKey(vm.stepVideoLdtInstruction)),
+      VideoScreen('assets/videos/videoLdt.mp4',
+          key: ValueKey(vm.stepVideoLdtInstruction),
+          onVideoCompleted: vm.videoLdtCompleted),
+      InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(vm.stepLdt00)),
+      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt01)),
+      InitialLdtScreen("0_2", _onLdtFinished, key: ValueKey(vm.stepLdt02)),
+      InitialLdtScreen("0_3", _onLdtFinished, key: ValueKey(vm.stepLdt03)),
+      InitialRewardScreenFirst(key: ValueKey(vm.stepRewardFirst)),
       InitialOutcomeExplanationScreen(
           key: ValueKey(vm.stepOutcomeExplanationScreen)),
       OutcomeSelectionScreen(key: ValueKey(vm.stepOutcomeSelectionScreen)),
@@ -79,7 +91,9 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       questionnaireFuture(AssessmentTypes.srl, ValueKey(vm.stepQuestionsSrl)),
       questionnaireFuture(AssessmentTypes.learningGoals2,
           ValueKey(vm.stepQuestionsLearningGoals2)),
-      VideoScreen("chZNcG-sLAM", key: ValueKey(vm.stepVideo4)),
+      VideoScreen('assets/videos/videoFinished.mp4',
+          key: ValueKey(vm.stepVideoFinish),
+          onVideoCompleted: vm.videoFinishCompleted),
     ];
   }
 

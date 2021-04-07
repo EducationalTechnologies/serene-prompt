@@ -109,11 +109,12 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
 
     var buildHeader = Column(
       children: [
-        UIHelper.verticalSpaceLarge(),
+        UIHelper.verticalSpaceMedium(),
         Text(
           "Sortiere die Hindernisse nach Wichtigkeit, indem du sie an die entsprechende Stelle verschiebst. Das größte Hindernis sollte ganz oben sein.",
           style: Theme.of(context).textTheme.subtitle1,
         ),
+        UIHelper.verticalSpaceMedium(),
       ],
     );
 

@@ -42,10 +42,13 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
     var lastRecallTask = await dataService.getLastRecallTask();
 
-    if (lastRecallTask.completionDate.isToday()) {
-      var streakDays = await dataService.getStreakDays();
-      if (streakDays > 1) {
-        _textStreakDays = "Du hast jetzt $streakDays Tage in Folge mitgemacht";
+    if (lastRecallTask != null) {
+      if (lastRecallTask.completionDate.isToday()) {
+        var streakDays = await dataService.getStreakDays();
+        if (streakDays > 1) {
+          _textStreakDays =
+              "Du hast jetzt $streakDays Tage in Folge mitgemacht";
+        }
       }
     }
 

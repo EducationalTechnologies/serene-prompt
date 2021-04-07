@@ -33,7 +33,7 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
   buildAddButton() {
     return ElevatedButton.icon(
         onPressed: () {
-          // Widget only rebuild on assignment, therefore we use a temp list to assign to
+          // Widget only rebuilds on assignment, therefore we use a temp list to assign to
           List<TextField> temp = [];
           if (_customOutcomes.length <= 3) {
             _customOutcomes
@@ -55,6 +55,7 @@ class _OutcomeEnterScreenState extends State<OutcomeEnterScreen> {
     return Container(
       child: ListView(
         children: [
+          UIHelper.verticalSpaceMedium(),
           Text(
               "Wenn du in der vorherigen Liste nicht die Ziele gefunden hast, die dich am ehesten zum Vokabellernen motivieren, kannst du hier eigene eingeben.",
               style: Theme.of(context).textTheme.subtitle1),

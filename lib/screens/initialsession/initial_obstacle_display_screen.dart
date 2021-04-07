@@ -18,12 +18,15 @@ class InitialObstacleDisplayScreen extends StatelessWidget {
         children: [
           MarkdownBody(
               data:
-                  "## Wenn du regelmäßig Vokabeln lernst, dann wäre dein größtes Hindernis:"),
-          MarkdownBody(data: "## $text"),
+                  "### Wenn du regelmäßig Vokabeln lernst, dann wäre dein größtes Hindernis:"),
+          UIHelper.verticalSpaceMedium(),
+          Center(
+            child: MarkdownBody(data: "### _${text}_"),
+          ),
           UIHelper.verticalSpaceMedium(),
           MarkdownBody(
               data:
-                  "## Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen. "),
+                  "### Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen. "),
           UIHelper.verticalSpaceMedium(),
           Theme(
             data: Theme.of(context).copyWith(splashColor: Colors.white),

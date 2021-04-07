@@ -142,10 +142,8 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
   buildTrialSummary() {
     var message = Provider.of<InitSessionViewModel>(context, listen: false)
         .getTrialMessage(this.widget.key);
-    return Container(
-      child: SpeechBubble(
-        text: message,
-      ),
+    return SpeechBubble(
+      text: message,
     );
   }
 

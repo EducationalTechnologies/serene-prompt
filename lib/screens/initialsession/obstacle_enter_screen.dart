@@ -56,8 +56,9 @@ class _ObstacleEnterScreenState extends State<ObstacleEnterScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          UIHelper.verticalSpaceMedium(),
           Text(
               "Wenn du in der vorherigen Liste nicht die Hindernisse gefunden hast, die dich am ehesten vom Vokabellernen abhalten, kannst du hier eigene eingeben.",
               style: Theme.of(context).textTheme.subtitle1),

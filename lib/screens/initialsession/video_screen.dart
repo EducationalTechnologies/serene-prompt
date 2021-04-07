@@ -4,21 +4,17 @@ import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
   final String videoURL;
+  final VoidCallback onVideoCompleted;
 
-  const VideoScreen(this.videoURL, {Key key}) : super(key: key);
+  const VideoScreen(this.videoURL, {this.onVideoCompleted, Key key})
+      : super(key: key);
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
 }
 
 class _VideoScreenState extends State<VideoScreen> {
-  void listener() {
-    // if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-    //   setState(() {});
-    // }
-  }
   VideoPlayerController _videoPlayerController;
-  // YoutubePlayerController _controller;
   ChewieController _chewieController;
 
   @override
@@ -26,20 +22,24 @@ class _VideoScreenState extends State<VideoScreen> {
     super.initState();
     _videoPlayerController = VideoPlayerController.asset(widget.videoURL);
 
-    _videoPlayerController.addListener(() {
-      setState(() {});
-    });
-
     _videoPlayerController.initialize().then((_) => setState(() {}));
 
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
-      autoPlay: true,
       looping: false,
       showControls: true,
     );
-    _chewieController.addListener(() {
-      int wurst = 5;
+
+    _videoPlayerController.addListener(() {
+      if (_videoPlayerController.value != null) {
+        var timeToFinish = _videoPlayerController.value.position.inSeconds -
+            _videoPlayerController.value.duration.inSeconds;
+        if (timeToFinish < 5 && timeToFinish > 0) {
+          if (widget.onVideoCompleted != null) {
+            widget.onVideoCompleted();
+          }
+        }
+      }
     });
   }
 
