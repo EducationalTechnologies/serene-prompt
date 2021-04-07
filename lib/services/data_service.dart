@@ -24,7 +24,7 @@ enum CachedValues { goals, internalisations }
 
 class DataService {
   List<dynamic> _ldtTaskListCache = [];
-  List<String> _planCache = [];
+  List<Internalisation> _planCache = [];
   final UserService _userService;
   final FirebaseService _databaseService;
   final LocalDatabaseService _localDatabaseService;
@@ -117,11 +117,13 @@ class DataService {
         .getNumberOfInternalisations(_userService.getUsername());
   }
 
-  getCurrentImplementationIntention() async {
+  Future<Internalisation> getCurrentImplementationIntention() async {
     if (_planCache.length == 0) {
-      String data = await rootBundle.loadString("assets/config/ldt_ii.json");
+      String data = await rootBundle.loadString("assets/config/plans.json");
       for (var plan in jsonDecode(data)) {
-        _planCache.add(plan["implementationIntention"]);
+        var internalisation =
+            Internalisation(plan: plan["plan"], planId: plan["planId"]);
+        _planCache.add(internalisation);
       }
     }
     var index =

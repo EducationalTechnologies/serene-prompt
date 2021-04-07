@@ -231,6 +231,12 @@ class ExperimentService {
 
     await _rewardService.onRecallTask(streakDays);
 
+    // The last internalisation has info that has to be added to the recall task
+    var lastInternalisation = await _dataService.getLastInternalisation();
+
+    recallTask.plan = lastInternalisation.plan;
+    recallTask.planId = lastInternalisation.planId;
+
     _dataService.saveRecallTask(recallTask);
 
     if (await lastThreeConditionsWereTheSame()) {

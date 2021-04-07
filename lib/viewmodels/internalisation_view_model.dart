@@ -8,7 +8,7 @@ class InternalisationViewModel extends BaseViewModel {
   final DataService _dataService;
   final ExperimentService _experimentService;
 
-  String implementationIntention = "";
+  String plan = "";
   Future<bool> initialized;
   InternalisationCondition internalisationCondition =
       InternalisationCondition.waiting;
@@ -28,7 +28,7 @@ class InternalisationViewModel extends BaseViewModel {
   InternalisationViewModel.forUsability(InternalisationCondition condition,
       this._dataService, this._experimentService) {
     _currentInternalisation.startDate = DateTime.now();
-    this.implementationIntention =
+    this.plan =
         "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.";
 
     this.internalisationCondition = condition;
@@ -37,9 +37,12 @@ class InternalisationViewModel extends BaseViewModel {
   }
 
   Future<bool> init() async {
-    this.implementationIntention =
+    var internalisation =
         await this._dataService.getCurrentImplementationIntention();
+    plan = internalisation.plan;
 
+    _currentInternalisation.plan = internalisation.plan;
+    _currentInternalisation.planId = internalisation.planId;
     this.internalisationCondition =
         await _experimentService.getTodaysInternalisationCondition();
 
@@ -52,7 +55,7 @@ class InternalisationViewModel extends BaseViewModel {
 
     _currentInternalisation.completionDate = DateTime.now();
     _currentInternalisation.input = input;
-    _currentInternalisation.implementationIntention = implementationIntention;
+    _currentInternalisation.plan = plan;
     _currentInternalisation.condition = condition.toString();
     await this
         ._experimentService

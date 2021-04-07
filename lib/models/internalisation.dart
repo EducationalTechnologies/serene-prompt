@@ -1,21 +1,23 @@
 class Internalisation {
-  DateTime startDate;
+  DateTime startDate = DateTime.now();
   DateTime completionDate = DateTime.now();
-  String implementationIntention;
-  String condition;
-  String input;
+  String plan = "";
+  String condition = "";
+  String input = "";
+  int planId = 0;
 
   Internalisation(
       {this.startDate,
       this.completionDate,
-      this.implementationIntention = "",
+      this.plan = "",
       this.condition = "",
-      this.input = ""});
+      this.input = "",
+      this.planId = 0});
 
   Internalisation.fromDocument(dynamic document) {
     this.completionDate = DateTime.parse(document["completionDate"]);
     this.startDate = DateTime.parse(document["startDate"]);
-    this.implementationIntention = document["implementationIntention"];
+    this.plan = document["plan"];
     this.condition = document["condition"];
     this.input = document["input"];
   }
@@ -24,7 +26,7 @@ class Internalisation {
     return {
       "startDate": this.startDate?.toIso8601String(),
       "completionDate": this.completionDate?.toIso8601String(),
-      "implementationIntention": this.implementationIntention,
+      "plan": this.plan,
       "condition": this.condition,
       "input": this.input
     };

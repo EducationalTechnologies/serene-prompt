@@ -78,7 +78,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     super.initState();
     Future.delayed(Duration.zero, () {
       var vm = Provider.of<InternalisationViewModel>(context, listen: false);
-      _correctSentence = _cleanInputString(vm.implementationIntention);
+      _correctSentence = _cleanInputString(vm.plan);
       setState(() {
         _scrambledSentence = ScrambleText.randomizeList(
             ScrambleText.scrambleTextListFromString(_correctSentence, 1));

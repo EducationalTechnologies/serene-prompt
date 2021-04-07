@@ -49,8 +49,7 @@ class _TypingInternalisationScreenState
                 setState(() {
                   _done = true;
                 });
-                if (text.toLowerCase() ==
-                    vm.implementationIntention.toLowerCase()) {
+                if (text.toLowerCase() == vm.plan.toLowerCase()) {
                   print("MATCH");
                 } else {
                   print("NO MATCH");
@@ -84,7 +83,7 @@ class _TypingInternalisationScreenState
         children: <Widget>[
           UIHelper.verticalSpaceMedium(),
           UIHelper.verticalSpaceMedium(),
-          Text(vm.implementationIntention,
+          Text(vm.plan,
               style: TextStyle(fontSize: 30.0, color: Colors.grey[900])),
           UIHelper.verticalSpaceMedium(),
           Center(

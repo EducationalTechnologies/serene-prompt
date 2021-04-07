@@ -14,7 +14,7 @@ class InternalisationRecallViewModel extends BaseViewModel {
     if (state == ViewState.busy) return false;
     setState(ViewState.busy);
     _recallTask.completionDate = DateTime.now();
-    _recallTask.recalledSentence = text;
+    _recallTask.recall = text;
     _experimentService.submitRecallTask(_recallTask);
   }
 }

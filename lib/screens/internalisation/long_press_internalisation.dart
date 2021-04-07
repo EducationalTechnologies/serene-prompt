@@ -42,7 +42,7 @@ class _LongPressInternalisationState extends State<LongPressInternalisation> {
               UIHelper.verticalSpaceMedium(),
               UIHelper.verticalSpaceMedium(),
               TextHighlight(
-                  text: intention.implementationIntention,
+                  text: intention.plan,
                   wpm: locator.get<SettingsService>().getWordsPerMinute()),
               UIHelper.verticalSpaceMedium(),
               // Text("Debug Stuff Counter: $_longPressCounter")

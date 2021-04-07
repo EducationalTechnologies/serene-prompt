@@ -42,7 +42,7 @@ class _WritingInternalisationState extends State<WritingInternalisation> {
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 UIHelper.verticalSpaceMedium(),
-                SpeechBubble(text: "'${vm.implementationIntention}'"),
+                SpeechBubble(text: "'${vm.plan}'"),
                 UIHelper.verticalSpaceMedium(),
                 Center(
                     child: TextField(

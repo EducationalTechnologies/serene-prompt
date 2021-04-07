@@ -66,7 +66,7 @@ class _WaitingInternalisationScreenState
               text:
                   "Lies den folgenden Text drei mal, und drücke dann auf Abschicken"),
           UIHelper.verticalSpaceMedium(),
-          SpeechBubble(text: vm.implementationIntention),
+          SpeechBubble(text: vm.plan),
           // LinearProgressIndicator(
           //   value: animation.value,
           // ),
