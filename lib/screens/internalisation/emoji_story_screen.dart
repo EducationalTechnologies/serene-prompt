@@ -52,7 +52,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                       text:
                           "Erstelle aus Emojis eine Darstellung deines Wenn-Dann-Planes"),
                   UIHelper.verticalSpaceMedium(),
-                  SpeechBubble(text: "'${vm.implementationIntention}'"),
+                  SpeechBubble(text: "'${vm.plan}'"),
                   UIHelper.verticalSpaceMedium(),
                   // buildEmojiFieldsHorizontal(),
                   _buildEmojiPickerCompatibleTextInput(),
@@ -99,7 +99,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                     ),
                     onChanged: (text) {
                       setState(() {
-                        // _emojiStoryIf = text;
+                        _emojiStoryIf = text;
                         // _checkIfIsDone();
                       });
                     },
@@ -148,7 +148,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                     ),
                     onChanged: (text) {
                       setState(() {
-                        // _emojiStoryThen = text;
+                        _emojiStoryThen = text;
                         // _checkIfIsDone();
                       });
                     },
@@ -195,7 +195,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
           height: 40,
           onPressed: () async {
             await vm.submit(InternalisationCondition.emoji,
-                "Wenn $_emojiStoryIf dann $_emojiStoryThen");
+                "Wenn ${_controllerLeft.text} dann ${_controllerRight.text}");
             Navigator.pushNamed(context, RouteNames.NO_TASKS);
           },
         ));
