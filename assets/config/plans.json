@@ -1,30 +1,110 @@
 [
-"Wenn ich mit den Hausaufgaben fertig bin, dann lerne ich sofort Englischvokabeln.",
-"Wenn ich gerade Leerlauf habe, dann lerne ich zwischendurch ein paar Vokabeln.",
-"Wenn ich Zuhause ankomme, dann beginne ich mit der Vorbereitung fürs Lernen.",
-"Wenn ich mit dem Mittagessen fertig bin, dann mache ich sofort meine Hausaufgaben.",
-"Wenn ich beim Lernen missmutig bin, dann denke ich an eine schöne Erinnerung.",
-"Wenn ich beim Lernen traurig bin, dann denke ich an einen guten Witz.",
-"Wenn ich beim Lernen nervös bin, dann achte ich auf eine ruhige Atmung.",
-"Wenn ich beim Lernen aufgeregt bin, dann gehe ich meinen Plan im Kopf durch.",
-"Wenn ich mich beim Lernen wütend fühle, dann frage ich mich nach dem Grund",
-"Wenn ich mich beim Lernen unwohl fühle, dann mache ich eine kurze Pause.",
-"Wenn ich beim Lernen Angst habe, dann sage ich mir, dass ich durchhalten will",
-"Wenn ich beim Lernen müde werde, dann mache ich zwischendurch einige Hampelmänner.",
-"Wenn ich unmotiviert bin zu lernen, dann denke ich an mein Lernziel für den Tag.",
-"Wenn ich mich beim Lernen unkonzentriert fühle, dann suche ich zwischendurch Bewegung.",
-"Wenn ich beim Lernen Langeweile habe, dann denke ich mir eine kleine Belohnung aus",
-"Wenn es beim Lernen eine Unterbrechung gibt, dann kehre ich danach sofort zur Aufgabe zurück",
-"Wenn ich eine Nachricht bekomme, dann werde ich warten bis ich das Lernen beendet habe.",
-"Wenn ich beim Lernen Tagträume habe, dann schließe ich kurz fest die Augen.",
-"Wenn ich beim Lernen eine Ablenkung bemerke, dann suche ich mir einen ruhigen Raum.",
-"Wenn ich mit dem Vokabellernen in cabuu beginne, dann schließe ich zuerst alle anderen Apps.",
-"Wenn ich mit dem Lernen anfangen will, dann gehe ich an einen geeigneten Arbeitsplatz",
-"Wenn mein Smartphone mich ablenkt, dann lege ich es in einiger Entfernung ab.",
-"Wenn ich im nächsten Vokabeltest eine gute Leistung bringe, dann bin ich erleichtert.",
-"Wenn ich fleißig lerne, dann kann ich sehr stolz auf mich sein.",
-"Wenn ich beim Lernen sehr konzentriert bin, dann fühle ich mich erfolgreich.",
-"Wenn ich mit dem Vokabellernen fertig bin, dann fühle ich große Erleichterung.",
-"Wenn ich alle meine Schulaufgaben erledigt habe, dann fühle ich große Freude.",
-"Wenn ich meinen Wortschatz vergrößere, dann kann ich besser auf Englisch Unterhaltungen führen."
+    {
+        "plan": "Wenn ich vom Lernen **genervt** bin, dann denke ich an den **Nutzen**.",
+        "planId": 1
+    },
+    {
+        "plan": "Wenn ich **neugierig** bleibe, dann kann ich viel **entdecken**.",
+        "planId": 2
+    },
+    {
+        "plan": "Wenn ich **erfolgreich** bin, dann werden mich andere **bewundern**.",
+        "planId": 3
+    },
+    {
+        "plan": "Wenn ich **traurig** werde, dann denke ich an einen guten **Witz**.",
+        "planId": 4
+    },
+    {
+        "plan": "Wenn ich **sauer** bin, dann werde ich in die Luft **treten**.",
+        "planId": 5
+    },
+    {
+        "plan": "Wenn ich **gegessen** habe, dann mache ich **Hausaufgaben**.",
+        "planId": 6
+    },
+    {
+        "plan": "Wenn ich **verträumt** bin, dann werde ich einmal **klatschen**.",
+        "planId": 7
+    },
+    {
+        "plan": "Wenn ich eine **Nachricht** kriege, dann werde ich sie **ignorieren**.",
+        "planId": 8
+    },
+    {
+        "plan": "Wenn ich **geduldig** bin, dann kann ich alles gut **verstehen**",
+        "planId": 9
+    },
+    {
+        "plan": "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.",
+        "planId": 10
+    },
+    {
+        "plan": "Wenn ich **nachdenken** will, dann werde ich mich konzentrieren.",
+        "planId": 11
+    },
+    {
+        "plan": "Wenn ich **spielen** will, dann lerne ich erst **Vokabeln**.",
+        "planId": 12
+    },
+    {
+        "plan": "Wenn ich **ängstlich** bin, dann versuche ich mich zu **beruhigen**.",
+        "planId": 13
+    },
+    {
+        "plan": "Wenn ich **nervös** bin, dann werde ich ganz tief **atmen**.",
+        "planId": 14
+    },
+    {
+        "plan": "Wenn ich **verwirrt** bin, dann bitte ich andere um **Hilfe**.",
+        "planId": 15
+    },
+    {
+        "plan": "Wenn mein **Handy** hinderlich ist, dann werde ich es **umdrehen**.",
+        "planId": 16
+    },
+    {
+        "plan": "Wenn ich **aufgeregt** bin, dann denke ich an meinen **Plan**.",
+        "planId": 17
+    },
+    {
+        "plan": "Wenn mir **langweilig** ist, dann denke ich an eine **Belohnung**.",
+        "planId": 18
+    },
+    {
+        "plan": "Wenn ich **abgelenkt** bin, dann werde ich viel **verpassen**.",
+        "planId": 19
+    },
+    {
+        "plan": "Wenn ich **nachdenken** will, dann werde ich mich **konzentrieren**.",
+        "planId": 20
+    },
+    {
+        "plan": "Wenn ich **starten** will, dann mache ich mich an die **Arbeit**.",
+        "planId": 21
+    },
+    {
+        "plan": "Wenn ich **geduldig** bin, dann kann ich alles gut **verstehen**.",
+        "planId": 22
+    },
+    {
+        "plan": "Wenn ich **müde** werde, dann werde ich einmal kurz **lüften**.",
+        "planId": 23
+    },
+    {
+        "plan": "Wenn es eine **Störung** gibt, dann werde ich sie **beseitigen**.",
+        "planId": 24
+    },
+    {
+        "plan": "Wenn ich mich **unwohl** fühle, dann mache ich eine **Pause**.",
+        "planId": 25
+    },
+    {
+        "plan": "Wenn ich **Zuhause** bin, dann werde ich zuerst **aufräumen**.",
+        "planId": 26
+    },
+    {
+        "plan": "Wenn ich **fleißig** lerne, dann bin ich zu Recht sehr **selbstbewusst**.",
+        "planId": 27
+    }
 ]

@@ -1,5 +1,6 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
   final String videoURL;
@@ -16,66 +17,45 @@ class _VideoScreenState extends State<VideoScreen> {
     //   setState(() {});
     // }
   }
+  VideoPlayerController _videoPlayerController;
+  // YoutubePlayerController _controller;
+  ChewieController _chewieController;
 
-  YoutubePlayerController _controller;
   @override
   void initState() {
     super.initState();
-    // _controller = YoutubePlayerController(
-    //   initialVideoId: "pfknhYUOsJc",
-    //   flags: const YoutubePlayerFlags(
-    //     mute: false,
-    //     autoPlay: false,
-    //     disableDragSeek: false,
-    //     loop: false,
-    //     isLive: false,
-    //     forceHD: false,
-    //     enableCaption: true,
-    //   ),
-    // )..addListener(listener);
-    _controller = YoutubePlayerController(
-        initialVideoId: widget.videoURL,
-        params: YoutubePlayerParams(autoPlay: true, showControls: true));
+    _videoPlayerController = VideoPlayerController.asset(widget.videoURL);
+
+    _videoPlayerController.addListener(() {
+      setState(() {});
+    });
+
+    _videoPlayerController.initialize().then((_) => setState(() {}));
+
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      autoPlay: true,
+      looping: false,
+      showControls: true,
+    );
+    _chewieController.addListener(() {
+      int wurst = 5;
+    });
   }
 
   @override
   void dispose() {
-    _controller.close();
+    // _controller.close();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: YoutubePlayerIFrame(
-      controller: _controller,
-
-      // showVideoProgressIndicator: true,
-      // onEnded: (endedData) {
-      //   Provider.of<InitSessionViewModel>(context)
-      //       .onVideoCompleted(this.widget.videoURL);
+        child: Chewie(
+      controller: _chewieController,
     ));
-    // YoutubePlayerBuilder(
-    //     player: YoutubePlayer(
-    //       controller: _controller,
-    //       liveUIColor: Colors.amber,
-    //     ),
-    //     builder: (context, player) {
-    //       return Scaffold(
-    //         body: Container(
-    //           child: Column(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: [player],
-    //           ),
-    //         ),
-    //         floatingActionButton: FloatingActionButton(
-    //           onPressed: () {
-    //             Navigator.pushNamed(context, RouteNames.LOG_IN);
-    //           },
-    //           tooltip: 'Weiter',
-    //           child: Icon(Icons.add),
-    //         ),
-    //       );
-    //     });
   }
 }

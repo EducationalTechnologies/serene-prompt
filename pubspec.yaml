@@ -39,6 +39,7 @@ dependencies:
   csv: ^5.0.0
   youtube_plyr_iframe: ^2.0.3
   video_player: ^2.1.0
+  chewie: ^1.0.0
   
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,7 @@ flutter:
     - assets/rewards/
     - assets/ldt/
     - assets/assessments/
+    - assets/videos/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

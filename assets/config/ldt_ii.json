@@ -12,7 +12,8 @@
             "Glatze",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 1
     },
     {
         "implementationIntention": "Wenn ich **neugierig** bleibe, dann kann ich viel **entdecken**.",
@@ -27,7 +28,8 @@
             "entkommen",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 2
     },
     {
         "implementationIntention": "Wenn ich **erfolgreich** bin, dann werden mich andere **bewundern**.",
@@ -42,7 +44,8 @@
             "verbieten",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 3
     },
     {
         "implementationIntention": "Wenn ich **traurig** werde, dann denke ich an einen guten **Witz**.",
@@ -57,7 +60,8 @@
             "Baby",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 4
     },
     {
         "implementationIntention": "Wenn ich **sauer** bin, dann werde ich in die Luft **treten**.",
@@ -72,7 +76,8 @@
             "warnen",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 5
     },
     {
         "implementationIntention": "Wenn ich **gegessen** habe, dann mache ich **Hausaufgaben**.",
@@ -87,7 +92,8 @@
             "Entscheidung",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 6
     },
     {
         "implementationIntention": "Wenn ich **verträumt** bin, dann werde ich einmal **klatschen**.",
@@ -102,10 +108,11 @@
             "ausdenken",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 7
     },
     {
-        "implementationIntention": "Wenn ich **erfolgreich** bin, dann werden mich andere **bewundern**.",
+        "implementationIntention": "Wenn ich eine **Nachricht** kriege, dann werde ich sie **ignorieren**.",
         "primes": [
             "erfolgreich",
             "argwöhnisch",
@@ -117,10 +124,11 @@
             "verbieten",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 8
     },
     {
-        "implementationIntention": "Wenn ich eine **Nachricht** kriege, dann werde ich sie **ignorieren**.",
+        "implementationIntention": "Wenn ich **geduldig** bin, dann kann ich alles gut **verstehen**",
         "primes": [
             "Nachricht",
             "Gesichter",
@@ -132,10 +140,11 @@
             "streicheln",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 9
     },
     {
-        "implementationIntention": "Wenn ich **aufmerksam** bin, dann kann ich mich gut **erinnern**.",
+        "implementationIntention": "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.",
         "primes": [
             "aufmerksam",
             "merkwürdig",
@@ -147,10 +156,11 @@
             "erklären",
             "nonword",
             "nonword"
-        ]
+        ],
+        "planId": 9
     },
     {
-        "implementationIntention": "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.",
+        "implementationIntention": "Wenn ich **nachdenken** will, dann werde ich mich konzentrieren.",
         "primes": [
             "lustlos",
             "wertlos",
