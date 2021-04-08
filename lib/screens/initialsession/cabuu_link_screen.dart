@@ -36,12 +36,12 @@ class CabuuLinkScreen extends StatelessWidget {
             ],
           ),
           Text(
-            "Falls du bei 'cabuu' mit deiner Email Adresse angemeldet bist, gib diese bitte hier ein",
+            "Gib hier die E-Mail-Adresse ein, mit der du bei cabuu angemeldet bist",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           buildEmailField(context),
           Text(
-            "Falls du bei 'cabuu' mit einem Benutzernamen angemeldet bist, gib diesen bitte hier ein",
+            "Falls du bei cabuu auch mit einem Benutzernamen angemeldet bist, gib diesen bitte hier ein",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           buildUserIdField(context),

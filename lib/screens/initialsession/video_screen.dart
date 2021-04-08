@@ -31,10 +31,11 @@ class _VideoScreenState extends State<VideoScreen> {
     );
 
     _videoPlayerController.addListener(() {
+      if (!_videoPlayerController.value.isInitialized) return;
       if (_videoPlayerController.value != null) {
-        var timeToFinish = _videoPlayerController.value.position.inSeconds -
-            _videoPlayerController.value.duration.inSeconds;
-        if (timeToFinish < 5 && timeToFinish > 0) {
+        var timeToFinish = _videoPlayerController.value.duration.inSeconds -
+            _videoPlayerController.value.position.inSeconds;
+        if (timeToFinish < 2) {
           if (widget.onVideoCompleted != null) {
             widget.onVideoCompleted();
           }
@@ -45,7 +46,6 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   void dispose() {
-    // _controller.close();
     _videoPlayerController.dispose();
     _chewieController.dispose();
     super.dispose();

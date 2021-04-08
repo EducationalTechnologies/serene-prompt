@@ -10,12 +10,14 @@ import 'package:serene/screens/initialsession/initial_obstacle_explanation_scree
 import 'package:serene/screens/initialsession/initial_ldt_screen.dart';
 import 'package:serene/screens/initialsession/initial_outcome_explanation_screen.dart';
 import 'package:serene/screens/initialsession/initial_reward_screen_first.dart';
+import 'package:serene/screens/initialsession/initial_reward_screen_second.dart';
 import 'package:serene/screens/initialsession/obstacle_enter_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_selection_screen.dart';
 import 'package:serene/screens/initialsession/obstacle_sorting_screen.dart';
 import 'package:serene/screens/initialsession/outcome_enter_screen.dart';
 import 'package:serene/screens/initialsession/outcome_selection_screen.dart';
 import 'package:serene/screens/initialsession/outcome_sorting_screen.dart';
+import 'package:serene/screens/initialsession/text_explanation_screen.dart';
 import 'package:serene/screens/initialsession/video_screen.dart';
 import 'package:serene/screens/initialsession/welcome_screen.dart';
 import 'package:serene/screens/initialsession/cabuu_link_screen.dart';
@@ -54,6 +56,15 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       CabuuLinkScreen(key: ValueKey(vm.stepCabuuLink)), // Screen 3
       questionnaireFuture(
           AssessmentTypes.cabuuLearn, ValueKey(vm.stepQuestionsCabuuLearn)),
+      VideoScreen('assets/videos/videoLdt.mp4',
+          key: ValueKey(vm.stepVideoLdtInstruction),
+          onVideoCompleted: vm.videoLdtCompleted),
+      InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(vm.stepLdt00)),
+      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt01)),
+      // TODO: REPLACE WITH ACTUAL LDTs 0_2 0_3
+      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt02)),
+      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt03)),
+      InitialRewardScreenFirst(key: ValueKey(vm.stepRewardFirst)),
       VideoScreen('assets/videos/videoLearning.mp4',
           key: ValueKey(vm.stepVideoLearning),
           onVideoCompleted: vm.videoLearningInstructionsCompleted), //
@@ -61,18 +72,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
           key: ValueKey(vm.stepInitialDailyLearningGoal)),
       questionnaireFuture(
           AssessmentTypes.regulation, ValueKey(vm.stepQuestionsRegulation)),
-      // questionnaireFuture(AssessmentTypes.learningGoals1,
-      //     ValueKey(vm.stepQuestionsLearningGoals1)), // Screen 1
-      // VideoScreen('assets/videos/initvideo2.mp4',
-      //     key: ValueKey(vm.stepVideoLdtInstruction)),
-      VideoScreen('assets/videos/videoLdt.mp4',
-          key: ValueKey(vm.stepVideoLdtInstruction),
-          onVideoCompleted: vm.videoLdtCompleted),
-      InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(vm.stepLdt00)),
-      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt01)),
-      InitialLdtScreen("0_2", _onLdtFinished, key: ValueKey(vm.stepLdt02)),
-      InitialLdtScreen("0_3", _onLdtFinished, key: ValueKey(vm.stepLdt03)),
-      InitialRewardScreenFirst(key: ValueKey(vm.stepRewardFirst)),
+      questionnaireFuture(AssessmentTypes.learningGoals1,
+          ValueKey(vm.stepQuestionsLearningGoals1)), // Screen 1
       InitialOutcomeExplanationScreen(
           key: ValueKey(vm.stepOutcomeExplanationScreen)),
       OutcomeSelectionScreen(key: ValueKey(vm.stepOutcomeSelectionScreen)),
@@ -86,8 +87,12 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       ObstacleSortingScreen(key: ValueKey(vm.stepObstacleSortingScreen)),
       InitialObstacleDisplayScreen(
           key: ValueKey(vm.stepObstacleDisplayScreen)), // Screen 16
-      InitialLdtScreen("0_4", _onLdtFinished, key: ValueKey(vm.stepLdt04)),
-      InitialLdtScreen("0_5", _onLdtFinished, key: ValueKey(vm.stepLdt05)),
+      TextExplanationScreen(
+          "So, jetzt kommt noch einmal die Wortaufgabe. Bist du bereit?"),
+      // TODO: REPLACE WITH ACTUAL LDTs 0_4 0_5
+      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt04)),
+      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(vm.stepLdt05)),
+      InitialRewardScreenSecond(key: ValueKey(vm.stepRewardSecond)),
       questionnaireFuture(AssessmentTypes.srl, ValueKey(vm.stepQuestionsSrl)),
       questionnaireFuture(AssessmentTypes.learningGoals2,
           ValueKey(vm.stepQuestionsLearningGoals2)),

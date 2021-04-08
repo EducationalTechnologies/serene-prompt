@@ -175,10 +175,6 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     // Add one to the value because we are retrieving the completed step and we want to navigate to the one after that
     var nextStep = _settingsService.getInitSessionStep() + 1;
 
-    if (step == stepFinish) {
-      // TODO: SKIP TUTORIAL COMPLETELY
-      submit();
-    }
     return nextStep;
   }
 
@@ -274,7 +270,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
 
   @override
   bool canMoveBack(Key currentStep) {
-    return true;
+    return false;
   }
 
   saveSelected() async {
@@ -404,10 +400,10 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     }
 
     if (keyValue == stepLdt02) {
-      return "Sehr gut gemacht! Das war der erste richtige Durchlauf. Es kommen noch drei weitere.";
+      return "Sehr gut gemacht! Das war der erste richtige Durchlauf. Mach dich bereit für den nächsten.";
     }
     if (keyValue == stepLdt03) {
-      return "Super! Noch zwei mal.";
+      return "Super! Jetzt kommen erst einmal ein paar andere Fragen, und dann wird die Wortaufgabe später nochmal dran kommen.";
     }
     if (keyValue == stepLdt04) {
       return "Hervorragend! Einmal musst du die Wortaufgabe noch machen.";

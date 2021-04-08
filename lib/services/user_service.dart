@@ -71,4 +71,11 @@ class UserService {
   String getUsername() {
     return _settings.getSetting(SettingsKeys.userId);
   }
+
+  Future<bool> isSignedIn() async {
+    return await FirebaseService().getCurrentUser().then((value) {
+      if (value == null) return false;
+      return true;
+    });
+  }
 }

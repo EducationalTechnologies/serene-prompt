@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serene/screens/initialsession/text_explanation_screen.dart';
 import 'package:serene/shared/ui_helpers.dart';
 import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
@@ -142,9 +143,7 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
   buildTrialSummary() {
     var message = Provider.of<InitSessionViewModel>(context, listen: false)
         .getTrialMessage(this.widget.key);
-    return SpeechBubble(
-      text: message,
-    );
+    return TextExplanationScreen(message);
   }
 
   _buildCountDown() {

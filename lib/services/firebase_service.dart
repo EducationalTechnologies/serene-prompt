@@ -51,6 +51,10 @@ class FirebaseService {
     locator.get<LoggingService>().logError("Firetore Timeout: $function");
   }
 
+  Future<User> getCurrentUser() async {
+    return _firebaseAuth.currentUser;
+  }
+
   Future<bool> isNameAvailable(String userId) async {
     try {
       var availableMethods = await _firebaseAuth
@@ -113,8 +117,11 @@ class FirebaseService {
         .collection(COLLECTION_USERS)
         .where("email", isEqualTo: email)
         .get()
-        .then((documents) => UserData.fromJson(documents.docs[0].data()))
-        .catchError(handleError);
+        .then((documents) {
+      if (documents.size == 0) return null;
+      if (documents.docs.isEmpty) return null;
+      return UserData.fromJson(documents.docs[0].data());
+    }).catchError(handleError);
   }
 
   Future<UserData> signInUser(String userId, String password) async {
@@ -256,6 +263,9 @@ class FirebaseService {
   }
 
   Future<Internalisation> getLastInternalisation(String email) async {
+    if (email == null) return null;
+    if (email.isEmpty) return null;
+
     var docs = await getLastInternalisations(email, 1);
 
     if (docs == null) return null;

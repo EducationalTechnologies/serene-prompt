@@ -22,12 +22,13 @@ class LoggingService {
     _dataService.logData(event);
   }
 
-  logError(String eventName) {
+  logError(String eventName, {String data = ""}) {
     print("ERROR: $eventName");
     Map<String, String> event = {
       "type": "error",
       "time": getTimestamp(),
-      "name": eventName
+      "name": eventName,
+      "data": data
     };
     // TODO: Submit logs batched in the no task screen
     logs.add(event);

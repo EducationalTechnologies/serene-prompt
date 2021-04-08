@@ -106,8 +106,6 @@ class ExperimentService {
     if (lastInternalisation.completionDate.isToday()) {
       return false;
     }
-
-    _loggingService.logEvent("Should return true");
     return true;
   }
 
