@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushNamed(context, RouteNames.INIT_START);
     } else if (registered == RegistrationCodes.USER_NOT_FOUND) {
       _buildErrorDialog("Falscher Code",
-          "Der eingegebene Code war nicht richtig. Bitte überprüfe, ob du ihn richtig eingegeben hast");
+          "Der eingegebene Code war nicht richtig. Bitte überprüfe, ob du ihn richtig eingegeben hast.");
     }
   }
 
