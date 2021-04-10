@@ -1,12 +1,18 @@
+import 'dart:async';
+
 import 'package:serene/models/unlockable_background.dart';
 import 'package:serene/services/data_service.dart';
+import 'package:serene/services/logging_service.dart';
 
 class RewardService {
-  int score = 0;
+  StreamController<int> controller;
+  Stream<int> scoreStream;
+  int scoreValue = 0;
   int gems = 0;
   int daysActive = 0;
   String backgroundImagePath = "assets/illustrations/mascot_bare.png";
   final DataService _dataService;
+  final LoggingService _logService;
 
   List<UnlockableBackground> backgrounds = [
     UnlockableBackground("Standard", "assets/illustrations/mascot_bare.png", 0),
@@ -18,36 +24,44 @@ class RewardService {
         "Pyramiden", "assets/illustrations/mascot_pyramid.png", 20),
   ];
 
-  Future<bool> initialized;
+  RewardService(this._dataService, this._logService) {
+    controller = StreamController.broadcast();
+  }
 
-  RewardService(this._dataService);
-
-  Future initialize() async {
+  Future retrieveScore() async {
     _dataService.getScore().then((s) {
-      this.score = s;
-      initialized = Future.value(true);
+      scoreValue = s;
+      controller.add(s);
+      return s;
     });
+  }
 
+  Future getDaysActive() async {
+    _dataService.getDaysActive().then((s) {
+      daysActive = s;
+      return s;
+    });
+  }
+
+  Future getBackgroundImagePath() async {
     _dataService.getBackgroundImagePath().then((path) {
       if (path != null) {
         this.backgroundImagePath = path;
       }
-      initialized = Future.value(true);
+      return backgroundImagePath;
     });
+  }
+
+  Future initialize() async {
+    retrieveScore();
+    getDaysActive();
+    getBackgroundImagePath();
   }
 
   setBackgroundImagePath(String imagePath) async {
     this.backgroundImagePath = imagePath;
+    _logService.logEvent("backgroundImageChanged", data: imagePath);
     await this._dataService.setBackgroundImage(imagePath);
-  }
-
-  void getScore() {
-    initialized = null;
-    _dataService.getScore().then((score) {
-      score = score;
-      // initialized = true;
-      initialized = Future.value(true);
-    });
   }
 
   onRecallTask(int streakDays) async {
@@ -62,10 +76,20 @@ class RewardService {
     await addPoints(10);
   }
 
+  onLdtInitialLongLdtFinished() async {
+    await addPoints(4);
+  }
+
   onRecallTaskEverythingCompleted() async {}
 
+  addDaysActive(int days) async {
+    daysActive += days;
+    await _dataService.saveDaysActive(daysActive);
+  }
+
   addPoints(int points) async {
-    score += points;
-    await _dataService.saveScore(score);
+    scoreValue += points;
+    controller.add(scoreValue);
+    await _dataService.saveScore(scoreValue);
   }
 }

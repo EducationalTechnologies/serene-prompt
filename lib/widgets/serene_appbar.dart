@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:serene/locator.dart';
@@ -17,50 +19,51 @@ class SereneAppBar extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _SereneAppBarState extends State<SereneAppBar> {
+  StreamController<int> scoreStream;
   getRewardDisplay() {}
+
+  @override
+  void initState() {
+    super.initState();
+    var rewardService = locator.get<RewardService>();
+    scoreStream = rewardService.controller;
+
+    rewardService.retrieveScore();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   AppBar build(BuildContext context) {
     var rewardService = locator.get<RewardService>();
+    var scoreValue = rewardService.scoreValue;
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
-        FutureBuilder(
-            future: rewardService.initialized,
+        StreamBuilder(
+            stream: scoreStream.stream,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(
-                  "${rewardService.score}💎",
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.yellow[800]),
-                );
-                return Row(
-                  children: [
-                    Image(
-                        image: AssetImage("assets/rewards/crown_12.png"),
-                        width: 34,
-                        height: 34,
-                        fit: BoxFit.scaleDown),
-                    Text(
-                      "${rewardService.score.toString()}",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.yellow[800]),
-                    ),
-                  ],
-                );
-              } else {
-                return Text("0💎",
+              if (snapshot.connectionState == ConnectionState.active ||
+                  snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return Text(
+                    "${snapshot.data}💎",
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.yellow[800]));
+                        color: Colors.yellow[800]),
+                  );
+                }
               }
+              return Text("${rewardService.scoreValue}💎",
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow[800]));
             }),
         UIHelper.horizontalSpaceMedium()
       ],
