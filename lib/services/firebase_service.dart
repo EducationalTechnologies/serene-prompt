@@ -11,6 +11,7 @@ import 'package:serene/models/recall_task.dart';
 import 'package:serene/models/user_data.dart';
 import 'package:flutter/services.dart';
 import 'package:serene/services/logging_service.dart';
+import 'package:serene/services/user_service.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -43,8 +44,10 @@ class FirebaseService {
   static const String COLLECTION_LDT = "ldt";
   static const String COLLECTION_INITSESSION = "initSession";
 
-  void handleError(Object e) {
-    locator.get<LoggingService>().logError("Firestore error: ${e.toString()}");
+  void handleError(Object e, {String data = ""}) {
+    locator
+        .get<LoggingService>()
+        .logError("Firestore error: ${e.toString()}", data: data);
   }
 
   void handleTimeout(String function) {
@@ -78,13 +81,8 @@ class FirebaseService {
       var result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: userId, password: password);
 
-      var userData = UserData(
-          userId: result.user.uid,
-          email: result.user.email,
-          registrationDate: DateTime.now(),
-          streakDays: 0,
-          internalisationCondition: internalisationCondition);
-
+      var userData = UserService.getDefaultUserData(result.user.email,
+          uid: result.user.uid);
       await insertUserData(userData);
 
       return userData;
@@ -96,23 +94,17 @@ class FirebaseService {
   }
 
   insertUserData(UserData userData) async {
-    var resultDocuments = await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_USERS)
         .doc(userData.email)
-        .set(userData.toMap());
-
-    return resultDocuments;
+        .set(userData.toMap())
+        .then((value) => value)
+        .catchError((error) {
+      handleError(error.toString(), data: "Trying to inser UserData");
+    });
   }
 
   Future<UserData> getUserData(String email) async {
-    // var resultDocuments = await _databaseReference
-    //     .collection(COLLECTION_USERS)
-    //     .where("email", isEqualTo: email)
-    //     .get();
-
-    // if (resultDocuments.docs.isEmpty) return null;
-    // return UserData.fromJson(resultDocuments.docs[0].data());
-
     return _databaseReference
         .collection(COLLECTION_USERS)
         .where("email", isEqualTo: email)
@@ -121,36 +113,20 @@ class FirebaseService {
       if (documents.size == 0) return null;
       if (documents.docs.isEmpty) return null;
       return UserData.fromJson(documents.docs[0].data());
-    }).catchError(handleError);
+    }).catchError((error) {
+      handleError(error, data: "Trying to obtain user data");
+    });
   }
 
-  Future<UserData> signInUser(String userId, String password) async {
-    try {
-      var result = await _firebaseAuth.signInWithEmailAndPassword(
-          email: userId, password: password);
-
-      if (result == null) return null;
-
-      var userData = await getUserData(result.user.email);
-
-      if (userData == null) {
-        userData = UserData(
-            userId: result.user.uid,
-            email: result.user.email,
-            internalisationCondition: 1,
-            score: 0,
-            streakDays: 0,
-            registrationDate: DateTime.now());
-        await insertUserData(userData);
-      }
-      return userData;
-    } catch (e) {
-      handleError(e.toString());
-      if (e.code == "wrong-password") {
-        return null;
-      }
+  Future<User> signInUser(String userId, String password) async {
+    return _firebaseAuth
+        .signInWithEmailAndPassword(email: userId, password: password)
+        .then((value) => value.user)
+        .onError((error, stackTrace) {
+      handleError(error.toString(), data: "Error signing in user");
+      lastError = error.code;
       return null;
-    }
+    });
   }
 
   saveFcmToken(String userId, String token) async {
@@ -166,7 +142,7 @@ class FirebaseService {
   saveAssessment(AssessmentResult assessment, String userid) async {
     var assessmentMap = assessment.toMap();
     assessmentMap["user"] = userid;
-    return _databaseReference
+    _databaseReference
         .collection(COLLECTION_ASSESSMENTS)
         .add(assessmentMap)
         .then((res) => res)
@@ -195,7 +171,7 @@ class FirebaseService {
   saveOutcomes(List<Outcome> outcomes, String email) async {
     var dynamicList = outcomes.map((outcome) => outcome.toMap()).toList();
 
-    await _databaseReference
+    _databaseReference
         .collection(COLLECTION_OUTCOMES)
         .doc(email)
         .set({"outcomes": dynamicList});
@@ -265,7 +241,7 @@ class FirebaseService {
   Future<Internalisation> getLastInternalisation(String email) async {
     if (email == null) return null;
     if (email.isEmpty) return null;
-
+    // TODO: Refactor await
     var docs = await getLastInternalisations(email, 1);
 
     if (docs == null) return null;
@@ -274,6 +250,7 @@ class FirebaseService {
   }
 
   Future<Internalisation> getFirstInternalisation(String email) async {
+    // TODO: Refactor await
     var doc = await _databaseReference
         .collection(COLLECTION_INTERNALISATION)
         .where("user", isEqualTo: email)
@@ -285,11 +262,15 @@ class FirebaseService {
     return Internalisation.fromDocument(doc.docs[0]);
   }
 
-  saveRecallTask(RecallTask recallTask, String email) async {
+  Future saveRecallTask(RecallTask recallTask, String email) async {
     var map = recallTask.toMap();
     map["user"] = email;
 
-    return await _databaseReference.collection(COLLECTION_RECALLTASKS).add(map);
+    return _databaseReference
+        .collection(COLLECTION_RECALLTASKS)
+        .add(map)
+        .then((value) => value)
+        .catchError(handleError);
   }
 
   Future<RecallTask> getLastRecallTask(String email) async {

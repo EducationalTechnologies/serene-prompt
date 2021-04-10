@@ -44,6 +44,7 @@ class RegistrationCodes {
   static const WEAK_PASSWORD = "ERROR_WEAK_PASSWORD";
   static const INVALID_CREDENTIAL = "ERROR_INVALID_CREDENTIAL";
   static const EMAIL_ALREADY_IN_USE = "ERROR_EMAIL_ALREADY_IN_USE";
+  static const USER_NOT_FOUND = "user-not-found";
 }
 
 class ExperimentalGroup {

@@ -65,7 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
         _userIdTextController.text, _passwordTextController.text);
     if (registered == RegistrationCodes.SUCCESS) {
       Navigator.pushNamed(context, RouteNames.INIT_START);
-    } else if (registered == RegistrationCodes.WEAK_PASSWORD) {}
+    } else if (registered == RegistrationCodes.USER_NOT_FOUND) {
+      _buildErrorDialog("Falscher Code",
+          "Der eingegebene Code war nicht richtig. Bitte überprüfe, ob du ihn richtig eingegeben hast");
+    }
   }
 
   @override

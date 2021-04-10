@@ -1,5 +1,7 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:serene/locator.dart';
 import 'package:serene/services/navigation_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
@@ -48,6 +50,7 @@ class LoginViewModel extends BaseViewModel {
     }
     setState(ViewState.busy);
     var signin = await _userService.signInUser(email, password);
+    await locator<RewardService>().initialize();
     setState(ViewState.idle);
     return signin;
   }
