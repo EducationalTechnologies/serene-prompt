@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
           UIHelper.verticalSpaceLarge(),
           Text(
-            "Auf der nächsten Seite geben wir dir erst einmal eine Einführung. Nimm dir dafür ein paar Minuten Zeit",
+            "Auf der nächsten Seite geben wir dir erst einmal eine Einführung. Nimm dir dafür ein paar Minuten Zeit.",
             style: Theme.of(context).textTheme.headline5,
           )
         ],

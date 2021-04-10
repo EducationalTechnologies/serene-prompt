@@ -10,15 +10,15 @@ class InitialRewardScreenFirst extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          MarkdownBody(data: "### Du bekommst 4💎."),
+          MarkdownBody(data: "# Du bekommst 💎💎💎💎."),
           UIHelper.verticalSpaceMedium(),
           MarkdownBody(
               data:
-                  "### Du hast dir gerade deine erste Belohnung in der App verdient"),
+                  "### Du hast dir gerade deine erste Belohnung in der App verdient!"),
           UIHelper.verticalSpaceMedium(),
           MarkdownBody(
               data:
-                  "### Jeder 💎 den du sammelst ist wie ein Losticket, und wenn du die Studie bis zum Ende mitmachst, bekommst du für mehr 💎 bessere Preise."),
+                  "### Jeder 💎, den du sammelst, ist wie ein Losticket. Wenn du die Studie bis zum Ende mitmachst, bekommst du für mehr 💎 bessere Preise."),
         ],
       ),
     );

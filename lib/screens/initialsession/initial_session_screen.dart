@@ -37,6 +37,8 @@ class InitialSessionScreen extends StatefulWidget {
 class _InitialSessionScreenState extends State<InitialSessionScreen> {
   List<Widget> _pages = [];
 
+  Map<int, Widget> pageMap = {};
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +48,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     var vm = Provider.of<InitSessionViewModel>(context, listen: false);
+
     _pages = [
       WelcomeScreen(key: ValueKey(vm.stepWelcomeScreen)),
       VideoScreen(
@@ -70,10 +73,10 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
           onVideoCompleted: vm.videoLearningInstructionsCompleted), //
       InitialDailyLearningGoalScreen(
           key: ValueKey(vm.stepInitialDailyLearningGoal)),
-      questionnaireFuture(
-          AssessmentTypes.regulation, ValueKey(vm.stepQuestionsRegulation)),
       questionnaireFuture(AssessmentTypes.learningGoals1,
           ValueKey(vm.stepQuestionsLearningGoals1)), // Screen 1
+      questionnaireFuture(
+          AssessmentTypes.regulation, ValueKey(vm.stepQuestionsRegulation)),
       InitialOutcomeExplanationScreen(
           key: ValueKey(vm.stepOutcomeExplanationScreen)),
       OutcomeSelectionScreen(key: ValueKey(vm.stepOutcomeSelectionScreen)),

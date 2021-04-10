@@ -39,7 +39,7 @@ class _InternalisationRecallScreenState
                 children: [
                   UIHelper.verticalSpaceMedium(),
                   Text(
-                    "Schreibe deinen Wenn-Dann-Plan so auf, wie du dich an ihn erinnerst.",
+                    "Schreibe deinen Satz von heute so auf, wie du dich an ihn erinnerst.",
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   UIHelper.verticalSpaceMedium(),
@@ -66,10 +66,7 @@ class _InternalisationRecallScreenState
         autocorrect: false,
         enableSuggestions: false,
         style: Theme.of(context).textTheme.headline6,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-        ),
+        decoration: UIHelper.defaultTextfieldDecoration,
         onChanged: (text) {
           setState(() {
             _ifPart = text;
@@ -86,10 +83,7 @@ class _InternalisationRecallScreenState
         autocorrect: false,
         enableSuggestions: false,
         style: Theme.of(context).textTheme.headline6,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-        ),
+        decoration: UIHelper.defaultTextfieldDecoration,
         onChanged: (text) {
           setState(() {
             _thenPart = text;

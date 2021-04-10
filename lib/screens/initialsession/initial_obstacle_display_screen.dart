@@ -35,7 +35,8 @@ class InitialObstacleDisplayScreen extends StatelessWidget {
               decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
-                  hintText: 'Gib hier deinen Text ein'),
+                  hintText:
+                      'Gib hier ein, was du denken oder tun könntest, um das Hindernis zu überwinden.'),
               onChanged: (String text) {
                 vm.overcomeObstacleText = text;
               },

@@ -7,7 +7,6 @@ import 'package:serene/viewmodels/init_session_view_model.dart';
 import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:serene/widgets/countdown.dart';
 import 'package:serene/widgets/full_width_button.dart';
-import 'package:serene/widgets/speech_bubble.dart';
 
 typedef void OnLoadedCallback(String trialName);
 

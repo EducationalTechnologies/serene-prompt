@@ -58,12 +58,12 @@ class _MultiStepAssessmentState extends State<MultiStepAssessment> {
   }
 
   _buildSubmitButton() {
-    return FullWidthButton(onPressed: () async {
-      widget.vm.submit();
-      // // Navigator.pushNamed(context, RouteNames.NO_TASKS);
-      //
-      // this.widget.onSubmit();
-    });
+    return FullWidthButton(
+      onPressed: () async {
+        widget.vm.submit();
+      },
+      text: "Weiter",
+    );
   }
 
   _buildBottomNavigation() {

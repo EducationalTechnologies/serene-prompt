@@ -68,7 +68,8 @@ class _EveningAssessmentScreenState extends State<EveningAssessmentScreen> {
       child: Column(
         children: [
           Text(
-            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu der Erinnerungsaufgabe",
+            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu der Erinnerungsaufgabe.",
+            style: TextStyle(fontSize: 20),
           ),
         ],
       ),

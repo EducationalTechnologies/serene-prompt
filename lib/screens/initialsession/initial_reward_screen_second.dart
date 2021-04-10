@@ -10,11 +10,11 @@ class InitialRewardScreenSecond extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          MarkdownBody(data: "### Du hast dir weitere 4💎 verdient."),
+          MarkdownBody(data: "# Du bekommst weitere 💎💎💎💎."),
           UIHelper.verticalSpaceMedium(),
           MarkdownBody(
               data:
-                  "### Denk daran:  Jeder 💎 den du sammelst ist ein Losticket."),
+                  "### Denk daran: Jeder 💎, den du sammelst, ist ein Losticket für einen tollen Preis!"),
         ],
       ),
     );

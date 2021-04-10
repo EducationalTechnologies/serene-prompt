@@ -24,7 +24,11 @@ class FreeTextQuestion extends StatelessWidget {
           onChanged: this.textChanged,
           autofocus: true,
           decoration: InputDecoration(
-              border: OutlineInputBorder(), focusColor: Colors.white),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              focusColor: Colors.white),
         ),
       ],
     ));

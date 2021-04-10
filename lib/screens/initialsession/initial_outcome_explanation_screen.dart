@@ -20,7 +20,7 @@ class InitialOutcomeExplanationScreen extends StatelessWidget {
           UIHelper.verticalSpaceMedium(),
           MarkdownBody(
               data:
-                  "### Auf der nächsten Seite siehst du ein paar Vorschläge von uns. Wähle alles aus der Liste aus, was **auf dich zutrifft** Sollte nichts darunter sein oder noch etwas Wichtiges fehlen, kannst du es auf der übernächsten Seite ergänzen."),
+                  "### Auf der nächsten Seite siehst du ein paar Vorschläge von uns. Wähle alles aus der Liste aus, was **auf dich zutrifft.** Sollte nichts darunter sein oder noch etwas Wichtiges fehlen, kannst du es auf der übernächsten Seite ergänzen."),
           UIHelper.verticalSpaceMedium(),
         ],
       ),
