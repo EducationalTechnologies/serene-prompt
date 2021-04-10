@@ -7,9 +7,9 @@
             "questionText": "Ich fühle mich gerade gut gelaunt",
             "labels": {
                 "1": "Gar nicht",
-                "2": "Wenig",
-                "3": "Teils / teils",
-                "4": "Etwas",
+                "2": "Kaum",
+                "3": "Mittel",
+                "4": "Ziemlich",
                 "5": "Sehr"
             }
         },
@@ -18,9 +18,9 @@
             "questionText": "Ich fühle mich gerade ängstlich.",
             "labels": {
                 "1": "Gar nicht",
-                "2": "Wenig",
-                "3": "Teils / teils",
-                "4": "Etwas",
+                "2": "Kaum",
+                "3": "Mittel",
+                "4": "Ziemlich",
                 "5": "Sehr"
             }
         },
@@ -29,9 +29,9 @@
             "questionText": "Ich fühle mich gerade toll.",
             "labels": {
                 "1": "Gar nicht",
-                "2": "Wenig",
-                "3": "Teils / teils",
-                "4": "Etwas",
+                "2": "Kaum",
+                "3": "Mittel",
+                "4": "Ziemlich",
                 "5": "Sehr"
             }
         },
@@ -40,9 +40,9 @@
             "questionText": "Ich fühle mich gerade unglücklich.",
             "labels": {
                 "1": "Gar nicht",
-                "2": "Wenig",
-                "3": "Teils / teils",
-                "4": "Etwas",
+                "2": "Kaum",
+                "3": "Mittel",
+                "4": "Ziemlich",
                 "5": "Sehr"
             }
         },
@@ -51,9 +51,9 @@
             "questionText": "Ich fühle mich gerade zufrieden.",
             "labels": {
                 "1": "Gar nicht",
-                "2": "Wenig",
-                "3": "Teils / teils",
-                "4": "Etwas",
+                "2": "Kaum",
+                "3": "Mittel",
+                "4": "Ziemlich",
                 "5": "Sehr"
             }
         },
@@ -62,9 +62,9 @@
             "questionText": "Ich fühle mich gerade schlecht.",
             "labels": {
                 "1": "Gar nicht",
-                "2": "Wenig",
-                "3": "Teils / teils",
-                "4": "Etwas",
+                "2": "Kaum",
+                "3": "Mittel",
+                "4": "Ziemlich",
                 "5": "Sehr"
             }
         }
