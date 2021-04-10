@@ -14,6 +14,7 @@ import 'package:serene/screens/test_screen.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -150,7 +151,8 @@ class AppRouter {
                   create: (_) => InitSessionViewModel(
                       locator.get<DataService>(),
                       locator.get<ExperimentService>(),
-                      locator.get<SettingsService>()),
+                      locator.get<SettingsService>(),
+                      locator.get<RewardService>()),
                   child: InitialSessionScreen(),
                 ));
 

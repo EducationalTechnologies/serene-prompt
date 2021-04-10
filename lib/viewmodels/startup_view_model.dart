@@ -1,4 +1,5 @@
 import 'package:serene/locator.dart';
+import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/notification_service.dart';
@@ -77,6 +78,11 @@ class StartupViewModel extends BaseViewModel {
     addDebugText("User Initialized: $userInitialized");
     bool signedIn = await locator<UserService>().isSignedIn();
     if (!userInitialized || !signedIn) {
+      return AppStartupMode.firstLaunch;
+    }
+
+    var userData = await locator<DataService>().getUserData();
+    if (userData == null) {
       return AppStartupMode.firstLaunch;
     }
 

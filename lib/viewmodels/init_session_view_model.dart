@@ -5,6 +5,7 @@ import 'package:serene/models/obstacle.dart';
 import 'package:serene/models/outcome.dart';
 import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
+import 'package:serene/services/reward_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/app_asset_paths.dart';
 import 'package:serene/shared/enums.dart';
@@ -51,6 +52,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   final ExperimentService _experimentService;
   final DataService _dataService;
   final SettingsService _settingsService;
+  final RewardService _rewardService;
 
   LexicalDecisionTaskViewModel ldtvm;
 
@@ -105,7 +107,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   Assessment lastAssessment = Assessment();
   Map<String, String> currentAssessmentResults = {};
   String numberOfDaysLearningGoal = "";
-  String overcomeObstacleText;
+  String overcomeObstacleText = "";
   // Map<AssessmentTypes, Map<String, String>> assessmentResults = {};
 
   List<Obstacle> selectedObstacles = <Obstacle>[];
@@ -168,8 +170,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
-  InitSessionViewModel(
-      this._dataService, this._experimentService, this._settingsService);
+  InitSessionViewModel(this._dataService, this._experimentService,
+      this._settingsService, this._rewardService);
 
   int getPreviouslyCompletedStep() {
     // Add one to the value because we are retrieving the completed step and we want to navigate to the one after that
@@ -264,6 +266,9 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     if (currentPageKey == ValueKey(stepInitialDailyLearningGoal)) {
       return numberOfDaysLearningGoal.isNotEmpty;
     }
+    if (currentPageKey == ValueKey(stepObstacleDisplayScreen)) {
+      return overcomeObstacleText.isNotEmpty;
+    }
 
     return true;
   }
@@ -330,8 +335,19 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     }
 
     if (currentPageKey == ValueKey(stepInitialDailyLearningGoal)) {
-      _dataService.saveInitialSessionValue(
-          "dailyLearningGoal", numberOfDaysLearningGoal);
+      var result = AssessmentResult(
+          {"initialDailyLearningGoal": numberOfDaysLearningGoal},
+          "initialDailyLearningGoal",
+          DateTime.now());
+      _dataService.saveAssessment(result);
+    }
+
+    if (currentPageKey == ValueKey(stepObstacleDisplayScreen)) {
+      var result = AssessmentResult(
+          {"overcomeObstaclePlan": overcomeObstacleText},
+          "initialOvercomeObstaclePlan",
+          DateTime.now());
+      _dataService.saveAssessment(result);
     }
 
     if (currentPageKey == ValueKey(stepLdt00) ||
@@ -342,6 +358,11 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
         currentPageKey == ValueKey(stepLdt05)) {
       _dataService.saveLdtData(ldtvm.ldt);
       ldtvm = null;
+    }
+    // Give rewards after the two long LDTs
+    if (currentPageKey == ValueKey(stepLdt03) ||
+        currentPageKey == ValueKey(stepLdt05)) {
+      _rewardService.onLdtInitialLongLdtFinished();
     }
 
     if (currentPageKey == ValueKey(stepCabuuLink)) {
@@ -377,7 +398,6 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     var keyValue = ldtKey.value;
     var results = ldtvm.ldt.trials;
 
-    var msgGood = "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
     var msgSlow =
         "Da warst du leider nicht immer schnell genug. Denk daran, dass du die richtige Taste so schnell wie möglich drücken sollst! Wir üben das noch einmal.";
     var msgIncorrect =
@@ -396,17 +416,22 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
           return msgIncorrect;
         }
       }
-      return msgGood;
+      if (keyValue == stepLdt00) {
+        return "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
+      }
+      if (keyValue == stepLdt01) {
+        return "Gut gemacht! Als nächstes kommt der erste richtige Durchlauf.";
+      }
     }
 
     if (keyValue == stepLdt02) {
       return "Sehr gut gemacht! Das war der erste richtige Durchlauf. Mach dich bereit für den nächsten.";
     }
     if (keyValue == stepLdt03) {
-      return "Super! Jetzt kommen erst einmal ein paar andere Fragen, und dann wird die Wortaufgabe später nochmal dran kommen.";
+      return "Super! Jetzt kommen erst einmal ein paar andere Fragen, und dann wird die Wortaufgabe später noch mal drankommen.";
     }
     if (keyValue == stepLdt04) {
-      return "Hervorragend! Einmal musst du die Wortaufgabe noch machen.";
+      return "Hervorragend! Einmal musst du die Wortaufgabe noch erledigen.";
     }
     if (keyValue == stepLdt05) {
       return "Fantastisch! Das war jetzt erstmal die letzte Wortaufgabe für ein paar Tage. Wenn in ein paar Tagen dann die nächste kommt, wird die auch viel kürzer sein.";

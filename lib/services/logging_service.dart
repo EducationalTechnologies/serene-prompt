@@ -11,11 +11,12 @@ class LoggingService {
 
   logData(String data) {}
 
-  logEvent(String eventName) {
+  logEvent(String eventName, {String data = ""}) {
     Map<String, String> event = {
       "type": "event",
       "time": getTimestamp(),
-      "name": eventName
+      "name": eventName,
+      "data": data
     };
     // TODO: Submit logs batched in the no task screen
     logs.add(event);

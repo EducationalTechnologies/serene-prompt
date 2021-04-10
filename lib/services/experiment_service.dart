@@ -218,22 +218,20 @@ class ExperimentService {
     return streakDays;
   }
 
-  Future<void> updateDaysActive() async {
-    var daysActive = await _dataService.getDaysActive();
-    await _dataService.saveDaysActive(daysActive + 1);
-  }
-
   Future<void> submitRecallTask(RecallTask recallTask) async {
     // Checking the streak BEFORE submitting the recall task
     int streakDays = await updateAndGetStreakDays();
 
-    await _rewardService.onRecallTask(streakDays);
+    _rewardService.addDaysActive(1);
+    _rewardService.onRecallTask(streakDays);
 
     // The last internalisation has info that has to be added to the recall task
     var lastInternalisation = await _dataService.getLastInternalisation();
 
-    recallTask.plan = lastInternalisation.plan;
-    recallTask.planId = lastInternalisation.planId;
+    if (lastInternalisation != null) {
+      recallTask.plan = lastInternalisation.plan;
+      recallTask.planId = lastInternalisation.planId;
+    }
 
     _dataService.saveRecallTask(recallTask);
 

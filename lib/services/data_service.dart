@@ -167,9 +167,11 @@ class DataService {
   }
 
   Future<UserData> getUserData() async {
+    var username = _userService.getUsername();
+    if (username == null) return null;
+    if (username.isEmpty) return null;
     if (_userDataCache == null) {
-      _userDataCache =
-          await _databaseService.getUserData(_userService.getUsername());
+      _userDataCache = await _databaseService.getUserData(username);
     }
     return _userDataCache;
   }
@@ -199,13 +201,20 @@ class DataService {
     if (_userService.getUsername() == null) return 0;
     if (_userService.getUsername().isEmpty) return 0;
 
-    var userData = await getUserData();
-    if (userData == null) return 0;
-    return userData.score;
+    return getUserData().then((userData) {
+      if (userData == null)
+        return 0;
+      else
+        return userData.score;
+    });
+    // var userData = await getUserData();
+    // if (userData == null) return 0;
+    // return userData.score;
   }
 
   saveScore(int score) async {
-    _userDataCache.score = score;
+    var ud = await getUserData();
+    ud.score = score;
     await _databaseService.saveScore(_userService.getUsername(), score);
   }
 
@@ -216,7 +225,8 @@ class DataService {
   }
 
   saveDaysActive(int daysActive) async {
-    _userDataCache.daysActive = daysActive;
+    var ud = await getUserData();
+    ud.daysActive = daysActive;
     await _databaseService.saveDaysAcive(
         _userService.getUsername(), daysActive);
   }
@@ -229,7 +239,8 @@ class DataService {
   updateInternalisationConditionGroup(int group) async {
     await _databaseService.updateInternalisationConditionGroup(
         _userService.getUsername(), group);
-    _userDataCache.internalisationCondition = group;
+    var ud = await getUserData();
+    ud.internalisationCondition = group;
   }
 
   Future<DateTime> getDateOfLastLDT() async {
@@ -291,7 +302,8 @@ class DataService {
   }
 
   Future<void> setStreakDays(int value) async {
-    _userDataCache.streakDays = value;
+    var ud = await getUserData();
+    ud.streakDays = value;
     return await _databaseService.setStreakDays(
         _userService.getUsername(), value);
   }

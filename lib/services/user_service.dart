@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:serene/locator.dart';
+import 'package:serene/models/user_data.dart';
 import 'package:serene/services/firebase_service.dart';
 import 'package:serene/services/settings_service.dart';
 import 'package:serene/shared/enums.dart';
@@ -43,10 +44,29 @@ class UserService {
     }
   }
 
+  static UserData getDefaultUserData(email, {uid = ""}) {
+    return UserData(
+        userId: uid,
+        email: email,
+        internalisationCondition: 1,
+        score: 0,
+        streakDays: 0,
+        registrationDate: DateTime.now());
+  }
+
   Future<String> signInUser(String email, String password) async {
-    var userData = await FirebaseService().signInUser(email, password);
-    if (userData != null) {
+    var user = await FirebaseService()
+        .signInUser(email, password)
+        .onError((error, stackTrace) {
+      print("Error signing in user: ${error.toString()}");
+    });
+    if (user != null) {
       await saveUsername(email);
+      var userData = FirebaseService().getUserData(email);
+      if (userData == null) {
+        var defaultUserData = getDefaultUserData(email, uid: user.uid);
+        await FirebaseService().insertUserData(defaultUserData);
+      }
       return RegistrationCodes.SUCCESS;
     } else {
       return locator.get<FirebaseService>().lastError;
