@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/viewmodels/startup_view_model.dart';
+import 'package:prompt/viewmodels/startup_view_model.dart';
 
 class SplashScreen extends StatelessWidget {
   @override

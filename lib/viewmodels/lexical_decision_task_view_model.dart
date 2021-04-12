@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:serene/models/ldt_data.dart';
-import 'package:serene/services/experiment_service.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/base_view_model.dart';
+import 'package:prompt/models/ldt_data.dart';
+import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/route_names.dart';
+import 'package:prompt/viewmodels/base_view_model.dart';
 
 class LexicalDecisionTaskViewModel extends BaseViewModel {
   final int durationFixationCross = 1000;

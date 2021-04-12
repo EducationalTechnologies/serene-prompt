@@ -1,4 +1,4 @@
-import 'package:serene/shared/enums.dart';
+import 'package:prompt/shared/enums.dart';
 
 const Map<int, List<dynamic>> PLAN_CONDITION_MAPPING = {
   1: [

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/screens/startup_screen.dart';
-import 'package:serene/services/navigation_service.dart';
-import 'package:serene/shared/app_router.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/screens/startup_screen.dart';
+import 'package:prompt/services/navigation_service.dart';
+import 'package:prompt/shared/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {

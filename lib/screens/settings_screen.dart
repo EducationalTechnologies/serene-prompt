@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/settings_view_model.dart';
-import 'package:serene/widgets/serene_drawer.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/settings_view_model.dart';
+import 'package:prompt/widgets/serene_drawer.dart';
 
 class SettingsScreen extends StatelessWidget {
   _submit(SettingsViewModel vm) {

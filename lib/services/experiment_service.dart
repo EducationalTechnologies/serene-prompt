@@ -1,19 +1,19 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:serene/models/assessment_result.dart';
-import 'package:serene/models/internalisation.dart';
-import 'package:serene/models/ldt_data.dart';
-import 'package:serene/models/recall_task.dart';
-import 'package:serene/services/data_service.dart';
-import 'package:serene/services/logging_service.dart';
-import 'package:serene/services/navigation_service.dart';
-import 'package:serene/services/notification_service.dart';
-import 'package:serene/services/reward_service.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/experiment_constants.dart';
-import 'package:serene/shared/extensions.dart';
-import 'package:serene/shared/route_names.dart';
+import 'package:prompt/models/assessment_result.dart';
+import 'package:prompt/models/internalisation.dart';
+import 'package:prompt/models/ldt_data.dart';
+import 'package:prompt/models/recall_task.dart';
+import 'package:prompt/services/data_service.dart';
+import 'package:prompt/services/logging_service.dart';
+import 'package:prompt/services/navigation_service.dart';
+import 'package:prompt/services/notification_service.dart';
+import 'package:prompt/services/reward_service.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/experiment_constants.dart';
+import 'package:prompt/shared/extensions.dart';
+import 'package:prompt/shared/route_names.dart';
 
 class ExperimentService {
   static const int INTERNALISATION_RECALL_BREAK = 6;

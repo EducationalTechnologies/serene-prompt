@@ -1,7 +1,7 @@
-import 'package:serene/models/recall_task.dart';
-import 'package:serene/services/experiment_service.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/viewmodels/base_view_model.dart';
+import 'package:prompt/models/recall_task.dart';
+import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/viewmodels/base_view_model.dart';
 
 class InternalisationRecallViewModel extends BaseViewModel {
   final ExperimentService _experimentService;

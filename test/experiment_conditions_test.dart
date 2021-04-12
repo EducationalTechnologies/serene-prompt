@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:serene/services/experiment_service.dart';
+import 'package:prompt/services/experiment_service.dart';
 
 void main() {
   group("Experiment Conditions", () {

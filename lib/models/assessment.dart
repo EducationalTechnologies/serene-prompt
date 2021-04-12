@@ -1,4 +1,4 @@
-import 'package:serene/models/assessment_item.dart';
+import 'package:prompt/models/assessment_item.dart';
 
 class Assessment {
   String id = "";

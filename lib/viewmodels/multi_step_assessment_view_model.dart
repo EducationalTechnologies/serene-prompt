@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serene/models/assessment.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/viewmodels/base_view_model.dart';
+import 'package:prompt/models/assessment.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/viewmodels/base_view_model.dart';
 
 abstract class MultiStepAssessmentViewModel extends BaseViewModel {
   int step = 0;

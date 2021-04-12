@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serene/shared/enums.dart';
+import 'package:prompt/shared/enums.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 class Resource {

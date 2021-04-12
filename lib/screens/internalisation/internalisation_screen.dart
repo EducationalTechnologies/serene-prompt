@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/screens/internalisation/emoji_story_screen.dart';
-import 'package:serene/screens/internalisation/scramble_internalisation.dart';
-import 'package:serene/screens/internalisation/waiting_internalisation_screen.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/viewmodels/internalisation_view_model.dart';
-import 'package:serene/widgets/serene_appbar.dart';
-import 'package:serene/widgets/serene_drawer.dart';
+import 'package:prompt/screens/internalisation/emoji_story_screen.dart';
+import 'package:prompt/screens/internalisation/scramble_internalisation.dart';
+import 'package:prompt/screens/internalisation/waiting_internalisation_screen.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/viewmodels/internalisation_view_model.dart';
+import 'package:prompt/widgets/serene_appbar.dart';
+import 'package:prompt/widgets/serene_drawer.dart';
 
 class InternalisationScreen extends StatefulWidget {
   InternalisationScreen({Key key}) : super(key: key);

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/services/reward_service.dart';
-import 'package:serene/shared/ui_helpers.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/services/reward_service.dart';
+import 'package:prompt/shared/ui_helpers.dart';
 
 class SereneAppBar extends StatefulWidget with PreferredSizeWidget {
   final String title;
@@ -45,18 +45,20 @@ class _SereneAppBarState extends State<SereneAppBar> {
       elevation: 0,
       actions: [
         StreamBuilder(
-            stream: scoreStream.stream,
+            stream: rewardService.controller.stream,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active ||
                   snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
-                  return Text(
-                    "${snapshot.data}💎",
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.yellow[800]),
-                  );
+                  return TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "${snapshot.data}💎",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.yellow[800]),
+                      ));
                 }
               }
               return Text("${rewardService.scoreValue}💎",

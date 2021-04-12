@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:serene/shared/extensions.dart';
+import 'package:prompt/shared/extensions.dart';
 
 void main() {
   test("Date Should be three days ago", () {

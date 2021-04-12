@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serene/shared/enums.dart';
+import 'package:prompt/shared/enums.dart';
 
 class BaseViewModel extends ChangeNotifier {
   final GlobalKey<State> keyLoader = new GlobalKey<State>();

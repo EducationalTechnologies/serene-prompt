@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/screens/rewards/reward_selection_screen.dart';
-import 'package:serene/services/data_service.dart';
-import 'package:serene/services/experiment_service.dart';
-import 'package:serene/services/reward_service.dart';
-import 'package:serene/shared/route_names.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/widgets/full_width_button.dart';
-import 'package:serene/widgets/serene_appbar.dart';
-import 'package:serene/widgets/serene_drawer.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/screens/rewards/reward_selection_screen.dart';
+import 'package:prompt/services/data_service.dart';
+import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/services/reward_service.dart';
+import 'package:prompt/shared/route_names.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/widgets/full_width_button.dart';
+import 'package:prompt/widgets/serene_appbar.dart';
+import 'package:prompt/widgets/serene_drawer.dart';
 import 'package:flutter/foundation.dart';
-import 'package:serene/shared/extensions.dart';
+import 'package:prompt/shared/extensions.dart';
 import 'package:intl/intl.dart';
 
 class NoTasksScreen extends StatefulWidget {
@@ -182,8 +182,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(Icons.image),
-                                          UIHelper.horizontalSpaceMedium(),
                                           Text(
                                             "Hintergrund ändern",
                                             style:

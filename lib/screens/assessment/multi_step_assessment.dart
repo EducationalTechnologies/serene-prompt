@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serene/viewmodels/multi_step_assessment_view_model.dart';
-import 'package:serene/shared/extensions.dart';
-import 'package:serene/widgets/full_width_button.dart';
+import 'package:prompt/viewmodels/multi_step_assessment_view_model.dart';
+import 'package:prompt/shared/extensions.dart';
+import 'package:prompt/widgets/full_width_button.dart';
 
 class MultiStepAssessment extends StatefulWidget {
   final MultiStepAssessmentViewModel vm;

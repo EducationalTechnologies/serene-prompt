@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:serene/shared/ui_helpers.dart';
+import 'package:prompt/shared/ui_helpers.dart';
 
 class InitialRewardScreenFirst extends StatelessWidget {
   const InitialRewardScreenFirst({Key key}) : super(key: key);

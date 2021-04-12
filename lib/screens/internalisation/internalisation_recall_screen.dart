@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:prompt/widgets/help_appbar.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/internalisation_recall_view_model.dart';
-import 'package:serene/widgets/full_width_button.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/internalisation_recall_view_model.dart';
+import 'package:prompt/widgets/full_width_button.dart';
 
 class InternalisationRecallScreen extends StatefulWidget {
   InternalisationRecallScreen({Key key}) : super(key: key);
@@ -29,6 +30,7 @@ class _InternalisationRecallScreenState
   Widget build(BuildContext context) {
     var vm = Provider.of<InternalisationRecallViewModel>(context);
     return Scaffold(
+      appBar: HelpAppBar(),
       body: Container(
         margin: UIHelper.getContainerMargin(),
         child: Column(

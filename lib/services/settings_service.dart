@@ -1,5 +1,5 @@
-import 'package:serene/services/local_database_service.dart';
-import 'package:serene/shared/enums.dart';
+import 'package:prompt/services/local_database_service.dart';
+import 'package:prompt/shared/enums.dart';
 
 class SettingsService {
   // SharedPreferences _prefs;

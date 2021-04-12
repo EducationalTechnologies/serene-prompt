@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/models/obstacle.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/init_session_view_model.dart';
+import 'package:prompt/models/obstacle.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/init_session_view_model.dart';
 
 class ObstacleSortingScreen extends StatefulWidget {
   ObstacleSortingScreen({Key key}) : super(key: key);

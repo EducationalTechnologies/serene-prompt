@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/screens/initialsession/text_explanation_screen.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/init_session_view_model.dart';
-import 'package:serene/viewmodels/lexical_decision_task_view_model.dart';
-import 'package:serene/widgets/countdown.dart';
-import 'package:serene/widgets/full_width_button.dart';
+import 'package:prompt/screens/initialsession/text_explanation_screen.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/init_session_view_model.dart';
+import 'package:prompt/viewmodels/lexical_decision_task_view_model.dart';
+import 'package:prompt/widgets/countdown.dart';
+import 'package:prompt/widgets/full_width_button.dart';
 
 typedef void OnLoadedCallback(String trialName);
 

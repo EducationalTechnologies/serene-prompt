@@ -1,4 +1,4 @@
-import 'package:serene/shared/enums.dart';
+import 'package:prompt/shared/enums.dart';
 
 class AssessmentScreenArguments {
   final AssessmentTypes assessmentType;

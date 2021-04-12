@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/models/assessment.dart';
-import 'package:serene/screens/assessment/free_text_question.dart';
-import 'package:serene/screens/assessment/multi_step_assessment.dart';
-import 'package:serene/screens/assessment/questionnaire.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/evening_assessment_view_model.dart';
-import 'package:serene/widgets/serene_appbar.dart';
-import 'package:serene/widgets/serene_drawer.dart';
+import 'package:prompt/models/assessment.dart';
+import 'package:prompt/screens/assessment/free_text_question.dart';
+import 'package:prompt/screens/assessment/multi_step_assessment.dart';
+import 'package:prompt/screens/assessment/questionnaire.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/evening_assessment_view_model.dart';
+import 'package:prompt/widgets/serene_appbar.dart';
+import 'package:prompt/widgets/serene_drawer.dart';
 
 class EveningAssessmentScreen extends StatefulWidget {
   EveningAssessmentScreen({Key key}) : super(key: key);

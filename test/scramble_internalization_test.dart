@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:serene/screens/internalisation/scramble_internalisation.dart';
+import 'package:prompt/screens/internalisation/scramble_internalisation.dart';
 
 void main() {
   test("Correct sentence should be available after scramble", () {

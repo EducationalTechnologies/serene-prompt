@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serene/models/assessment.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/widgets/interval_scale.dart';
+import 'package:prompt/models/assessment.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/widgets/interval_scale.dart';
 
 typedef void ItemSelectedCallback(
     String assessment, String itemId, String value);

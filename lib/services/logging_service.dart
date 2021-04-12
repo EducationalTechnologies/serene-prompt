@@ -1,4 +1,4 @@
-import 'package:serene/services/data_service.dart';
+import 'package:prompt/services/data_service.dart';
 
 class LoggingService {
   List<Map<String, String>> logs = [];

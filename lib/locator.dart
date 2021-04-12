@@ -1,14 +1,14 @@
 import 'package:get_it/get_it.dart';
-import 'package:serene/services/data_service.dart';
-import 'package:serene/services/experiment_service.dart';
-import 'package:serene/services/firebase_service.dart';
-import 'package:serene/services/local_database_service.dart';
-import 'package:serene/services/logging_service.dart';
-import 'package:serene/services/navigation_service.dart';
-import 'package:serene/services/notification_service.dart';
-import 'package:serene/services/reward_service.dart';
-import 'package:serene/services/settings_service.dart';
-import 'package:serene/services/user_service.dart';
+import 'package:prompt/services/data_service.dart';
+import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/services/firebase_service.dart';
+import 'package:prompt/services/local_database_service.dart';
+import 'package:prompt/services/logging_service.dart';
+import 'package:prompt/services/navigation_service.dart';
+import 'package:prompt/services/notification_service.dart';
+import 'package:prompt/services/reward_service.dart';
+import 'package:prompt/services/settings_service.dart';
+import 'package:prompt/services/user_service.dart';
 
 GetIt locator = GetIt.instance;
 

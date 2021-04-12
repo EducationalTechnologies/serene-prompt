@@ -1,12 +1,12 @@
 import 'dart:core';
 import 'package:flutter/foundation.dart';
-import 'package:serene/models/assessment.dart';
-import 'package:serene/models/assessment_result.dart';
-import 'package:serene/services/data_service.dart';
-import 'package:serene/services/experiment_service.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/multi_step_assessment_view_model.dart';
+import 'package:prompt/models/assessment.dart';
+import 'package:prompt/models/assessment_result.dart';
+import 'package:prompt/services/data_service.dart';
+import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/route_names.dart';
+import 'package:prompt/viewmodels/multi_step_assessment_view_model.dart';
 
 enum MorningAssessmentPages {
   learningIntention,

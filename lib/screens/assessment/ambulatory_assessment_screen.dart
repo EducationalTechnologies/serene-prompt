@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:serene/models/assessment.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/ambulatory_assessment_view_model.dart';
-import 'package:serene/widgets/full_width_button.dart';
-import 'package:serene/widgets/interval_scale.dart';
+import 'package:prompt/models/assessment.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/ambulatory_assessment_view_model.dart';
+import 'package:prompt/widgets/full_width_button.dart';
+import 'package:prompt/widgets/interval_scale.dart';
 import 'package:provider/provider.dart';
 
 class AmbulatoryAssessmentScreen extends StatelessWidget {

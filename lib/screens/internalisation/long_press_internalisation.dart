@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/services/settings_service.dart';
-import 'package:serene/shared/route_names.dart';
-import 'package:serene/shared/ui_helpers.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/services/settings_service.dart';
+import 'package:prompt/shared/route_names.dart';
+import 'package:prompt/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/viewmodels/internalisation_view_model.dart';
+import 'package:prompt/viewmodels/internalisation_view_model.dart';
 
 class LongPressInternalisation extends StatefulWidget {
   @override

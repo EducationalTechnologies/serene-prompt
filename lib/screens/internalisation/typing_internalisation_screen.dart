@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/route_names.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/internalisation_view_model.dart';
+import 'package:prompt/shared/route_names.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/internalisation_view_model.dart';
 
 class TypingInternalisationScreen extends StatefulWidget {
   @override

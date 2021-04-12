@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/internalisation_view_model.dart';
-import 'package:serene/widgets/speech_bubble.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/internalisation_view_model.dart';
+import 'package:prompt/widgets/speech_bubble.dart';
 
 class ScrambleText {
   int originalPosition;

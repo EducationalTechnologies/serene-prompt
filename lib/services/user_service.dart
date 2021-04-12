@@ -1,9 +1,9 @@
 import 'dart:math';
-import 'package:serene/locator.dart';
-import 'package:serene/models/user_data.dart';
-import 'package:serene/services/firebase_service.dart';
-import 'package:serene/services/settings_service.dart';
-import 'package:serene/shared/enums.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/models/user_data.dart';
+import 'package:prompt/services/firebase_service.dart';
+import 'package:prompt/services/settings_service.dart';
+import 'package:prompt/shared/enums.dart';
 
 class UserService {
   UserService(this._settings);

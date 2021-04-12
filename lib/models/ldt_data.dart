@@ -4,7 +4,7 @@ class LdtData {
   List<String> primes = [];
   List<int> correctValues = [];
   int durationFixationCross = 1000;
-  int durationPrime = 50;
+  int durationPrime = 40;
   int durationBackwardMask = 700;
   int durationInterTrialScreen = 2000;
   DateTime startDate = DateTime.now();

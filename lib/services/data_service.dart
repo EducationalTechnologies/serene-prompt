@@ -3,23 +3,23 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/services.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/models/assessment.dart';
-import 'package:serene/models/assessment_result.dart';
-import 'package:serene/models/assessment_item.dart';
-import 'package:serene/models/internalisation.dart';
-import 'package:serene/models/ldt_data.dart';
-import 'package:serene/models/obstacle.dart';
-import 'package:serene/models/outcome.dart';
-import 'package:serene/models/recall_task.dart';
-import 'package:serene/models/user_data.dart';
-import 'package:serene/services/firebase_service.dart';
-import 'package:serene/services/local_database_service.dart';
-import 'package:serene/services/settings_service.dart';
-import 'package:serene/services/user_service.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/models/assessment.dart';
+import 'package:prompt/models/assessment_result.dart';
+import 'package:prompt/models/assessment_item.dart';
+import 'package:prompt/models/internalisation.dart';
+import 'package:prompt/models/ldt_data.dart';
+import 'package:prompt/models/obstacle.dart';
+import 'package:prompt/models/outcome.dart';
+import 'package:prompt/models/recall_task.dart';
+import 'package:prompt/models/user_data.dart';
+import 'package:prompt/services/firebase_service.dart';
+import 'package:prompt/services/local_database_service.dart';
+import 'package:prompt/services/settings_service.dart';
+import 'package:prompt/services/user_service.dart';
 import 'package:csv/csv.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/experiment_constants.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/experiment_constants.dart';
 
 enum CachedValues { goals, internalisations }
 
@@ -264,19 +264,19 @@ class DataService {
     return locator.get<SettingsService>().getInitSessionStep();
   }
 
-  void saveInitialSessionStepCompleted(int step) async {
-    locator
-        .get<SettingsService>()
-        .setSetting(SettingsKeys.initSessionStep, step.toString());
-  }
-
   Future<void> saveInitialSessionValue(String key, dynamic value) async {
     await _databaseService.saveInitialSessionValue(
         _userService.getUsername(), key, value);
   }
 
+  void saveInitialSessionStepCompleted(int step) async {
+    await _databaseService.saveInitSessionStepCompleted(
+        _userService.getUsername(), step);
+  }
+
   Future<int> getCompletedInitialSessionStep() async {
-    var step = await _localDatabaseService.getSettingsValue("initSessionStep");
+    var step =
+        await _databaseService.getMaxInitSession(_userService.getUsername());
     if (step == null) return 0;
     return step;
   }

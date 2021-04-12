@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serene/widgets/speech_bubble.dart';
+import 'package:prompt/widgets/speech_bubble.dart';
 
 class TextExplanationScreen extends StatelessWidget {
   final String text;

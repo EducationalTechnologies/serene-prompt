@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:serene/shared/materialized_path.dart';
+import 'package:prompt/shared/materialized_path.dart';
 
 void main() {
   group("Materialized Path", () {

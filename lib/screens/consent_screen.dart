@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/viewmodels/consent_view_model.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/viewmodels/consent_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/widgets/full_width_button.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/widgets/full_width_button.dart';
 
 class ConsentScreen extends StatelessWidget {
   final List<String> _textIntroduction = [

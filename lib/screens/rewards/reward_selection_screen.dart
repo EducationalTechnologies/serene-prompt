@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/services/reward_service.dart';
-import 'package:serene/widgets/serene_appbar.dart';
-import 'package:serene/widgets/timeline.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/services/reward_service.dart';
+import 'package:prompt/widgets/serene_appbar.dart';
+import 'package:prompt/widgets/timeline.dart';
+import 'package:prompt/models/unlockable_background.dart';
 
 class RewardSelectionScreen extends StatefulWidget {
   RewardSelectionScreen() : super();
@@ -18,8 +19,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
     var rewardService = locator<RewardService>();
     for (var bg in rewardService.backgrounds) {
       var unlocked = rewardService.daysActive >= bg.requiredDays;
-      unlockItems
-          .add(_buildUnlockItem(bg.name, bg.path, bg.requiredDays, unlocked));
+      unlockItems.add(_buildUnlockItem(bg, unlocked));
     }
 
     return Scaffold(
@@ -31,7 +31,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
     );
   }
 
-  _buildUnlockItem(String header, String path, int price, bool unlocked) {
+  _buildUnlockItem(UnlockableBackground unlockable, bool unlocked) {
     var rewardService = locator.get<RewardService>();
 
     Widget unlockButton;
@@ -40,7 +40,10 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
       unlockButton = ElevatedButton(
         onPressed: () {
           setState(() {
-            rewardService.setBackgroundImagePath(path);
+            rewardService.setBackgroundImagePath(unlockable.path);
+            if (unlockable.backgroundColor != null) {
+              rewardService.setBackgroundColor(unlockable.backgroundColor);
+            }
           });
         },
         child: Text("Aktivieren"),
@@ -53,11 +56,12 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
             // rewardService.setBackgroundImagePath(path);
           });
         },
-        child: Text("Wird nach $price Tagen Aktivität freigeschaltet"),
+        child: Text(
+            "Wird nach ${unlockable.requiredDays} Tagen Aktivität freigeschaltet"),
       );
     }
 
-    var isSelected = rewardService.backgroundImagePath == path;
+    var isSelected = rewardService.backgroundImagePath == unlockable.path;
     return Container(
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(boxShadow: [
@@ -69,12 +73,12 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
       child: Column(
         children: [
           Text(
-            header,
+            unlockable.name,
             style: Theme.of(context).textTheme.headline6,
           ),
           if (unlocked)
             Image(
-              image: AssetImage(path),
+              image: AssetImage(unlockable.path),
               width: 130,
               height: 110,
             ),
@@ -85,7 +89,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
                 BlendMode.saturation,
               ),
               child: Image(
-                image: AssetImage(path),
+                image: AssetImage(unlockable.path),
                 width: 130,
                 height: 110,
               ),

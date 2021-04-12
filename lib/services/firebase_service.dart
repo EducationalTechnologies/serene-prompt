@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/models/assessment_result.dart';
-import 'package:serene/models/internalisation.dart';
-import 'package:serene/models/ldt_data.dart';
-import 'package:serene/models/obstacle.dart';
-import 'package:serene/models/outcome.dart';
-import 'package:serene/models/recall_task.dart';
-import 'package:serene/models/user_data.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/models/assessment_result.dart';
+import 'package:prompt/models/internalisation.dart';
+import 'package:prompt/models/ldt_data.dart';
+import 'package:prompt/models/obstacle.dart';
+import 'package:prompt/models/outcome.dart';
+import 'package:prompt/models/recall_task.dart';
+import 'package:prompt/models/user_data.dart';
 import 'package:flutter/services.dart';
-import 'package:serene/services/logging_service.dart';
-import 'package:serene/services/user_service.dart';
+import 'package:prompt/services/logging_service.dart';
+import 'package:prompt/services/user_service.dart';
 
 class FirebaseService {
   static final FirebaseService _instance = FirebaseService._internal();
@@ -285,7 +285,7 @@ class FirebaseService {
   }
 
   Future<int> getNumberOfInternalisations(String email) async {
-    return await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_INTERNALISATION)
         .where("user", isEqualTo: email)
         .get()
@@ -345,12 +345,17 @@ class FirebaseService {
     await _databaseReference.collection(COLLECTION_LOGS).add(data);
   }
 
-  Future<Map<String, String>> getInitSessionSteps(String userid) async {
+  Future<int> getMaxInitSession(String userid) async {
     var initSessionData = await _databaseReference
         .collection(COLLECTION_INITSESSION)
         .where("user", isEqualTo: userid)
         .get()
-        .catchError(handleError);
+        .then((value) {
+      if (value.docs.isEmpty) return null;
+      if (value.docs[0].data().containsKey("maxStep")) {
+        return value.docs[0].data()["maxStep"];
+      }
+    }).catchError(handleError);
 
     if (initSessionData.docs.length == null) {
       return null;
@@ -363,7 +368,7 @@ class FirebaseService {
     await _databaseReference
         .collection(COLLECTION_INITSESSION)
         .doc(userid)
-        .set({"step": step}, SetOptions(merge: true));
+        .set({"maxStep": step}, SetOptions(merge: true));
   }
 
   Future<void> saveInitialSessionValue(

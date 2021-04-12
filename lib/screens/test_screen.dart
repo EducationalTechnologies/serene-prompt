@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serene/locator.dart';
-import 'package:serene/services/logging_service.dart';
-import 'package:serene/widgets/serene_drawer.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/services/logging_service.dart';
+import 'package:prompt/widgets/serene_drawer.dart';
 
 class TestScreen extends StatefulWidget {
   @override

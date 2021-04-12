@@ -1,14 +1,14 @@
-import 'package:serene/locator.dart';
-import 'package:serene/services/data_service.dart';
-import 'package:serene/services/experiment_service.dart';
-import 'package:serene/services/navigation_service.dart';
-import 'package:serene/services/notification_service.dart';
-import 'package:serene/services/reward_service.dart';
-import 'package:serene/services/settings_service.dart';
-import 'package:serene/services/user_service.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/base_view_model.dart';
+import 'package:prompt/locator.dart';
+import 'package:prompt/services/data_service.dart';
+import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/services/navigation_service.dart';
+import 'package:prompt/services/notification_service.dart';
+import 'package:prompt/services/reward_service.dart';
+import 'package:prompt/services/settings_service.dart';
+import 'package:prompt/services/user_service.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/route_names.dart';
+import 'package:prompt/viewmodels/base_view_model.dart';
 
 class StartupViewModel extends BaseViewModel {
   List<String> debugTexts = [];

@@ -1,5 +1,5 @@
-import 'package:serene/services/settings_service.dart';
-import 'package:serene/viewmodels/base_view_model.dart';
+import 'package:prompt/services/settings_service.dart';
+import 'package:prompt/viewmodels/base_view_model.dart';
 
 class SettingsViewModel extends BaseViewModel {
   SettingsService _settingsService;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serene/shared/enums.dart';
-import 'package:serene/shared/ui_helpers.dart';
-import 'package:serene/viewmodels/morning_assessment_view_model.dart';
+import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/viewmodels/morning_assessment_view_model.dart';
 
 class DailyLearningQuestionScreen extends StatelessWidget {
   @override
