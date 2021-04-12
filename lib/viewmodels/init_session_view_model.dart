@@ -107,8 +107,14 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   Assessment lastAssessment = Assessment();
   Map<String, String> currentAssessmentResults = {};
   String numberOfDaysLearningGoal = "";
-  String overcomeObstacleText = "";
-  // Map<AssessmentTypes, Map<String, String>> assessmentResults = {};
+  String _overcomeObstacleText = "";
+
+  String get overcomeObstacleText => _overcomeObstacleText;
+
+  set overcomeObstacleText(String overcomeObstacleText) {
+    _overcomeObstacleText = overcomeObstacleText;
+    notifyListeners();
+  }
 
   List<Obstacle> selectedObstacles = <Obstacle>[];
   List<Outcome> selectedOutcomes = <Outcome>[];

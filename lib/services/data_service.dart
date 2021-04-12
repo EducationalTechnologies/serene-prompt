@@ -19,6 +19,7 @@ import 'package:serene/services/settings_service.dart';
 import 'package:serene/services/user_service.dart';
 import 'package:csv/csv.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/experiment_constants.dart';
 
 enum CachedValues { goals, internalisations }
 
@@ -117,18 +118,15 @@ class DataService {
         .getNumberOfInternalisations(_userService.getUsername());
   }
 
-  Future<Internalisation> getCurrentImplementationIntention() async {
+  Future<Internalisation> getCurrentInternalisation(int number) async {
     if (_planCache.length == 0) {
-      String data = await rootBundle.loadString("assets/config/plans.json");
-      for (var plan in jsonDecode(data)) {
+      for (var plan in PLANS) {
         var internalisation =
             Internalisation(plan: plan["plan"], planId: plan["planId"]);
         _planCache.add(internalisation);
       }
     }
-    var index =
-        await getNumberOfCompletedInternalisations() % (_planCache.length - 1);
-    var plan = _planCache[index];
+    var plan = _planCache[number];
     return plan;
   }
 
@@ -207,9 +205,6 @@ class DataService {
       else
         return userData.score;
     });
-    // var userData = await getUserData();
-    // if (userData == null) return 0;
-    // return userData.score;
   }
 
   saveScore(int score) async {
@@ -240,7 +235,7 @@ class DataService {
     await _databaseService.updateInternalisationConditionGroup(
         _userService.getUsername(), group);
     var ud = await getUserData();
-    ud.internalisationCondition = group;
+    ud.group = group;
   }
 
   Future<DateTime> getDateOfLastLDT() async {

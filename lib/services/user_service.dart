@@ -45,24 +45,23 @@ class UserService {
   }
 
   static UserData getDefaultUserData(email, {uid = ""}) {
+    var rng = Random();
+    var condition = rng.nextInt(6);
+    condition += 1;
     return UserData(
         userId: uid,
         email: email,
-        internalisationCondition: 1,
+        group: condition,
         score: 0,
         streakDays: 0,
         registrationDate: DateTime.now());
   }
 
   Future<String> signInUser(String email, String password) async {
-    var user = await FirebaseService()
-        .signInUser(email, password)
-        .onError((error, stackTrace) {
-      print("Error signing in user: ${error.toString()}");
-    });
+    var user = await FirebaseService().signInUser(email, password);
     if (user != null) {
       await saveUsername(email);
-      var userData = FirebaseService().getUserData(email);
+      var userData = await FirebaseService().getUserData(email);
       if (userData == null) {
         var defaultUserData = getDefaultUserData(email, uid: user.uid);
         await FirebaseService().insertUserData(defaultUserData);

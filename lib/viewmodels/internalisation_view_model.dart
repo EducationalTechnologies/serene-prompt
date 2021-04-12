@@ -8,7 +8,8 @@ class InternalisationViewModel extends BaseViewModel {
   final DataService _dataService;
   final ExperimentService _experimentService;
 
-  String plan = "";
+  String get plan => _currentInternalisation.plan;
+
   Future<bool> initialized;
   InternalisationCondition internalisationCondition =
       InternalisationCondition.waiting;
@@ -19,8 +20,6 @@ class InternalisationViewModel extends BaseViewModel {
     this._dataService,
     this._experimentService,
   ) {
-    _currentInternalisation.startDate = DateTime.now();
-
     initialized = init();
     waitingDuration = ExperimentService.WAITING_TIMER_DURATION;
   }
@@ -28,6 +27,7 @@ class InternalisationViewModel extends BaseViewModel {
   Future<bool> init() async {
     var numberOf = await _experimentService.getDayOfExperiment();
     _currentInternalisation = await _experimentService.getTodaysPlan(numberOf);
+    _currentInternalisation.startDate = DateTime.now();
     this.internalisationCondition =
         await _experimentService.getTodaysInternalisationCondition(numberOf);
 

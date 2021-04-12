@@ -10,6 +10,21 @@ class UIHelper {
   static const double _horizontalSpaceMedium = 20.0;
   static const double _horizontalSpaceLarge = 50.0;
 
+  ThemeData darkTheme = ThemeData.dark().copyWith(
+      primaryColor: Color(0xff1f655d),
+      accentColor: Color(0xff40bf7a),
+      textTheme: TextTheme(
+          headline6: TextStyle(color: Color(0xff40bf7a)),
+          subtitle2: TextStyle(color: Colors.white),
+          subtitle1: TextStyle(color: Color(0xff40bf7a))),
+      appBarTheme: AppBarTheme(color: Color(0xff1f655d)));
+
+  static InputDecoration defaultTextfieldDecoration = InputDecoration(
+      fillColor: Colors.white,
+      filled: true,
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))));
+
   static Widget verticalSpaceSmall() {
     return verticalSpace(_verticalSpaceSmall);
   }

@@ -217,25 +217,24 @@ class FirebaseService {
 
   Future<List<Internalisation>> getLastInternalisations(
       String userid, int number) async {
-    var doc = await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_INTERNALISATION)
         .where("user", isEqualTo: userid)
         .orderBy("completionDate", descending: true)
         .limit(number)
         .get()
-        .timeout(Duration(seconds: 10), onTimeout: () {
+        .then((doc) {
+      if (doc == null) return null;
+      List<Internalisation> internalisations = [];
+      for (var doc in doc.docs) {
+        internalisations.add(Internalisation.fromDocument(doc));
+      }
+
+      return internalisations;
+    }).timeout(Duration(seconds: 15), onTimeout: () {
       handleTimeout("Last Internalisation");
       return null;
     }).catchError((handleError));
-
-    if (doc == null) return null;
-
-    List<Internalisation> internalisations = [];
-    for (var doc in doc.docs) {
-      internalisations.add(Internalisation.fromDocument(doc));
-    }
-
-    return internalisations;
   }
 
   Future<Internalisation> getLastInternalisation(String email) async {
@@ -286,12 +285,12 @@ class FirebaseService {
   }
 
   Future<int> getNumberOfInternalisations(String email) async {
-    var count = await _databaseReference
+    return await _databaseReference
         .collection(COLLECTION_INTERNALISATION)
         .where("user", isEqualTo: email)
-        .get();
-
-    return count.docs.length;
+        .get()
+        .then((value) => value.docs.length)
+        .catchError(handleError);
   }
 
   saveConsent(String userid, bool consentValue) async {

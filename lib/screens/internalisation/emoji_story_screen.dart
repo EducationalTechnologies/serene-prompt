@@ -20,8 +20,8 @@ class EmojiStoryScreen extends StatefulWidget {
 
 class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
   bool _done = false;
-  String _emojiStoryIf = "";
-  String _emojiStoryThen = "";
+  // String _emojiStoryIf = "";
+  // String _emojiStoryThen = "";
 
   final TextEditingController _controllerLeft = TextEditingController();
   final TextEditingController _controllerRight = TextEditingController();
@@ -99,7 +99,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                     ),
                     onChanged: (text) {
                       setState(() {
-                        _emojiStoryIf = text;
+                        // _emojiStoryIf = text;
                         // _checkIfIsDone();
                       });
                     },
@@ -148,7 +148,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                     ),
                     onChanged: (text) {
                       setState(() {
-                        _emojiStoryThen = text;
+                        // _emojiStoryThen = text;
                         // _checkIfIsDone();
                       });
                     },

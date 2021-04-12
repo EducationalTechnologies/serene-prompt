@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:serene/locator.dart';
-import 'package:serene/screens/internalisation/internalisation_screen.dart';
-import 'package:serene/services/data_service.dart';
 import 'package:serene/services/experiment_service.dart';
 import 'package:serene/services/user_service.dart';
-import 'package:serene/shared/enums.dart';
 import 'package:serene/shared/route_names.dart';
-import 'package:serene/viewmodels/internalisation_view_model.dart';
 import 'package:serene/widgets/version_info.dart';
 
 class SereneDrawer extends StatelessWidget {
@@ -92,53 +87,21 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.filter_2,
-              text: "Login",
+              text: "LDT!!!",
               onTap: () {
-                Navigator.pop(context);
-
-                Navigator.pushNamed(context, RouteNames.LOG_IN);
+                var trialIndex =
+                    locator<ExperimentService>().getCurrentTrialIndex();
+                Navigator.pushNamed(context, RouteNames.LDT,
+                    arguments: trialIndex.toString());
               }),
           Divider(),
           _buildDrawerItem(
-              icon: Icons.filter_3,
-              text: "Internalisierung Warten",
+              icon: Icons.memory,
+              text: "Heutige Internalisierung",
               onTap: () {
-                var route = ChangeNotifierProvider<InternalisationViewModel>(
-                    create: (_) => InternalisationViewModel.forUsability(
-                        InternalisationCondition.waiting,
-                        locator.get<DataService>(),
-                        locator.get<ExperimentService>()),
-                    child: InternalisationScreen());
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => route));
-              }),
-          Divider(),
-          _buildDrawerItem(
-              icon: Icons.filter_4,
-              text: "Internalisierung Emoji",
-              onTap: () {
-                var route = ChangeNotifierProvider<InternalisationViewModel>(
-                    create: (_) => InternalisationViewModel.forUsability(
-                        InternalisationCondition.emoji,
-                        locator.get<DataService>(),
-                        locator.get<ExperimentService>()),
-                    child: InternalisationScreen());
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => route));
-              }),
-          Divider(),
-          _buildDrawerItem(
-              icon: Icons.filter_5,
-              text: "Internalisierung Puzzle",
-              onTap: () {
-                var route = ChangeNotifierProvider<InternalisationViewModel>(
-                    create: (_) => InternalisationViewModel.forUsability(
-                        InternalisationCondition.scrambleWithHint,
-                        locator.get<DataService>(),
-                        locator.get<ExperimentService>()),
-                    child: InternalisationScreen());
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => route));
+                Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT_USABILITY,
+                    arguments: "1");
               }),
           Divider(),
           _buildDrawerItem(

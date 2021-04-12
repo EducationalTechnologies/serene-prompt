@@ -196,8 +196,6 @@ class ExperimentService {
     this.updateInternalisationConditionGroup();
 
     _notificationService.scheduleInternalisationReminder(new Time(6, 30, 0));
-
-    _navigationService.navigateTo(RouteNames.NO_TASKS);
   }
 
   Future<bool> isFinalTask() async {
@@ -279,6 +277,9 @@ class ExperimentService {
     }
     if (currentScreen == RouteNames.INIT_START) {
       return await _navigationService.navigateTo(RouteNames.NO_TASKS);
+    }
+    if (currentScreen == RouteNames.INTERNALISATION) {
+      _navigationService.navigateTo(RouteNames.NO_TASKS);
     }
   }
 }

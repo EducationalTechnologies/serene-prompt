@@ -130,80 +130,87 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     var rewardService = locator.get<RewardService>();
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        appBar: SereneAppBar(),
-        drawer: _getDrawer(),
-        body: FutureBuilder(
-            future: _nextText,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                    decoration: BoxDecoration(
-                        // color: Colors.black,
-                        image: DecorationImage(
-                            image:
-                                AssetImage(rewardService.backgroundImagePath),
-                            fit: BoxFit.contain,
-                            // scale: 7.0,
-                            alignment: Alignment.bottomCenter)),
-                    child: Align(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            // Text(_textNext,
-                            //     textAlign: TextAlign.center,
-                            //     style: Theme.of(context).textTheme.headline5),
-                            // UIHelper.verticalSpaceLarge(),
-                            Text(_textNotification,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText1),
-                            UIHelper.verticalSpaceSmall(),
-                            Text(_textStreakDays,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText1),
-                            UIHelper.verticalSpaceSmall(),
-                            Text(_textReward,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText1),
-                            UIHelper.verticalSpaceMedium(),
-                            // Text("Du kriegst für deine Teilnahme 15💎.",
-                            //     textAlign: TextAlign.center,
-                            //     style: Theme.of(context).textTheme.headline5),
-                            Container(
-                                width: 250,
-                                height: 40,
-                                child: OutlinedButton(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.image),
-                                        UIHelper.horizontalSpaceMedium(),
-                                        Text(
-                                          "Hintergrund ändern",
-                                          style: TextStyle(color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                    onPressed: () async {
-                                      var rewardWidget =
-                                          RewardSelectionScreen();
-                                      await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  rewardWidget));
-                                      setState(() {});
-                                    })),
-                            if (_showToRecallTaskButton)
-                              _buildToRecallTaskButton(),
-                          ],
-                        ),
-                        alignment: Alignment(0.0, 0.6)));
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }),
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: <Color>[Color(0xffffffff), Color(0xff00d4ff)],
+            ),
+            // color: Colors.black,
+            image: DecorationImage(
+                image: AssetImage(rewardService.backgroundImagePath),
+                fit: BoxFit.contain,
+                alignment: Alignment.bottomCenter)),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: SereneAppBar(),
+          drawer: _getDrawer(),
+          body: FutureBuilder(
+              future: _nextText,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                      child: Align(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // Text(_textNext,
+                              //     textAlign: TextAlign.center,
+                              //     style: Theme.of(context).textTheme.headline5),
+                              // UIHelper.verticalSpaceLarge(),
+                              Text(_textNotification,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.headline6),
+                              UIHelper.verticalSpaceSmall(),
+                              Text(_textStreakDays,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyText1),
+                              UIHelper.verticalSpaceSmall(),
+                              Text(_textReward,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyText1),
+                              UIHelper.verticalSpaceMedium(),
+                              // Text("Du kriegst für deine Teilnahme 15💎.",
+                              //     textAlign: TextAlign.center,
+                              //     style: Theme.of(context).textTheme.headline5),
+                              Container(
+                                  width: 250,
+                                  height: 40,
+                                  child: OutlinedButton(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.image),
+                                          UIHelper.horizontalSpaceMedium(),
+                                          Text(
+                                            "Hintergrund ändern",
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                      onPressed: () async {
+                                        var rewardWidget =
+                                            RewardSelectionScreen();
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    rewardWidget));
+                                        setState(() {});
+                                      })),
+                              if (_showToRecallTaskButton)
+                                _buildToRecallTaskButton(),
+                            ],
+                          ),
+                          alignment: Alignment(0.0, 0.6)));
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              }),
+        ),
       ),
     );
   }

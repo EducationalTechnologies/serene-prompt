@@ -29,7 +29,7 @@ class CabuuLinkScreen extends StatelessWidget {
                   value: vm.consented),
               Flexible(
                 child: Text(
-                  "Ja, ich möchte an der Studie Teilnehmen",
+                  "Ja, ich möchte an der Studie teilnehmen",
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
@@ -113,7 +113,6 @@ class CabuuLinkScreen extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.center,
               onChanged: (text) {
-                // Provider.of<LoginState>(context).userId =
                 vm.cabuuLinkEmail = text;
               },
               validator: (String arg) {
@@ -123,7 +122,7 @@ class CabuuLinkScreen extends StatelessWidget {
                 // labelText: "Email",
                 // alignLabelWithHint: true,
                 border: InputBorder.none,
-                hintText: 'Email',
+                hintText: 'E-Mail',
               ),
             ),
           ),

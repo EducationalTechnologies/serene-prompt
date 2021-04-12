@@ -17,9 +17,12 @@ class EveningAssessmentViewModel extends MultiStepAssessmentViewModel {
   final int stepAffect = 3;
   final int stepFinish = 4;
 
+  String reasonNotLearnToday = "";
+
   EveningAssessmentViewModel(this._dataService, this._experimentService);
 
   void whyNotLearnReason(String reason) {
+    reasonNotLearnToday = reason;
     this.setAssessmentResult("didLearnToday_2", "didLearnToday_2", reason);
   }
 
@@ -30,6 +33,14 @@ class EveningAssessmentViewModel extends MultiStepAssessmentViewModel {
 
   @override
   bool canMoveNext(Key currentStep) {
+    if (currentStep == ValueKey(stepDidLearnToday) ||
+        currentStep == ValueKey(stepAffect) ||
+        currentStep == ValueKey(stepEveningAssessment)) {
+      return isAssessmentFilledOut(lastAssessment);
+    }
+    if (currentStep == ValueKey(stepWhyNotLearn)) {
+      return reasonNotLearnToday.isNotEmpty;
+    }
     return true;
   }
 
