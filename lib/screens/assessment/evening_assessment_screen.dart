@@ -8,8 +8,6 @@ import 'package:prompt/screens/assessment/questionnaire.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/shared/ui_helpers.dart';
 import 'package:prompt/viewmodels/evening_assessment_view_model.dart';
-import 'package:prompt/widgets/serene_appbar.dart';
-import 'package:prompt/widgets/serene_drawer.dart';
 
 class EveningAssessmentScreen extends StatefulWidget {
   EveningAssessmentScreen({Key key}) : super(key: key);
@@ -56,10 +54,8 @@ class _EveningAssessmentScreenState extends State<EveningAssessmentScreen> {
     var vm = Provider.of<EveningAssessmentViewModel>(context);
     return WillPopScope(
         onWillPop: () async => false,
-        child: Scaffold(
-            appBar: SereneAppBar(),
-            drawer: SereneDrawer(),
-            body: Container(child: MultiStepAssessment(vm, _pages))));
+        child:
+            Scaffold(body: Container(child: MultiStepAssessment(vm, _pages))));
   }
 
   buildFinish() {

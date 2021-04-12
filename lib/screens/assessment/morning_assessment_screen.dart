@@ -6,8 +6,6 @@ import 'package:prompt/screens/assessment/questionnaire.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/shared/ui_helpers.dart';
 import 'package:prompt/viewmodels/morning_assessment_view_model.dart';
-import 'package:prompt/widgets/serene_appbar.dart';
-import 'package:prompt/widgets/serene_drawer.dart';
 
 class MorningAssessmentScreen extends StatefulWidget {
   MorningAssessmentScreen({Key key}) : super(key: key);
@@ -60,10 +58,8 @@ class _MorningAssessmentScreenState extends State<MorningAssessmentScreen> {
     var vm = Provider.of<MorningAssessmentViewModel>(context);
     return WillPopScope(
         onWillPop: () async => false,
-        child: Scaffold(
-            appBar: SereneAppBar(),
-            drawer: SereneDrawer(),
-            body: Container(child: MultiStepAssessment(vm, _pages))));
+        child:
+            Scaffold(body: Container(child: MultiStepAssessment(vm, _pages))));
   }
 
   buildFinish(Key key) {
@@ -76,15 +72,6 @@ class _MorningAssessmentScreenState extends State<MorningAssessmentScreen> {
             "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Satz, den du dir merken sollst.",
             style: TextStyle(fontSize: 20),
           ),
-          // FullWidthButton(
-          //     text: "Abschicken",
-          //     onPressed: () {
-          //       var vm = Provider.of<MorningAssessmentViewModel>(context,
-          //           listen: false);
-          //       if (vm.state == ViewState.idle) {
-          //         vm.submit();
-          //       }
-          //     })
         ],
       ),
     );
