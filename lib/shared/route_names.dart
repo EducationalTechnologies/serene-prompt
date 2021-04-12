@@ -29,4 +29,6 @@ class RouteNames {
 
   static const LDT = "/ldt";
   static const NO_TASKS = "/notasks";
+  static const NO_TASKS_AFTER_RECALL = "/notasksafterrecall";
+  static const NO_TASKS_FINAL_DAY = "/notasksfinalday";
 }

@@ -11,6 +11,7 @@ class RewardService {
   int scoreValue = 0;
   int gems = 0;
   int daysActive = 0;
+  int streakDays = 0;
   String backgroundImagePath = "assets/illustrations/mascot_bare.png";
   LinearGradient backgroundColor = LinearGradient(colors: [Color(0xffffff)]);
   final DataService _dataService;
@@ -59,6 +60,13 @@ class RewardService {
     });
   }
 
+  Future<int> getStreakDays() async {
+    return _dataService.getStreakDays().then((s) {
+      streakDays = s;
+      return s;
+    });
+  }
+
   Future getBackgroundImagePath() async {
     _dataService.getBackgroundImagePath().then((path) {
       if (path != null) {
@@ -71,6 +79,7 @@ class RewardService {
   Future initialize() async {
     retrieveScore();
     getDaysActive();
+    getStreakDays();
     getBackgroundImagePath();
   }
 
@@ -114,4 +123,6 @@ class RewardService {
     controller.add(scoreValue);
     await _dataService.saveScore(scoreValue);
   }
+
+  addStreakDays(int days) async {}
 }

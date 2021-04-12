@@ -95,4 +95,6 @@ enum AssessmentTypes {
   success,
 }
 
+enum NoTaskSituation { standard, afterInitialization, afterRecall, afterLdt }
+
 enum DailyLearningIntention { yes, no, unsure, alreadyDid }

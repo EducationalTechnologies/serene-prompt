@@ -230,17 +230,7 @@ class ExperimentService {
       recallTask.planId = lastInternalisation.planId;
     }
 
-    _dataService.saveRecallTask(recallTask);
-
-    if (await lastThreeConditionsWereTheSame()) {
-      _navigationService.navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
-    } else {
-      _navigationService.navigateTo(RouteNames.NO_TASKS);
-    }
-
-    if (await isFinalTask()) {
-      this._rewardService.onFinalTask();
-    }
+    await _dataService.saveRecallTask(recallTask);
   }
 
   Future<void> submitAssessment(
@@ -273,13 +263,27 @@ class ExperimentService {
       return await _navigationService.navigateTo(RouteNames.INTERNALISATION);
     }
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_EVENING) {
-      return await _navigationService.navigateTo(RouteNames.RECALL_TASK);
+      if (await lastThreeConditionsWereTheSame()) {
+        _navigationService
+            .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
+      } else {
+        _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
+      }
+
+      if (await isFinalTask()) {
+        this._rewardService.onFinalTask();
+        _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
+      }
     }
     if (currentScreen == RouteNames.INIT_START) {
       return await _navigationService.navigateTo(RouteNames.NO_TASKS);
     }
     if (currentScreen == RouteNames.INTERNALISATION) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);
+    }
+    if (currentScreen == RouteNames.RECALL_TASK) {
+      return await _navigationService
+          .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_EVENING);
     }
   }
 }

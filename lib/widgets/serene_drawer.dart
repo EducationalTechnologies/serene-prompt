@@ -97,7 +97,7 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.memory,
-              text: "Heutige Internalisierung",
+              text: "Usability",
               onTap: () {
                 Navigator.pushNamed(
                     context, RouteNames.AMBULATORY_ASSESSMENT_USABILITY,

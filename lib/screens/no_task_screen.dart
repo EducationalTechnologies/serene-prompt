@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:prompt/locator.dart';
 import 'package:prompt/screens/rewards/reward_selection_screen.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/reward_service.dart';
+import 'package:prompt/shared/enums.dart';
 import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/shared/ui_helpers.dart';
 import 'package:prompt/widgets/full_width_button.dart';
 import 'package:prompt/widgets/serene_appbar.dart';
 import 'package:prompt/widgets/serene_drawer.dart';
-import 'package:flutter/foundation.dart';
 import 'package:prompt/shared/extensions.dart';
 import 'package:intl/intl.dart';
 
 class NoTasksScreen extends StatefulWidget {
-  const NoTasksScreen({Key key}) : super(key: key);
+  final NoTaskSituation previousRoute;
+  const NoTasksScreen({Key key, this.previousRoute = NoTaskSituation.standard})
+      : super(key: key);
 
   @override
   _NoTasksScreenState createState() => _NoTasksScreenState();
@@ -34,6 +37,52 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   void initState() {
     super.initState();
     _nextText = getNextText();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showDialogIfNecessary();
+    });
+  }
+
+  showDialogIfNecessary() async {
+    if (widget.previousRoute == NoTaskSituation.standard) return;
+
+    String _textReward = "";
+    String _textStreak = "";
+    String _textTotal = "";
+    var rewardService = locator<RewardService>();
+    if (widget.previousRoute == NoTaskSituation.afterRecall) {
+      _textReward =
+          "Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎";
+
+      if (rewardService.streakDays > 0) {
+        _textStreak =
+            "🎉 Außerdem hast du ${rewardService.streakDays} Tage in Folge alle Aufgaben erledigt 🎉. Dafür bekommst du heute also zusätzlich ${rewardService.streakDays}💎 als Bonus";
+      }
+    }
+
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => new AlertDialog(
+        title: new Text("Belohnung erhalten"),
+        content: new Column(
+          children: [
+            MarkdownBody(data: _textReward),
+            UIHelper.verticalSpaceMedium(),
+            Text(_textStreak),
+            UIHelper.verticalSpaceMedium(),
+            Text(_textTotal)
+          ],
+        ),
+        actions: <Widget>[
+          new ElevatedButton(
+            child: new Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Future<String> getNextText() async {
