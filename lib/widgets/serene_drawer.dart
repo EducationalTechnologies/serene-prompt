@@ -118,8 +118,7 @@ class SereneDrawer extends StatelessWidget {
               icon: Icons.nightlight_round,
               text: "Abendfragen",
               onTap: () {
-                Navigator.pushNamed(
-                    context, RouteNames.AMBULATORY_ASSESSMENT_EVENING,
+                Navigator.pushNamed(context, RouteNames.RECALL_TASK,
                     arguments: "1");
               }),
         ],

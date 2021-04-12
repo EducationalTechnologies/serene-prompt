@@ -29,6 +29,7 @@ class _HelpAppBarState extends State<HelpAppBar> {
   @override
   AppBar build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [

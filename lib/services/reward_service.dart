@@ -13,32 +13,58 @@ class RewardService {
   int daysActive = 0;
   int streakDays = 0;
   String backgroundImagePath = "assets/illustrations/mascot_bare.png";
-  LinearGradient backgroundColor = LinearGradient(colors: [Color(0xffffff)]);
+  // LinearGradient _baseGradient =
+  LinearGradient backgroundColor = LinearGradient(
+    colors: [Color(0xffffffff), Color(0xffffffff)],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
   final DataService _dataService;
   final LoggingService _logService;
 
   List<UnlockableBackground> backgrounds = [
-    UnlockableBackground("Standard", "assets/illustrations/mascot_bare.png", 0),
+    UnlockableBackground("Standard", "assets/illustrations/mascot_bare.png", 0,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xffffffff)])),
     UnlockableBackground(
-        "Weltraum 1", "assets/illustrations/mascot_space.png", 1),
-    UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean.png", 3),
+        "Weltraum 1", "assets/illustrations/mascot_space.png", 1,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xff08111f), Color(0xff08111f)])),
+    UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean.png", 3,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xff083549)])),
     UnlockableBackground(
-        "Lüfte 1", "assets/illustrations/mascot_plane_1.png", 6),
+        "Lüfte 1", "assets/illustrations/mascot_plane_1.png", 6,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Pyramiden", "assets/illustrations/mascot_pyramid.png", 9),
+        "Pyramiden", "assets/illustrations/mascot_pyramid.png", 9,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xffa2d0ff)])),
     UnlockableBackground(
         "Vulkan 1", "assets/illustrations/mascot_vulcan_1.png", 12,
-        backgroundColor: LinearGradient(colors: [Color(0xffb7c6d6)])),
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xffa2d0ff)])),
     UnlockableBackground(
-        "Zauberer", "assets/illustrations/mascot_wizard_1.png", 15),
+        "Zauberer", "assets/illustrations/mascot_wizard_1.png", 15,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Wikinger", "assets/illustrations/mascot_viking_1.png", 18),
+        "Wikinger", "assets/illustrations/mascot_viking_1.png", 18,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xffa2d0ff)])),
     UnlockableBackground(
-        "Lüfte 2", "assets/illustrations/mascot_plane_2.png", 21),
+        "Lüfte 2", "assets/illustrations/mascot_plane_2.png", 21,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Weltraum 2", "assets/illustrations/mascot_space_2.png", 24),
+        "Weltraum 2", "assets/illustrations/mascot_space_2.png", 24,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xff08111f)])),
     UnlockableBackground(
-        "Pyramiden 2", "assets/illustrations/mascot_pyramid_2.png", 24),
+        "Pyramiden 2", "assets/illustrations/mascot_pyramid_2.png", 27,
+        backgroundColor:
+            LinearGradient(colors: [Color(0xffffffff), Color(0xffa2d0ff)])),
   ];
 
   RewardService(this._dataService, this._logService) {
@@ -90,7 +116,11 @@ class RewardService {
   }
 
   setBackgroundColor(LinearGradient lg) async {
-    this.backgroundColor = lg;
+    this.backgroundColor = LinearGradient(
+      colors: lg.colors,
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    );
     // _logService.logEvent("backgroundImageChanged", data: imagePath);
     // await this._dataService.setBackgroundImage(imagePath);
   }

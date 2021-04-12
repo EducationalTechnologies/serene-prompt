@@ -181,11 +181,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
       onWillPop: () async => false,
       child: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: <Color>[Color(0xffffffff), Color(0xff00d4ff)],
-            ),
+            gradient: rewardService.backgroundColor,
             // color: Colors.black,
             image: DecorationImage(
                 image: AssetImage(rewardService.backgroundImagePath),

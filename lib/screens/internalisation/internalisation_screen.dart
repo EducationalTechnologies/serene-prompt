@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:prompt/widgets/help_appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:prompt/screens/internalisation/emoji_story_screen.dart';
 import 'package:prompt/screens/internalisation/scramble_internalisation.dart';
 import 'package:prompt/screens/internalisation/waiting_internalisation_screen.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/viewmodels/internalisation_view_model.dart';
-import 'package:prompt/widgets/serene_appbar.dart';
-import 'package:prompt/widgets/serene_drawer.dart';
 
 class InternalisationScreen extends StatefulWidget {
   InternalisationScreen({Key key}) : super(key: key);
@@ -44,8 +43,7 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: SereneAppBar(),
-        drawer: SereneDrawer(),
+        appBar: HelpAppBar(),
         body: FutureBuilder(
           future: vm.initialized,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

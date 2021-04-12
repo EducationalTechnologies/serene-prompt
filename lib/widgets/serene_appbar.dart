@@ -57,7 +57,7 @@ class _SereneAppBarState extends State<SereneAppBar> {
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Colors.yellow[800]),
+                            color: Colors.grey[850]),
                       ));
                 }
               }

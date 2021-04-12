@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prompt/shared/ui_helpers.dart';
 import 'package:prompt/viewmodels/multi_step_assessment_view_model.dart';
 import 'package:prompt/shared/extensions.dart';
 import 'package:prompt/widgets/full_width_button.dart';
@@ -39,6 +40,7 @@ class _MultiStepAssessmentState extends State<MultiStepAssessment> {
       margin: EdgeInsets.all(10),
       child: Column(
         children: [
+          UIHelper.verticalSpaceMedium(),
           Flexible(
             child: PageView.builder(
               controller: _controller,
