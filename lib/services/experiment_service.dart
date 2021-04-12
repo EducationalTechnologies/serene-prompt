@@ -11,6 +11,7 @@ import 'package:serene/services/navigation_service.dart';
 import 'package:serene/services/notification_service.dart';
 import 'package:serene/services/reward_service.dart';
 import 'package:serene/shared/enums.dart';
+import 'package:serene/shared/experiment_constants.dart';
 import 'package:serene/shared/extensions.dart';
 import 'package:serene/shared/route_names.dart';
 
@@ -72,25 +73,14 @@ class ExperimentService {
     }
   }
 
-  int getTrialIndexForDate(DateTime dateOfFirstInternalization) {
-    var daysSinceFirstDate =
-        DateTime.now().weekDaysAgo(dateOfFirstInternalization);
-
-    // Division WITH remainder to get the start offset
-    var startIndex = daysSinceFirstDate ~/ DAYS_INTERVAL_LDT;
-
-    //Index calculates zero-based, but the files start with 1, which is why we add the 1
-    return startIndex + 1;
-  }
-
   getLdtData(String trialName) async {
     return _dataService.getLdtData(trialName);
   }
 
   getCurrentTrialIndex() async {
-    var first = await this._dataService.getFirstInternalisation();
+    Internalisation last = await this._dataService.getLastInternalisation();
 
-    return getTrialIndexForDate(first.completionDate);
+    return PLAN_LDT_MAPPING[last.planId];
   }
 
   Future<bool> isTimeForInternalisationTask() async {
@@ -163,10 +153,20 @@ class ExperimentService {
     return false;
   }
 
-  Future<InternalisationCondition> getTodaysInternalisationCondition() async {
-    var ud = await this._dataService.getUserData();
+  Future<int> getDayOfExperiment() async {
+    return await _dataService.getNumberOfCompletedInternalisations();
+  }
 
-    return InternalisationCondition.values[ud.internalisationCondition];
+  Future<Internalisation> getTodaysPlan(int day) async {
+    var ud = await _dataService.getUserData();
+    int planNumber = PLAN_CONDITION_MAPPING[ud.group][day]["planId"];
+    return await this._dataService.getCurrentInternalisation(planNumber);
+  }
+
+  Future<InternalisationCondition> getTodaysInternalisationCondition(
+      int day) async {
+    var ud = await _dataService.getUserData();
+    return PLAN_CONDITION_MAPPING[ud.group][day]["condition"];
   }
 
   Future<int> getNextInternalisationCondition(int current) async {
@@ -180,9 +180,8 @@ class ExperimentService {
 
   Future<void> updateInternalisationConditionGroup() async {
     var userData = await _dataService.getUserData();
-    var newCondition = await getNextInternalisationCondition(
-        userData.internalisationCondition);
-    if (newCondition != userData.internalisationCondition) {
+    var newCondition = await getNextInternalisationCondition(userData.group);
+    if (newCondition != userData.group) {
       await _dataService.updateInternalisationConditionGroup(newCondition);
     }
   }

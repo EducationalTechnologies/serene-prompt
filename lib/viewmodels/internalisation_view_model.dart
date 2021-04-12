@@ -25,26 +25,11 @@ class InternalisationViewModel extends BaseViewModel {
     waitingDuration = ExperimentService.WAITING_TIMER_DURATION;
   }
 
-  InternalisationViewModel.forUsability(InternalisationCondition condition,
-      this._dataService, this._experimentService) {
-    _currentInternalisation.startDate = DateTime.now();
-    this.plan =
-        "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.";
-
-    this.internalisationCondition = condition;
-
-    this.initialized = Future.delayed(Duration.zero).then((value) => true);
-  }
-
   Future<bool> init() async {
-    var internalisation =
-        await this._dataService.getCurrentImplementationIntention();
-    plan = internalisation.plan;
-
-    _currentInternalisation.plan = internalisation.plan;
-    _currentInternalisation.planId = internalisation.planId;
+    var numberOf = await _experimentService.getDayOfExperiment();
+    _currentInternalisation = await _experimentService.getTodaysPlan(numberOf);
     this.internalisationCondition =
-        await _experimentService.getTodaysInternalisationCondition();
+        await _experimentService.getTodaysInternalisationCondition(numberOf);
 
     return true;
   }

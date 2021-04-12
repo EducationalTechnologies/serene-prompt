@@ -22,26 +22,6 @@ void main() {
       var conditionValue = daysSince % 3;
       expect(conditionValue, 2);
     });
-
-    test("LDT index calculation should be 0", () {
-      var xps = ExperimentService(null, null, null, null, null);
-
-      var dateOfFirst = DateTime.now().subtract(Duration(days: 2));
-
-      var index = xps.getTrialIndexForDate(dateOfFirst);
-
-      expect(index, 0);
-    });
-
-    test("LDT index calculation should be 1", () {
-      var xps = ExperimentService(null, null, null, null, null);
-
-      var dateOfFirst = DateTime.now().subtract(Duration(days: 5));
-
-      var index = xps.getTrialIndexForDate(dateOfFirst);
-
-      expect(index, 1);
-    });
   });
 
   group("Scheduling of notifications", () {

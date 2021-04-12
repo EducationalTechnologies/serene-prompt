@@ -4,7 +4,7 @@ class Internalisation {
   String plan = "";
   String condition = "";
   String input = "";
-  int planId = 0;
+  int planId = 1;
 
   Internalisation(
       {this.startDate,
@@ -12,7 +12,7 @@ class Internalisation {
       this.plan = "",
       this.condition = "",
       this.input = "",
-      this.planId = 0});
+      this.planId = 1});
 
   Internalisation.fromDocument(dynamic document) {
     this.completionDate = DateTime.parse(document["completionDate"]);
@@ -20,6 +20,7 @@ class Internalisation {
     this.plan = document["plan"];
     this.condition = document["condition"];
     this.input = document["input"];
+    this.planId = document["planId"];
   }
 
   Map<String, dynamic> toMap() {
@@ -28,7 +29,8 @@ class Internalisation {
       "completionDate": this.completionDate?.toIso8601String(),
       "plan": this.plan,
       "condition": this.condition,
-      "input": this.input
+      "input": this.input,
+      "planId": this.planId
     };
   }
 }

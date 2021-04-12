@@ -40,59 +40,59 @@
         "planId": 10
     },
     {
-        "plan": "Wenn ich **nachdenken** will, dann werde ich mich konzentrieren.",
+        "plan": "Wenn ich **nachdenken** will, dann werde ich mich **konzentrieren**.",
         "planId": 11
     },
     {
-        "plan": "Wenn ich **spielen** will, dann lerne ich erst **Vokabeln**.",
+        "plan": "Wenn ich **ängstlich** bin, dann versuche ich mich zu **beruhigen**.",
         "planId": 12
     },
     {
-        "plan": "Wenn ich **ängstlich** bin, dann versuche ich mich zu **beruhigen**.",
+        "plan": "Wenn ich **nervös** bin, dann werde ich ganz tief **atmen**.",
         "planId": 13
     },
     {
-        "plan": "Wenn ich **nervös** bin, dann werde ich ganz tief **atmen**.",
+        "plan": "Wenn ich **verwirrt** bin, dann bitte ich andere um **Hilfe**.",
         "planId": 14
     },
     {
-        "plan": "Wenn ich **verwirrt** bin, dann bitte ich andere um **Hilfe**.",
+        "plan": "Wenn mein **Handy** hinderlich ist, dann werde ich es **umdrehen**.",
         "planId": 15
     },
     {
-        "plan": "Wenn mein **Handy** hinderlich ist, dann werde ich es **umdrehen**.",
+        "plan": "Wenn ich **aufgeregt** bin, dann denke ich an meinen **Plan**.",
         "planId": 16
     },
     {
-        "plan": "Wenn ich **aufgeregt** bin, dann denke ich an meinen **Plan**.",
+        "plan": "Wenn mir **langweilig** ist, dann denke ich an eine **Belohnung**.",
         "planId": 17
     },
     {
-        "plan": "Wenn mir **langweilig** ist, dann denke ich an eine **Belohnung**.",
+        "plan": "Wenn ich **abgelenkt** bin, dann werde ich viel **verpassen**",
         "planId": 18
     },
     {
-        "plan": "Wenn ich **abgelenkt** bin, dann werde ich viel **verpassen**.",
+        "plan": "Wenn ich **spielen** will, dann lerne ich erst **Vokabeln**.",
         "planId": 19
     },
     {
-        "plan": "Wenn ich **nachdenken** will, dann werde ich mich **konzentrieren**.",
+        "plan": "Wenn ich **starten** will, dann mache ich mich an die **Arbeit**.",
         "planId": 20
     },
     {
-        "plan": "Wenn ich **starten** will, dann mache ich mich an die **Arbeit**.",
+        "plan": "Wenn ich **aufmerksam** bin, dann kann ich mich gut **erinnern**.",
         "planId": 21
     },
     {
-        "plan": "Wenn ich **geduldig** bin, dann kann ich alles gut **verstehen**.",
+        "plan": "Wenn ich **müde** werde, dann werde ich einmal kurz **lüften**.",
         "planId": 22
     },
     {
-        "plan": "Wenn ich **müde** werde, dann werde ich einmal kurz **lüften**.",
+        "plan": "Wenn es eine **Störung** gibt, dann werde ich sie **beseitigen**.",
         "planId": 23
     },
     {
-        "plan": "Wenn es eine **Störung** gibt, dann werde ich sie **beseitigen**.",
+        "plan": "Wenn ich **Zuhause** bin, dann werde ich zuerst **aufräumen**.",
         "planId": 24
     },
     {
@@ -100,7 +100,7 @@
         "planId": 25
     },
     {
-        "plan": "Wenn ich **Zuhause** bin, dann werde ich zuerst **aufräumen**.",
+        "plan": "Wenn alles **erledigt** ist, dann fühle ich mich **erleichtert**",
         "planId": 26
     },
     {
