@@ -2,27 +2,31 @@ import 'package:flutter/material.dart';
 
 /// Mostly copy-paste from https://stackoverflow.com/questions/49635381/flutter-create-a-timeline-ui
 class Timeline extends StatelessWidget {
-  const Timeline({
-    @required this.children,
-    this.indicators,
-    this.isLeftAligned = true,
-    this.itemGap = 12.0,
-    this.gutterSpacing = 4.0,
-    this.padding = const EdgeInsets.all(8),
-    this.controller,
-    this.lineColor = Colors.grey,
-    this.physics,
-    this.shrinkWrap = true,
-    this.primary = false,
-    this.reverse = false,
-    this.indicatorSize = 30.0,
-    this.lineGap = 4.0,
-    this.indicatorColor = Colors.blue,
-    this.indicatorStyle = PaintingStyle.fill,
-    this.strokeCap = StrokeCap.butt,
-    this.strokeWidth = 2.0,
-    this.style = PaintingStyle.stroke,
-  })  : itemCount = children.length,
+  const Timeline(
+      {@required this.children,
+      this.indicators,
+      this.isLeftAligned = true,
+      this.itemGap = 12.0,
+      this.gutterSpacing = 4.0,
+      this.padding = const EdgeInsets.all(8),
+      this.controller,
+      this.lineColor = Colors.blue,
+      this.lineColorInactive = Colors.grey,
+      this.physics,
+      this.shrinkWrap = true,
+      this.primary = false,
+      this.reverse = false,
+      this.indicatorSize = 30.0,
+      this.lineGap = 4.0,
+      this.indicatorColor = Colors.blue,
+      this.indicatorColorInactive = Colors.blue,
+      this.indicatorStyle = PaintingStyle.fill,
+      this.indicatorStyleInactive = PaintingStyle.stroke,
+      this.strokeCap = StrokeCap.butt,
+      this.strokeWidth = 6.0,
+      this.style = PaintingStyle.stroke,
+      this.progress = 0.0})
+      : itemCount = children.length,
         assert(itemGap >= 0),
         assert(lineGap >= 0),
         assert(indicators == null || children.length == indicators.length);
@@ -41,13 +45,18 @@ class Timeline extends StatelessWidget {
   final bool reverse;
 
   final Color lineColor;
+  final Color lineColorInactive;
   final double lineGap;
   final double indicatorSize;
   final Color indicatorColor;
+  final Color indicatorColorInactive;
   final PaintingStyle indicatorStyle;
+  final PaintingStyle indicatorStyleInactive;
   final StrokeCap strokeCap;
   final double strokeWidth;
   final PaintingStyle style;
+
+  final double progress;
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +80,24 @@ class Timeline extends StatelessWidget {
         final isFirst = index == 0;
         final isLast = index == itemCount - 1;
 
+        var indicatorProgess = index / itemCount;
+        var iColor = indicatorColor;
+        var fStyle = indicatorStyle;
+        var indicatorActive = progress >= indicatorProgess;
+
+        var lineProgress = index / (2 * itemCount - 2);
+        var lineActive = progress >= lineProgress;
+
         final timelineTile = <Widget>[
           CustomPaint(
             foregroundPainter: _TimelinePainter(
               hideDefaultIndicator: indicator != null,
-              lineColor: lineColor,
-              indicatorColor: indicatorColor,
+              lineColor: indicatorActive ? lineColor : lineColorInactive,
+              indicatorColor:
+                  indicatorActive ? indicatorColor : indicatorColorInactive,
               indicatorSize: indicatorSize,
-              indicatorStyle: indicatorStyle,
+              indicatorStyle:
+                  indicatorActive ? indicatorStyle : indicatorStyleInactive,
               isFirst: isFirst,
               isLast: isLast,
               lineGap: lineGap,

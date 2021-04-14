@@ -44,6 +44,8 @@ class FirebaseService {
   static const String COLLECTION_LDT = "ldt";
   static const String COLLECTION_INITSESSION = "initSession";
 
+  static const Duration timeoutDuration = Duration(seconds: 15);
+
   void handleError(Object e, {String data = ""}) {
     locator
         .get<LoggingService>()
@@ -51,7 +53,7 @@ class FirebaseService {
   }
 
   void handleTimeout(String function) {
-    locator.get<LoggingService>().logError("Firetore Timeout: $function");
+    locator.get<LoggingService>().logError("Firestore Timeout: $function");
   }
 
   Future<User> getCurrentUser() async {
@@ -196,23 +198,23 @@ class FirebaseService {
   }
 
   Future<DateTime> getLastLdtTaskDate(String userid) async {
-    var doc = await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_LDT)
         .where("user", isEqualTo: userid)
         .orderBy("completionDate", descending: true)
         .limit(1)
         .get()
-        .timeout(Duration(seconds: 10), onTimeout: () {
+        .then((doc) {
+      if (doc == null) return null;
+      if (doc.docs.length == 0) return null;
+      var last = doc.docs[0];
+      var lastDateString = last["completionDate"];
+      var lastDate = DateTime.parse(lastDateString);
+      return lastDate;
+    }).timeout(timeoutDuration, onTimeout: () {
       handleTimeout("LDT Task");
       return null;
     }).catchError((handleError));
-
-    if (doc == null) return null;
-    if (doc.docs.length == 0) return null;
-    var last = doc.docs[0];
-    var lastDateString = last["completionDate"];
-    var lastDate = DateTime.parse(lastDateString);
-    return lastDate;
   }
 
   Future<List<Internalisation>> getLastInternalisations(
@@ -229,9 +231,8 @@ class FirebaseService {
       for (var doc in doc.docs) {
         internalisations.add(Internalisation.fromDocument(doc));
       }
-
       return internalisations;
-    }).timeout(Duration(seconds: 15), onTimeout: () {
+    }).timeout(timeoutDuration, onTimeout: () {
       handleTimeout("Last Internalisation");
       return null;
     }).catchError((handleError));
@@ -273,15 +274,16 @@ class FirebaseService {
   }
 
   Future<RecallTask> getLastRecallTask(String email) async {
-    var doc = await _databaseReference
+    return _databaseReference
         .collection(COLLECTION_RECALLTASKS)
         .where("user", isEqualTo: email)
         .orderBy("completionDate", descending: true)
         .limit(1)
-        .get();
-
-    if (doc.docs.length == 0) return null;
-    return RecallTask.fromDocument(doc.docs[0]);
+        .get()
+        .then((doc) {
+      if (doc.docs.length == 0) return null;
+      return RecallTask.fromDocument(doc.docs[0]);
+    });
   }
 
   Future<int> getNumberOfInternalisations(String email) async {

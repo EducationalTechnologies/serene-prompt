@@ -18,6 +18,7 @@ class RouteNames {
   static const AMBULATORY_ASSESSMENT_USABILITY = "/usability";
   static const AMBULATORY_ASSESSMENT_EVENING = "/aaevening";
   static const AMBULATORY_ASSESSMENT_MORNING = "/aamorning";
+  static const AMBULATORY_ASSESSMENT_FINISH = "/aafinish";
 
   static const CONSENT = "/consent";
   static const TEST = "/test";
@@ -31,4 +32,5 @@ class RouteNames {
   static const NO_TASKS = "/notasks";
   static const NO_TASKS_AFTER_RECALL = "/notasksafterrecall";
   static const NO_TASKS_FINAL_DAY = "/notasksfinalday";
+  static const NO_TASKS_AFTER_USABILITY = "/notasksafterusability";
 }

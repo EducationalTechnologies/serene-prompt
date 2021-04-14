@@ -24,8 +24,6 @@ import 'package:prompt/screens/initialsession/cabuu_link_screen.dart';
 import 'package:prompt/screens/initialsession/initial_daily_learning_goal_screen.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/viewmodels/init_session_view_model.dart';
-import 'package:prompt/widgets/serene_appbar.dart';
-import 'package:prompt/widgets/serene_drawer.dart';
 
 class InitialSessionScreen extends StatefulWidget {
   InitialSessionScreen({Key key}) : super(key: key);
@@ -131,13 +129,13 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            appBar: SereneAppBar(),
-            drawer: SereneDrawer(),
+            // appBar: SereneAppBar(),
+            // drawer: SereneDrawer(),
             body: Container(
                 child: MultiStepAssessment(
-              vm,
-              _pages,
-              initialStep: vm.getPreviouslyCompletedStep(),
-            ))));
+          vm,
+          _pages,
+          initialStep: vm.getPreviouslyCompletedStep(),
+        ))));
   }
 }

@@ -15,7 +15,7 @@ class SpeechBubble extends StatelessWidget {
       //   this.text,
       //   style: Theme.of(context).textTheme.headline6,
       // ),
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

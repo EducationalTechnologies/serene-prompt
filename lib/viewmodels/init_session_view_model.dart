@@ -354,7 +354,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     }
   }
 
-  getNextPage(Key currentPageKey) {
+  getNextPage(ValueKey currentPageKey) {
     print("Step is $step");
 
     if (currentPageKey == ValueKey(STEP.stepObstacleSortingScreen)) {

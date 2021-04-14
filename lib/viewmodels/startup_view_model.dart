@@ -35,16 +35,8 @@ class StartupViewModel extends BaseViewModel {
       case AppStartupMode.signin:
         nav.navigateAndRemove(RouteNames.LOG_IN);
         break;
-      case AppStartupMode.preInternalisationAssessment:
-        nav.navigateAndRemove(RouteNames.LOG_IN);
-        // nav.navigateAndRemove(RouteNames.INTERNALISATION);
-        break;
       case AppStartupMode.firstLaunch:
         nav.navigateAndRemove(RouteNames.LOG_IN);
-        // nav.navigateAndRemove(RouteNames.CONSENT);
-        break;
-      case AppStartupMode.postLearningAssessment:
-        nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_POST_TEST);
         break;
       case AppStartupMode.internalisationTask:
         await nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_MORNING);
@@ -57,6 +49,7 @@ class StartupViewModel extends BaseViewModel {
         break;
       case AppStartupMode.lexicalDecisionTask:
         nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
+        break;
     }
   }
 

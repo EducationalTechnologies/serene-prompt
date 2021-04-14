@@ -84,29 +84,11 @@ class SereneDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, RouteNames.INIT_START);
               }),
-          Divider(),
-          _buildDrawerItem(
-              icon: Icons.filter_2,
-              text: "LDT!!!",
-              onTap: () {
-                var trialIndex =
-                    locator<ExperimentService>().getCurrentTrialIndex();
-                Navigator.pushNamed(context, RouteNames.LDT,
-                    arguments: trialIndex.toString());
-              }),
-          Divider(),
-          _buildDrawerItem(
-              icon: Icons.memory,
-              text: "Usability",
-              onTap: () {
-                Navigator.pushNamed(
-                    context, RouteNames.AMBULATORY_ASSESSMENT_USABILITY,
-                    arguments: "1");
-              }),
+
           Divider(),
           _buildDrawerItem(
               icon: Icons.wb_sunny,
-              text: "Morgenfragen",
+              text: "Morgens",
               onTap: () {
                 Navigator.pushNamed(
                     context, RouteNames.AMBULATORY_ASSESSMENT_MORNING,
@@ -116,9 +98,27 @@ class SereneDrawer extends StatelessWidget {
           Divider(),
           _buildDrawerItem(
               icon: Icons.nightlight_round,
-              text: "Abendfragen",
+              text: "Abends",
               onTap: () {
                 Navigator.pushNamed(context, RouteNames.RECALL_TASK,
+                    arguments: "1");
+              }),
+          Divider(),
+          _buildDrawerItem(
+              icon: Icons.gamepad,
+              text: "Usability",
+              onTap: () {
+                Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT_USABILITY,
+                    arguments: "1");
+              }),
+          Divider(),
+          _buildDrawerItem(
+              icon: Icons.golf_course_sharp,
+              text: "Abschluss",
+              onTap: () {
+                Navigator.pushNamed(
+                    context, RouteNames.AMBULATORY_ASSESSMENT_FINISH,
                     arguments: "1");
               }),
         ],

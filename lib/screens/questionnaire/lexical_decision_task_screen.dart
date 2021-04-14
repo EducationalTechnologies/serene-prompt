@@ -50,8 +50,6 @@ class _LexicalDecisionTaskScrenState extends State<LexicalDecisionTaskScren> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          appBar: AppBar(),
-          drawer: SereneDrawer(),
           body: FutureBuilder(
             future: ldtLoaded,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

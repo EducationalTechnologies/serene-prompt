@@ -12,6 +12,7 @@ class SettingsService {
     SettingsKeys.wordsPerMinute: "180",
     SettingsKeys.initSessionStep: "0",
     SettingsKeys.backGroundImage: "",
+    SettingsKeys.backgroundColors: "ffffff,ffffff"
   };
 
   SettingsService(this._databaseService);

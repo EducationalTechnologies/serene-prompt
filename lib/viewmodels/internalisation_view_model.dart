@@ -2,6 +2,7 @@ import 'package:prompt/models/internalisation.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/viewmodels/base_view_model.dart';
 
 class InternalisationViewModel extends BaseViewModel {
@@ -45,6 +46,8 @@ class InternalisationViewModel extends BaseViewModel {
     await this
         ._experimentService
         .submitInternalisation(_currentInternalisation);
+
+    _experimentService.nextScreen(RouteNames.INTERNALISATION);
     return true;
   }
 }

@@ -27,6 +27,9 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
       body: Container(
           child: Timeline(
               indicatorColor: Theme.of(context).primaryColor,
+              indicatorColorInactive: Colors.grey,
+              lineColor: Theme.of(context).primaryColor,
+              progress: (rewardService.daysActive / 27),
               children: [...unlockItems])),
     );
   }
@@ -44,13 +47,14 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
             if (unlockable.backgroundColor != null) {
               rewardService.setBackgroundColor(unlockable.backgroundColor);
             }
+            Navigator.pop(context);
           });
         },
         child: Text("Aktivieren"),
       );
     } else {
       unlockButton = ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.blue[300]),
+        style: ElevatedButton.styleFrom(primary: Colors.grey),
         onPressed: () {
           setState(() {
             // rewardService.setBackgroundImagePath(path);
@@ -64,12 +68,15 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
     var isSelected = rewardService.backgroundImagePath == unlockable.path;
     return Container(
       margin: EdgeInsets.all(5),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            blurRadius: .5,
-            spreadRadius: 1.0,
-            color: Colors.black.withOpacity(.12))
-      ], borderRadius: BorderRadius.all(Radius.circular(10))),
+      decoration: BoxDecoration(
+          color: Colors.orange[50],
+          boxShadow: [
+            BoxShadow(
+                blurRadius: .5,
+                spreadRadius: 1.0,
+                color: Colors.black.withOpacity(.12))
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         children: [
           Text(

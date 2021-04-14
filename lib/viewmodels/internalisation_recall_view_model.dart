@@ -1,6 +1,7 @@
 import 'package:prompt/models/recall_task.dart';
 import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/shared/enums.dart';
+import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/viewmodels/base_view_model.dart';
 
 class InternalisationRecallViewModel extends BaseViewModel {
@@ -16,5 +17,6 @@ class InternalisationRecallViewModel extends BaseViewModel {
     _recallTask.completionDate = DateTime.now();
     _recallTask.recall = text;
     _experimentService.submitRecallTask(_recallTask);
+    _experimentService.nextScreen(RouteNames.RECALL_TASK);
   }
 }

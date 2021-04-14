@@ -4,7 +4,7 @@
     "questions": [
         {
             "id": "affect_1",
-            "questionText": "Ich fühle mich gerade gut gelaunt",
+            "questionText": "Ich fühle mich gerade gut gelaunt.",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Wenig",

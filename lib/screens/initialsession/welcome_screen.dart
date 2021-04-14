@@ -16,13 +16,13 @@ class WelcomeScreen extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Hallo und Willkommen bei PROMPT!",
+            "Willkommen bei PROMPT!",
             style: Theme.of(context).textTheme.headline4,
           ),
-          UIHelper.verticalSpaceLarge(),
+          UIHelper.verticalSpaceMedium(),
           Text(
             "Auf der nächsten Seite geben wir dir erst einmal eine Einführung. Nimm dir dafür ein paar Minuten Zeit.",
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headline6,
           )
         ],
       ),

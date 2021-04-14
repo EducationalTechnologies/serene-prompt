@@ -3,69 +3,36 @@
     "id": "usability",
     "questions": [
         {
-            "id": "usability_1",
-            "questionText": "Wie viel **Spaß** hat es dir gemacht, dir die Pläne so einzuprägen?",
+            "id": "attitude_affective",
+            "questionText": "Hat es dir Spaß gemacht, dir die Pläne so einzuprägen?",
             "labels": {
-                "1": "Sehr viel Spaß",
-                "2": "Eher Spaß",
-                "3": "Weder noch",
-                "4": "Eher keinen Spaß",
-                "5": "Gar keinen Spaß"
+                "1": "Überhaupt nicht",
+                "2": "Eher wenig",
+                "3": "Teils / teils",
+                "4": "Ziemlich",
+                "5": "Sehr"
             }
         },
         {
-            "id": "usability_2",
-            "questionText": "Wie **schwierig** fandest du es, dir die Pläne so einzuprägen?",
+            "id": "attitude_perceived_ease_of_use",
+            "questionText": "Wie anstrengend fandest du es, dir die Pläne so einzuprägen?",
             "labels": {
-                "1": "Sehr schwierig",
-                "2": "Eher schwierig",
-                "3": "Weder noch",
-                "4": "Eher einfach",
-                "5": "Sehr einfach"
+                "1": "Überhaupt nicht anstrengend",
+                "2": "Kaum anstrengend",
+                "3": "Teils / teils",
+                "4": "Ziemlich anstrengend",
+                "5": "Sehr anstrengend"
             }
         },
         {
-            "id": "usability_3",
-            "questionText": "Wie gut hast du verstanden, was du zu tun hattest?",
+            "id": "attitude_perceived_usefulness",
+            "questionText": "Hat dir [X] dabei geholfen, dir die Pläne besser zu merken?",
             "labels": {
-                "1": "Sehr gut",
-                "2": "Eher gut",
-                "3": "Weder gut noch schlecht",
-                "4": "Eher schlecht",
-                "5": "Sehr schlecht"
-            }
-        },
-        {
-            "id": "usability_4",
-            "questionText": "Würdest du das Wortpuzzle zum Pläne merken gerne öfter oder weniger oft in der App nutzen?",
-            "labels": {
-                "1": "Sehr oft",
-                "2": "Eher oft",
-                "3": "Mir egal",
-                "4": "Eher weniger",
-                "5": "Sehr viel weniger"
-            }
-        },
-        {
-            "id": "usability_5",
-            "questionText": "Würdest du die Emojis zum Pläne merken gerne öfter oder weniger oft in der App nutzen?",
-            "labels": {
-                "1": "Sehr oft",
-                "2": "Eher oft",
-                "3": "Mir egal",
-                "4": "Eher weniger",
-                "5": "Sehr viel weniger"
-            }
-        },
-        {
-            "id": "usability_5",
-            "questionText": "Würdest du die Wartezeit zum Pläne merken gerne öfter oder weniger oft in der App nutzen?",
-            "labels": {
-                "1": "Sehr oft",
-                "2": "Eher oft",
-                "3": "Mir egal",
-                "4": "Eher weniger",
-                "5": "Sehr viel weniger"
+                "1": "Überhaupt nicht",
+                "2": "Eher wenig",
+                "3": "Teils / teils",
+                "4": "Ziemlich",
+                "5": "Sehr"
             }
         }
     ]

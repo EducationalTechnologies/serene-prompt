@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prompt/locator.dart';
 import 'package:prompt/screens/assessment/evening_assessment_screen.dart';
+import 'package:prompt/screens/assessment/finish_assessment_screen.dart';
 import 'package:prompt/screens/assessment/morning_assessment_screen.dart';
+import 'package:prompt/screens/assessment/usability_assessment_screen.dart';
 import 'package:prompt/screens/initialsession/initial_session_screen.dart';
 import 'package:prompt/screens/internalisation/internalisation_recall_screen.dart';
 import 'package:prompt/screens/internalisation/internalisation_screen.dart';
@@ -25,11 +27,13 @@ import 'package:prompt/screens/consent_screen.dart';
 import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/shared/screen_args.dart';
 import 'package:prompt/viewmodels/evening_assessment_view_model.dart';
+import 'package:prompt/viewmodels/finish_assessment_view_model.dart';
 import 'package:prompt/viewmodels/init_session_view_model.dart';
 import 'package:prompt/viewmodels/internalisation_recall_view_model.dart';
 import 'package:prompt/viewmodels/internalisation_view_model.dart';
 import 'package:prompt/viewmodels/lexical_decision_task_view_model.dart';
 import 'package:prompt/viewmodels/login_view_model.dart';
+import 'package:prompt/viewmodels/usability_assessment_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:prompt/viewmodels/morning_assessment_view_model.dart';
 import 'package:prompt/viewmodels/settings_view_model.dart';
@@ -68,12 +72,11 @@ class AppRouter {
       case RouteNames.AMBULATORY_ASSESSMENT_USABILITY:
         return MaterialPageRoute(
             builder: (_) =>
-                ChangeNotifierProvider<AmbulatoryAssessmentViewModel>(
-                    create: (_) => AmbulatoryAssessmentViewModel(
-                        AssessmentTypes.usability,
+                ChangeNotifierProvider<UsabilityAssessmentViewModel>(
+                    create: (_) => UsabilityAssessmentViewModel(
                         locator.get<DataService>(),
                         locator.get<ExperimentService>()),
-                    child: AmbulatoryAssessmentScreen()));
+                    child: UsabilityAssessmentScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_TEST:
         return MaterialPageRoute(
@@ -100,6 +103,14 @@ class AppRouter {
                     locator.get<DataService>(),
                     locator.get<ExperimentService>()),
                 child: EveningAssessmentScreen()));
+
+      case RouteNames.AMBULATORY_ASSESSMENT_FINISH:
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<FinishAssessmentViewModel>(
+                create: (_) => FinishAssessmentViewModel(
+                    locator.get<DataService>(),
+                    locator.get<ExperimentService>()),
+                child: FinishAssessmentScreen()));
 
       case RouteNames.AMBULATORY_ASSESSMENT_PRE_II_INTERNALISATION:
         return MaterialPageRoute(
@@ -144,6 +155,12 @@ class AppRouter {
 
       case RouteNames.NO_TASKS:
         return MaterialPageRoute(builder: (_) => NoTasksScreen());
+
+      case RouteNames.NO_TASKS_AFTER_RECALL:
+        return MaterialPageRoute(
+            builder: (_) => NoTasksScreen(
+                  previousRoute: NoTaskSituation.afterRecall,
+                ));
 
       case RouteNames.INIT_START:
         return MaterialPageRoute(

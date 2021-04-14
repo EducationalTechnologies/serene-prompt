@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:csv/csv_settings_autodetection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prompt/locator.dart';
 import 'package:prompt/models/assessment.dart';
@@ -291,8 +292,32 @@ class DataService {
         .getSettingsValue(SettingsKeys.backGroundImage);
   }
 
+  Future saveBackgroundGradientColors(List<Color> colors) async {
+    var colorString = colors
+        .map((e) => e.toString().split('(0x')[1].split(')')[0])
+        .toList()
+        .join(",");
+    _localDatabaseService.upsertSetting(
+        SettingsKeys.backgroundColors, colorString);
+  }
+
+  Future<List<Color>> getBackgroundGradientColors() async {
+    var colorString = await _localDatabaseService
+        .getSettingsValue(SettingsKeys.backgroundColors);
+    if (colorString != null) {
+      List<String> colorStringList = colorString.split(",");
+      var list =
+          colorStringList.map((e) => Color(int.parse(e, radix: 16))).toList();
+
+      return list;
+    } else {
+      return [Color(0xffffffff), Color(0xffffffff)];
+    }
+  }
+
   Future<int> getStreakDays() async {
     var userData = await getUserData();
+    if (userData == null) return 0;
     return userData.streakDays;
   }
 

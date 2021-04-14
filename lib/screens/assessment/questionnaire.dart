@@ -41,53 +41,53 @@ class _QuestionnaireState extends State<Questionnaire> {
     print(widget.assessment.title);
     if (widget.assessment == null)
       return Container(child: CircularProgressIndicator());
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Visibility(
-            visible: widget.assessment.title.isNotEmpty,
-            child: Card(
-                child: Container(
-              padding: EdgeInsets.all(10),
-              child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    widget.assessment.title,
-                    textAlign: TextAlign.center,
-                    style: (TextStyle(fontSize: 18)),
-                  )),
-            )),
-          ),
-          for (var index = 0; index < widget.assessment.items.length; index++)
-            Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: IntervalScale(
-                    title: widget.assessment.items[index].title,
-                    labels: widget.assessment.items[index].labels,
-                    id: widget.assessment.items[index].id,
-                    // groupValue: vm.getResultForIndex(index),
-                    callback: (val) {
-                      print("Changed Assessment value to: $val");
-                      setState(() {
-                        this.widget.onFinished(widget.assessment.id,
-                            widget.assessment.items[index].id, val);
-                        _results[widget.assessment.items[index].id] = val;
-                      });
-                    },
-                  ),
+    return ListView(
+      padding: EdgeInsets.only(top: 10, bottom: 10),
+      shrinkWrap: true,
+      children: <Widget>[
+        Visibility(
+          visible: widget.assessment.title.isNotEmpty,
+          child: Card(
+              child: Container(
+            padding: EdgeInsets.all(10),
+            child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  widget.assessment.title,
+                  textAlign: TextAlign.center,
+                  style: (TextStyle(fontSize: 18)),
                 )),
-          UIHelper.verticalSpaceMedium(),
-          Visibility(
-            visible: !_isFilledOut(),
-            child: Text(
-                "Du hast noch nicht alle Fragen beantwortet. Sobald du für alle Fragen eine Auswahl getroffen hast, kannst du weiter zum nächsten Schritt"),
-          )
-        ],
-      ),
+          )),
+        ),
+        for (var index = 0; index < widget.assessment.items.length; index++)
+          Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: IntervalScale(
+                  title: widget.assessment.items[index].title,
+                  labels: widget.assessment.items[index].labels,
+                  id: widget.assessment.items[index].id,
+                  // groupValue: vm.getResultForIndex(index),
+                  callback: (val) {
+                    print("Changed Assessment value to: $val");
+                    setState(() {
+                      this.widget.onFinished(widget.assessment.id,
+                          widget.assessment.items[index].id, val);
+                      _results[widget.assessment.items[index].id] = val;
+                    });
+                  },
+                ),
+              )),
+        UIHelper.verticalSpaceMedium(),
+        Visibility(
+          visible: !_isFilledOut(),
+          child: Text(
+              "Du hast noch nicht alle Fragen beantwortet. Sobald du für alle Fragen eine Auswahl getroffen hast, kannst du weiter zum nächsten Schritt"),
+        )
+      ],
     );
   }
 

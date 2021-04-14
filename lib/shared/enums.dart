@@ -30,6 +30,7 @@ class SettingsKeys {
   static const String wordsPerMinute = "wordsPerMinute";
   static const String initSessionStep = "initSessionStep";
   static const String backGroundImage = "backgroundImage";
+  static const String backgroundColors = "backgroundColors";
 }
 
 class Hindrances {
@@ -57,15 +58,12 @@ enum InternalisationCondition {
   waiting,
   scrambleWithHint,
   emoji,
-  // scrambleWithoutHint
 }
 
 enum AppStartupMode {
   normal,
   signin,
-  preInternalisationAssessment,
   firstLaunch,
-  postLearningAssessment,
   noTasks,
   internalisationTask,
   recallTask,
@@ -93,6 +91,10 @@ enum AssessmentTypes {
   learningGoals1,
   learningGoals2,
   success,
+  visibilitySelection,
+  visibilityCouldRead,
+  finalAttitude,
+  finalMotivation
 }
 
 enum NoTaskSituation { standard, afterInitialization, afterRecall, afterLdt }

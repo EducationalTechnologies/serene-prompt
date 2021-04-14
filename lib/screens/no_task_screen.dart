@@ -52,11 +52,11 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     var rewardService = locator<RewardService>();
     if (widget.previousRoute == NoTaskSituation.afterRecall) {
       _textReward =
-          "Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎";
+          "### Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎";
 
       if (rewardService.streakDays > 0) {
         _textStreak =
-            "🎉 Außerdem hast du ${rewardService.streakDays} Tage in Folge alle Aufgaben erledigt 🎉. Dafür bekommst du heute also zusätzlich ${rewardService.streakDays}💎 als Bonus";
+            "### 🎉 Außerdem hast du ${rewardService.streakDays} Tage in Folge alle Aufgaben erledigt 🎉. Dafür bekommst du heute also zusätzlich ${rewardService.streakDays}💎 als Bonus";
       }
     }
 
@@ -204,17 +204,18 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                               //     textAlign: TextAlign.center,
                               //     style: Theme.of(context).textTheme.headline5),
                               // UIHelper.verticalSpaceLarge(),
+                              UIHelper.verticalSpaceLarge(),
                               Text(_textNotification,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.headline6),
-                              UIHelper.verticalSpaceSmall(),
-                              Text(_textStreakDays,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1),
+                              // UIHelper.verticalSpaceSmall(),
+                              // Text(_textStreakDays,
+                              //     textAlign: TextAlign.center,
+                              //     style: Theme.of(context).textTheme.headline6),
                               UIHelper.verticalSpaceSmall(),
                               Text(_textReward,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1),
+                                  style: Theme.of(context).textTheme.headline6),
                               UIHelper.verticalSpaceMedium(),
                               // Text("Du kriegst für deine Teilnahme 15💎.",
                               //     textAlign: TextAlign.center,
@@ -233,6 +234,13 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                                                 TextStyle(color: Colors.black),
                                           )
                                         ],
+                                      ),
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        30.0))),
                                       ),
                                       onPressed: () async {
                                         var rewardWidget =

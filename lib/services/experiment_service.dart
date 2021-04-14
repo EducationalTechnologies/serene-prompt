@@ -77,7 +77,7 @@ class ExperimentService {
     return _dataService.getLdtData(trialName);
   }
 
-  getCurrentTrialIndex() async {
+  Future<int> getCurrentTrialIndex() async {
     Internalisation last = await this._dataService.getLastInternalisation();
 
     return PLAN_LDT_MAPPING[last.planId];
@@ -284,6 +284,14 @@ class ExperimentService {
     if (currentScreen == RouteNames.RECALL_TASK) {
       return await _navigationService
           .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_EVENING);
+    }
+    if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_USABILITY) {
+      int trialIndex = await getCurrentTrialIndex();
+      _navigationService.navigateTo(RouteNames.LDT,
+          arguments: trialIndex.toString());
+    }
+    if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_FINISH) {
+      _navigationService.navigateTo(RouteNames.NO_TASKS);
     }
   }
 }

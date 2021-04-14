@@ -7,9 +7,9 @@ abstract class MultiStepAssessmentViewModel extends BaseViewModel {
   int step = 0;
   Assessment lastAssessment = Assessment();
 
-  bool canMoveBack(Key currentPageKey);
-  bool canMoveNext(Key currentPageKey);
-  int getNextPage(Key currentPageKey);
+  bool canMoveBack(ValueKey currentPageKey);
+  bool canMoveNext(ValueKey currentPageKey);
+  int getNextPage(ValueKey currentPageKey);
   void submit();
 
   Map<String, String> currentAssessmentResults = {};

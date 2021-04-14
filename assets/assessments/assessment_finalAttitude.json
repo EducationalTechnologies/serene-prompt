@@ -1,9 +1,9 @@
 {
     "title": "Abschlussbefragung",
-    "id": "final",
+    "id": "finalAttitude",
     "questions": [
         {
-            "id": "final_1",
+            "id": "finalAttitude_1",
             "questionText": "Wenn du dir noch einmal jeden Tag Pläne einprägen müsstest, wie würdest du sie am liebsten lernen?",
             "labels": {
                 "1": "Plan dreimal durchlesen",
@@ -12,7 +12,7 @@
             }
         },
         {
-            "id": "final_2",
+            "id": "finalAttitude_2",
             "questionText": "Wie viel Spaß hat es dir gemacht, die App PROMPT zu nutzen?",
             "labels": {
                 "1": "Gar nicht",
@@ -23,7 +23,7 @@
             }
         },
         {
-            "id": "final_3",
+            "id": "finalAttitude_3",
             "questionText": "Wie schwierig fandest du es, die App PROMPT zu bedienen?",
             "labels": {
                 "1": "Gar nicht",
@@ -34,7 +34,7 @@
             }
         },
         {
-            "id": "final_4",
+            "id": "finalAttitude_4",
             "questionText": "Würdest du die App PROMPT weiter benutzen?",
             "labels": {
                 "1": "Sehr ungern",
@@ -45,47 +45,14 @@
             }
         },
         {
-            "id": "final_5",
-            "questionText": "Ich habe mir Mühe gegeben, mir die Pläne gut zu merken.",
+            "id": "finalAttitude_5",
+            "questionText": "Hast du dir Mühe gegeben, dir die Pläne gut zu merken?",
             "labels": {
                 "1": "(Fast) nie",
                 "2": "Selten",
                 "3": "Hin und wieder",
                 "4": "Oft",
                 "5": "(Fast) jeden Tag"
-            }
-        },
-        {
-            "id": "final_6",
-            "questionText": "Es hat mich motiviert, für die Aufgaben 💎 zu bekommen.",
-            "labels": {
-                "1": "Überhaupt nicht",
-                "2": "Kaum",
-                "3": "Teils / teils",
-                "4": "Ziemlich",
-                "5": "Sehr"
-            }
-        },
-        {
-            "id": "final_7",
-            "questionText": "Es hat mich motiviert, dass ich für meine 💎 am Ende der Studie einen Gutschein bekomme.",
-            "labels": {
-                "1": "Überhaupt nicht",
-                "2": "Kaum",
-                "3": "Teils / teils",
-                "4": "Ziemlich",
-                "5": "Sehr"
-            }
-        },
-        {
-            "id": "final_8",
-            "questionText": "Es hat mich motiviert, dass ich Hintergründe für das Monster freischalten konnte.",
-            "labels": {
-                "1": "Überhaupt nicht",
-                "2": "Kaum",
-                "3": "Teils / teils",
-                "4": "Ziemlich",
-                "5": "Sehr"
             }
         }
     ]
