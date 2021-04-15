@@ -81,12 +81,10 @@ class Timeline extends StatelessWidget {
         final isLast = index == itemCount - 1;
 
         var indicatorProgess = index / itemCount;
-        var iColor = indicatorColor;
-        var fStyle = indicatorStyle;
         var indicatorActive = progress >= indicatorProgess;
 
-        var lineProgress = index / (2 * itemCount - 2);
-        var lineActive = progress >= lineProgress;
+        // var lineProgress = index / (2 * itemCount - 2);
+        // var lineActive = progress >= lineProgress;
 
         final timelineTile = <Widget>[
           CustomPaint(
