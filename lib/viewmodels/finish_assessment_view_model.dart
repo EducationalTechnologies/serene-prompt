@@ -23,6 +23,20 @@ class FinishAssessmentViewModel extends MultiStepAssessmentViewModel {
 
   FinishAssessmentViewModel(this._dataService, this._experimentService);
 
+  String _textPositive = "";
+  setTextPositive(String text) {
+    _textPositive = text;
+    this.setAssessmentResult("finalFree_positive", "finalFree_positive", text);
+    notifyListeners();
+  }
+
+  String _textNegative = "";
+  setTextNegative(String text) {
+    _textNegative = text;
+    this.setAssessmentResult("finalFree_negative", "finalFree_negative", text);
+    notifyListeners();
+  }
+
   @override
   bool canMoveBack(Key currentPageKey) {
     if (currentPageKey == ValueKey(STEPS.instruction)) {

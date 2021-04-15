@@ -19,14 +19,12 @@ class SereneAppBar extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _SereneAppBarState extends State<SereneAppBar> {
-  StreamController<int> scoreStream;
   getRewardDisplay() {}
 
   @override
   void initState() {
     super.initState();
     var rewardService = locator.get<RewardService>();
-    scoreStream = rewardService.controller;
 
     rewardService.retrieveScore();
   }
@@ -39,7 +37,6 @@ class _SereneAppBarState extends State<SereneAppBar> {
   @override
   AppBar build(BuildContext context) {
     var rewardService = locator.get<RewardService>();
-    var scoreValue = rewardService.scoreValue;
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,

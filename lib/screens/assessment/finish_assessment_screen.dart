@@ -21,6 +21,8 @@ class _FinishAssessmentScreenState extends State<FinishAssessmentScreen> {
   void initState() {
     super.initState();
 
+    var vm = Provider.of<FinishAssessmentViewModel>(context, listen: false);
+
     _pages = [
       TextExplanationScreen(
         "Wir sind am Ende der Studie angelangt. Noch einmal vielen Dank, dass du mitgemacht hast! Zum Schluss haben wir noch ein paar Fragen an dich. Bitte antworte ehrlich. Es gibt keine richtigen oder falschen Antworten und deine Antworten haben keinen Einfluss darauf, welchen Preis zu erhältst.",
@@ -34,10 +36,14 @@ class _FinishAssessmentScreenState extends State<FinishAssessmentScreen> {
           AssessmentTypes.finalAttitude, ValueKey(STEPS.questionsAttitude)),
       questionnaireFuture(
           AssessmentTypes.finalMotivation, ValueKey(STEPS.questionsMotivation)),
-      FreeTextQuestion("Das fand ich gut an der App:",
-          key: ValueKey(STEPS.questionsFreePositive)),
+      FreeTextQuestion(
+        "Das fand ich gut an der App:",
+        key: ValueKey(STEPS.questionsFreePositive),
+        textChanged: vm.setTextPositive,
+      ),
       FreeTextQuestion("Das fand ich nicht so gut an der App:",
-          key: ValueKey(STEPS.questionsFreeNegative)),
+          key: ValueKey(STEPS.questionsFreeNegative),
+          textChanged: vm.setTextNegative),
     ];
   }
 
