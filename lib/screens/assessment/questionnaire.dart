@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prompt/models/assessment.dart';
+import 'package:prompt/models/assessment_item.dart';
 import 'package:prompt/shared/ui_helpers.dart';
 import 'package:prompt/widgets/interval_scale.dart';
 
@@ -60,27 +61,7 @@ class _QuestionnaireState extends State<Questionnaire> {
           )),
         ),
         for (var index = 0; index < widget.assessment.items.length; index++)
-          Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: IntervalScale(
-                  title: widget.assessment.items[index].title,
-                  labels: widget.assessment.items[index].labels,
-                  id: widget.assessment.items[index].id,
-                  // groupValue: vm.getResultForIndex(index),
-                  callback: (val) {
-                    print("Changed Assessment value to: $val");
-                    setState(() {
-                      this.widget.onFinished(widget.assessment.id,
-                          widget.assessment.items[index].id, val);
-                      _results[widget.assessment.items[index].id] = val;
-                    });
-                  },
-                ),
-              )),
+          buildQuestionCard(widget.assessment.items[index], index),
         UIHelper.verticalSpaceMedium(),
         Visibility(
           visible: !_isFilledOut(),
@@ -89,6 +70,39 @@ class _QuestionnaireState extends State<Questionnaire> {
         )
       ],
     );
+  }
+
+  buildQuestionCard(AssessmentItemModel assessment, int index) {
+    var groupValue = -1;
+    if (_results.containsKey(widget.assessment.items[index].id)) {
+      groupValue = int.tryParse(_results[widget.assessment.items[index].id]);
+      if (groupValue == null) {
+        groupValue = -1;
+      }
+    }
+
+    return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: IntervalScale(
+            title: assessment.title,
+            labels: assessment.labels,
+            id: assessment.id,
+            groupValue: groupValue,
+            // groupValue: vm.getResultForIndex(index),
+            callback: (val) {
+              print("Changed Assessment value to: $val");
+              setState(() {
+                this.widget.onFinished(widget.assessment.id,
+                    widget.assessment.items[index].id, val);
+                _results[widget.assessment.items[index].id] = val;
+              });
+            },
+          ),
+        ));
   }
 
   bool _isFilledOut() {
