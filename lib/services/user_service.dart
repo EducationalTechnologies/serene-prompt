@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:prompt/locator.dart';
 import 'package:prompt/models/user_data.dart';
+import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/firebase_service.dart';
 import 'package:prompt/services/settings_service.dart';
 import 'package:prompt/shared/enums.dart';
@@ -29,7 +30,7 @@ class UserService {
   int _getInternalisationCondition() {
     var rng = new Random();
     // TODO: This hardcoded value needs to go and the number of groups has to be stored somewhere else, maybe in an Experiment.json
-    return rng.nextInt(2) + 1;
+    return rng.nextInt(ExperimentService.NUM_GROUPS) + 1;
   }
 
   Future<String> registerUser(String email, String password) async {

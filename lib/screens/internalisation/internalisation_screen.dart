@@ -42,26 +42,41 @@ class _InternalisationScreenState extends State<InternalisationScreen> {
 
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        appBar: HelpAppBar(),
-        body: FutureBuilder(
-          future: vm.initialized,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasData) {
-              return Container(
-                child: getScreenForCondition(vm.internalisationCondition),
-                // child: ScrambleInternalisation(true),
-              );
-            } else {
-              return Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-          },
-        ),
+      child: FutureBuilder(
+        future: vm.initialized,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+                appBar: HelpAppBar(
+                    getHelpTypeForCondition(vm.internalisationCondition)),
+                body: Container(
+                  child: getScreenForCondition(vm.internalisationCondition),
+                ));
+          } else {
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        },
       ),
     );
+  }
+
+  getHelpTypeForCondition(InternalisationCondition condition) {
+    switch (condition) {
+      case InternalisationCondition.waiting:
+        return HelpType.waitingInternalisation;
+        break;
+      case InternalisationCondition.scrambleWithHint:
+        return HelpType.scrambleInternalisation;
+        break;
+      case InternalisationCondition.emoji:
+        return HelpType.emojiInternalisation;
+        break;
+      default:
+        return HelpType.general;
+    }
   }
 }

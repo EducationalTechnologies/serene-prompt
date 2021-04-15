@@ -6,7 +6,6 @@ import 'package:prompt/models/outcome.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/reward_service.dart';
-import 'package:prompt/services/settings_service.dart';
 import 'package:prompt/shared/app_asset_paths.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/shared/route_names.dart';
@@ -87,7 +86,6 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
 
   final ExperimentService _experimentService;
   final DataService _dataService;
-  final SettingsService _settingsService;
   final RewardService _rewardService;
 
   LexicalDecisionTaskViewModel ldtvm;
@@ -212,8 +210,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
         iconPath: AppAssetPaths.ICON_TEAMWORK),
   ];
 
-  InitSessionViewModel(this._dataService, this._experimentService,
-      this._settingsService, this._rewardService);
+  InitSessionViewModel(
+      this._dataService, this._experimentService, this._rewardService);
 
   int getPreviouslyCompletedStep() {
     return 0;
@@ -442,9 +440,6 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     var msgIncorrect =
         "Du hast leider nicht immer richtig gedrückt. Denk daran, dass du bei einem echten Wort die Taste 'ja' drücken sollst und bei einem unechten Wort die Taste 'nein' Wir üben das noch einmal.";
 
-    var slow = false;
-    var incorrect = false;
-    var msg = "";
     if (keyValue == STEP.ldt00 || keyValue == STEP.stepLdt01) {
       for (var i = 0; i < results.length; i++) {
         var result = results[i];

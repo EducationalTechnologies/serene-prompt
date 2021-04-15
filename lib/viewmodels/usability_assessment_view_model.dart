@@ -80,13 +80,11 @@ class UsabilityAssessmentViewModel extends MultiStepAssessmentViewModel {
     Assessment assessment = await _dataService.getAssessment(name);
     assessment = replacePlaceholder(assessment, condition);
     assessment.title = getIntroductionText(condition);
-    ;
     return assessment;
   }
 
   @override
   int getNextPage(Key currentPageKey) {
-    // TODO: implement getNextPage
     return step + 1;
   }
 

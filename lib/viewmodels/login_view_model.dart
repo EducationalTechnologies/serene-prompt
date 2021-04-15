@@ -25,8 +25,7 @@ class LoginViewModel extends BaseViewModel {
       email = "$email@prompt.studie";
     }
     if (password.isEmpty) {
-      // TODO: Change for production to read from environment file
-      password = "hasselhoernchen!$input";
+      password = getDefaultPassword(input);
     }
 
     setState(ViewState.busy);
@@ -47,13 +46,17 @@ class LoginViewModel extends BaseViewModel {
     }
     if (password.isEmpty) {
       // TODO: Change for production to read from environment file
-      password = "hasselhoernchen!$input";
+      password = getDefaultPassword(input);
     }
     setState(ViewState.busy);
     var signin = await _userService.signInUser(email, password);
     await locator<RewardService>().initialize();
     setState(ViewState.idle);
     return signin;
+  }
+
+  getDefaultPassword(String userid) {
+    return "hasselhoernchen!$userid";
   }
 
   submit() async {

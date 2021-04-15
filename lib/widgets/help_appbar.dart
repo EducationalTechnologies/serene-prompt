@@ -3,10 +3,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:prompt/shared/ui_helpers.dart';
 
+enum HelpType {
+  general,
+  emojiInternalisation,
+  waitingInternalisation,
+  scrambleInternalisation,
+  recall
+}
+
 class HelpAppBar extends StatefulWidget with PreferredSizeWidget {
   final String title;
+  final HelpType helpType;
 
-  const HelpAppBar({Key key, this.title = ""}) : super(key: key);
+  const HelpAppBar(this.helpType, {Key key, this.title = ""}) : super(key: key);
 
   @override
   _HelpAppBarState createState() => _HelpAppBarState();

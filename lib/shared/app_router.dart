@@ -168,7 +168,6 @@ class AppRouter {
                   create: (_) => InitSessionViewModel(
                       locator.get<DataService>(),
                       locator.get<ExperimentService>(),
-                      locator.get<SettingsService>(),
                       locator.get<RewardService>()),
                   child: InitialSessionScreen(),
                 ));

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:prompt/models/assessment.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:prompt/models/assessment_result.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';

@@ -5,8 +5,6 @@ import 'package:prompt/screens/assessment/questionnaire.dart';
 import 'package:prompt/screens/initialsession/text_explanation_screen.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/viewmodels/finish_assessment_view_model.dart';
-import 'package:prompt/widgets/serene_appbar.dart';
-import 'package:prompt/widgets/serene_drawer.dart';
 import 'package:provider/provider.dart';
 
 class FinishAssessmentScreen extends StatefulWidget {

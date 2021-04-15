@@ -50,7 +50,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                   UIHelper.verticalSpaceMedium(),
                   InfoBubble(
                       text:
-                          "Erstelle aus Emojis eine Darstellung deines Wenn-Dann-Planes"),
+                          "Erstelle aus Emojis eine Darstellung deines Planes"),
                   UIHelper.verticalSpaceMedium(),
                   SpeechBubble(text: "'${vm.plan}'"),
                   UIHelper.verticalSpaceMedium(),

@@ -69,7 +69,7 @@ class _MorningAssessmentScreenState extends State<MorningAssessmentScreen> {
       child: Column(
         children: [
           Text(
-            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Satz, den du dir merken sollst.",
+            "Vielen Dank, dass du die Fragen beantwortet hast. Jetzt geht es weiter zu dem heutigen Plan, den du dir merken sollst.",
             style: TextStyle(fontSize: 20),
           ),
         ],

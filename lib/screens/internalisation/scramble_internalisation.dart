@@ -277,7 +277,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         child: Column(
           children: [
             Text(
-              "Merke dir folgenden Satz, und Puzzle ihn dann gleich zusammen:",
+              "Merke dir folgenden Satz, und puzzle ihn dann gleich zusammen:",
               style: Theme.of(context).textTheme.headline6,
             ),
             UIHelper.verticalSpaceMedium(),

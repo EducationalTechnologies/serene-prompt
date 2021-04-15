@@ -30,7 +30,7 @@ class _InternalisationRecallScreenState
   Widget build(BuildContext context) {
     var vm = Provider.of<InternalisationRecallViewModel>(context);
     return Scaffold(
-      appBar: HelpAppBar(),
+      appBar: HelpAppBar(HelpType.recall),
       body: Container(
         margin: UIHelper.getContainerMargin(),
         child: Column(
@@ -41,7 +41,7 @@ class _InternalisationRecallScreenState
                 children: [
                   UIHelper.verticalSpaceMedium(),
                   Text(
-                    "Schreibe deinen Satz von heute so auf, wie du dich an ihn erinnerst.",
+                    "Schreibe deinen Plan von heute so auf, wie du dich an ihn erinnerst.",
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   UIHelper.verticalSpaceMedium(),

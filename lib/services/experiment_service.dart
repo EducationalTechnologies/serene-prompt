@@ -23,6 +23,7 @@ class ExperimentService {
   static const int DAYS_INTERVAL_USABILITY = 3;
   static const int STUDY_DURATION = 27;
   static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
+  static const int NUM_GROUPS = 6;
 
   final DataService _dataService;
   final NotificationService _notificationService;
@@ -130,8 +131,6 @@ class ExperimentService {
   }
 
   Future<bool> isTimeForLexicalDecisionTask() async {
-    // TODO: Also check if the LDT was alread done!
-
     if (await lastThreeConditionsWereTheSame()) {
       DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
 
@@ -142,7 +141,6 @@ class ExperimentService {
       if (lastLdtDate.daysAgo() < 2) {
         return false;
       }
-      // TODO: Also check if the recall task was done for the day
 
       var lastInternalisation = await _dataService.getLastInternalisation();
 

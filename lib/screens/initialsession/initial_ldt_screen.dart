@@ -91,29 +91,13 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
         child: Column(
             children: [
               currentPhaseWidget,
-              Visibility(
-                maintainSize: true,
-                maintainState: true,
-                maintainAnimation: true,
-                visible: vm.phase == 3,
-                child: Column(
-                  children: [
-                    FullWidthButton(
-                        onPressed: () {
-                          vm.pressed(1);
-                        },
-                        text: "Ja",
-                        height: 140),
-                    UIHelper.verticalSpaceLarge(),
-                    FullWidthButton(
-                        onPressed: () {
-                          vm.pressed(0);
-                        },
-                        text: "Nein",
-                        height: 140),
-                  ],
-                ),
-              ),
+              OrientationBuilder(builder: (context, orientation) {
+                if (orientation == Orientation.portrait) {
+                  return buildInputPortrait();
+                } else {
+                  return buildInputLandscape();
+                }
+              }),
               LinearProgressIndicator(
                 value: vm.getProgress(),
                 minHeight: 8,
@@ -121,6 +105,58 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
             ],
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center));
+  }
+
+  buildInputPortrait() {
+    return Visibility(
+      maintainSize: true,
+      maintainState: true,
+      maintainAnimation: true,
+      visible: vm.phase == 3,
+      child: Column(
+        children: [
+          FullWidthButton(
+              onPressed: () {
+                vm.pressed(1);
+              },
+              text: "Ja",
+              height: 140),
+          UIHelper.verticalSpaceLarge(),
+          FullWidthButton(
+              onPressed: () {
+                vm.pressed(0);
+              },
+              text: "Nein",
+              height: 140),
+        ],
+      ),
+    );
+  }
+
+  buildInputLandscape() {
+    return Visibility(
+      maintainSize: true,
+      maintainState: true,
+      maintainAnimation: true,
+      visible: vm.phase == 3,
+      child: Column(
+        children: [
+          FullWidthButton(
+              onPressed: () {
+                vm.pressed(1);
+              },
+              text: "Ja",
+              height: 140),
+          UIHelper.verticalSpaceLarge(),
+          FullWidthButton(
+              onPressed: () {
+                vm.pressed(0);
+              },
+              text: "Nein",
+              height: 140),
+        ],
+      ),
+    );
   }
 
   buildBackwardMask() {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:prompt/locator.dart';
-import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/user_service.dart';
 import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/widgets/version_info.dart';
