@@ -110,7 +110,8 @@ class ExperimentService {
     var lastRecall = await _dataService.getLastRecallTask();
 
     if (lastRecall != null) {
-      if (lastRecall.completionDate.isToday()) {
+      if (lastRecall.completionDate
+          .isAfter(lastInternalisation.completionDate)) {
         return false;
       }
     }
@@ -131,24 +132,25 @@ class ExperimentService {
   }
 
   Future<bool> isTimeForLexicalDecisionTask() async {
-    if (await lastThreeConditionsWereTheSame()) {
-      DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
+    if (!await lastThreeConditionsWereTheSame()) return false;
 
-      if (lastLdtDate == null) {
-        return true;
-      }
+    DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
 
-      if (lastLdtDate.daysAgo() < 2) {
-        return false;
-      }
-
-      var lastInternalisation = await _dataService.getLastInternalisation();
-
-      if (lastLdtDate.isAfter(lastInternalisation.completionDate)) {
-        return false;
-      }
+    if (lastLdtDate == null) {
+      return true;
     }
-    return false;
+
+    if (lastLdtDate.daysAgo() < 2) {
+      return false;
+    }
+
+    var lastInternalisation = await _dataService.getLastInternalisation();
+
+    if (lastLdtDate.isAfter(lastInternalisation.completionDate)) {
+      return false;
+    }
+
+    return true;
   }
 
   Future<int> getDayOfExperiment() async {

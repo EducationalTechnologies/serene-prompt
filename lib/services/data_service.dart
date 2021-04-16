@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,7 @@ enum CachedValues { goals, internalisations }
 class DataService {
   List<dynamic> _ldtTaskListCache = [];
   List<Internalisation> _planCache = [];
+  List<Internalisation> _lastInternalisationsCache = [];
   final UserService _userService;
   final FirebaseService _databaseService;
   final LocalDatabaseService _localDatabaseService;
@@ -132,6 +134,7 @@ class DataService {
   }
 
   saveInternalisation(Internalisation internalisation) async {
+    _lastInternalisationsCache.add(internalisation);
     return await _databaseService.saveInternalisation(
         internalisation, _userService.getUsername());
   }
@@ -156,13 +159,21 @@ class DataService {
   }
 
   Future<Internalisation> getLastInternalisation() async {
-    return await _databaseService
-        .getLastInternalisation(_userService.getUsername());
+    // Since the app needs up to three last internalisations later on, we cache them here
+    var lastThree = await getLastInternalisations(3);
+    return lastThree[0];
   }
 
   Future<List<Internalisation>> getLastInternalisations(int number) async {
-    return await _databaseService.getLastInternalisations(
-        _userService.getUsername(), number);
+    if (_lastInternalisationsCache.isEmpty ||
+        _lastInternalisationsCache.length < number) {
+      _lastInternalisationsCache = await _databaseService
+          .getLastInternalisations(_userService.getUsername(), number);
+    }
+    //TODO: Bounds checks
+    var start = min(_lastInternalisationsCache.length - number, 0);
+    var end = _lastInternalisationsCache.length;
+    return _lastInternalisationsCache.sublist(start, end);
   }
 
   Future<UserData> getUserData() async {
