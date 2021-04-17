@@ -61,8 +61,7 @@ class _HelpAppBarState extends State<HelpAppBar> {
   }
 
   showHelpDialog() async {
-    String textHelpRecall =
-        "Wenn du nicht verstehst was du hier tun sollst, melde dich telefonisch bei **Jasmin Breitwieser: 069 24708 375**";
+    String helpText = getHelpText(widget.helpType);
 
     await showDialog<String>(
       context: context,
@@ -70,7 +69,7 @@ class _HelpAppBarState extends State<HelpAppBar> {
         title: new Text("Hilfe"),
         content: new Column(
           children: [
-            MarkdownBody(data: textHelpRecall),
+            MarkdownBody(data: helpText),
           ],
         ),
         actions: <Widget>[
@@ -83,5 +82,24 @@ class _HelpAppBarState extends State<HelpAppBar> {
         ],
       ),
     );
+  }
+
+  String getHelpText(HelpType helpType) {
+    switch (helpType) {
+      case HelpType.general:
+        return "Wenn du nicht verstehst was du hier tun sollst, melde dich telefonisch bei **Jasmin Breitwieser: 069 24708 375**";
+      case HelpType.emojiInternalisation:
+        return "Hier sollst du Emojis benutzen, die so gut wie möglich deinen Plan repräsentieren. Trage in das linke Feld Emojis ein, die den 'wenn'-Teil deines Planes gut repräsentieren, und in das rechte Feld Emojis, die den 'dann'-Teil deines Planes gut repräsentieren.";
+        break;
+      case HelpType.waitingInternalisation:
+        return "Hier musst du in Ruhe und mit viel Sorgfalt den Plan drei-mal lesen und ihn dir dabei ganz deutlich vorstellen.";
+        break;
+      case HelpType.scrambleInternalisation:
+        return "Hier musst du aus einzelnen Wörtern den kompletten Plan zusammenbauen";
+        break;
+      case HelpType.recall:
+        return "Hier musst du dich so gut wie es geht an deinen Plan von heute erinnern. Es ist gar nicht schlimm, wenn es nicht genau ist, aber versuche trotzdem, dich so gut es geht zu erinnern.";
+        break;
+    }
   }
 }

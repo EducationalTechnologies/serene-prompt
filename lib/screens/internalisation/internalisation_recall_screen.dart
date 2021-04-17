@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prompt/widgets/help_appbar.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +63,11 @@ class _InternalisationRecallScreenState
       Text("Wenn...", style: Theme.of(context).textTheme.headline6),
       Center(
           child: TextField(
+        keyboardType: TextInputType.text,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(
+              RegExp("[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF]")),
+        ],
         minLines: 1,
         maxLines: 2,
         autofocus: true,
@@ -79,6 +85,7 @@ class _InternalisationRecallScreenState
       Text("dann...", style: Theme.of(context).textTheme.headline6),
       Center(
           child: TextField(
+        keyboardType: TextInputType.text,
         minLines: 1,
         maxLines: 2,
         autofocus: true,
