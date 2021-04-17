@@ -131,16 +131,6 @@ class FirebaseService {
     });
   }
 
-  saveFcmToken(String userId, String token) async {
-    var tokens = _databaseReference
-        .collection(COLLECTION_USERS)
-        .doc(userId)
-        .collection('tokens')
-        .doc(token);
-
-    await tokens.set({'token': token});
-  }
-
   saveAssessment(AssessmentResult assessment, String userid) async {
     var assessmentMap = assessment.toMap();
     assessmentMap["user"] = userid;
@@ -149,25 +139,6 @@ class FirebaseService {
         .add(assessmentMap)
         .then((res) => res)
         .catchError(handleError);
-  }
-
-  Future<AssessmentResult> getLastSubmittedAssessment(
-      String assessmentType, String email) async {
-    try {
-      var doc = await _databaseReference
-          .collection(COLLECTION_ASSESSMENTS)
-          .doc(email)
-          .collection(assessmentType)
-          .orderBy("submissionDate", descending: true)
-          .limit(1)
-          .get();
-
-      if (doc.docs.length == 0) return null;
-      return AssessmentResult.fromDocument(doc.docs[0]);
-    } catch (e) {
-      print("Error trying to get the last submitted assessment: $e");
-      return null;
-    }
   }
 
   saveOutcomes(List<Outcome> outcomes, String email) async {
@@ -182,7 +153,7 @@ class FirebaseService {
   saveObstacles(List<Obstacle> obstacles, String email) async {
     var dynamicList = obstacles.map((obstacle) => obstacle.toMap()).toList();
 
-    await _databaseReference
+    _databaseReference
         .collection(COLLECTION_OBSTACLES)
         .doc(email)
         .set({"obstacles": dynamicList});
@@ -192,9 +163,7 @@ class FirebaseService {
     var map = internalisation.toMap();
     map["user"] = email;
 
-    return await _databaseReference
-        .collection(COLLECTION_INTERNALISATION)
-        .add(map);
+    _databaseReference.collection(COLLECTION_INTERNALISATION).add(map);
   }
 
   Future<DateTime> getLastLdtTaskDate(String userid) async {
@@ -236,30 +205,6 @@ class FirebaseService {
       handleTimeout("Last Internalisation");
       return null;
     }).catchError((handleError));
-  }
-
-  Future<Internalisation> getLastInternalisation(String email) async {
-    if (email == null) return null;
-    if (email.isEmpty) return null;
-    // TODO: Refactor await
-    var docs = await getLastInternalisations(email, 1);
-
-    if (docs == null) return null;
-    if (docs.length == 0) return null;
-    return (docs[0]);
-  }
-
-  Future<Internalisation> getFirstInternalisation(String email) async {
-    // TODO: Refactor await
-    var doc = await _databaseReference
-        .collection(COLLECTION_INTERNALISATION)
-        .where("user", isEqualTo: email)
-        .orderBy("completionDate", descending: false)
-        .limit(1)
-        .get();
-
-    if (doc.docs.length == 0) return null;
-    return Internalisation.fromDocument(doc.docs[0]);
   }
 
   Future saveRecallTask(RecallTask recallTask, String email) async {
@@ -324,27 +269,14 @@ class FirebaseService {
         .set({"internalisationCondition": group}, SetOptions(merge: true));
   }
 
-  Future<int> getScore(String userid) async {
-    var scores = await _databaseReference
-        .collection(COLLECTION_USERS)
-        .doc(userid)
-        .get()
-        .catchError(handleError);
-
-    if (!scores.exists) return 0;
-    var score = scores.data()["score"];
-    if (score == null) return 0;
-    return score;
-  }
-
   Future<void> saveLdt(String userid, LdtData ldtData) async {
     var ldtMap = ldtData.toMap();
     ldtMap["user"] = userid;
-    await _databaseReference.collection(COLLECTION_LDT).add(ldtMap);
+    _databaseReference.collection(COLLECTION_LDT).add(ldtMap);
   }
 
   logEvent(String userid, dynamic data) async {
-    await _databaseReference.collection(COLLECTION_LOGS).add(data);
+    _databaseReference.collection(COLLECTION_LOGS).add(data);
   }
 
   Future<int> getMaxInitSession(String userid) async {
@@ -367,7 +299,7 @@ class FirebaseService {
   }
 
   Future<void> saveInitSessionStepCompleted(String userid, int step) async {
-    await _databaseReference
+    _databaseReference
         .collection(COLLECTION_INITSESSION)
         .doc(userid)
         .set({"maxStep": step}, SetOptions(merge: true));
@@ -375,7 +307,7 @@ class FirebaseService {
 
   Future<void> saveInitialSessionValue(
       String username, String key, dynamic value) async {
-    await _databaseReference
+    _databaseReference
         .collection(COLLECTION_INITSESSION)
         .doc(username)
         .set({key: value}, SetOptions(merge: true));
@@ -388,19 +320,6 @@ class FirebaseService {
         .set({"streakDays": value}, SetOptions(merge: true))
         .then((value) => null)
         .catchError(handleError);
-  }
-
-  Future<int> getStreakDays(String username) async {
-    var resultDocuments = await _databaseReference
-        .collection(COLLECTION_USERS)
-        .where("email", isEqualTo: username)
-        .get()
-        .catchError(handleError);
-
-    if (resultDocuments == null) return 0;
-    if (!resultDocuments.docs[0].data().containsKey("streakDays")) return 0;
-    int days = resultDocuments.docs[0].data()["streakDays"];
-    return days;
   }
 
   Future saveDaysAcive(String username, int daysActive) async {

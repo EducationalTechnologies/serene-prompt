@@ -67,12 +67,6 @@ class DataService {
         assessment, _userService.getUsername());
   }
 
-  Future<AssessmentResult> getLastSubmittedAssessment(
-      String assessmentType) async {
-    return await _databaseService.getLastSubmittedAssessment(
-        assessmentType, _userService.getUsername());
-  }
-
   _getLdtTrialByName(String trial) async {
     var csvSettingsDetector =
         new FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']);
@@ -153,15 +147,10 @@ class DataService {
     return _lastRecallTask;
   }
 
-  Future<Internalisation> getFirstInternalisation() async {
-    return await _databaseService
-        .getFirstInternalisation(_userService.getUsername());
-  }
-
   Future<Internalisation> getLastInternalisation() async {
     // Since the app needs up to three last internalisations later on, we cache them here
-    var lastThree = await getLastInternalisations(3);
-    return lastThree[0];
+    var all = await getLastInternalisations(27);
+    return all[0];
   }
 
   Future<List<Internalisation>> getLastInternalisations(int number) async {
@@ -170,8 +159,7 @@ class DataService {
       _lastInternalisationsCache = await _databaseService
           .getLastInternalisations(_userService.getUsername(), number);
     }
-    //TODO: Bounds checks
-    var start = min(_lastInternalisationsCache.length - number, 0);
+    var start = max(_lastInternalisationsCache.length - number, 0);
     var end = _lastInternalisationsCache.length;
     return _lastInternalisationsCache.sublist(start, end);
   }
