@@ -62,9 +62,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
           onVideoCompleted: vm.videoLdtCompleted),
       InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(STEP.ldt00)),
       InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.stepLdt01)),
-      // TODO: REPLACE WITH ACTUAL LDTs 0_2 0_3
-      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.stepLdt02)),
-      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.stepLdt03)),
+      InitialLdtScreen("0_2", _onLdtFinished, key: ValueKey(STEP.stepLdt02)),
+      InitialLdtScreen("0_3", _onLdtFinished, key: ValueKey(STEP.stepLdt03)),
       InitialRewardScreenFirst(key: ValueKey(STEP.stepRewardFirst)),
       VideoScreen('assets/videos/videoLearning.mp4',
           key: ValueKey(STEP.stepVideoLearning),
@@ -91,9 +90,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       TextExplanationScreen(
           "So, jetzt kommt noch einmal die Wortaufgabe. Bist du bereit?",
           key: ValueKey(STEP.readyForNextLdtRound)),
-      // TODO: REPLACE WITH ACTUAL LDTs 0_4 0_5
-      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.stepLdt04)),
-      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.stepLdt05)),
+      InitialLdtScreen("0_4", _onLdtFinished, key: ValueKey(STEP.stepLdt04)),
+      InitialLdtScreen("0_5", _onLdtFinished, key: ValueKey(STEP.stepLdt05)),
       InitialRewardScreenSecond(key: ValueKey(STEP.stepRewardSecond)),
       questionnaireFuture(AssessmentTypes.srl, ValueKey(STEP.stepQuestionsSrl)),
       questionnaireFuture(AssessmentTypes.learningGoals2,

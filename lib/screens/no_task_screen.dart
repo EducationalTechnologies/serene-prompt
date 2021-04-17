@@ -45,12 +45,14 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
   showDialogIfNecessary() async {
     if (widget.previousRoute == NoTaskSituation.standard) return;
-
+    if (widget.previousRoute == NoTaskSituation.afterLdt) return;
+    String _title = "";
     String _textReward = "";
     String _textStreak = "";
     String _textTotal = "";
     var rewardService = locator<RewardService>();
     if (widget.previousRoute == NoTaskSituation.afterRecall) {
+      _title = "Belohnung erhalten";
       _textReward =
           "### Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎";
 
@@ -59,16 +61,21 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
             "### 🎉 Außerdem hast du ${rewardService.streakDays} Tage in Folge alle Aufgaben erledigt 🎉. Dafür bekommst du heute also zusätzlich ${rewardService.streakDays}💎 als Bonus";
       }
     }
+    if (widget.previousRoute == NoTaskSituation.afterFinal) {
+      _title = "Die Studie ist fertig!";
+      _textReward =
+          "Du hast diese Studie hiermit abgeschlossen und es gibt erstmal keine weiteren Aufgaben. Wenn du bei weiteren Studien mitmachen möchtest, dann schreibe doch eine E-Mail an **breitwieser@dipf.de**";
+    }
 
     await showDialog<String>(
       context: context,
       builder: (BuildContext context) => new AlertDialog(
-        title: new Text("Belohnung erhalten"),
+        title: new Text(_title),
         content: new Column(
           children: [
             MarkdownBody(data: _textReward),
             UIHelper.verticalSpaceMedium(),
-            Text(_textStreak),
+            MarkdownBody(data: _textStreak),
             UIHelper.verticalSpaceMedium(),
             Text(_textTotal)
           ],

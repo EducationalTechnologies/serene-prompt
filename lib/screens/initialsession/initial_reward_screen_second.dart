@@ -10,7 +10,7 @@ class InitialRewardScreenSecond extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          MarkdownBody(data: "# Du bekommst 💎💎💎💎."),
+          MarkdownBody(data: "# Du bekommst 5💎."),
           UIHelper.verticalSpaceMedium(),
           MarkdownBody(
               data:

@@ -162,6 +162,12 @@ class AppRouter {
                   previousRoute: NoTaskSituation.afterRecall,
                 ));
 
+      case RouteNames.NO_TASKS_AFTER_LDT:
+        return MaterialPageRoute(
+            builder: (_) => NoTasksScreen(
+                  previousRoute: NoTaskSituation.afterLdt,
+                ));
+
       case RouteNames.INIT_START:
         return MaterialPageRoute(
             builder: (_) => ChangeNotifierProvider<InitSessionViewModel>(

@@ -97,6 +97,12 @@ enum AssessmentTypes {
   finalMotivation
 }
 
-enum NoTaskSituation { standard, afterInitialization, afterRecall, afterLdt }
+enum NoTaskSituation {
+  standard,
+  afterInitialization,
+  afterRecall,
+  afterLdt,
+  afterFinal
+}
 
 enum DailyLearningIntention { yes, no, unsure, alreadyDid }

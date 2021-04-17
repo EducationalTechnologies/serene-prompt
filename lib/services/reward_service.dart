@@ -35,35 +35,47 @@ class RewardService {
         "Lüfte 2", "assets/illustrations/mascot_plane_2.png", 3,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
-    UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean.png", 6,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xff083549)])),
+    // UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean.png", 6,
+    //     backgroundColor:
+    //         LinearGradient(colors: [Colors.orange[50], Color(0xff083549)])),
     UnlockableBackground(
-        "Pyramiden", "assets/illustrations/mascot_pyramid.png", 9,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
-    UnlockableBackground(
-        "Pyramiden 2", "assets/illustrations/mascot_pyramid_2.png", 12,
+        "Pyramiden", "assets/illustrations/mascot_pyramid.png", 6,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
     UnlockableBackground(
-        "Weltraum 1", "assets/illustrations/mascot_space.png", 15,
+        "Pyramiden 2", "assets/illustrations/mascot_pyramid_2.png", 9,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    // UnlockableBackground(
+    //     "Weltraum 1", "assets/illustrations/mascot_space_1.png", 15,
+    //     backgroundColor:
+    //         LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
+    // UnlockableBackground(
+    //     "Weltraum 2", "assets/illustrations/mascot_space_2.png", 18,
+    //     backgroundColor:
+    //         LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
     UnlockableBackground(
-        "Weltraum 2", "assets/illustrations/mascot_space_2.png", 18,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
-    UnlockableBackground(
-        "Vulkan 1", "assets/illustrations/mascot_vulcan_1.png", 21,
+        "Vulkan 1", "assets/illustrations/mascot_vulcan_1.png", 12,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
     UnlockableBackground(
-        "Zauberer", "assets/illustrations/mascot_wizard_1.png", 24,
+        "Vulkan 2", "assets/illustrations/mascot_vulcan_1.png", 15,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    UnlockableBackground(
+        "Zauberei", "assets/illustrations/mascot_wizard_1.png", 18,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Wikinger", "assets/illustrations/mascot_viking_1.png", 27,
+        "Zauberei 2", "assets/illustrations/mascot_wizard_1.png", 21,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
+    UnlockableBackground(
+        "Wikinger", "assets/illustrations/mascot_viking_1.png", 24,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    UnlockableBackground(
+        "Wikinger 2", "assets/illustrations/mascot_viking_1.png", 27,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
   ];
@@ -154,7 +166,7 @@ class RewardService {
   }
 
   onLdtInitialLongLdtFinished() async {
-    await addPoints(4);
+    await addPoints(5);
   }
 
   onRecallTaskEverythingCompleted() async {}

@@ -257,7 +257,7 @@ class ExperimentService {
 
   Future<void> nextScreen(String currentScreen) async {
     if (currentScreen == RouteNames.LDT) {
-      return await _navigationService.navigateTo(RouteNames.NO_TASKS);
+      return await _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_LDT);
     }
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_MORNING) {
       return await _navigationService.navigateTo(RouteNames.INTERNALISATION);
@@ -291,7 +291,7 @@ class ExperimentService {
           arguments: trialIndex.toString());
     }
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_FINISH) {
-      _navigationService.navigateTo(RouteNames.NO_TASKS);
+      _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_FINAL);
     }
   }
 }

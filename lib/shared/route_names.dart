@@ -33,4 +33,6 @@ class RouteNames {
   static const NO_TASKS_AFTER_RECALL = "/notasksafterrecall";
   static const NO_TASKS_FINAL_DAY = "/notasksfinalday";
   static const NO_TASKS_AFTER_USABILITY = "/notasksafterusability";
+  static const NO_TASKS_AFTER_FINAL = "/notasksafterusability";
+  static const NO_TASKS_AFTER_LDT = "/notasksafterusability";
 }
