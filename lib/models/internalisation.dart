@@ -20,7 +20,10 @@ class Internalisation {
     this.plan = document["plan"];
     this.condition = document["condition"];
     this.input = document["input"];
-    this.planId = document["planId"];
+
+    if (document["planId"] != null) {
+      this.planId = document["planId"];
+    }
   }
 
   Map<String, dynamic> toMap() {
