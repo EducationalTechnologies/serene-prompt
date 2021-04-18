@@ -147,18 +147,24 @@ class DataService {
     return _lastRecallTask;
   }
 
+  Future<List<Internalisation>> cacheAllInternalisations() async {
+    return await getLastInternalisations(27);
+  }
+
   Future<Internalisation> getLastInternalisation() async {
     // Since the app needs up to three last internalisations later on, we cache them here
     var all = await getLastInternalisations(27);
-    return all[0];
+    if (all.length > 0) return all[0];
+    return null;
   }
 
   Future<List<Internalisation>> getLastInternalisations(int number) async {
-    if (_lastInternalisationsCache.isEmpty ||
-        _lastInternalisationsCache.length < number) {
+    if (_lastInternalisationsCache.isEmpty) {
       _lastInternalisationsCache = await _databaseService
           .getLastInternalisations(_userService.getUsername(), number);
     }
+    if (_lastInternalisationsCache == null) return [];
+
     var start = max(_lastInternalisationsCache.length - number, 0);
     var end = _lastInternalisationsCache.length;
     return _lastInternalisationsCache.sublist(start, end);
