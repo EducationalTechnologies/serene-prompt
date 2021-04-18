@@ -37,29 +37,7 @@
         },
         {
             "id": "learningGoals1_4",
-            "questionText": "Wie verpflichtet fühlst du dich, an X Tagen pro Woche mit cabuu zu lernen?",
-            "labels": {
-                "1": "Gar nicht",
-                "2": "Kaum",
-                "3": "Neutral",
-                "4": "Ziemlich",
-                "5": "Voll und ganz"
-            }
-        },
-        {
-            "id": "learningGoals1_5",
             "questionText": "Wie enttäuscht würdest du sein, wenn du es nicht schaffen würdest, an X Tagen pro Woche mit cabuu zu lernen?",
-            "labels": {
-                "1": "Gar nicht",
-                "2": "Kaum",
-                "3": "Neutral",
-                "4": "Ziemlich",
-                "5": "Voll und ganz"
-            }
-        },
-        {
-            "id": "learningGoals1_6",
-            "questionText": "Wie schlecht wäre es für dich, wenn du es nicht schaffen würdest, an X Tagen pro Woche mit cabuu zu lernen?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
