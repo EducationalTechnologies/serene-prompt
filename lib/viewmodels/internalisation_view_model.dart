@@ -11,6 +11,8 @@ class InternalisationViewModel extends BaseViewModel {
 
   String get plan => _currentInternalisation.plan;
 
+  List<String> scrambleCorrections = [];
+
   Future<bool> initialized;
   InternalisationCondition internalisationCondition =
       InternalisationCondition.waiting;
@@ -35,6 +37,10 @@ class InternalisationViewModel extends BaseViewModel {
     return true;
   }
 
+  void onScrambleCorrection(String correction) {
+    scrambleCorrections.add(correction);
+  }
+
   Future<bool> submit(InternalisationCondition condition, String input) async {
     if (state == ViewState.busy) return false;
     setState(ViewState.busy);
@@ -46,6 +52,9 @@ class InternalisationViewModel extends BaseViewModel {
     await this
         ._experimentService
         .submitInternalisation(_currentInternalisation);
+
+    _dataService.saveScrambleCorrections(
+        scrambleCorrections, _currentInternalisation.planId);
 
     _experimentService.nextScreen(RouteNames.INTERNALISATION);
     return true;

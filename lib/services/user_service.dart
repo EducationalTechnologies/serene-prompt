@@ -96,7 +96,7 @@ class UserService {
     return _settings.getSetting(SettingsKeys.userId);
   }
 
-  Future<bool> isSignedIn() async {
+  bool isSignedIn() {
     return _isSignedIn;
     // return await FirebaseService().getCurrentUser().l.then((value) {
     //   if (value == null) return false;

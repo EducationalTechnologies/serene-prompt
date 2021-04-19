@@ -229,6 +229,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   }
 
   _buildDeleteButton() {
+    var vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return Container(
       width: 250,
       child: OutlinedButton(
@@ -248,6 +249,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
                 var last = _builtSentence.last;
                 _scrambleTextClick(last);
               }
+              vm.onScrambleCorrection(_builtSentence.last.text);
             });
           }),
     );

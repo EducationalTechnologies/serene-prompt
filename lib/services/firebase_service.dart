@@ -23,7 +23,8 @@ class FirebaseService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   FirebaseService._internal() {
-    FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
+    FirebaseFirestore.instance.settings =
+        Settings(persistenceEnabled: true, cacheSizeBytes: 5000000);
   }
 
   static const String COLLECTION_GOALS = "goals";
@@ -115,6 +116,10 @@ class FirebaseService {
         .catchError((error) {
       handleError(error.toString(), data: "Trying to inser UserData");
     });
+  }
+
+  saveScrambleCorrections(dynamic corrections) async {
+    _databaseReference.collection("scrambleCorrections").add(corrections);
   }
 
   Future<UserData> getUserData(String email) async {
@@ -290,30 +295,11 @@ class FirebaseService {
     _databaseReference.collection(COLLECTION_LOGS).add(data);
   }
 
-  Future<int> getMaxInitSession(String userid) async {
-    var initSessionData = await _databaseReference
-        .collection(COLLECTION_INITSESSION)
-        .where("user", isEqualTo: userid)
-        .get()
-        .then((value) {
-      if (value.docs.isEmpty) return null;
-      if (value.docs[0].data().containsKey("maxStep")) {
-        return value.docs[0].data()["maxStep"];
-      }
-    }).catchError(handleError);
-
-    if (initSessionData.docs.length == null) {
-      return null;
-    }
-    // TODO: Implement?
-    return null;
-  }
-
   Future<void> saveInitSessionStepCompleted(String userid, int step) async {
     _databaseReference
-        .collection(COLLECTION_INITSESSION)
+        .collection(COLLECTION_USERS)
         .doc(userid)
-        .set({"maxStep": step}, SetOptions(merge: true));
+        .set({"initSessionStep": step}, SetOptions(merge: true));
   }
 
   Future<void> saveInitialSessionValue(

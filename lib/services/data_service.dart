@@ -110,6 +110,16 @@ class DataService {
         obstacles, _userService.getUsername());
   }
 
+  saveScrambleCorrections(List<String> corrections, int planId) async {
+    var correction = {
+      "corrections": corrections,
+      "completionDate": DateTime.now().toIso8601String(),
+      "user": _userService.getUsername(),
+      "planId": planId
+    };
+    await _databaseService.saveScrambleCorrections(correction);
+  }
+
   Future<int> getNumberOfCompletedInternalisations() async {
     return await _databaseService
         .getNumberOfInternalisations(_userService.getUsername());
@@ -160,7 +170,8 @@ class DataService {
   }
 
   Future<List<Internalisation>> getLastInternalisations(int number) async {
-    if (_lastInternalisationsCache.isEmpty) {
+    if (_lastInternalisationsCache == null ||
+        _lastInternalisationsCache.isEmpty) {
       _lastInternalisationsCache = await _databaseService
           .getLastInternalisations(_userService.getUsername(), number);
     }
@@ -235,7 +246,9 @@ class DataService {
 
   logData(dynamic data) async {
     data["userid"] = _userService.getUsername();
-    await _databaseService.logEvent(_userService.getUsername(), data);
+    if (_userService.isSignedIn()) {
+      await _databaseService.logEvent(_userService.getUsername(), data);
+    }
   }
 
   updateInternalisationConditionGroup(int group) async {
@@ -282,10 +295,9 @@ class DataService {
   }
 
   Future<int> getCompletedInitialSessionStep() async {
-    var step =
-        await _databaseService.getMaxInitSession(_userService.getUsername());
-    if (step == null) return 0;
-    return step;
+    var userData = await getUserData();
+    if (userData == null) return 0;
+    return userData.initSessionStep;
   }
 
   Future<void> setBackgroundImage(String imagePath) async {
