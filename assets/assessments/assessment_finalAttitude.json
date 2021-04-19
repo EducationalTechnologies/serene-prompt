@@ -8,7 +8,11 @@
             "labels": {
                 "1": "Plan dreimal durchlesen",
                 "2": "Wörter zum Plan zusammensetzen",
-                "3": "Plan mit Emojis darstellen"
+                "3": "Plan mit Emojis darstellen",
+                "4": "Abwechselnd Plan dreimal durchlesen und aus Wörtern zusammensetzen",
+                "5": "Abwechselnd Plan dreimal durchlesen und mit Emojis darstellen",
+                "6": "Abwechselnd Plan  Wörtern zusammensetzen und mit Emojis darstellen",
+                "7": "Alle drei im Wechsel"
             }
         },
         {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:prompt/shared/enums.dart';
-import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/viewmodels/login_view_model.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var registered = await vm.signIn(
         _userIdTextController.text, _passwordTextController.text);
     if (registered == RegistrationCodes.SUCCESS) {
-      Navigator.pushNamed(context, RouteNames.INIT_START);
+      vm.submit();
     } else if (registered == RegistrationCodes.USER_NOT_FOUND) {
       _buildErrorDialog("Falscher Code",
           "Der eingegebene Code war nicht richtig. Bitte überprüfe, ob du ihn richtig eingegeben hast.");

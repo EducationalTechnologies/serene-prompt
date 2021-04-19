@@ -7,6 +7,7 @@ import 'package:prompt/shared/enums.dart';
 import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/viewmodels/base_view_model.dart';
 import 'package:prompt/services/data_service.dart';
+import 'package:prompt/viewmodels/init_session_view_model.dart';
 
 class LoginViewModel extends BaseViewModel {
   String _email;
@@ -60,14 +61,13 @@ class LoginViewModel extends BaseViewModel {
   }
 
   submit() async {
-    // TODO: Implement
-    //
-    bool userHasCreatedSession0 = false;
-    var maxInitSessionStep =
-        await locator<DataService>().getCompletedInitialSessionStep();
+    int maxStep = await locator<DataService>().getCompletedInitialSessionStep();
+
+    bool userHasCreatedSession0 = maxStep == STEP.values.length;
     if (userHasCreatedSession0) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);
     } else {
+      // TODO: Incorporate completed steps
       _navigationService.navigateTo(RouteNames.INIT_START);
     }
   }
