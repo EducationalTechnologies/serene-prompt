@@ -28,15 +28,17 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   String _textNotification = "Vielen Dank, dass du mitmachst!";
   String _textStreakDays = "";
   String _textReward = "";
+  String _textNextTask = "";
+  String _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
 
-  Future<String> _nextText;
+  Future<bool> _nextTask;
 
-  bool _showToRecallTaskButton = false;
+  bool _showNextButton = false;
 
   @override
   void initState() {
     super.initState();
-    _nextText = getNextText();
+    _nextTask = getNextText();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await showDialogIfNecessary();
@@ -92,36 +94,35 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     );
   }
 
-  Future<String> getNextText() async {
+  Future<bool> getNextText() async {
     var dataService = locator<DataService>();
     var experimentService = locator<ExperimentService>();
 
     var lastRecallTask = await dataService.getLastRecallTask();
-
-    if (lastRecallTask != null) {
-      if (lastRecallTask.completionDate.isToday()) {
-        var streakDays = await dataService.getStreakDays();
-        if (streakDays > 1) {
-          _textStreakDays =
-              "Du hast jetzt $streakDays Tage in Folge mitgemacht";
-        }
-      }
-    }
-
-    return "Vielen Dank, dass du mitmachst!";
-
-    String nextText = "";
     var lastInternalisation = await dataService.getLastInternalisation();
 
+    _showNextButton = false;
+
     if (await experimentService.isTimeForInternalisationTask()) {
-      Navigator.pushNamed(context, RouteNames.INTERNALISATION);
-      return "";
+      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
+      _showNextButton = true;
+      _textNextTask = "Es ist jetzt Zeit, dir deinen Plan einzuprägen.";
+      return true;
     }
 
     if (await experimentService.isTimeForRecallTask()) {
-      Navigator.pushNamed(context, RouteNames.RECALL_TASK);
-      _showToRecallTaskButton = true;
-      return "";
+      _nextRoute = RouteNames.RECALL_TASK;
+      _showNextButton = true;
+      _textNextTask = "Versuche jetzt, dich an deinen Plan zu erinnern.";
+      return true;
+    }
+
+    if (await experimentService.isTimeForLexicalDecisionTask()) {
+      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_USABILITY;
+      _showNextButton = true;
+      _textNextTask =
+          "Beantworte uns jetzt ein paar Fragen, und erledige dann die Wortaufgabe.";
+      return true;
     }
 
     var lastRecall = await dataService.getLastRecallTask();
@@ -131,10 +132,10 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
 
       var timeForRecall = await experimentService.isTimeForRecallTask();
       if (timeForRecall) {
-        nextText =
-            "Überprüfe jetzt, wie gut du dich an deinen heutigen Wenn-Dann-Plan erinnern kannst";
+        // nextText =
+        //     "Überprüfe jetzt, wie gut du dich an deinen heutigen Wenn-Dann-Plan erinnern kannst";
 
-        _showToRecallTaskButton = true;
+        _showNextButton = true;
         // setState(() {
         //   _showToRecallTaskButton = true;
         // });
@@ -146,25 +147,25 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         if (nextTime.isToday()) {
           if (lastRecall != null) {
             if (lastRecall.completionDate.isToday()) {
-              nextText = "Danke, dass du für heute die Aufgaben erledigt hast.";
+              _textNextTask = "Du hast für heute alle Aufgaben erledigt";
             } else {
-              nextText = _getNextTimeTodayString(nextTime);
+              _textNextTask = _getNextTimeTodayString(nextTime);
             }
           } else {
-            nextText = _getNextTimeTodayString(nextTime);
+            _textNextTask = _getNextTimeTodayString(nextTime);
           }
         } else {
-          nextText =
+          _textNextTask =
               "Du hast deinen Wenn-Dann-Plan heute sehr spät gelernt. Versuche doch, das Morgen etwas früher zu tun.";
         }
       }
     }
-    return nextText;
+    return true;
   }
 
   _getNextTimeTodayString(DateTime nextTime) {
     var nextTimeString = DateFormat("HH:mm").format(nextTime);
-    return "Ab $nextTimeString Uhr solltest du die Erinnerung an deinen Wenn-Dann-Plan überprüfen";
+    return "Überprüfe später, wie gut du dich an deinen Plan erinnern kannst.";
   }
 
   _getDrawer() {
@@ -172,12 +173,15 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   }
 
   _buildToRecallTaskButton() {
-    return FullWidthButton(
-      onPressed: () async {
-        Navigator.pushNamed(context, RouteNames.RECALL_TASK);
-        return;
-      },
-      text: "Zur Gedächtnisaufgabe",
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: FullWidthButton(
+        onPressed: () async {
+          Navigator.pushNamed(context, _nextRoute);
+          return;
+        },
+        text: "Weiter zur Aufgabe",
+      ),
     );
   }
 
@@ -199,7 +203,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
           appBar: SereneAppBar(),
           drawer: _getDrawer(),
           body: FutureBuilder(
-              future: _nextText,
+              future: _nextTask,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Container(
@@ -211,7 +215,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                               //     textAlign: TextAlign.center,
                               //     style: Theme.of(context).textTheme.headline5),
                               // UIHelper.verticalSpaceLarge(),
-                              UIHelper.verticalSpaceLarge(),
+                              UIHelper.verticalSpaceMedium(),
                               Text(_textNotification,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.headline6),
@@ -219,48 +223,17 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
                               // Text(_textStreakDays,
                               //     textAlign: TextAlign.center,
                               //     style: Theme.of(context).textTheme.headline6),
-                              UIHelper.verticalSpaceSmall(),
-                              Text(_textReward,
+                              UIHelper.verticalSpaceMedium(),
+                              Text(_textNextTask,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.headline6),
                               UIHelper.verticalSpaceMedium(),
                               // Text("Du kriegst für deine Teilnahme 15💎.",
                               //     textAlign: TextAlign.center,
                               //     style: Theme.of(context).textTheme.headline5),
-                              Container(
-                                  width: 250,
-                                  height: 40,
-                                  child: OutlinedButton(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Hintergrund ändern",
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          )
-                                        ],
-                                      ),
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        30.0))),
-                                      ),
-                                      onPressed: () async {
-                                        var rewardWidget =
-                                            RewardSelectionScreen();
-                                        await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    rewardWidget));
-                                        setState(() {});
-                                      })),
-                              if (_showToRecallTaskButton)
-                                _buildToRecallTaskButton(),
+                              if (_showNextButton) _buildToRecallTaskButton(),
+                              UIHelper.verticalSpaceMedium(),
+                              _buildChangeBackgroundButton()
                             ],
                           ),
                           alignment: Alignment(0.0, 0.6)));
@@ -271,5 +244,31 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
         ),
       ),
     );
+  }
+
+  _buildChangeBackgroundButton() {
+    return Container(
+        width: 250,
+        height: 40,
+        child: OutlinedButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Hintergrund ändern",
+                  style: TextStyle(color: Colors.black),
+                )
+              ],
+            ),
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0))),
+            ),
+            onPressed: () async {
+              var rewardWidget = RewardSelectionScreen();
+              await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => rewardWidget));
+              setState(() {});
+            }));
   }
 }
