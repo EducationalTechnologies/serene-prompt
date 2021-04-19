@@ -46,44 +46,9 @@ enum STEP {
   stepRewardSecond,
   stepQuestionsLearningGoals2,
   stepVideoFinish,
-  stepFinish,
 }
 
 class InitSessionViewModel extends MultiStepAssessmentViewModel {
-  final List<STEP> steps = [
-    STEP.stepWelcomeScreen,
-    STEP.stepVideoWelcome,
-    STEP.stepCabuuLink,
-    STEP.stepQuestionsCabuuLearn,
-    STEP.stepVideoLdtInstruction,
-    STEP.ldt00,
-    STEP.stepLdt01,
-    STEP.stepLdt02,
-    STEP.stepLdt03,
-    STEP.stepRewardFirst,
-    STEP.stepVideoLearning,
-    STEP.stepInitialDailyLearningGoal,
-    STEP.stepQuestionsLearningGoals1,
-    STEP.stepQuestionsRegulation,
-    STEP.stepLdt04,
-    STEP.stepLdt05,
-    STEP.stepOutcomeExplanationScreen,
-    STEP.stepOutcomeSelectionScreen,
-    STEP.stepOutcomeEnterScreen,
-    STEP.stepOutcomeSortingScreen,
-    STEP.stepOutcomeDisplayScreen,
-    STEP.stepObstacleExplanationScreen,
-    STEP.stepObstacleSelectionScreen,
-    STEP.stepObstacleEnterScreen,
-    STEP.stepObstacleSortingScreen,
-    STEP.stepObstacleDisplayScreen,
-    STEP.stepQuestionsSrl,
-    STEP.stepQuestionsLearningGoals2,
-    STEP.stepVideoFinish,
-    STEP.stepFinish,
-    STEP.stepRewardSecond
-  ];
-
   final ExperimentService _experimentService;
   final DataService _dataService;
   final RewardService _rewardService;

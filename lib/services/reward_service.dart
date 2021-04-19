@@ -140,7 +140,7 @@ class RewardService {
 
   setBackgroundImagePath(String imagePath) async {
     this.backgroundImagePath = imagePath;
-    _logService.logEvent("backgroundImageChanged", data: imagePath);
+    _logService.logEvent("backgroundImageChanged", data: {"path": imagePath});
     await this._dataService.setBackgroundImage(imagePath);
   }
 

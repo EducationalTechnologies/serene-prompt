@@ -15,6 +15,7 @@ import 'package:prompt/screens/settings_screen.dart';
 import 'package:prompt/screens/test_screen.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/services/logging_service.dart';
 import 'package:prompt/services/navigation_service.dart';
 import 'package:prompt/services/reward_service.dart';
 import 'package:prompt/services/settings_service.dart';
@@ -40,6 +41,8 @@ import 'package:prompt/viewmodels/settings_view_model.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    locator<LoggingService>().logEvent("navigation",
+        data: {"routeName": settings.name, "routeArgs": settings.arguments});
     switch (settings.name) {
       case RouteNames.INTERNALISATION:
         return MaterialPageRoute(

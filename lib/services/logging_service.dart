@@ -1,7 +1,7 @@
 import 'package:prompt/services/data_service.dart';
 
 class LoggingService {
-  List<Map<String, String>> logs = [];
+  List<Map<String, dynamic>> logs = [];
   DataService _dataService;
   LoggingService(this._dataService);
 
@@ -11,8 +11,8 @@ class LoggingService {
 
   logData(String data) {}
 
-  logEvent(String eventName, {String data = ""}) {
-    Map<String, String> event = {
+  logEvent(String eventName, {Map<String, dynamic> data}) {
+    Map<String, dynamic> event = {
       "type": "event",
       "time": getTimestamp(),
       "name": eventName,
