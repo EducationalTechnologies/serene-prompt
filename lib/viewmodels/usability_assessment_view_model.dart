@@ -64,7 +64,7 @@ class UsabilityAssessmentViewModel extends MultiStepAssessmentViewModel {
       replacementValue += "den Plan dreimal lesen";
     }
     if (condition == InternalisationCondition.scrambleWithHint.toString()) {
-      replacementValue += "den Plan aus Wörtern selbst zusammenpuzzlen";
+      replacementValue += "den Plan aus Wörtern selbst zusammenbauen";
     }
     for (var item in assessment.items) {
       item.title = item.title.replaceAll("[X]", replacementValue);
