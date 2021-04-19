@@ -128,7 +128,8 @@ class DataService {
   }
 
   saveInternalisation(Internalisation internalisation) async {
-    _lastInternalisationsCache.add(internalisation);
+    // Insert the last one at the beginning since it is ordered from newest to oldest
+    _lastInternalisationsCache.insert(0, internalisation);
     return await _databaseService.saveInternalisation(
         internalisation, _userService.getUsername());
   }
