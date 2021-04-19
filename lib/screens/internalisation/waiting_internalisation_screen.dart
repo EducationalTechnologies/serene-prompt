@@ -23,7 +23,7 @@ class _WaitingInternalisationScreenState
     with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
-  bool _done = true;
+  bool _done = false;
 
   @override
   void initState() {
@@ -37,6 +37,13 @@ class _WaitingInternalisationScreenState
     animation = Tween<double>(begin: 0, end: 1).animate(controller);
     animation.addListener(() {
       setState(() {});
+    });
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          _done = true;
+        });
+      }
     });
 
     controller.forward();
@@ -67,9 +74,10 @@ class _WaitingInternalisationScreenState
                   "Lies den folgenden Text drei mal, und drücke dann auf Abschicken"),
           UIHelper.verticalSpaceMedium(),
           SpeechBubble(text: vm.plan),
-          // LinearProgressIndicator(
-          //   value: animation.value,
-          // ),
+          UIHelper.verticalSpaceMedium(),
+          LinearProgressIndicator(
+            value: animation.value,
+          ),
           UIHelper.verticalSpaceMedium(),
           if (_done) _buildSubmitButton()
         ],
