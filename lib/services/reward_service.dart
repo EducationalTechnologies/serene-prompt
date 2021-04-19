@@ -59,7 +59,7 @@ class RewardService {
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
     UnlockableBackground(
-        "Vulkan 2", "assets/illustrations/mascot_vulcan_1.png", 15,
+        "Vulkan 2", "assets/illustrations/mascot_vulcan_2.png", 15,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
     UnlockableBackground(
@@ -67,7 +67,7 @@ class RewardService {
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Zauberei 2", "assets/illustrations/mascot_wizard_1.png", 21,
+        "Zauberei 2", "assets/illustrations/mascot_wizard_2.png", 21,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
@@ -75,7 +75,7 @@ class RewardService {
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
     UnlockableBackground(
-        "Wikinger 2", "assets/illustrations/mascot_viking_1.png", 27,
+        "Wikinger 2", "assets/illustrations/mascot_viking_2.png", 27,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
   ];

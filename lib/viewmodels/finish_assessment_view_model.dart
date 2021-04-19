@@ -23,16 +23,16 @@ class FinishAssessmentViewModel extends MultiStepAssessmentViewModel {
 
   FinishAssessmentViewModel(this._dataService, this._experimentService);
 
-  String _textPositive = "";
+  // String _textPositive = "";
   setTextPositive(String text) {
-    _textPositive = text;
+    // _textPositive = text;
     this.setAssessmentResult("finalFree_positive", "finalFree_positive", text);
     notifyListeners();
   }
 
-  String _textNegative = "";
+  // String _textNegative = "";
   setTextNegative(String text) {
-    _textNegative = text;
+    // _textNegative = text;
     this.setAssessmentResult("finalFree_negative", "finalFree_negative", text);
     notifyListeners();
   }
@@ -79,7 +79,7 @@ class FinishAssessmentViewModel extends MultiStepAssessmentViewModel {
   @override
   void submit() {
     var date = DateTime.now();
-    var type = "finishQuestions";
+    var type = "finalQuestions";
     Map<String, String> results = {};
     for (var result in allAssessmentResults.values) {
       results.addAll(result);

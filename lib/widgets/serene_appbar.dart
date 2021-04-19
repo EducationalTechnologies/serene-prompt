@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prompt/locator.dart';
+import 'package:prompt/screens/rewards/reward_selection_screen.dart';
 import 'package:prompt/services/reward_service.dart';
 import 'package:prompt/shared/ui_helpers.dart';
 
@@ -39,6 +40,28 @@ class _SereneAppBarState extends State<SereneAppBar> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
+        // OutlinedButton(
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         Icon(Icons.brush),
+        //         Text(
+        //           "Hintergrund ändern",
+        //           style: TextStyle(color: Colors.black),
+        //         )
+        //       ],
+        //     ),
+        //     style: ButtonStyle(
+        //       shape: MaterialStateProperty.all(RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(30.0))),
+        //     ),
+        //     onPressed: () async {
+        //       var rewardWidget = RewardSelectionScreen();
+        //       await Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => rewardWidget));
+        //       setState(() {});
+        //     }),
+        // UIHelper.horizontalSpaceMedium(),
         StreamBuilder(
             stream: rewardService.controller.stream,
             builder: (context, snapshot) {
