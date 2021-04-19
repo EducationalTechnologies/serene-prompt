@@ -6,6 +6,7 @@ class UserData {
   int streakDays = 0;
   int score = 0;
   int daysActive = 0;
+  int initSessionStep = 0;
 
   UserData(
       {this.userId,
@@ -24,7 +25,8 @@ class UserData {
       "registrationDate": this.registrationDate?.toIso8601String(),
       "streakDays": this.streakDays,
       "score": this.score,
-      "daysActive": this.daysActive
+      "daysActive": this.daysActive,
+      "initSessionStep": this.initSessionStep
     };
   }
 
@@ -42,6 +44,9 @@ class UserData {
     }
     if (json.containsKey("daysActive")) {
       daysActive = json["daysActive"];
+    }
+    if (json.containsKey("initSessionStep")) {
+      initSessionStep = json["initSessionStep"];
     }
   }
 }

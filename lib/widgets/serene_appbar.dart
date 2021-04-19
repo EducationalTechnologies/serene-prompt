@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prompt/locator.dart';
-import 'package:prompt/screens/rewards/reward_selection_screen.dart';
 import 'package:prompt/services/reward_service.dart';
 import 'package:prompt/shared/ui_helpers.dart';
 

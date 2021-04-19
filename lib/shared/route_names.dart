@@ -35,4 +35,5 @@ class RouteNames {
   static const NO_TASKS_AFTER_USABILITY = "/notasksafterusability";
   static const NO_TASKS_AFTER_FINAL = "/notasksafterusability";
   static const NO_TASKS_AFTER_LDT = "/notasksafterusability";
+  static const NO_TASKS_AFTER_INITIALIZATION = "/notasksafterinitialization";
 }
