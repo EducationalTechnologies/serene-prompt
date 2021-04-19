@@ -44,7 +44,7 @@ class FirebaseService {
   static const String COLLECTION_LDT = "ldt";
   static const String COLLECTION_INITSESSION = "initSession";
 
-  static const Duration timeoutDuration = Duration(seconds: 15);
+  static const Duration timeoutDuration = Duration(seconds: 30);
 
   void handleError(Object e, {String data = ""}) {
     locator
@@ -56,8 +56,19 @@ class FirebaseService {
     locator.get<LoggingService>().logError("Firestore Timeout: $function");
   }
 
-  Future<User> getCurrentUser() async {
-    return _firebaseAuth.currentUser;
+  Stream<User> getCurrentUser() {
+    return FirebaseAuth.instance.authStateChanges();
+    // return _firebaseAuth.currentUser;
+    //
+    // return FirebaseAuth.instance.authStateChanges().listen((User user) {
+    //   return user;
+    //   if (user == null) {
+    //     return null;
+    //     print('User is currently signed out!');
+    //   } else {
+    //     print('User is signed in!');
+    //   }
+    // });
   }
 
   Future<bool> isNameAvailable(String userId) async {
@@ -202,7 +213,7 @@ class FirebaseService {
       }
       return internalisations;
     }).timeout(timeoutDuration, onTimeout: () {
-      handleTimeout("Last Internalisation");
+      handleTimeout("Trying to retrieve last $number Internalisations");
       return null;
     }).catchError((handleError));
   }

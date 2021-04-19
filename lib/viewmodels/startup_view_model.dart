@@ -39,16 +39,16 @@ class StartupViewModel extends BaseViewModel {
         nav.navigateAndRemove(RouteNames.LOG_IN);
         break;
       case AppStartupMode.internalisationTask:
-        await nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_MORNING);
+        await nav.navigateAndRemove(RouteNames.NO_TASKS);
         break;
       case AppStartupMode.recallTask:
-        nav.navigateAndRemove(RouteNames.RECALL_TASK);
+        nav.navigateAndRemove(RouteNames.NO_TASKS);
         break;
       case AppStartupMode.noTasks:
         nav.navigateAndRemove(RouteNames.NO_TASKS);
         break;
       case AppStartupMode.lexicalDecisionTask:
-        nav.navigateAndRemove(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
+        nav.navigateAndRemove(RouteNames.NO_TASKS);
         break;
     }
   }
@@ -79,20 +79,20 @@ class StartupViewModel extends BaseViewModel {
       return AppStartupMode.firstLaunch;
     }
 
-    addDebugText("Time For Internalisation Task?");
-    if (await experimentService.isTimeForInternalisationTask()) {
-      return AppStartupMode.internalisationTask;
-    }
-    addDebugText("Time For Recall Task?");
-    if (await experimentService.isTimeForRecallTask()) {
-      return AppStartupMode.recallTask;
-    }
-    addDebugText("Time For Lexical Decision Task?");
-    if (await experimentService.isTimeForLexicalDecisionTask()) {
-      return AppStartupMode.lexicalDecisionTask;
-    }
+    // addDebugText("Time For Internalisation Task?");
+    // if (await experimentService.isTimeForInternalisationTask()) {
+    //   return AppStartupMode.internalisationTask;
+    // }
+    // addDebugText("Time For Recall Task?");
+    // if (await experimentService.isTimeForRecallTask()) {
+    //   return AppStartupMode.recallTask;
+    // }
+    // addDebugText("Time For Lexical Decision Task?");
+    // if (await experimentService.isTimeForLexicalDecisionTask()) {
+    //   return AppStartupMode.lexicalDecisionTask;
+    // }
 
-    addDebugText("No Tasks!");
+    // addDebugText("No Tasks!");
     return AppStartupMode.noTasks;
   }
 }

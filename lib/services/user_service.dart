@@ -7,16 +7,21 @@ import 'package:prompt/services/settings_service.dart';
 import 'package:prompt/shared/enums.dart';
 
 class UserService {
-  UserService(this._settings);
+  UserService(this._settings) {
+    FirebaseService().getCurrentUser().listen((user) {
+      _isSignedIn = user != null;
+    });
+  }
 
   SettingsService _settings;
   String userId = "";
+  bool _isSignedIn = false;
 
   Future<bool> initialize() async {
     var id = getUsername();
     if (id == null) return false;
     if (id.isEmpty) return false;
-    return !await FirebaseService().isNameAvailable(id);
+    return true;
   }
 
   Future<bool> isNameAvailable(String userId) async {
@@ -27,14 +32,13 @@ class UserService {
     await _settings.setSetting(SettingsKeys.userId, username);
   }
 
-  int _getInternalisationCondition() {
+  int _generateGroupNumber() {
     var rng = new Random();
-    // TODO: This hardcoded value needs to go and the number of groups has to be stored somewhere else, maybe in an Experiment.json
     return rng.nextInt(ExperimentService.NUM_GROUPS) + 1;
   }
 
   Future<String> registerUser(String email, String password) async {
-    var treatmentGroup = _getInternalisationCondition();
+    var treatmentGroup = _generateGroupNumber();
     var userData =
         await FirebaseService().registerUser(email, password, treatmentGroup);
     if (userData != null) {
@@ -93,9 +97,10 @@ class UserService {
   }
 
   Future<bool> isSignedIn() async {
-    return await FirebaseService().getCurrentUser().then((value) {
-      if (value == null) return false;
-      return true;
-    });
+    return _isSignedIn;
+    // return await FirebaseService().getCurrentUser().l.then((value) {
+    //   if (value == null) return false;
+    //   return true;
+    // });
   }
 }
