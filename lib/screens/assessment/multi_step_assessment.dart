@@ -26,6 +26,9 @@ class _MultiStepAssessmentState extends State<MultiStepAssessment> {
     super.initState();
 
     _controller = new PageController(initialPage: widget.vm.step);
+    _controller.addListener(() {
+      widget.vm.step = _controller.page.round();
+    });
   }
 
   @override
