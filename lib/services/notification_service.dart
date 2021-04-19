@@ -27,6 +27,14 @@ class NotificationService {
   static const String CHANNEL_DESCRIPTION_LDT_REMINDER = "LDT Erinnerung";
   static const String PAYLOAD_LDT_REMINDER = "PAYLOAD_LDT_REMINDER";
 
+  static const String CHANNEL_ID_FINAL_REMINDER =
+      "Erinnerung Abschlussbefragung";
+  static const String CHANNEL_NAME_FINAL_REMINDER =
+      "Erinnerung Abschlussbefragung";
+  static const String CHANNEL_DESCRIPTION_FINAL_REMINDER =
+      "Erinnerung Abschlussbefragung";
+  static const String PAYLOAD_FINAL_REMINDER = "PAYLOAD_FINAL_REMINDER";
+
   static const int ID_LDT_REMINDER = 87;
   static const int ID_INTERNALISATION = 69;
   static const int ID_TASK_REMINDER = 42;
@@ -111,6 +119,8 @@ class NotificationService {
   }
 
   scheduleInternalisationReminder(Time time) async {
+    await deleteScheduledInternalisationReminder();
+
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_II_REMINDER,
         CHANNEL_NAME_II_REMINDER,
@@ -120,6 +130,8 @@ class NotificationService {
     var notificationDetails = new NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
+
+    locator.get<LoggingService>().logEvent("ScheduleNotificationTaskReminder");
 
     await localNotifications.zonedSchedule(
         ID_INTERNALISATION,
@@ -142,6 +154,8 @@ class NotificationService {
   }
 
   scheduleRecallTaskReminder(DateTime time) async {
+    await deleteScheduledRecallReminderTask();
+
     var timeoutAfter = getMillisecondsUntilMidnight(time);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_TASK, CHANNEL_NAME_TASK, CHANNEL_DESCRIPTION_TASK,
@@ -156,7 +170,7 @@ class NotificationService {
     var textReminder =
         "Überprüfe, wie gut du dich an deinen heutigen Plan erinnern kannst.";
 
-    locator.get<LoggingService>().logEvent("TaskReminderNotificationSchedule");
+    locator.get<LoggingService>().logEvent("ScheduleNotificationTaskReminder");
 
     await localNotifications.zonedSchedule(
         ID_TASK_REMINDER,
