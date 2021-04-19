@@ -17,10 +17,14 @@ class Internalisation {
   Internalisation.fromDocument(dynamic document) {
     this.completionDate = DateTime.parse(document["completionDate"]);
     this.startDate = DateTime.parse(document["startDate"]);
-    this.plan = document["plan"];
     this.condition = document["condition"];
-    this.input = document["input"];
 
+    if (document["plan"] != null) {
+      this.plan = document["plan"];
+    }
+    if (document["input"] != null) {
+      this.input = document["input"];
+    }
     if (document["planId"] != null) {
       this.planId = document["planId"];
     }

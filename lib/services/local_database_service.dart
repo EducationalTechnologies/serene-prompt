@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:path/path.dart';
+import 'package:prompt/models/internalisation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
@@ -13,6 +14,8 @@ final String columnHindrance = 'hindrance';
 const String TABLE_GOALS = "goals";
 const String TABLE_SETTINGS = "settings";
 const String TABLE_CACHE = "cache";
+const String TABLE_INTERNALISATIONS = "internalisations";
+const String TABLE_RECALL = "recall";
 const int DB_VERSION = 5;
 
 class LocalDatabaseService {
@@ -47,6 +50,26 @@ class LocalDatabaseService {
     await db.execute("CREATE TABLE $TABLE_CACHE(key STRING PRIMARY KEY, " +
         "data STRING " +
         ")");
+
+    await db.execute(
+        "CREATE TABLE $TABLE_INTERNALISATIONS(key STRING PRIMARY KEY, " +
+            "completionDate STRING " +
+            "condition STRING " +
+            "input STRING " +
+            "plan STRING " +
+            "planId INTEGER " +
+            "startDate STRING " +
+            "user STRING)");
+
+    await db.execute("CREATE TABLE $TABLE_RECALL(key STRING PRIMARY KEY, " +
+        "completionDate STRING " +
+        "condition STRING " +
+        "input STRING " +
+        "plan STRING " +
+        "planId INTEGER " +
+        "startDate STRING " +
+        "recall STRING " +
+        "user STRING)");
   }
 
 //TODO: Write a better migration script
@@ -62,6 +85,26 @@ class LocalDatabaseService {
           "CREATE TABLE IF NOT EXISTS $TABLE_CACHE(key STRING PRIMARY KEY, " +
               "data STRING " +
               ")");
+
+      await db.execute(
+          "CREATE TABLE $TABLE_INTERNALISATIONS(key STRING PRIMARY KEY, " +
+              "completionDate STRING " +
+              "condition STRING " +
+              "input STRING " +
+              "plan STRING " +
+              "planId INTEGER " +
+              "startDate STRING " +
+              "user STRING)");
+
+      await db.execute("CREATE TABLE $TABLE_RECALL(key STRING PRIMARY KEY, " +
+          "completionDate STRING " +
+          "condition STRING " +
+          "input STRING " +
+          "plan STRING " +
+          "planId INTEGER " +
+          "startDate STRING " +
+          "recall STRING " +
+          "user STRING)");
     }
   }
 
@@ -111,6 +154,26 @@ class LocalDatabaseService {
     final Database db = await database;
 
     await db.delete(TABLE_GOALS);
+  }
+
+  insertInternalisation(Internalisation internalisation) async {
+    final Database db = await database;
+
+    await db.insert(TABLE_INTERNALISATIONS, internalisation.toMap());
+  }
+
+  Future<List<Internalisation>> getAllInternalisations() async {
+    final Database db = await database;
+
+    List<Internalisation> allInternalisations = [];
+
+    var maps =
+        await db.query(TABLE_INTERNALISATIONS, orderBy: "completionDate");
+    if (maps.length > 0) {
+      for (var map in maps) {
+        allInternalisations.add(Internalisation.fromDocument(map));
+      }
+    }
   }
 
   clearUser() async {
