@@ -76,7 +76,7 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
 
     var content = Container(
         child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         UIHelper.horizontalSpaceSmall(),
         Image.asset(
@@ -84,13 +84,14 @@ class _ObstacleSortingScreenState extends State<ObstacleSortingScreen> {
           width: 54,
           height: 54,
         ),
-        UIHelper.horizontalSpaceSmall(),
-        Flexible(
-            child: Text(
+        UIHelper.horizontalSpaceMedium(),
+        Text(
           obstacle.description,
           textAlign: TextAlign.left,
-        )),
-        upDownArrow
+        ),
+        Spacer(),
+        upDownArrow,
+        UIHelper.horizontalSpaceSmall()
       ],
     ));
 
