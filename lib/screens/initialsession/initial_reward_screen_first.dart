@@ -9,6 +9,7 @@ class InitialRewardScreenFirst extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MarkdownBody(data: "# Du bekommst 5💎."),
           UIHelper.verticalSpaceMedium(),
