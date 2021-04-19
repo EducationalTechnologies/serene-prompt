@@ -153,7 +153,7 @@ class ExperimentService {
     return true;
   }
 
-  Future<int> getDayOfExperiment() async {
+  Future<int> getNumberOfCompletedInternalisations() async {
     return await _dataService.getNumberOfCompletedInternalisations();
   }
 
@@ -163,9 +163,8 @@ class ExperimentService {
   }
 
   Future<InternalisationCondition> getTodaysInternalisationCondition(
-      int day) async {
-    var ud = await _dataService.getUserData();
-    return PLAN_CONDITION_MAPPING[ud.group][day]["condition"];
+      int day, int group) async {
+    return PLAN_CONDITION_MAPPING[group][day]["condition"];
   }
 
   Future<int> getNextInternalisationCondition(int current) async {
