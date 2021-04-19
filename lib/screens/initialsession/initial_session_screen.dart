@@ -57,6 +57,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       CabuuLinkScreen(key: ValueKey(STEP.stepCabuuLink)), // Screen 3
       questionnaireFuture(
           AssessmentTypes.cabuuLearn, ValueKey(STEP.stepQuestionsCabuuLearn)),
+      questionnaireFuture(
+          AssessmentTypes.regulation, ValueKey(STEP.stepQuestionsRegulation)),
       VideoScreen('assets/videos/videoLdt.mp4',
           key: ValueKey(STEP.stepVideoLdtInstruction),
           onVideoCompleted: vm.videoLdtCompleted),
@@ -71,9 +73,8 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       InitialDailyLearningGoalScreen(
           key: ValueKey(STEP.stepInitialDailyLearningGoal)),
       questionnaireFuture(AssessmentTypes.learningGoals1,
-          ValueKey(STEP.stepQuestionsLearningGoals1)), // Screen 1
-      questionnaireFuture(
-          AssessmentTypes.regulation, ValueKey(STEP.stepQuestionsRegulation)),
+          ValueKey(STEP.stepQuestionsLearningGoals1)),
+      questionnaireFuture(AssessmentTypes.srl, ValueKey(STEP.stepQuestionsSrl)),
       InitialOutcomeExplanationScreen(
           key: ValueKey(STEP.stepOutcomeExplanationScreen)),
       OutcomeSelectionScreen(key: ValueKey(STEP.stepOutcomeSelectionScreen)),
@@ -93,7 +94,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       InitialLdtScreen("0_4", _onLdtFinished, key: ValueKey(STEP.stepLdt04)),
       InitialLdtScreen("0_5", _onLdtFinished, key: ValueKey(STEP.stepLdt05)),
       InitialRewardScreenSecond(key: ValueKey(STEP.stepRewardSecond)),
-      questionnaireFuture(AssessmentTypes.srl, ValueKey(STEP.stepQuestionsSrl)),
       questionnaireFuture(AssessmentTypes.learningGoals2,
           ValueKey(STEP.stepQuestionsLearningGoals2)),
       VideoScreen('assets/videos/videoFinished.mp4',
