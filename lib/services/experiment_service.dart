@@ -276,7 +276,7 @@ class ExperimentService {
       }
     }
     if (currentScreen == RouteNames.INIT_START) {
-      return await _navigationService.navigateTo(RouteNames.NO_TASKS);
+      return await _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_INITIALIZATION);
     }
     if (currentScreen == RouteNames.INTERNALISATION) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);

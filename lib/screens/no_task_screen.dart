@@ -26,8 +26,6 @@ class NoTasksScreen extends StatefulWidget {
 
 class _NoTasksScreenState extends State<NoTasksScreen> {
   String _textNotification = "Vielen Dank, dass du mitmachst!";
-  String _textStreakDays = "";
-  String _textReward = "";
   String _textNextTask = "";
   String _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
 
@@ -97,11 +95,16 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   Future<bool> getNextText() async {
     var dataService = locator<DataService>();
     var experimentService = locator<ExperimentService>();
-
+    var cache = await dataService.cacheAllInternalisations();
     var lastRecallTask = await dataService.getLastRecallTask();
     var lastInternalisation = await dataService.getLastInternalisation();
-
     _showNextButton = false;
+
+    if (widget.previousRoute == NoTaskSituation.afterInitialization) {
+      _textNextTask =
+          "Morgen geht es richtig los, dann musst du dir zum ersten mal einen Plan merken.";
+      return true;
+    }
 
     if (await experimentService.isTimeForInternalisationTask()) {
       _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
@@ -126,6 +129,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     }
 
     var lastRecall = await dataService.getLastRecallTask();
+    if (lastRecall == null) return true;
 
     if (lastInternalisation.completionDate.isToday()) {
       //If no recall task was done today, we check when it is due next
