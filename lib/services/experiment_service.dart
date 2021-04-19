@@ -157,9 +157,8 @@ class ExperimentService {
     return await _dataService.getNumberOfCompletedInternalisations();
   }
 
-  Future<Internalisation> getTodaysPlan(int day) async {
-    var ud = await _dataService.getUserData();
-    int planNumber = PLAN_CONDITION_MAPPING[ud.group][day]["planId"];
+  Future<Internalisation> getTodaysPlan(int day, int group) async {
+    int planNumber = PLAN_CONDITION_MAPPING[group][day]["planId"];
     return await this._dataService.getCurrentInternalisation(planNumber);
   }
 
@@ -276,7 +275,8 @@ class ExperimentService {
       }
     }
     if (currentScreen == RouteNames.INIT_START) {
-      return await _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_INITIALIZATION);
+      return await _navigationService
+          .navigateTo(RouteNames.NO_TASKS_AFTER_INITIALIZATION);
     }
     if (currentScreen == RouteNames.INTERNALISATION) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);

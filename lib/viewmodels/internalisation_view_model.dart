@@ -29,7 +29,9 @@ class InternalisationViewModel extends BaseViewModel {
 
   Future<bool> init() async {
     var numberOf = await _experimentService.getDayOfExperiment();
-    _currentInternalisation = await _experimentService.getTodaysPlan(numberOf);
+    var ud = await _dataService.getUserData();
+    _currentInternalisation =
+        await _experimentService.getTodaysPlan(numberOf, ud.group);
     _currentInternalisation.startDate = DateTime.now();
     this.internalisationCondition =
         await _experimentService.getTodaysInternalisationCondition(numberOf);

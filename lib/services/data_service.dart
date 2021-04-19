@@ -126,15 +126,10 @@ class DataService {
   }
 
   Future<Internalisation> getCurrentInternalisation(int number) async {
-    if (_planCache.length == 0) {
-      for (var plan in PLANS) {
-        var internalisation =
-            Internalisation(plan: plan["plan"], planId: plan["planId"]);
-        _planCache.add(internalisation);
-      }
-    }
-    var plan = _planCache[number];
-    return plan;
+    var plan = PLANS[number];
+    var internalisation =
+        Internalisation(plan: plan["plan"], planId: plan["planId"]);
+    return internalisation;
   }
 
   saveInternalisation(Internalisation internalisation) async {

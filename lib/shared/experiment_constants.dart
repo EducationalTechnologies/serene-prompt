@@ -208,119 +208,119 @@ const Map<int, int> PLAN_LDT_MAPPING = {
 };
 
 const PLANS = {
-  {
+  1: {
     "plan":
         "Wenn ich vom Lernen **genervt** bin, dann denke ich an den **Nutzen**.",
     "planId": 1
   },
-  {
+  2: {
     "plan": "Wenn ich **neugierig** bleibe, dann kann ich viel **entdecken**.",
     "planId": 2
   },
-  {
+  3: {
     "plan":
         "Wenn ich **erfolgreich** bin, dann werden mich andere **bewundern**.",
     "planId": 3
   },
-  {
+  4: {
     "plan":
         "Wenn ich **traurig** werde, dann denke ich an einen guten **Witz**.",
     "planId": 4
   },
-  {
+  5: {
     "plan": "Wenn ich **sauer** bin, dann werde ich in die Luft **treten**.",
     "planId": 5
   },
-  {
+  6: {
     "plan": "Wenn ich **gegessen** habe, dann mache ich **Hausaufgaben**.",
     "planId": 6
   },
-  {
+  7: {
     "plan": "Wenn ich **verträumt** bin, dann werde ich einmal **klatschen**.",
     "planId": 7
   },
-  {
+  8: {
     "plan":
         "Wenn ich eine **Nachricht** kriege, dann werde ich sie **ignorieren**.",
     "planId": 8
   },
-  {
+  9: {
     "plan": "Wenn ich **geduldig** bin, dann kann ich alles gut **verstehen**",
     "planId": 9
   },
-  {
+  10: {
     "plan": "Wenn ich mich **lustlos** fühle, dann denke ich an mein **Ziel**.",
     "planId": 10
   },
-  {
+  11: {
     "plan":
         "Wenn ich **nachdenken** will, dann werde ich mich **konzentrieren**.",
     "planId": 11
   },
-  {
+  12: {
     "plan":
         "Wenn ich **ängstlich** bin, dann versuche ich mich zu **beruhigen**.",
     "planId": 12
   },
-  {
+  13: {
     "plan": "Wenn ich **nervös** bin, dann werde ich ganz tief **atmen**.",
     "planId": 13
   },
-  {
+  14: {
     "plan": "Wenn ich **verwirrt** bin, dann bitte ich andere um **Hilfe**.",
     "planId": 14
   },
-  {
+  15: {
     "plan":
         "Wenn mein **Handy** hinderlich ist, dann werde ich es **umdrehen**.",
     "planId": 15
   },
-  {
+  16: {
     "plan": "Wenn ich **aufgeregt** bin, dann denke ich an meinen **Plan**.",
     "planId": 16
   },
-  {
+  17: {
     "plan":
         "Wenn mir **langweilig** ist, dann denke ich an eine **Belohnung**.",
     "planId": 17
   },
-  {
+  18: {
     "plan": "Wenn ich **abgelenkt** bin, dann werde ich viel **verpassen**",
     "planId": 18
   },
-  {
+  19: {
     "plan": "Wenn ich **spielen** will, dann lerne ich erst **Vokabeln**.",
     "planId": 19
   },
-  {
+  20: {
     "plan": "Wenn ich **starten** will, dann mache ich mich an die **Arbeit**.",
     "planId": 20
   },
-  {
+  21: {
     "plan": "Wenn ich **aufmerksam** bin, dann kann ich mich gut **erinnern**.",
     "planId": 21
   },
-  {
+  22: {
     "plan": "Wenn ich **müde** werde, dann werde ich einmal kurz **lüften**.",
     "planId": 22
   },
-  {
+  23: {
     "plan": "Wenn es eine **Störung** gibt, dann werde ich sie **beseitigen**.",
     "planId": 23
   },
-  {
+  24: {
     "plan": "Wenn ich **Zuhause** bin, dann werde ich zuerst **aufräumen**.",
     "planId": 24
   },
-  {
+  25: {
     "plan": "Wenn ich mich **unwohl** fühle, dann mache ich eine **Pause**.",
     "planId": 25
   },
-  {
+  26: {
     "plan": "Wenn alles **erledigt** ist, dann fühle ich mich **erleichtert**",
     "planId": 26
   },
-  {
+  27: {
     "plan":
         "Wenn ich **fleißig** lerne, dann bin ich zu Recht sehr **selbstbewusst**.",
     "planId": 27
