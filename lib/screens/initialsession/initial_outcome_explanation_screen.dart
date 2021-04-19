@@ -12,7 +12,10 @@ class InitialOutcomeExplanationScreen extends StatelessWidget {
     var daysOfLearning =
         Provider.of<InitSessionViewModel>(context).numberOfDaysLearningGoal;
     return Container(
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.all(5),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MarkdownBody(
               data:

@@ -7,8 +7,10 @@ class InitialObstacleExplanationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.all(5),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MarkdownBody(
               data:
