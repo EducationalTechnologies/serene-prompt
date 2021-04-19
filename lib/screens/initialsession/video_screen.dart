@@ -28,6 +28,7 @@ class _VideoScreenState extends State<VideoScreen> {
       videoPlayerController: _videoPlayerController,
       looping: false,
       showControls: true,
+      aspectRatio: 0.6,
     );
 
     _videoPlayerController.addListener(() {
