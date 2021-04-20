@@ -24,20 +24,16 @@ class RewardService {
   final LoggingService _logService;
 
   List<UnlockableBackground> backgrounds = [
-    UnlockableBackground("Standard", "assets/illustrations/mascot_bare.png", 0,
+    UnlockableBackground("Monster", "assets/illustrations/mascot_bare.png", 0,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Colors.orange[50]])),
-    UnlockableBackground(
-        "Lüfte 1", "assets/illustrations/mascot_plane_1.png", 1,
+    UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean_2.png", 0,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Lüfte 2", "assets/illustrations/mascot_plane_2.png", 3,
+        "Flugzeug", "assets/illustrations/mascot_plane_2.png", 3,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
-    // UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean.png", 6,
-    //     backgroundColor:
-    //         LinearGradient(colors: [Colors.orange[50], Color(0xff083549)])),
     UnlockableBackground(
         "Pyramiden", "assets/illustrations/mascot_pyramid.png", 6,
         backgroundColor:
@@ -46,14 +42,6 @@ class RewardService {
         "Pyramiden 2", "assets/illustrations/mascot_pyramid_2.png", 9,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
-    // UnlockableBackground(
-    //     "Weltraum 1", "assets/illustrations/mascot_space_1.png", 15,
-    //     backgroundColor:
-    //         LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
-    // UnlockableBackground(
-    //     "Weltraum 2", "assets/illustrations/mascot_space_2.png", 18,
-    //     backgroundColor:
-    //         LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
     UnlockableBackground(
         "Vulkan 1", "assets/illustrations/mascot_vulcan_1.png", 12,
         backgroundColor:
@@ -85,7 +73,7 @@ class RewardService {
   }
 
   Future retrieveScore() async {
-    _dataService.getScore().then((s) {
+    await _dataService.getScore().then((s) {
       scoreValue = s;
       controller.add(s);
       return s;
@@ -93,14 +81,14 @@ class RewardService {
   }
 
   Future getDaysActive() async {
-    _dataService.getDaysActive().then((s) {
+    await _dataService.getDaysActive().then((s) {
       daysActive = s;
       return s;
     });
   }
 
   Future<int> getStreakDays() async {
-    return _dataService.getStreakDays().then((s) {
+    return await _dataService.getStreakDays().then((s) {
       streakDays = s;
       return s;
     });
@@ -131,10 +119,10 @@ class RewardService {
   }
 
   Future initialize() async {
-    retrieveScore();
-    getDaysActive();
-    getStreakDays();
-    getBackgroundImagePath();
+    await retrieveScore();
+    await getDaysActive();
+    await getStreakDays();
+    await getBackgroundImagePath();
     // getBackgroundColors();
   }
 

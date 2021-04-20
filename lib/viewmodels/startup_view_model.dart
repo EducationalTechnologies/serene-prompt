@@ -65,7 +65,7 @@ class StartupViewModel extends BaseViewModel {
     addDebugText("Initialized Notification Service");
     var experimentService = locator<ExperimentService>();
     await experimentService.initialize();
-    locator<RewardService>().initialize();
+    await locator<RewardService>().initialize();
 
     bool userInitialized = await locator<UserService>().initialize();
     addDebugText("User Initialized: $userInitialized");
