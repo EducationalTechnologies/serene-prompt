@@ -18,6 +18,7 @@ enum STEP {
   stepWelcomeScreen,
   stepVideoWelcome,
   stepCabuuLink,
+  stepQuestionsItLiteracy,
   stepQuestionsCabuuLearn,
   stepVideoLdtInstruction,
   ldt00,
@@ -327,6 +328,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       _dataService.saveOutcomes(selectedOutcomes);
     }
     if (currentPageKey == ValueKey(STEP.stepQuestionsCabuuLearn) ||
+        currentPageKey == ValueKey(STEP.stepQuestionsItLiteracy) ||
         currentPageKey == ValueKey(STEP.stepQuestionsRegulation) ||
         currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals1) ||
         currentPageKey == ValueKey(STEP.stepQuestionsSrl) ||
@@ -386,6 +388,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   }
 
   submit() async {
+    _dataService.setRegistrationDate(DateTime.now());
     _experimentService.nextScreen(RouteNames.INIT_START);
   }
 
@@ -405,7 +408,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     var msgIncorrect =
         "Du hast leider nicht immer richtig gedrückt. Denk daran, dass du bei einem echten Wort die Taste 'ja' drücken sollst und bei einem unechten Wort die Taste 'nein' Wir üben das noch einmal.";
 
-    if (keyValue == STEP.ldt00 || keyValue == STEP.stepLdt01) {
+    if (keyValue == STEP.ldt00) {
       for (var i = 0; i < results.length; i++) {
         var result = results[i];
         if (result.selection == -1) {
@@ -415,12 +418,10 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
           return msgIncorrect;
         }
       }
-      if (keyValue == STEP.ldt00) {
-        return "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
-      }
-      if (keyValue == STEP.stepLdt01) {
-        return "Gut gemacht! Als nächstes kommt der erste richtige Durchlauf.";
-      }
+      return "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
+    }
+    if (keyValue == STEP.stepLdt01) {
+      return "Gut gemacht! Als nächstes kommt der erste richtige Durchlauf.";
     }
 
     if (keyValue == STEP.stepLdt02) {

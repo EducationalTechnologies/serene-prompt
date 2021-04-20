@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
 
 void main() {
@@ -28,13 +29,12 @@ void main() {
     var expService = ExperimentService(null, null, null, null, null);
     var now = DateTime.now();
 
-    test("Schedule of recall task should be postponed to the same day at four",
-        () {
+    test("Schedule of recall task should be postponed six hours", () {
       var dateTooEarly = DateTime(now.year, now.month, now.day, 8, 30);
 
       var date = expService.getScheduleTimeForRecallTask(dateTooEarly);
 
-      expect(date.hour, 16);
+      expect(date.hour, 14);
     });
 
     test(
@@ -63,5 +63,15 @@ void main() {
 
       expect(should, true);
     });
+  });
+  test("LDTs should match", () {
+    var dataService = DataService(null, null, null);
+    var expService = ExperimentService(dataService, null, null, null, null);
+
+    //previously, 2 plans have been completed, so now we want to get the third one
+    var previouslyCompleted = 16;
+
+    // third day, group 2
+    // var trialIndex = await expService.getLdtData()
   });
 }

@@ -6,7 +6,7 @@ class Timeline extends StatelessWidget {
       {@required this.children,
       this.indicators,
       this.isLeftAligned = true,
-      this.itemGap = 12.0,
+      this.itemGap = 1.0,
       this.gutterSpacing = 4.0,
       this.padding = const EdgeInsets.all(8),
       this.controller,
