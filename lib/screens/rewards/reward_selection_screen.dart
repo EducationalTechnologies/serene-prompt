@@ -79,10 +79,10 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         children: [
-          Text(
-            unlockable.name,
-            style: Theme.of(context).textTheme.headline6,
-          ),
+          // Text(
+          //   unlockable.name,
+          //   style: Theme.of(context).textTheme.headline6,
+          // ),
           if (unlocked)
             Image(
               image: AssetImage(unlockable.path),
@@ -101,7 +101,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
                 height: 110,
               ),
             ),
-          Divider(),
+          // Divider(),
           if (isSelected)
             ElevatedButton(
               style: ElevatedButton.styleFrom(primary: Colors.green[300]),
