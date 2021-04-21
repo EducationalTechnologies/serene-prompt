@@ -18,8 +18,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
     List<Widget> unlockItems = [];
     var rewardService = locator<RewardService>();
     for (var bg in rewardService.backgrounds) {
-      var unlocked = rewardService.daysActive >= bg.requiredDays;
-      unlockItems.add(_buildUnlockItem(bg, unlocked));
+      unlockItems.add(_buildUnlockItem(bg, rewardService.daysActive));
     }
 
     return Scaffold(
@@ -29,14 +28,14 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
               indicatorColor: Theme.of(context).primaryColor,
               indicatorColorInactive: Colors.grey,
               lineColor: Theme.of(context).primaryColor,
-              progress: (rewardService.daysActive / 27),
+              progress: ((rewardService.daysActive + 5) / 27),
               children: [...unlockItems])),
     );
   }
 
-  _buildUnlockItem(UnlockableBackground unlockable, bool unlocked) {
+  _buildUnlockItem(UnlockableBackground unlockable, int daysActive) {
     var rewardService = locator.get<RewardService>();
-
+    var unlocked = daysActive >= unlockable.requiredDays;
     Widget unlockButton;
 
     if (unlocked) {
@@ -61,7 +60,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
           });
         },
         child: Text(
-            "Wird nach ${unlockable.requiredDays} Tagen Aktivität freigeschaltet"),
+            "Noch ${unlockable.requiredDays - daysActive} Tage alle Aufgaben erledigen"),
       );
     }
 
