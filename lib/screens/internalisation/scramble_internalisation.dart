@@ -197,6 +197,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   }
 
   _scrambleTextClick(ScrambleText scramble) {
+    var vm = Provider.of<InternalisationViewModel>(context, listen: false);
     setState(() {
       scramble.isSelected = !scramble.isSelected;
       if (scramble.isSelected) {
@@ -205,6 +206,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
         setState(() {});
       } else {
         _builtSentence.remove(scramble);
+        vm.onScrambleCorrection(_builtSentence.last.text);
       }
     });
   }
@@ -229,7 +231,6 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   }
 
   _buildDeleteButton() {
-    var vm = Provider.of<InternalisationViewModel>(context, listen: false);
     return Container(
       width: 250,
       child: OutlinedButton(
@@ -249,7 +250,6 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
                 var last = _builtSentence.last;
                 _scrambleTextClick(last);
               }
-              vm.onScrambleCorrection(_builtSentence.last.text);
             });
           }),
     );

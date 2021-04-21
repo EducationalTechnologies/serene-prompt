@@ -79,6 +79,7 @@ enum AssessmentTypes {
   dailyObstacle,
   didLearnToday,
   evening,
+  itLiteracy,
   postTest,
   preLearning,
   postLearning,
@@ -102,7 +103,8 @@ enum NoTaskSituation {
   afterInitialization,
   afterRecall,
   afterLdt,
-  afterFinal
+  afterFinal,
+  afterInternalisation
 }
 
 enum DailyLearningIntention { yes, no, unsure, alreadyDid }

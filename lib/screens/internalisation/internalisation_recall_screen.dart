@@ -59,14 +59,15 @@ class _InternalisationRecallScreenState
   }
 
   buildInputBoxes() {
+    String inputRegex =
+        "[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF 1234567890,.:!)(/&%#-_)]";
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text("Wenn...", style: Theme.of(context).textTheme.headline6),
       Center(
           child: TextField(
         keyboardType: TextInputType.text,
         inputFormatters: [
-          FilteringTextInputFormatter.allow(
-              RegExp("[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF]")),
+          FilteringTextInputFormatter.allow(RegExp(inputRegex)),
         ],
         minLines: 1,
         maxLines: 2,
@@ -86,6 +87,9 @@ class _InternalisationRecallScreenState
       Center(
           child: TextField(
         keyboardType: TextInputType.text,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(inputRegex)),
+        ],
         minLines: 1,
         maxLines: 2,
         autofocus: true,
