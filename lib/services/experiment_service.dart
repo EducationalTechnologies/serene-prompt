@@ -24,6 +24,8 @@ class ExperimentService {
   static const int STUDY_DURATION = 27;
   static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
   static const int NUM_GROUPS = 6;
+  // ignore: non_constant_identifier_names
+  static final DateTime FINAL_DATE = DateTime(2021, 6, 21);
 
   final DataService _dataService;
   final NotificationService _notificationService;
@@ -56,14 +58,8 @@ class ExperimentService {
   }
 
   DateTime getScheduleTimeForRecallTask(DateTime timeOfInternalisation) {
-    // We check if the scheduled time would be before 4pm, as this is the earliest
-    // time where we want to schedule a notification
-    var targetTime = timeOfInternalisation.hour + INTERNALISATION_RECALL_BREAK;
-    var diff = EARLIEST_RECALL.hour - targetTime;
-    var offset = max(0, diff);
-
     return timeOfInternalisation
-        .add(Duration(hours: INTERNALISATION_RECALL_BREAK + offset));
+        .add(Duration(hours: INTERNALISATION_RECALL_BREAK));
   }
 
   void scheduleRecallTaskNotificationIfAppropriate(
@@ -72,6 +68,11 @@ class ExperimentService {
       var date = getScheduleTimeForRecallTask(timeOfInternalisation);
       this._notificationService.scheduleRecallTaskReminder(date);
     }
+  }
+
+  isTimeForFinalTask() async {
+    // 27 internalisations?
+    return DateTime.now().isAfter(FINAL_DATE);
   }
 
   getLdtData(String trialName) async {
@@ -86,6 +87,9 @@ class ExperimentService {
 
   Future<bool> isTimeForInternalisationTask() async {
     _loggingService.logEvent("Trying to retrieve the last internalisation");
+    var ud = await _dataService.getUserData();
+    if (ud.registrationDate.isToday()) return false;
+
     var lastInternalisation = await _dataService.getLastInternalisation();
     // If there is no previous internalisation, we definitely need the first one
     if (lastInternalisation == null) {
@@ -95,6 +99,11 @@ class ExperimentService {
 
     _loggingService.logEvent("Checking if last internalisation was today");
     if (lastInternalisation.completionDate.isToday()) {
+      return false;
+    }
+
+    var numberOf = await getNumberOfCompletedInternalisations();
+    if (numberOf == STUDY_DURATION) {
       return false;
     }
     return true;
@@ -134,17 +143,20 @@ class ExperimentService {
   Future<bool> isTimeForLexicalDecisionTask() async {
     if (!await lastThreeConditionsWereTheSame()) return false;
 
+    var lastInternalisation = await _dataService.getLastInternalisation();
+
+    // LDT and Internalisation have to be at least 6 hours
+    var now = DateTime.now();
+    var difference = now.difference(lastInternalisation.completionDate);
+    if (difference.inHours < INTERNALISATION_RECALL_BREAK) {
+      return false;
+    }
+
     DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
 
     if (lastLdtDate == null) {
       return true;
     }
-
-    if (lastLdtDate.daysAgo() < 2) {
-      return false;
-    }
-
-    var lastInternalisation = await _dataService.getLastInternalisation();
 
     if (lastLdtDate.isAfter(lastInternalisation.completionDate)) {
       return false;
@@ -167,31 +179,12 @@ class ExperimentService {
     return PLAN_CONDITION_MAPPING[group][day]["condition"];
   }
 
-  Future<int> getNextInternalisationCondition(int current) async {
-    // var max = await _dataService.
-    var next = current;
-    if (await lastThreeConditionsWereTheSame()) {
-      next = (next + 1) % 3;
-    }
-    return next;
-  }
-
-  Future<void> updateInternalisationConditionGroup() async {
-    var userData = await _dataService.getUserData();
-    var newCondition = await getNextInternalisationCondition(userData.group);
-    if (newCondition != userData.group) {
-      await _dataService.updateInternalisationConditionGroup(newCondition);
-    }
-  }
-
   Future<void> submitInternalisation(Internalisation internalisation) async {
     await this._dataService.saveInternalisation(internalisation);
 
     _notificationService.deleteScheduledInternalisationReminder();
 
     this.scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
-
-    this.updateInternalisationConditionGroup();
 
     _notificationService.scheduleInternalisationReminder(new Time(6, 30, 0));
   }
@@ -261,7 +254,7 @@ class ExperimentService {
       return await _navigationService.navigateTo(RouteNames.INTERNALISATION);
     }
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_EVENING) {
-      if (await lastThreeConditionsWereTheSame()) {
+      if (await isTimeForLexicalDecisionTask()) {
         _navigationService
             .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
       } else {
