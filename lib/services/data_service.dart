@@ -172,8 +172,8 @@ class DataService {
     }
     if (_lastInternalisationsCache == null) return [];
 
-    var start = max(_lastInternalisationsCache.length - number, 0);
-    var end = _lastInternalisationsCache.length;
+    var start = 0;
+    var end = min(_lastInternalisationsCache.length, number);
     return _lastInternalisationsCache.sublist(start, end);
   }
 
@@ -339,5 +339,12 @@ class DataService {
     ud.streakDays = value;
     return await _databaseService.setStreakDays(
         _userService.getUsername(), value);
+  }
+
+  setRegistrationDate(DateTime dateTime) async {
+    var ud = await getUserData();
+    ud.registrationDate = dateTime;
+    return await _databaseService.setRegistrationDate(
+        _userService.getUsername(), dateTime.toIso8601String());
   }
 }
