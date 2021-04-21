@@ -109,8 +109,7 @@ class _OutcomeSortingScreenState extends State<OutcomeSortingScreen> {
           height: 44,
         ),
         UIHelper.horizontalSpaceMedium(),
-        Text(outcome.description),
-        Spacer(),
+        Expanded(flex: 1, child: Text(outcome.description)),
         upDownArrow
       ],
     ));
