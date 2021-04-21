@@ -98,7 +98,7 @@ class _HelpAppBarState extends State<HelpAppBar> {
         return "Hier musst du aus einzelnen Wörtern den kompletten Plan zusammenbauen";
         break;
       case HelpType.recall:
-        return "Hier musst du dich so gut wie es geht an deinen Plan von heute erinnern. Es ist gar nicht schlimm, wenn es nicht genau ist, aber versuche trotzdem, dich so gut es geht zu erinnern.";
+        return "Hier musst du dich so gut wie es geht an deinen Plan von heute erinnern. Es ist gar nicht schlimm, wenn es nicht genau ist, aber versuche trotzdem, dich so gut es geht zu erinnern. Falls du dir deinen Plan mit Emojis eingeprägt hast, sollst du dir trotzdem den richtigen Plan merken, nicht die Emoji-Darstellung.";
         break;
     }
     return "";
