@@ -39,28 +39,27 @@ class _SereneAppBarState extends State<SereneAppBar> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
-        // OutlinedButton(
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         Icon(Icons.brush),
-        //         Text(
-        //           "Hintergrund ändern",
-        //           style: TextStyle(color: Colors.black),
-        //         )
-        //       ],
-        //     ),
-        //     style: ButtonStyle(
-        //       shape: MaterialStateProperty.all(RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(30.0))),
-        //     ),
-        //     onPressed: () async {
-        //       var rewardWidget = RewardSelectionScreen();
-        //       await Navigator.push(context,
-        //           MaterialPageRoute(builder: (context) => rewardWidget));
-        //       setState(() {});
-        //     }),
-        // UIHelper.horizontalSpaceMedium(),
+        TextButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Icon(Icons.brush),
+                // Text(
+                //   "Hintergrund ändern",
+                //   style: TextStyle(
+                //     color: Colors.black,
+                //     fontSize: 20,
+                //   ),
+                // )
+              ],
+            ),
+            onPressed: () async {
+              // var rewardWidget = RewardSelectionScreen();
+              // await Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => rewardWidget));
+              setState(() {});
+            }),
+        UIHelper.horizontalSpaceMedium(),
         StreamBuilder(
             stream: rewardService.controller.stream,
             builder: (context, snapshot) {
@@ -72,7 +71,7 @@ class _SereneAppBarState extends State<SereneAppBar> {
                       child: Text(
                         "${snapshot.data}💎",
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.grey[850]),
                       ));

@@ -37,6 +37,9 @@ class InternalisationViewModel extends BaseViewModel {
       _currentInternalisation.startDate = DateTime.now();
       this.internalisationCondition = await _experimentService
           .getTodaysInternalisationCondition(numberOf, ud.group);
+      _currentInternalisation.condition =
+          this.internalisationCondition.toString();
+      var x = 0;
     } catch (e) {
       print(
           "Exception when trying get the current internalisation ${e.toString()}");
@@ -62,8 +65,10 @@ class InternalisationViewModel extends BaseViewModel {
         ._experimentService
         .submitInternalisation(_currentInternalisation);
 
-    _dataService.saveScrambleCorrections(
-        scrambleCorrections, _currentInternalisation.planId);
+    if (scrambleCorrections.length > 0) {
+      _dataService.saveScrambleCorrections(
+          scrambleCorrections, _currentInternalisation.planId);
+    }
 
     _experimentService.nextScreen(RouteNames.INTERNALISATION);
     return true;

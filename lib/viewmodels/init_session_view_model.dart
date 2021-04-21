@@ -388,7 +388,6 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   }
 
   submit() async {
-    _dataService.setRegistrationDate(DateTime.now());
     _experimentService.nextScreen(RouteNames.INIT_START);
   }
 

@@ -43,11 +43,6 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
     notifyListeners();
   }
 
-  // set willLearnToday(bool willLearnToday) {
-  //   _willLearnToday = willLearnToday;
-  //   notifyListeners();
-  // }
-
   onNotLearningReasonChanged(String notLearningReason) {
     _notLearningReason = notLearningReason;
     this.setAssessmentResult("dailyLearningIntention_2",

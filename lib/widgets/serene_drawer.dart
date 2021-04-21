@@ -84,10 +84,10 @@ class SereneDrawer extends StatelessWidget {
               onTap: () {
                 // Navigator.pop(context);
                 //
-                // Navigator.pushNamed(context, RouteNames.INIT_START);
-                var now = DateTime.now();
-                var next = now.add(Duration(seconds: 100));
-                locator<NotificationService>().scheduleRecallTaskReminder(next);
+                Navigator.pushNamed(context, RouteNames.INIT_START);
+                // var now = DateTime.now();
+                // var next = now.add(Duration(seconds: 100));
+                // locator<NotificationService>().scheduleRecallTaskReminder(next);
               }),
 
           Divider(),

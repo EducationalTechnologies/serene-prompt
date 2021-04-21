@@ -62,7 +62,7 @@ class LoginViewModel extends BaseViewModel {
 
   submit() async {
     int maxStep = await locator<DataService>().getCompletedInitialSessionStep();
-
+    locator<DataService>().setRegistrationDate(DateTime.now());
     bool userHasCreatedSession0 = maxStep == STEP.values.length;
     if (userHasCreatedSession0) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);
