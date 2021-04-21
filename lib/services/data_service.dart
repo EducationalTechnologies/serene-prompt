@@ -15,6 +15,7 @@ import 'package:prompt/models/obstacle.dart';
 import 'package:prompt/models/outcome.dart';
 import 'package:prompt/models/recall_task.dart';
 import 'package:prompt/models/user_data.dart';
+import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/firebase_service.dart';
 import 'package:prompt/services/local_database_service.dart';
 import 'package:prompt/services/settings_service.dart';
@@ -121,8 +122,10 @@ class DataService {
   }
 
   Future<int> getNumberOfCompletedInternalisations() async {
-    return await _databaseService
-        .getNumberOfInternalisations(_userService.getUsername());
+    // TODO use cached value
+    var all = await getLastInternalisations(ExperimentService.STUDY_DURATION);
+    if (all == null) return 0;
+    return all.length;
   }
 
   Future<Internalisation> getCurrentInternalisation(int number) async {
@@ -244,13 +247,6 @@ class DataService {
     if (_userService.isSignedIn()) {
       await _databaseService.logEvent(_userService.getUsername(), data);
     }
-  }
-
-  updateInternalisationConditionGroup(int group) async {
-    await _databaseService.updateInternalisationConditionGroup(
-        _userService.getUsername(), group);
-    var ud = await getUserData();
-    ud.group = group;
   }
 
   Future<DateTime> getDateOfLastLDT() async {

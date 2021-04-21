@@ -169,8 +169,10 @@ class ExperimentService {
     return await _dataService.getNumberOfCompletedInternalisations();
   }
 
-  Future<Internalisation> getTodaysPlan(int day, int group) async {
-    int planNumber = PLAN_CONDITION_MAPPING[group][day]["planId"];
+  Future<Internalisation> getTodaysPlan(
+      int completedInternalisations, int group) async {
+    int planNumber =
+        PLAN_CONDITION_MAPPING[group][completedInternalisations]["planId"];
     return await this._dataService.getCurrentInternalisation(planNumber);
   }
 
@@ -194,24 +196,22 @@ class ExperimentService {
     return completed == STUDY_DURATION;
   }
 
-  Future<int> updateAndGetStreakDays() async {
+  Future<bool> _shouldIncrementStreakDay() async {
     var lastRecall = await _dataService.getLastRecallTask();
-    if (lastRecall == null) return 0;
-
-    var streakDays = await _dataService.getStreakDays();
-    if (lastRecall.completionDate.isYesterday()) {
-      streakDays += 1;
+    if (lastRecall == null) {
+      var userData = await _dataService.getUserData();
+      return userData.registrationDate.isYesterday();
     }
-    await _dataService.setStreakDays(streakDays);
-    return streakDays;
+
+    return lastRecall.completionDate.isYesterday();
   }
 
   Future<void> submitRecallTask(RecallTask recallTask) async {
-    // Checking the streak BEFORE submitting the recall task
-    int streakDays = await updateAndGetStreakDays();
-
+    if (await _shouldIncrementStreakDay()) {
+      _rewardService.addStreakDays(1);
+    }
     _rewardService.addDaysActive(1);
-    _rewardService.onRecallTask(streakDays);
+    _rewardService.onRecallTask();
 
     // The last internalisation has info that has to be added to the recall task
     var lastInternalisation = await _dataService.getLastInternalisation();
