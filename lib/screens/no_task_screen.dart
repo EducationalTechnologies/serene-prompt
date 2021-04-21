@@ -46,19 +46,26 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   showDialogIfNecessary() async {
     if (widget.previousRoute == NoTaskSituation.standard) return;
     if (widget.previousRoute == NoTaskSituation.afterLdt) return;
+    if (widget.previousRoute == NoTaskSituation.afterInitialization) return;
     String _title = "";
     String _textReward = "";
     String _textStreak = "";
     String _textTotal = "";
     var rewardService = locator<RewardService>();
     if (widget.previousRoute == NoTaskSituation.afterRecall) {
-      _title = "Belohnung erhalten";
+      _title = "🎉 Belohnung erhalten 🎉";
       _textReward =
           "### Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎";
 
       if (rewardService.streakDays > 0) {
-        _textStreak =
-            "### 🎉 Außerdem hast du ${rewardService.streakDays} Tage in Folge alle Aufgaben erledigt 🎉. Dafür bekommst du heute also zusätzlich ${rewardService.streakDays}💎 als Bonus";
+        if (rewardService.streakDays == 1) {
+          _textStreak =
+              "### Außerdem hast du gestern auch schon **alle** Aufgaben erledigt. Dafür bekommst du heute zusätzlich ${rewardService.streakDays}💎 als Bonus";
+        }
+        if (rewardService.streakDays > 1) {
+          _textStreak =
+              "### Außerdem hast du ${rewardService.streakDays} Tage in Folge alle Aufgaben erledigt. Dafür bekommst du heute zusätzlich ${rewardService.streakDays}💎 als Bonus";
+        }
       }
     }
     if (widget.previousRoute == NoTaskSituation.afterFinal) {
@@ -95,29 +102,28 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   Future<bool> getNextText() async {
     var dataService = locator<DataService>();
     var experimentService = locator<ExperimentService>();
-    var cache = await dataService.cacheAllInternalisations();
+    await dataService.cacheAllInternalisations();
     var lastRecallTask = await dataService.getLastRecallTask();
     var lastInternalisation = await dataService.getLastInternalisation();
+    var userData = await dataService.getUserData();
     _showNextButton = false;
 
-    if (widget.previousRoute == NoTaskSituation.afterInitialization) {
+    if (widget.previousRoute == NoTaskSituation.afterInitialization ||
+        userData.registrationDate.isToday()) {
       _textNextTask =
           "Morgen geht es richtig los, dann musst du dir zum ersten mal einen Plan merken.";
       return true;
     }
 
-    if (await experimentService.isTimeForInternalisationTask()) {
-      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
-      _showNextButton = true;
-      _textNextTask = "Es ist jetzt Zeit, dir deinen Plan einzuprägen.";
-      return true;
-    }
-
-    if (await experimentService.isTimeForRecallTask()) {
-      _nextRoute = RouteNames.RECALL_TASK;
-      _showNextButton = true;
-      _textNextTask = "Versuche jetzt, dich an deinen Plan zu erinnern.";
-      return true;
+    if (widget.previousRoute == NoTaskSituation.afterInternalisation) {
+      // If the next recall task after an internalisation is not scheduled for today, the internalisation was performed too late
+      if (!experimentService
+          .getScheduleTimeForRecallTask(DateTime.now())
+          .isToday()) {
+        _textNextTask =
+            "Du hast deinen Plan heute sehr spät gelernt. Versuche doch, das Morgen etwas früher zu tun.";
+        return true;
+      }
     }
 
     if (await experimentService.isTimeForLexicalDecisionTask()) {
@@ -127,49 +133,52 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
           "Beantworte uns jetzt ein paar Fragen, und erledige dann die Wortaufgabe.";
       return true;
     }
+    if (await experimentService.isTimeForInternalisationTask()) {
+      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
+      _showNextButton = true;
+      _textNextTask = "Es ist jetzt Zeit, dir deinen Plan einzuprägen.";
+      return true;
+    }
 
-    var lastRecall = await dataService.getLastRecallTask();
-    if (lastRecall == null) return true;
+    if (lastRecallTask != null) {
+      if (!lastRecallTask.completionDate.isToday()) {
+        var nextRecallTaskTime = experimentService
+            .getScheduleTimeForRecallTask(lastInternalisation?.completionDate);
+        if (nextRecallTaskTime.isToday()) {
+          var nextTimeString = DateFormat("HH:mm").format(nextRecallTaskTime);
+          _textNextTask =
+              "Überprüfe ab $nextTimeString Uhr, wie gut du dich an deinen Plan erinnern kannst.";
 
-    if (lastInternalisation.completionDate.isToday()) {
-      //If no recall task was done today, we check when it is due next
-
-      var timeForRecall = await experimentService.isTimeForRecallTask();
-      if (timeForRecall) {
-        // nextText =
-        //     "Überprüfe jetzt, wie gut du dich an deinen heutigen Wenn-Dann-Plan erinnern kannst";
-
-        _showNextButton = true;
-        // setState(() {
-        //   _showToRecallTaskButton = true;
-        // });
-      } else {
-        //If the recall task is in less than
-        DateTime nextTime =
-            experimentService.getScheduleTimeForRecallTask(DateTime.now());
-
-        if (nextTime.isToday()) {
-          if (lastRecall != null) {
-            if (lastRecall.completionDate.isToday()) {
-              _textNextTask = "Du hast für heute alle Aufgaben erledigt";
-            } else {
-              _textNextTask = _getNextTimeTodayString(nextTime);
-            }
-          } else {
-            _textNextTask = _getNextTimeTodayString(nextTime);
-          }
+          return true;
         } else {
           _textNextTask =
-              "Du hast deinen Wenn-Dann-Plan heute sehr spät gelernt. Versuche doch, das Morgen etwas früher zu tun.";
+              "Du hast deinen Plan heute sehr spät gelernt. Versuche doch, das Morgen etwas früher zu tun.";
+          return true;
         }
       }
     }
+
+    if (await experimentService.isTimeForRecallTask()) {
+      _nextRoute = RouteNames.RECALL_TASK;
+      _showNextButton = true;
+      _textNextTask = "Versuche jetzt, dich an deinen Plan zu erinnern.";
+      return true;
+    }
+
+    if (await experimentService.isTimeForFinalTask()) {
+      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_FINISH;
+      _showNextButton = true;
+      _textNextTask = "Jetzt ist Zeit für die Abschlussbefragung";
+      return true;
+    }
+
+    _textNextTask = "Du hast für heute alle Aufgaben erledigt";
     return true;
   }
 
   _getNextTimeTodayString(DateTime nextTime) {
     var nextTimeString = DateFormat("HH:mm").format(nextTime);
-    return "Überprüfe später, wie gut du dich an deinen Plan erinnern kannst.";
+    return "Überprüfe ab ${nextTimeString} Uhr, wie gut du dich an deinen Plan erinnern kannst.";
   }
 
   _getDrawer() {
