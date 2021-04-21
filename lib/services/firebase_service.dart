@@ -277,14 +277,6 @@ class FirebaseService {
         .set({"score": score}, SetOptions(merge: true));
   }
 
-  Future<void> updateInternalisationConditionGroup(
-      String userid, int group) async {
-    return _databaseReference
-        .collection(COLLECTION_USERS)
-        .doc(userid)
-        .set({"internalisationCondition": group}, SetOptions(merge: true));
-  }
-
   Future<void> saveLdt(String userid, LdtData ldtData) async {
     var ldtMap = ldtData.toMap();
     ldtMap["user"] = userid;
@@ -315,7 +307,7 @@ class FirebaseService {
         .collection(COLLECTION_USERS)
         .doc(username)
         .set({"streakDays": value}, SetOptions(merge: true))
-        .then((value) => null)
+        .then((value) => true)
         .catchError(handleError);
   }
 
@@ -324,7 +316,16 @@ class FirebaseService {
         .collection(COLLECTION_USERS)
         .doc(username)
         .set({"daysActive": daysActive}, SetOptions(merge: true))
-        .then((value) => null)
+        .then((value) => true)
+        .catchError(handleError);
+  }
+
+  Future setRegistrationDate(String username, String dateString) async {
+    _databaseReference
+        .collection(COLLECTION_USERS)
+        .doc(username)
+        .set({"registrationDate": dateString}, SetOptions(merge: true))
+        .then((value) => true)
         .catchError(handleError);
   }
 }

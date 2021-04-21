@@ -27,43 +27,47 @@ class RewardService {
     UnlockableBackground("Monster", "assets/illustrations/mascot_bare.png", 0,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Colors.orange[50]])),
-    UnlockableBackground("Ozean", "assets/illustrations/mascot_ocean_2.png", 0,
+    UnlockableBackground(
+        "Flugzeug", "assets/illustrations/mascot_plane_2.png", 0,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
+    UnlockableBackground("Ozean", "assets/illustrations/mascot_space_2.png", 1,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Flugzeug", "assets/illustrations/mascot_plane_2.png", 3,
+        "Pyramiden", "assets/illustrations/mascot_pyramid.png", 3,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    UnlockableBackground(
+        "Vulkan 1", "assets/illustrations/mascot_vulcan_1.png", 6,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    UnlockableBackground(
+        "Wikinger", "assets/illustrations/mascot_viking_1.png", 9,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    UnlockableBackground(
+        "Ozean 1", "assets/illustrations/mascot_ocean_2.png", 12,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    UnlockableBackground(
+        "Pyramide 2", "assets/illustrations/mascot_pyramid_2.png", 15,
+        backgroundColor:
+            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+    UnlockableBackground(
+        "Weltraum", "assets/illustrations/mascot_space_2.png", 18,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Pyramiden", "assets/illustrations/mascot_pyramid.png", 6,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
-    UnlockableBackground(
-        "Pyramiden 2", "assets/illustrations/mascot_pyramid_2.png", 9,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
-    UnlockableBackground(
-        "Vulkan 1", "assets/illustrations/mascot_vulcan_1.png", 12,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
-    UnlockableBackground(
-        "Vulkan 2", "assets/illustrations/mascot_vulcan_2.png", 15,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
-    UnlockableBackground(
-        "Zauberei", "assets/illustrations/mascot_wizard_1.png", 18,
+        "Zauberei 2", "assets/illustrations/mascot_vulcan_2.png", 21,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
-        "Zauberei 2", "assets/illustrations/mascot_wizard_2.png", 21,
-        backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
-    UnlockableBackground(
-        "Wikinger", "assets/illustrations/mascot_viking_1.png", 24,
+        "Wikinger 2", "assets/illustrations/mascot_viking_2.png", 24,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
     UnlockableBackground(
-        "Wikinger 2", "assets/illustrations/mascot_viking_2.png", 27,
+        "Wikinger 2", "assets/illustrations/mascot_wizard_2.png", 27,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
   ];
@@ -123,7 +127,6 @@ class RewardService {
     await getDaysActive();
     await getStreakDays();
     await getBackgroundImagePath();
-    // getBackgroundColors();
   }
 
   setBackgroundImagePath(String imagePath) async {
@@ -141,12 +144,9 @@ class RewardService {
     await this._dataService.saveBackgroundGradientColors(lg.colors);
   }
 
-  onRecallTask(int streakDays) async {
-    await addPoints(4);
-  }
-
-  onRecallTaskThird() async {
-    await addPoints(8);
+  onRecallTask() async {
+    int points = 10 + daysActive;
+    await addPoints(points);
   }
 
   onFinalTask() async {
@@ -170,5 +170,8 @@ class RewardService {
     await _dataService.saveScore(scoreValue);
   }
 
-  addStreakDays(int days) async {}
+  addStreakDays(int days) async {
+    streakDays += days;
+    await _dataService.setStreakDays(days);
+  }
 }
