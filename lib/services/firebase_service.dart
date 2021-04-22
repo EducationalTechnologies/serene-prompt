@@ -328,4 +328,20 @@ class FirebaseService {
         .then((value) => true)
         .catchError(handleError);
   }
+
+  Future<dynamic> getLastAssessment(
+      String assessmentName, String username) async {
+    return _databaseReference
+        .collection(COLLECTION_ASSESSMENTS)
+        .where("user", isEqualTo: username)
+        .where("assessmentType", isEqualTo: assessmentName)
+        .limit(1)
+        .get()
+        .then((val) {
+      if (val.docs.isEmpty)
+        return null;
+      else
+        return val.docs[0];
+    });
+  }
 }

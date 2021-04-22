@@ -108,7 +108,10 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     var userData = await dataService.getUserData();
     _showNextButton = false;
 
-    var isAfterFinalDate = DateTime.now();
+    if (await experimentService.isTimeForFinalTask()) {
+      _setIsFinalTask();
+      return true;
+    }
 
     if (widget.previousRoute == NoTaskSituation.afterInitialization ||
         userData.registrationDate.isToday()) {
@@ -168,9 +171,7 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     }
 
     if (await experimentService.isTimeForFinalTask()) {
-      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_FINISH;
-      _showNextButton = true;
-      _textNextTask = "Jetzt ist Zeit für die Abschlussbefragung";
+      _setIsFinalTask();
       return true;
     }
 
@@ -181,6 +182,14 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
   _getNextTimeTodayString(DateTime nextTime) {
     var nextTimeString = DateFormat("HH:mm").format(nextTime);
     return "Überprüfe ab ${nextTimeString} Uhr, wie gut du dich an deinen Plan erinnern kannst.";
+  }
+
+  _setIsFinalTask() {
+    _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_FINISH;
+    _showNextButton = true;
+    _textNotification = "";
+    _textNextTask = _textNextTask =
+        "Jetzt ist es Zeit für die Abschlussbefragung. Danach bist du mit der gesamten Studie fertig, und hast alle Aufgaben erledigt.";
   }
 
   _getDrawer() {

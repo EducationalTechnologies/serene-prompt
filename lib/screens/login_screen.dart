@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // labelText: "Email",
                 // alignLabelWithHint: true,
                 border: InputBorder.none,
-                hintText: 'Nutzernamen eingeben',
+                hintText: 'Code eingeben',
               ),
             ),
           ),
@@ -145,8 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return new ElevatedButton(
       onPressed: () async {
         if (vm.state != ViewState.idle) return;
-        if (_userIdTextController.text.length != 5) {
-          _buildErrorDialog("Der Code besteht aus fünf Ziffern", "");
+        if (_userIdTextController.text.length < 5) {
+          _buildErrorDialog("Der Code besteht aus 6 Ziffern", "");
         } else {
           String message = "";
           if (vm.validateUserId(_userIdTextController.text)) {

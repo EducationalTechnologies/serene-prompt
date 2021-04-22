@@ -310,6 +310,12 @@ class DataService {
         SettingsKeys.backgroundColors, colorString);
   }
 
+  Future<bool> finalAssessmentCompleted() async {
+    return await _databaseService.getLastAssessment(
+            "finalQuestions", _userService.getUsername()) !=
+        null;
+  }
+
   Future<List<Color>> getBackgroundGradientColors() async {
     var colorString = await _localDatabaseService
         .getSettingsValue(SettingsKeys.backgroundColors);

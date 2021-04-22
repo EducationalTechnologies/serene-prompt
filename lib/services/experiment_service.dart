@@ -25,7 +25,7 @@ class ExperimentService {
   static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
   static const int NUM_GROUPS = 6;
   // ignore: non_constant_identifier_names
-  static final DateTime FINAL_DATE = DateTime(2021, 6, 21);
+  static final DateTime FINAL_DATE = DateTime(2020, 6, 21);
 
   final DataService _dataService;
   final NotificationService _notificationService;
@@ -71,8 +71,34 @@ class ExperimentService {
   }
 
   isTimeForFinalTask() async {
-    // 27 internalisations?
-    return DateTime.now().isAfter(FINAL_DATE);
+    bool timeForFinalTask = false;
+
+    var isAfterFinalDay = DateTime.now().isAfter(FINAL_DATE);
+
+    if (isAfterFinalDay) {
+      timeForFinalTask = true;
+    } else {
+      var allInternalisationsCompleted =
+          await getNumberOfCompletedInternalisations() >= STUDY_DURATION;
+      // If all internalisations are complete, we still have to check if the LDT was performed after this
+      if (allInternalisationsCompleted) {
+        var lastLdtDate = await _dataService.getDateOfLastLDT();
+        var lastInternalisationDate =
+            (await _dataService.getLastInternalisation()).completionDate;
+
+        timeForFinalTask = allInternalisationsCompleted &&
+            lastLdtDate.isAfter(lastInternalisationDate);
+      }
+    }
+
+    // if we have checked the pre-conditions, we also have to check if the final task has already been completed
+    if (timeForFinalTask) {
+      if (await _dataService.finalAssessmentCompleted()) {
+        timeForFinalTask = false;
+      }
+    }
+
+    return timeForFinalTask;
   }
 
   getLdtData(String trialName) async {
@@ -165,6 +191,8 @@ class ExperimentService {
     return true;
   }
 
+  Future<bool> hasCompletedFinalAssessment() async {}
+
   Future<int> getNumberOfCompletedInternalisations() async {
     return await _dataService.getNumberOfCompletedInternalisations();
   }
@@ -189,11 +217,6 @@ class ExperimentService {
     this.scheduleRecallTaskNotificationIfAppropriate(DateTime.now());
 
     _notificationService.scheduleInternalisationReminder(new Time(6, 30, 0));
-  }
-
-  Future<bool> isFinalTask() async {
-    var completed = await _dataService.getNumberOfCompletedInternalisations();
-    return completed == STUDY_DURATION;
   }
 
   Future<bool> _shouldIncrementStreakDay() async {
@@ -261,7 +284,7 @@ class ExperimentService {
         _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
       }
 
-      if (await isFinalTask()) {
+      if (await isTimeForFinalTask()) {
         this._rewardService.onFinalTask();
         _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
       }
