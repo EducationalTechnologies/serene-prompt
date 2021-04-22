@@ -57,8 +57,10 @@ class _IntervalScaleState extends State<IntervalScale> {
               _onChanged(value, groupValue.toString());
             },
           ),
-          MarkdownBody(
-            data: text,
+          Expanded(
+            child: MarkdownBody(
+              data: text,
+            ),
           )
         ],
       ),
