@@ -80,7 +80,7 @@ class SereneDrawer extends StatelessWidget {
           //     }),
           _buildDrawerItem(
               icon: Icons.filter_1,
-              text: "Reminder",
+              text: "Session 0 ",
               onTap: () {
                 // Navigator.pop(context);
                 //

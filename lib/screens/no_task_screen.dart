@@ -108,6 +108,8 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     var userData = await dataService.getUserData();
     _showNextButton = false;
 
+    var isAfterFinalDate = DateTime.now();
+
     if (widget.previousRoute == NoTaskSituation.afterInitialization ||
         userData.registrationDate.isToday()) {
       _textNextTask =

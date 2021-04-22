@@ -36,6 +36,15 @@ class _SereneAppBarState extends State<SereneAppBar> {
   AppBar build(BuildContext context) {
     var rewardService = locator.get<RewardService>();
     return AppBar(
+      // TODO: REMOVE SEMI_TRANSPARENT ICON BEFORE RELEASE
+      leading: Opacity(
+          opacity: 0.0,
+          child: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          )),
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
