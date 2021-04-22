@@ -25,7 +25,7 @@ class ExperimentService {
   static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
   static const int NUM_GROUPS = 6;
   // ignore: non_constant_identifier_names
-  static final DateTime FINAL_DATE = DateTime(2020, 6, 21);
+  static final DateTime FINAL_DATE = DateTime(2021, 6, 21);
 
   final DataService _dataService;
   final NotificationService _notificationService;
