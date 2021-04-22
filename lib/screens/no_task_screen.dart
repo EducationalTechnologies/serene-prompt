@@ -108,11 +108,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     var userData = await dataService.getUserData();
     _showNextButton = false;
 
-    if (await experimentService.isTimeForFinalTask()) {
-      _setIsFinalTask();
-      return true;
-    }
-
     if (widget.previousRoute == NoTaskSituation.afterInitialization ||
         userData.registrationDate.isToday()) {
       _textNextTask =
@@ -142,6 +137,11 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
       _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
       _showNextButton = true;
       _textNextTask = "Es ist jetzt Zeit, dir deinen Plan einzuprägen.";
+      return true;
+    }
+
+    if (await experimentService.isTimeForFinalTask()) {
+      _setIsFinalTask();
       return true;
     }
 
