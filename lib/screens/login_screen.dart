@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               validator: (String arg) {
                 if (arg.length < 5) {
-                  return "Dein Code sollte aus fünf Zeichen bestehen";
+                  return "Dein Code sollte aus sechs Zeichen bestehen";
                 } else {
                   return null;
                 }
