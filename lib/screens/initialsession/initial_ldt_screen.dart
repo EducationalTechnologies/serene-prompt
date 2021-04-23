@@ -99,6 +99,10 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
                   return buildInputLandscape();
                 }
               }),
+              LinearProgressIndicator(
+                value: vm.getProgress(),
+                minHeight: 8,
+              )
             ],
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center));
@@ -118,12 +122,7 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
               },
               text: "Ja",
               height: 140),
-          UIHelper.verticalSpaceSmall(),
-          LinearProgressIndicator(
-            value: vm.getProgress(),
-            minHeight: 8,
-          ),
-          UIHelper.verticalSpaceSmall(),
+          UIHelper.verticalSpaceLarge(),
           FullWidthButton(
               onPressed: () {
                 vm.pressed(0);
