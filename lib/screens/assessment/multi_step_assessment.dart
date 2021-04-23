@@ -106,7 +106,7 @@ class _MultiStepAssessmentState extends State<MultiStepAssessment> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Weiter",
+                    widget.vm.nextButtonText,
                     style: TextStyle(fontSize: 20),
                   ),
                   Icon(Icons.navigate_next)

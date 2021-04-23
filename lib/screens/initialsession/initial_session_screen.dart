@@ -48,8 +48,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     var vm = Provider.of<InitSessionViewModel>(context, listen: false);
 
     _pages = [
-      // OutcomeSelectionScreen(key: ValueKey("STEP.stepOutcomeSelectionScreen")),
-      // OutcomeSortingScreen(key: ValueKey("STEP.stepOutcomeSortingScreen")),
       WelcomeScreen(key: ValueKey(STEP.stepWelcomeScreen)),
       VideoScreen(
         'assets/videos/videoWelcome.mp4',

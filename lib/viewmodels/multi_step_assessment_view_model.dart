@@ -7,6 +7,8 @@ abstract class MultiStepAssessmentViewModel extends BaseViewModel {
   int step = 0;
   Assessment lastAssessment = Assessment();
 
+  String nextButtonText = "Weiter";
+
   bool canMoveBack(ValueKey currentPageKey);
   bool canMoveNext(ValueKey currentPageKey);
   int getNextPage(ValueKey currentPageKey);

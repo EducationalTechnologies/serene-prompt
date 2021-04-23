@@ -321,6 +321,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
   getNextPage(ValueKey currentPageKey) {
     print("Step is $step");
 
+    nextButtonText = "Weiter";
+
     if (currentPageKey == ValueKey(STEP.stepObstacleSortingScreen)) {
       _dataService.saveObstacles(selectedObstacles);
     }
@@ -375,6 +377,16 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       _dataService.saveInitialSessionValue("cabuuUsername", hashedUsername);
       var hashedEmail = md5.convert(utf8.encode(_cabuuLinkEmail)).toString();
       _dataService.saveInitialSessionValue("cabuuMail", hashedEmail);
+    }
+
+    // the pages AFTER which the button should be changed to START
+    if (currentPageKey == ValueKey(STEP.stepQuestionsRegulation) ||
+        currentPageKey == ValueKey(STEP.stepVideoLdtInstruction) ||
+        currentPageKey == ValueKey(STEP.ldt00) ||
+        currentPageKey == ValueKey(STEP.stepLdt01) ||
+        currentPageKey == ValueKey(STEP.stepObstacleDisplayScreen) ||
+        currentPageKey == ValueKey(STEP.readyForNextLdtRound)) {
+      nextButtonText = "Start";
     }
 
     _dataService.saveInitialSessionStepCompleted(step);
