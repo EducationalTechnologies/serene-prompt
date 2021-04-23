@@ -39,7 +39,6 @@ class InternalisationViewModel extends BaseViewModel {
           .getTodaysInternalisationCondition(numberOf, ud.group);
       _currentInternalisation.condition =
           this.internalisationCondition.toString();
-      var x = 0;
     } catch (e) {
       print(
           "Exception when trying get the current internalisation ${e.toString()}");

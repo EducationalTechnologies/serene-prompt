@@ -38,6 +38,7 @@ class NotificationService {
   static const int ID_LDT_REMINDER = 87;
   static const int ID_INTERNALISATION = 69;
   static const int ID_TASK_REMINDER = 42;
+  static const int ID_FINAL_TASK_REMINDER = 1901;
 
   NotificationService._internal() {
     localNotifications = FlutterLocalNotificationsPlugin();
@@ -160,9 +161,10 @@ class NotificationService {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_TASK, CHANNEL_NAME_TASK, CHANNEL_DESCRIPTION_TASK,
         ongoing: true, timeoutAfter: timeoutAfter);
-
-    var notificationDetails =
-        new NotificationDetails(android: androidPlatformChannelSpecifics);
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var notificationDetails = new NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
 
     var scheduledDate = tz.TZDateTime(
         tz.local, time.year, time.month, time.day, time.hour, time.minute);
@@ -190,18 +192,45 @@ class NotificationService {
         CHANNEL_NAME_LDT_REMINDER,
         CHANNEL_DESCRIPTION_LDT_REMINDER,
         ongoing: true);
-
-    var notificationDetails =
-        new NotificationDetails(android: androidPlatformChannelSpecifics);
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var notificationDetails = new NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
 
     var scheduledDate = tz.TZDateTime(
         tz.local, time.year, time.month, time.day, time.hour, time.minute);
 
-    await localNotifications.zonedSchedule(ID_LDT_REMINDER, "LDT Erinnerung",
-        "LDT Erinnerung", scheduledDate, notificationDetails,
+    await localNotifications.zonedSchedule(ID_LDT_REMINDER,
+        "Die Wortaufgabe steht an", "", scheduledDate, notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         payload: PAYLOAD_LDT_REMINDER,
+        androidAllowWhileIdle: true);
+  }
+
+  scheduleFinalTaskReminder(DateTime dateTime) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        CHANNEL_ID_FINAL_REMINDER,
+        CHANNEL_NAME_FINAL_REMINDER,
+        CHANNEL_DESCRIPTION_FINAL_REMINDER,
+        ongoing: true);
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var notificationDetails = new NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    var scheduledDate = tz.TZDateTime(tz.local, dateTime.year, dateTime.month,
+        dateTime.day, dateTime.hour, dateTime.minute);
+
+    await localNotifications.zonedSchedule(
+        ID_FINAL_TASK_REMINDER,
+        "Erledige jetzt die Abschlussbefragung",
+        "",
+        scheduledDate,
+        notificationDetails,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: PAYLOAD_FINAL_REMINDER,
         androidAllowWhileIdle: true);
   }
 

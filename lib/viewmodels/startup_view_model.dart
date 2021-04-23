@@ -69,7 +69,7 @@ class StartupViewModel extends BaseViewModel {
 
     bool userInitialized = await locator<UserService>().initialize();
     addDebugText("User Initialized: $userInitialized");
-    bool signedIn = await locator<UserService>().isSignedIn();
+    bool signedIn = locator<UserService>().isSignedIn();
     if (!userInitialized || !signedIn) {
       return AppStartupMode.firstLaunch;
     }
