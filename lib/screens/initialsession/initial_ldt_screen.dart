@@ -90,6 +90,7 @@ class _InitialLdtScreenState extends State<InitialLdtScreen> {
         margin: UIHelper.getContainerMargin(),
         child: Column(
             children: [
+              UIHelper.verticalSpaceMedium(),
               currentPhaseWidget,
               OrientationBuilder(builder: (context, orientation) {
                 if (orientation == Orientation.portrait) {

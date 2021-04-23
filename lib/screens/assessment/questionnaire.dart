@@ -42,33 +42,37 @@ class _QuestionnaireState extends State<Questionnaire> {
     print(widget.assessment.title);
     if (widget.assessment == null)
       return Container(child: CircularProgressIndicator());
-    return ListView(
-      padding: EdgeInsets.only(top: 10, bottom: 10),
-      shrinkWrap: true,
-      children: <Widget>[
-        Visibility(
-          visible: widget.assessment.title.isNotEmpty,
-          child: Card(
-              child: Container(
-            padding: EdgeInsets.all(10),
-            child: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  widget.assessment.title,
-                  textAlign: TextAlign.center,
-                  style: (TextStyle(fontSize: 18)),
-                )),
-          )),
-        ),
-        for (var index = 0; index < widget.assessment.items.length; index++)
-          buildQuestionCard(widget.assessment.items[index], index),
-        UIHelper.verticalSpaceMedium(),
-        Visibility(
-          visible: !_isFilledOut(),
-          child: Text(
-              "Du hast noch nicht alle Fragen beantwortet. Sobald du für alle Fragen eine Auswahl getroffen hast, kannst du weiter zum nächsten Schritt"),
-        )
-      ],
+    return Scrollbar(
+      thickness: 8.0,
+      isAlwaysShown: true,
+      child: ListView(
+        padding: EdgeInsets.only(top: 10, bottom: 10),
+        shrinkWrap: true,
+        children: <Widget>[
+          Visibility(
+            visible: widget.assessment.title.isNotEmpty,
+            child: Card(
+                child: Container(
+              padding: EdgeInsets.all(10),
+              child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    widget.assessment.title,
+                    textAlign: TextAlign.center,
+                    style: (TextStyle(fontSize: 18)),
+                  )),
+            )),
+          ),
+          for (var index = 0; index < widget.assessment.items.length; index++)
+            buildQuestionCard(widget.assessment.items[index], index),
+          UIHelper.verticalSpaceMedium(),
+          Visibility(
+            visible: !_isFilledOut(),
+            child: Text(
+                "Du hast noch nicht alle Fragen beantwortet. Sobald du für alle Fragen eine Auswahl getroffen hast, kannst du weiter zum nächsten Schritt"),
+          )
+        ],
+      ),
     );
   }
 

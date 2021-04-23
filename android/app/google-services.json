@@ -30,6 +30,14 @@
             {
               "client_id": "118595731509-h5v2gplvmgc19487rbqsgdj39jfhgb8i.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "118595731509-ispnq112iijkln3r420de7poc95rg6gi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "guru.edutec.serene",
+                "app_store_id": "1557435844"
+              }
             }
           ]
         }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prompt/shared/ui_helpers.dart';
 import 'package:provider/provider.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/viewmodels/login_view_model.dart';
@@ -181,23 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
         height: MediaQuery.of(context).size.height,
         child: ListView(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(top: 150.0, bottom: 50.0),
-              child: Center(
-                child: new Column(
-                  children: <Widget>[
-                    buildCircleAvatar(),
-                    new Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: new Text(
-                        "PROMPT",
-                        style: TextStyle(color: this.widget.foregroundColor),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            UIHelper.verticalSpaceLarge(),
             buildUserIdField(context),
             // buildPasswordInput(context),
             new Container(
