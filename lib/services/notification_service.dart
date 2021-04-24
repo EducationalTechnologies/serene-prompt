@@ -83,7 +83,18 @@ class NotificationService {
     var pendingNotifications = await getPendingNotifications();
     var taskReminderExists = pendingNotifications
         .firstWhere((n) => n.id == ID_TASK_REMINDER, orElse: () => null);
-    if (taskReminderExists == null) {}
+    if (taskReminderExists == null) {
+      localNotifications.cancel(ID_TASK_REMINDER);
+    }
+  }
+
+  deleteScheduledFinalReminderTask() async {
+    var pendingNotifications = await getPendingNotifications();
+    var taskReminderExists = pendingNotifications
+        .firstWhere((n) => n.id == ID_FINAL_TASK_REMINDER, orElse: () => null);
+    if (taskReminderExists == null) {
+      localNotifications.cancel(ID_FINAL_TASK_REMINDER);
+    }
   }
 
   Future<void> _configureLocalTimeZone() async {
@@ -209,6 +220,8 @@ class NotificationService {
   }
 
   scheduleFinalTaskReminder(DateTime dateTime) async {
+    await deleteScheduledFinalReminderTask();
+
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         CHANNEL_ID_FINAL_REMINDER,
         CHANNEL_NAME_FINAL_REMINDER,

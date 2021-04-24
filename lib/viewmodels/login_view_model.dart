@@ -1,6 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:prompt/locator.dart';
+import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/navigation_service.dart';
+import 'package:prompt/services/notification_service.dart';
 import 'package:prompt/services/reward_service.dart';
 import 'package:prompt/services/user_service.dart';
 import 'package:prompt/shared/enums.dart';
@@ -52,6 +54,9 @@ class LoginViewModel extends BaseViewModel {
     setState(ViewState.busy);
     var signin = await _userService.signInUser(email, password);
     await locator<RewardService>().initialize();
+    var dayAfterFinal = ExperimentService.FINAL_DATE.add(Duration(days: 1));
+    await locator<NotificationService>()
+        .scheduleFinalTaskReminder(dayAfterFinal);
     setState(ViewState.idle);
     return signin;
   }
@@ -67,7 +72,6 @@ class LoginViewModel extends BaseViewModel {
     if (userHasCreatedSession0) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);
     } else {
-      // TODO: Incorporate completed steps
       _navigationService.navigateTo(RouteNames.INIT_START);
     }
   }
