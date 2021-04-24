@@ -2,6 +2,7 @@ class AssessmentResult {
   Map<String, String> results;
   String assessmentType = "";
   DateTime submissionDate = DateTime.now();
+  DateTime startDate = DateTime.now();
 
   AssessmentResult(this.results, this.assessmentType, this.submissionDate);
 
@@ -9,7 +10,8 @@ class AssessmentResult {
     return {
       "results": this.results,
       "assessmentType": this.assessmentType,
-      "submissionDate": this.submissionDate.toIso8601String()
+      "submissionDate": this.submissionDate.toIso8601String(),
+      "startDate": this.startDate.toIso8601String()
     };
   }
 

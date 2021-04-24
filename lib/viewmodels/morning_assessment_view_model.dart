@@ -61,6 +61,7 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
       results.addAll(result);
     }
     var oneBigAssessment = AssessmentResult(results, type, date);
+    oneBigAssessment.startDate = this.startDate;
 
     _dataService.saveAssessment(oneBigAssessment);
     _experimentService.nextScreen(RouteNames.AMBULATORY_ASSESSMENT_MORNING);

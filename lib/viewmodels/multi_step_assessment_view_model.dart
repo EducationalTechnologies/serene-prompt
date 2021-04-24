@@ -6,6 +6,7 @@ import 'package:prompt/viewmodels/base_view_model.dart';
 abstract class MultiStepAssessmentViewModel extends BaseViewModel {
   int step = 0;
   Assessment lastAssessment = Assessment();
+  DateTime startDate = DateTime.now();
 
   String nextButtonText = "Weiter";
 
