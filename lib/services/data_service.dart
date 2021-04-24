@@ -122,7 +122,6 @@ class DataService {
   }
 
   Future<int> getNumberOfCompletedInternalisations() async {
-    // TODO use cached value
     var all = await getLastInternalisations(ExperimentService.STUDY_DURATION);
     if (all == null) return 0;
     return all.length;

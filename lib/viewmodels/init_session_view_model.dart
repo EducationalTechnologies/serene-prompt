@@ -20,11 +20,6 @@ enum STEP {
   stepCabuuLink,
   stepQuestionsItLiteracy,
   stepQuestionsCabuuLearn,
-  stepVideoLdtInstruction,
-  ldt00,
-  stepLdt01,
-  stepLdt02,
-  stepLdt03,
   stepRewardFirst,
   stepVideoLearning,
   stepInitialDailyLearningGoal,
@@ -41,9 +36,9 @@ enum STEP {
   stepObstacleSortingScreen,
   stepObstacleDisplayScreen,
   stepQuestionsSrl,
-  readyForNextLdtRound,
-  stepLdt04,
-  stepLdt05,
+  stepVideoLdtInstruction,
+  ldt00,
+  ldt01,
   stepRewardSecond,
   stepQuestionsLearningGoals2,
   stepVideoFinish,
@@ -235,11 +230,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       return _videoFinishCompleted;
     }
     if (currentPageKey == ValueKey(STEP.ldt00) ||
-        currentPageKey == ValueKey(STEP.stepLdt01) ||
-        currentPageKey == ValueKey(STEP.stepLdt02) ||
-        currentPageKey == ValueKey(STEP.stepLdt03) ||
-        currentPageKey == ValueKey(STEP.stepLdt04) ||
-        currentPageKey == ValueKey(STEP.stepLdt05)) {
+        currentPageKey == ValueKey(STEP.ldt01)) {
       if (ldtvm != null) {
         return ldtvm.done;
       } else {
@@ -251,6 +242,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
         currentPageKey == ValueKey(STEP.stepQuestionsRegulation) ||
         currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals1) ||
         currentPageKey == ValueKey(STEP.stepQuestionsSrl) ||
+        currentPageKey == ValueKey(STEP.stepQuestionsItLiteracy) ||
         currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals2)) {
       print("Last assessment: ${lastAssessment.id}");
       return isAssessmentFilledOut(lastAssessment);
@@ -357,17 +349,13 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     }
 
     if (currentPageKey == ValueKey(STEP.ldt00) ||
-        currentPageKey == ValueKey(STEP.stepLdt01) ||
-        currentPageKey == ValueKey(STEP.stepLdt02) ||
-        currentPageKey == ValueKey(STEP.stepLdt03) ||
-        currentPageKey == ValueKey(STEP.stepLdt04) ||
-        currentPageKey == ValueKey(STEP.stepLdt05)) {
+        currentPageKey == ValueKey(STEP.ldt01)) {
       _dataService.saveLdtData(ldtvm.ldt);
       ldtvm = null;
     }
     // Give rewards after the two long LDTs
-    if (currentPageKey == ValueKey(STEP.stepLdt03) ||
-        currentPageKey == ValueKey(STEP.stepLdt05)) {
+    if (currentPageKey == ValueKey(STEP.stepQuestionsSrl) ||
+        currentPageKey == ValueKey(STEP.ldt01)) {
       _rewardService.onLdtInitialLongLdtFinished();
     }
 
@@ -380,12 +368,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     }
 
     // the pages AFTER which the button should be changed to START
-    if (currentPageKey == ValueKey(STEP.stepQuestionsRegulation) ||
-        currentPageKey == ValueKey(STEP.stepVideoLdtInstruction) ||
-        currentPageKey == ValueKey(STEP.ldt00) ||
-        currentPageKey == ValueKey(STEP.stepLdt01) ||
-        currentPageKey == ValueKey(STEP.stepObstacleDisplayScreen) ||
-        currentPageKey == ValueKey(STEP.readyForNextLdtRound)) {
+    if (currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals2) ||
+        currentPageKey == ValueKey(STEP.stepVideoLdtInstruction)) {
       nextButtonText = "Start";
     }
 
@@ -431,21 +415,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       }
       return "Gut gemacht! Zur Sicherheit üben wir das noch einmal.";
     }
-    if (keyValue == STEP.stepLdt01) {
-      return "Gut gemacht! Als nächstes kommt der erste richtige Durchlauf.";
-    }
-
-    if (keyValue == STEP.stepLdt02) {
-      return "Sehr gut gemacht! Das war der erste richtige Durchlauf. Mach dich bereit für den nächsten.";
-    }
-    if (keyValue == STEP.stepLdt03) {
-      return "Super! Jetzt kommen erst einmal ein paar andere Fragen, und dann wird die Wortaufgabe später noch mal drankommen.";
-    }
-    if (keyValue == STEP.stepLdt04) {
-      return "Hervorragend! Einmal musst du die Wortaufgabe noch erledigen.";
-    }
-    if (keyValue == STEP.stepLdt05) {
-      return "Fantastisch! Das war jetzt erstmal die letzte Wortaufgabe für ein paar Tage. Wenn in ein paar Tagen dann die nächste kommt, wird die auch viel kürzer sein.";
+    if (keyValue == STEP.ldt01) {
+      return "Gut gemacht!";
     }
     return "";
   }

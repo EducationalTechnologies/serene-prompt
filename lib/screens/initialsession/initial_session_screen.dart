@@ -17,7 +17,6 @@ import 'package:prompt/screens/initialsession/obstacle_sorting_screen.dart';
 import 'package:prompt/screens/initialsession/outcome_enter_screen.dart';
 import 'package:prompt/screens/initialsession/outcome_selection_screen.dart';
 import 'package:prompt/screens/initialsession/outcome_sorting_screen.dart';
-import 'package:prompt/screens/initialsession/text_explanation_screen.dart';
 import 'package:prompt/screens/initialsession/video_screen.dart';
 import 'package:prompt/screens/initialsession/welcome_screen.dart';
 import 'package:prompt/screens/initialsession/cabuu_link_screen.dart';
@@ -61,14 +60,6 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
           AssessmentTypes.cabuuLearn, ValueKey(STEP.stepQuestionsCabuuLearn)),
       questionnaireFuture(
           AssessmentTypes.regulation, ValueKey(STEP.stepQuestionsRegulation)),
-      VideoScreen('assets/videos/videoLdt.mp4',
-          key: ValueKey(STEP.stepVideoLdtInstruction),
-          onVideoCompleted: vm.videoLdtCompleted),
-      InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(STEP.ldt00)),
-      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.stepLdt01)),
-      InitialLdtScreen("0_2", _onLdtFinished, key: ValueKey(STEP.stepLdt02)),
-      InitialLdtScreen("0_3", _onLdtFinished, key: ValueKey(STEP.stepLdt03)),
-      InitialRewardScreenFirst(key: ValueKey(STEP.stepRewardFirst)),
       VideoScreen('assets/videos/videoLearning.mp4',
           key: ValueKey(STEP.stepVideoLearning),
           onVideoCompleted: vm.videoLearningInstructionsCompleted), //
@@ -77,6 +68,7 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       questionnaireFuture(AssessmentTypes.learningGoals1,
           ValueKey(STEP.stepQuestionsLearningGoals1)),
       questionnaireFuture(AssessmentTypes.srl, ValueKey(STEP.stepQuestionsSrl)),
+      InitialRewardScreenFirst(key: ValueKey(STEP.stepRewardFirst)),
       InitialOutcomeExplanationScreen(
           key: ValueKey(STEP.stepOutcomeExplanationScreen)),
       OutcomeSelectionScreen(key: ValueKey(STEP.stepOutcomeSelectionScreen)),
@@ -90,14 +82,14 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       ObstacleSortingScreen(key: ValueKey(STEP.stepObstacleSortingScreen)),
       InitialObstacleDisplayScreen(
           key: ValueKey(STEP.stepObstacleDisplayScreen)), // Screen 16
-      TextExplanationScreen(
-          "So, jetzt kommt noch einmal die Wortaufgabe. Bist du bereit?",
-          key: ValueKey(STEP.readyForNextLdtRound)),
-      InitialLdtScreen("0_4", _onLdtFinished, key: ValueKey(STEP.stepLdt04)),
-      InitialLdtScreen("0_5", _onLdtFinished, key: ValueKey(STEP.stepLdt05)),
-      InitialRewardScreenSecond(key: ValueKey(STEP.stepRewardSecond)),
       questionnaireFuture(AssessmentTypes.learningGoals2,
           ValueKey(STEP.stepQuestionsLearningGoals2)),
+      VideoScreen('assets/videos/videoLdt.mp4',
+          key: ValueKey(STEP.stepVideoLdtInstruction),
+          onVideoCompleted: vm.videoLdtCompleted),
+      InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(STEP.ldt00)),
+      InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.ldt01)),
+      InitialRewardScreenSecond(key: ValueKey(STEP.stepRewardSecond)),
       VideoScreen('assets/videos/videoFinished.mp4',
           key: ValueKey(STEP.stepVideoFinish),
           onVideoCompleted: vm.videoFinishCompleted),

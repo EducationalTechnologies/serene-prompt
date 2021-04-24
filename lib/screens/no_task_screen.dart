@@ -179,12 +179,6 @@ class _NoTasksScreenState extends State<NoTasksScreen> {
     return true;
   }
 
-  _getNextTimeTodayString(DateTime nextTime) {
-    var nextTimeString = DateFormat("HH:mm").format(nextTime);
-    // ignore: unnecessary_brace_in_string_interps
-    return "Überprüfe ab ${nextTimeString} Uhr, wie gut du dich an deinen Plan erinnern kannst.";
-  }
-
   _setIsFinalTask() {
     _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_FINISH;
     _showNextButton = true;

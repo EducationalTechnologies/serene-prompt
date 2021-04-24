@@ -190,8 +190,6 @@ class ExperimentService {
     return true;
   }
 
-  Future<bool> hasCompletedFinalAssessment() async {}
-
   Future<int> getNumberOfCompletedInternalisations() async {
     return await _dataService.getNumberOfCompletedInternalisations();
   }
@@ -307,5 +305,9 @@ class ExperimentService {
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_FINISH) {
       _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_FINAL);
     }
+  }
+
+  onFinalTaskCompleted() async {
+    await _notificationService.deleteScheduledFinalReminderTask();
   }
 }

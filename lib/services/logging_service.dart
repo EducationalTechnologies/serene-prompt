@@ -18,7 +18,6 @@ class LoggingService {
       "name": eventName,
       "data": data
     };
-    // TODO: Submit logs batched in the no task screen
     logs.add(event);
     _dataService.logData(event);
   }
@@ -31,7 +30,6 @@ class LoggingService {
       "name": eventName,
       "data": data
     };
-    // TODO: Submit logs batched in the no task screen
     logs.add(event);
     _dataService.logData(event);
   }
