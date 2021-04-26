@@ -31,7 +31,7 @@ class RewardService {
         "Flugzeug", "assets/illustrations/mascot_plane_2.png", 0,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
-    UnlockableBackground("Ozean", "assets/illustrations/mascot_space_2.png", 1,
+    UnlockableBackground("Ozean", "assets/illustrations/mascot_space_1.png", 1,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
     UnlockableBackground(
