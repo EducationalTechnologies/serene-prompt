@@ -177,16 +177,19 @@ class ExperimentService {
       return false;
     }
 
+    // TODO: This one has to be checked urgently
     DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
 
+    // Last three conditions were the same, it is 6 hours after the last, and there was no prior one
     if (lastLdtDate == null) {
       return true;
     }
 
+    // Last three conditions were the same, it is 6 hours after the last, but there was already an LDT after the last internalisation
     if (lastLdtDate.isAfter(lastInternalisation.completionDate)) {
       return false;
     }
-
+    // Last three conditions were the same, it is 6 hours after the alst, and no ldt afterwards
     return true;
   }
 
@@ -216,20 +219,13 @@ class ExperimentService {
     _notificationService.scheduleInternalisationReminder(new Time(6, 30, 0));
   }
 
-  Future<bool> _shouldIncrementStreakDay() async {
-    var lastRecall = await _dataService.getLastRecallTask();
-    if (lastRecall == null) {
-      var userData = await _dataService.getUserData();
-      return userData.registrationDate.isYesterday();
-    }
-
-    return lastRecall.completionDate.isYesterday();
-  }
-
   Future<void> submitRecallTask(RecallTask recallTask) async {
     if (await _shouldIncrementStreakDay()) {
-      _rewardService.addStreakDays(1);
+      await _rewardService.addStreakDays(1);
+    } else {
+      await _rewardService.clearStreakDays();
     }
+
     _rewardService.addDaysActive(1);
     _rewardService.onRecallTask();
 
@@ -242,6 +238,16 @@ class ExperimentService {
     }
 
     await _dataService.saveRecallTask(recallTask);
+  }
+
+  Future<bool> _shouldIncrementStreakDay() async {
+    var lastRecall = await _dataService.getLastRecallTask();
+    if (lastRecall == null) {
+      var userData = await _dataService.getUserData();
+      return userData.registrationDate.isYesterday();
+    }
+
+    return lastRecall.completionDate.isYesterday();
   }
 
   Future<void> submitAssessment(
@@ -274,17 +280,19 @@ class ExperimentService {
       return await _navigationService.navigateTo(RouteNames.INTERNALISATION);
     }
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_EVENING) {
-      if (await isTimeForLexicalDecisionTask()) {
-        _navigationService
-            .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
-      } else {
-        _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
-      }
+      return await _navigationService
+          .navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
+      // if (await isTimeForLexicalDecisionTask()) {
+      //   _navigationService
+      //       .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
+      // } else {
+      //   _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
+      // }
 
-      if (await isTimeForFinalTask()) {
-        this._rewardService.onFinalTask();
-        _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
-      }
+      // if (await isTimeForFinalTask()) {
+      //   this._rewardService.onFinalTask();
+      //   _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
+      // }
     }
     if (currentScreen == RouteNames.INIT_START) {
       return await _navigationService

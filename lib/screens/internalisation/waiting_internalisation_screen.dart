@@ -71,7 +71,7 @@ class _WaitingInternalisationScreenState
         children: <Widget>[
           InfoBubble(
               text:
-                  "Lies den folgenden Text drei mal, und drücke dann auf Abschicken"),
+                  "Lies den folgenden Text dreimal, und drücke dann auf Abschicken"),
           UIHelper.verticalSpaceMedium(),
           SpeechBubble(text: vm.plan),
           UIHelper.verticalSpaceMedium(),

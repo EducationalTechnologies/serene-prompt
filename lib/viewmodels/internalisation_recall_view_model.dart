@@ -11,12 +11,12 @@ class InternalisationRecallViewModel extends BaseViewModel {
     _recallTask.startDate = DateTime.now();
   }
 
-  submit(String text) {
+  submit(String text) async {
     if (state == ViewState.busy) return false;
     setState(ViewState.busy);
     _recallTask.completionDate = DateTime.now();
     _recallTask.recall = text;
-    _experimentService.submitRecallTask(_recallTask);
+    await _experimentService.submitRecallTask(_recallTask);
     _experimentService.nextScreen(RouteNames.RECALL_TASK);
   }
 }
