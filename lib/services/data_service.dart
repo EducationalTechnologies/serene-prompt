@@ -37,6 +37,7 @@ class DataService {
 
   UserData _userDataCache;
   RecallTask _lastRecallTask;
+  LdtData _lastLdt;
 
   DataService(
       this._databaseService, this._userService, this._localDatabaseService);
@@ -202,6 +203,7 @@ class DataService {
   }
 
   saveLdtData(LdtData ldtData) async {
+    _lastLdt = ldtData;
     await _databaseService.saveLdt(_userService.getUsername(), ldtData);
   }
 

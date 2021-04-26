@@ -52,6 +52,13 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
         child: Text("Aktivieren"),
       );
     } else {
+      String text = "";
+      var daysToUnlock = unlockable.requiredDays - daysActive;
+      if (daysToUnlock == 1) {
+        text = "Noch $daysToUnlock Tag alle Aufgaben erledigen";
+      } else {
+        text = "Noch $daysToUnlock Tage alle Aufgaben erledigen";
+      }
       unlockButton = ElevatedButton(
         style: ElevatedButton.styleFrom(primary: Colors.grey),
         onPressed: () {
@@ -59,8 +66,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
             // rewardService.setBackgroundImagePath(path);
           });
         },
-        child: Text(
-            "Noch ${unlockable.requiredDays - daysActive} Tage alle Aufgaben erledigen"),
+        child: Text(text),
       );
     }
 
