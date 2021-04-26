@@ -57,7 +57,7 @@ class _NoTasksScreenState extends State<NoTasksScreen>
   }
 
   updateRegularly() {
-    updateRegularlyTimer = Timer(Duration(seconds: 30), () {
+    updateRegularlyTimer = Timer(Duration(minutes: 5), () {
       setState(() {
         getNextText();
       });
