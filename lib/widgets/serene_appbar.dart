@@ -7,8 +7,10 @@ import 'package:prompt/screens/info_screen.dart';
 
 class SereneAppBar extends StatefulWidget with PreferredSizeWidget {
   final String title;
+  final bool showBackButton;
 
-  const SereneAppBar({Key key, this.title = ""}) : super(key: key);
+  const SereneAppBar({Key key, this.title = "", this.showBackButton = false})
+      : super(key: key);
 
   @override
   _SereneAppBarState createState() => _SereneAppBarState();
@@ -38,8 +40,16 @@ class _SereneAppBarState extends State<SereneAppBar> {
     var rewardService = locator.get<RewardService>();
     return AppBar(
       backgroundColor: Colors.transparent,
+      automaticallyImplyLeading: widget.showBackButton,
       elevation: 0,
       actions: [
+        // IconButton(
+        //     icon: Icon(Icons.info_outline),
+        //     onPressed: () async {
+        //       await Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => InfoScreen()));
+        //       setState(() {});
+        //     }),
         TextButton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +68,7 @@ class _SereneAppBarState extends State<SereneAppBar> {
                   MaterialPageRoute(builder: (context) => InfoScreen()));
               setState(() {});
             }),
-        UIHelper.horizontalSpaceMedium(),
+        UIHelper.horizontalSpaceSmall(),
         StreamBuilder(
             stream: rewardService.controller.stream,
             builder: (context, snapshot) {
@@ -78,9 +88,9 @@ class _SereneAppBarState extends State<SereneAppBar> {
               }
               return Text("${rewardService.scoreValue}💎",
                   style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.yellow[800]));
+                      color: Colors.black));
             }),
         UIHelper.horizontalSpaceMedium()
       ],

@@ -22,7 +22,10 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
     }
 
     return Scaffold(
-      appBar: SereneAppBar(title: "Wähle einen neuen Hintergrud"),
+      appBar: SereneAppBar(
+        title: "Wähle einen neuen Hintergrud",
+        showBackButton: true,
+      ),
       body: Container(
           child: Timeline(
               indicatorColor: Theme.of(context).primaryColor,

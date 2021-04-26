@@ -16,33 +16,33 @@ import 'dart:convert';
 import 'package:prompt/viewmodels/multi_step_assessment_view_model.dart';
 
 enum STEP {
-  stepWelcomeScreen,
-  stepVideoWelcome,
-  stepCabuuLink,
-  stepQuestionsItLiteracy,
-  stepQuestionsCabuuLearn,
-  stepRewardFirst,
-  stepVideoLearning,
-  stepInitialDailyLearningGoal,
-  stepQuestionsLearningGoals1,
-  stepQuestionsRegulation,
-  stepOutcomeExplanationScreen,
-  stepOutcomeSelectionScreen,
-  stepOutcomeEnterScreen,
-  stepOutcomeSortingScreen,
-  stepOutcomeDisplayScreen,
-  stepObstacleExplanationScreen,
-  stepObstacleSelectionScreen,
-  stepObstacleEnterScreen,
-  stepObstacleSortingScreen,
-  stepObstacleDisplayScreen,
-  stepQuestionsSrl,
-  stepQuestionsLearningGoals2,
-  stepVideoLdtInstruction,
+  welcomeScreen,
+  videoWelcome,
+  cabuuLink,
+  questionsItLiteracy,
+  questionsCabuuLearn,
+  rewardFirst,
+  videoLearning,
+  initialDailyLearningGoal,
+  questionsLearningGoals1,
+  questionsRegulation,
+  outcomeExplanationScreen,
+  outcomeSelectionScreen,
+  outcomeEnterScreen,
+  outcomeSortingScreen,
+  outcomeDisplayScreen,
+  obstacleExplanationScreen,
+  obstacleSelectionScreen,
+  obstacleEnterScreen,
+  obstacleSortingScreen,
+  obstacleDisplayScreen,
+  questionsLearningGoals2,
+  videoLdtInstruction,
   ldt00,
   ldt01,
-  stepRewardSecond,
-  stepVideoFinish,
+  rewardSecond,
+  questionsSrl,
+  videoFinish,
 }
 
 class InitSessionViewModel extends MultiStepAssessmentViewModel {
@@ -218,16 +218,16 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
 
   @override
   bool canMoveNext(Key currentPageKey) {
-    if (currentPageKey == ValueKey(STEP.stepVideoWelcome)) {
+    if (currentPageKey == ValueKey(STEP.videoWelcome)) {
       return _videoWelcomeCompleted;
     }
-    if (currentPageKey == ValueKey(STEP.stepVideoLdtInstruction)) {
+    if (currentPageKey == ValueKey(STEP.videoLdtInstruction)) {
       return _videoLdtCompleted;
     }
-    if (currentPageKey == ValueKey(STEP.stepVideoLearning)) {
+    if (currentPageKey == ValueKey(STEP.videoLearning)) {
       return _videoLearningInstructionsCompleted;
     }
-    if (currentPageKey == ValueKey(STEP.stepVideoFinish)) {
+    if (currentPageKey == ValueKey(STEP.videoFinish)) {
       return _videoFinishCompleted;
     }
     if (currentPageKey == ValueKey(STEP.ldt00) ||
@@ -239,32 +239,32 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       }
     }
 
-    if (currentPageKey == ValueKey(STEP.stepQuestionsCabuuLearn) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsRegulation) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals1) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsSrl) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsItLiteracy) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals2)) {
+    if (currentPageKey == ValueKey(STEP.questionsCabuuLearn) ||
+        currentPageKey == ValueKey(STEP.questionsRegulation) ||
+        currentPageKey == ValueKey(STEP.questionsLearningGoals1) ||
+        currentPageKey == ValueKey(STEP.questionsSrl) ||
+        currentPageKey == ValueKey(STEP.questionsItLiteracy) ||
+        currentPageKey == ValueKey(STEP.questionsLearningGoals2)) {
       print("Last assessment: ${lastAssessment.id}");
       return isAssessmentFilledOut(lastAssessment);
     }
 
-    if (currentPageKey == ValueKey(STEP.stepOutcomeSelectionScreen)) {
+    if (currentPageKey == ValueKey(STEP.outcomeSelectionScreen)) {
       return selectedOutcomes.length > 0;
     }
-    if (currentPageKey == ValueKey(STEP.stepObstacleSelectionScreen)) {
+    if (currentPageKey == ValueKey(STEP.obstacleSelectionScreen)) {
       return selectedObstacles.length > 0;
     }
-    if (currentPageKey == ValueKey(STEP.stepCabuuLink)) {
+    if (currentPageKey == ValueKey(STEP.cabuuLink)) {
       var isEmail = EmailValidator.validate(cabuuLinkEmail);
       return consented &&
           (cabuuLinkUserName.isNotEmpty || cabuuLinkEmail.isNotEmpty) &&
           isEmail;
     }
-    if (currentPageKey == ValueKey(STEP.stepInitialDailyLearningGoal)) {
+    if (currentPageKey == ValueKey(STEP.initialDailyLearningGoal)) {
       return numberOfDaysLearningGoal.isNotEmpty;
     }
-    if (currentPageKey == ValueKey(STEP.stepObstacleDisplayScreen)) {
+    if (currentPageKey == ValueKey(STEP.obstacleDisplayScreen)) {
       return overcomeObstacleText.isNotEmpty;
     }
 
@@ -318,24 +318,24 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
 
     nextButtonText = "Weiter";
 
-    if (currentPageKey == ValueKey(STEP.stepObstacleSortingScreen)) {
+    if (currentPageKey == ValueKey(STEP.obstacleSortingScreen)) {
       _dataService.saveObstacles(selectedObstacles);
     }
-    if (currentPageKey == ValueKey(STEP.stepOutcomeSortingScreen)) {
+    if (currentPageKey == ValueKey(STEP.outcomeSortingScreen)) {
       _dataService.saveOutcomes(selectedOutcomes);
     }
-    if (currentPageKey == ValueKey(STEP.stepQuestionsCabuuLearn) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsItLiteracy) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsRegulation) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals1) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsSrl) ||
-        currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals2)) {
+    if (currentPageKey == ValueKey(STEP.questionsCabuuLearn) ||
+        currentPageKey == ValueKey(STEP.questionsItLiteracy) ||
+        currentPageKey == ValueKey(STEP.questionsRegulation) ||
+        currentPageKey == ValueKey(STEP.questionsLearningGoals1) ||
+        currentPageKey == ValueKey(STEP.questionsSrl) ||
+        currentPageKey == ValueKey(STEP.questionsLearningGoals2)) {
       var result = AssessmentResult(
           currentAssessmentResults, lastAssessment.id, DateTime.now());
       _dataService.saveAssessment(result);
     }
 
-    if (currentPageKey == ValueKey(STEP.stepInitialDailyLearningGoal)) {
+    if (currentPageKey == ValueKey(STEP.initialDailyLearningGoal)) {
       var result = AssessmentResult(
           {"initialDailyLearningGoal": numberOfDaysLearningGoal},
           "initialDailyLearningGoal",
@@ -343,7 +343,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       _dataService.saveAssessment(result);
     }
 
-    if (currentPageKey == ValueKey(STEP.stepObstacleDisplayScreen)) {
+    if (currentPageKey == ValueKey(STEP.obstacleDisplayScreen)) {
       var result = AssessmentResult(
           {"overcomeObstaclePlan": overcomeObstacleText},
           "initialOvercomeObstaclePlan",
@@ -357,12 +357,12 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       ldtvm = null;
     }
     // Give rewards after the two long LDTs
-    if (currentPageKey == ValueKey(STEP.stepQuestionsSrl) ||
+    if (currentPageKey == ValueKey(STEP.questionsSrl) ||
         currentPageKey == ValueKey(STEP.ldt01)) {
       _rewardService.onLdtInitialLongLdtFinished();
     }
 
-    if (currentPageKey == ValueKey(STEP.stepCabuuLink)) {
+    if (currentPageKey == ValueKey(STEP.cabuuLink)) {
       var hashedUsername =
           md5.convert(utf8.encode(_cabuuLinkUserName)).toString();
       _dataService.saveInitialSessionValue("cabuuUsername", hashedUsername);
@@ -371,8 +371,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
     }
 
     // the pages AFTER which the button should be changed to START
-    if (currentPageKey == ValueKey(STEP.stepQuestionsLearningGoals2) ||
-        currentPageKey == ValueKey(STEP.stepVideoLdtInstruction)) {
+    if (currentPageKey == ValueKey(STEP.questionsLearningGoals2) ||
+        currentPageKey == ValueKey(STEP.videoLdtInstruction)) {
       nextButtonText = "Start";
     }
 

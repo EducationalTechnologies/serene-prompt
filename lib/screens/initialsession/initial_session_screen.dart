@@ -47,56 +47,56 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
     var vm = Provider.of<InitSessionViewModel>(context, listen: false);
 
     _pages = [
-      WelcomeScreen(key: ValueKey(STEP.stepWelcomeScreen)),
+      WelcomeScreen(key: ValueKey(STEP.welcomeScreen)),
       VideoScreen(
         'assets/videos/videoWelcome.mp4',
-        key: ValueKey(STEP.stepVideoWelcome),
+        key: ValueKey(STEP.videoWelcome),
         onVideoCompleted: vm.videoWelcomeCompleted,
       ), // Screen 2
-      CabuuLinkScreen(key: ValueKey(STEP.stepCabuuLink)), // Screen 3
-      questionnaireFuture(
-          AssessmentTypes.itLiteracy, ValueKey(STEP.stepQuestionsItLiteracy)),
-      questionnaireFuture(
-          AssessmentTypes.cabuuLearn, ValueKey(STEP.stepQuestionsCabuuLearn)),
-      questionnaireFuture(
-          AssessmentTypes.regulation, ValueKey(STEP.stepQuestionsRegulation)),
+      CabuuLinkScreen(key: ValueKey(STEP.cabuuLink)), // Screen 3
+      questionnaire(
+          AssessmentTypes.itLiteracy, ValueKey(STEP.questionsItLiteracy)),
+      questionnaire(
+          AssessmentTypes.cabuuLearn, ValueKey(STEP.questionsCabuuLearn)),
+      questionnaire(
+          AssessmentTypes.regulation, ValueKey(STEP.questionsRegulation)),
       VideoScreen('assets/videos/videoLearning.mp4',
-          key: ValueKey(STEP.stepVideoLearning),
+          key: ValueKey(STEP.videoLearning),
           onVideoCompleted: vm.videoLearningInstructionsCompleted), //
       InitialDailyLearningGoalScreen(
-          key: ValueKey(STEP.stepInitialDailyLearningGoal)),
-      questionnaireFuture(AssessmentTypes.learningGoals1,
-          ValueKey(STEP.stepQuestionsLearningGoals1)),
-      questionnaireFuture(AssessmentTypes.srl, ValueKey(STEP.stepQuestionsSrl)),
-      InitialRewardScreenFirst(key: ValueKey(STEP.stepRewardFirst)),
+          key: ValueKey(STEP.initialDailyLearningGoal)),
+      questionnaire(AssessmentTypes.learningGoals1,
+          ValueKey(STEP.questionsLearningGoals1)),
+      InitialRewardScreenFirst(key: ValueKey(STEP.rewardFirst)),
       InitialOutcomeExplanationScreen(
-          key: ValueKey(STEP.stepOutcomeExplanationScreen)),
-      OutcomeSelectionScreen(key: ValueKey(STEP.stepOutcomeSelectionScreen)),
-      OutcomeEnterScreen(key: ValueKey(STEP.stepOutcomeEnterScreen)),
-      OutcomeSortingScreen(key: ValueKey(STEP.stepOutcomeSortingScreen)),
-      InitialOutcomeDisplayScreen(key: ValueKey(STEP.stepOutcomeDisplayScreen)),
+          key: ValueKey(STEP.outcomeExplanationScreen)),
+      OutcomeSelectionScreen(key: ValueKey(STEP.outcomeSelectionScreen)),
+      OutcomeEnterScreen(key: ValueKey(STEP.outcomeEnterScreen)),
+      OutcomeSortingScreen(key: ValueKey(STEP.outcomeSortingScreen)),
+      InitialOutcomeDisplayScreen(key: ValueKey(STEP.outcomeDisplayScreen)),
       InitialObstacleExplanationScreen(
-          key: ValueKey(STEP.stepObstacleExplanationScreen)),
-      ObstacleSelectionScreen(key: ValueKey(STEP.stepObstacleSelectionScreen)),
-      ObstacleEnterScreen(key: ValueKey(STEP.stepObstacleEnterScreen)),
-      ObstacleSortingScreen(key: ValueKey(STEP.stepObstacleSortingScreen)),
+          key: ValueKey(STEP.obstacleExplanationScreen)),
+      ObstacleSelectionScreen(key: ValueKey(STEP.obstacleSelectionScreen)),
+      ObstacleEnterScreen(key: ValueKey(STEP.obstacleEnterScreen)),
+      ObstacleSortingScreen(key: ValueKey(STEP.obstacleSortingScreen)),
       InitialObstacleDisplayScreen(
-          key: ValueKey(STEP.stepObstacleDisplayScreen)), // Screen 16
-      questionnaireFuture(AssessmentTypes.learningGoals2,
-          ValueKey(STEP.stepQuestionsLearningGoals2)),
+          key: ValueKey(STEP.obstacleDisplayScreen)), // Screen 16
+      questionnaire(AssessmentTypes.learningGoals2,
+          ValueKey(STEP.questionsLearningGoals2)),
       VideoScreen('assets/videos/videoLdt.mp4',
-          key: ValueKey(STEP.stepVideoLdtInstruction),
+          key: ValueKey(STEP.videoLdtInstruction),
           onVideoCompleted: vm.videoLdtCompleted),
       InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(STEP.ldt00)),
       InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.ldt01)),
-      InitialRewardScreenSecond(key: ValueKey(STEP.stepRewardSecond)),
+      InitialRewardScreenSecond(key: ValueKey(STEP.rewardSecond)),
       VideoScreen('assets/videos/videoFinished.mp4',
-          key: ValueKey(STEP.stepVideoFinish),
+          key: ValueKey(STEP.videoFinish),
           onVideoCompleted: vm.videoFinishCompleted),
+      questionnaire(AssessmentTypes.srl, ValueKey(STEP.questionsSrl)),
     ];
   }
 
-  questionnaireFuture(AssessmentTypes assessmentTypes, Key key) {
+  questionnaire(AssessmentTypes assessmentTypes, Key key) {
     var vm = Provider.of<InitSessionViewModel>(context);
     return FutureBuilder(
         key: key,
