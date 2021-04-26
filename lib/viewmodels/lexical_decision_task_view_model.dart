@@ -8,7 +8,7 @@ import 'package:prompt/viewmodels/base_view_model.dart';
 
 class LexicalDecisionTaskViewModel extends BaseViewModel {
   final int durationFixationCross = 1000;
-  final int durationPrime = 40;
+  final int durationPrime = 35;
   final int durationBackwardMask = 700;
   final int durationIntertrialScreen = 5000;
   List<int> phaseDurations;

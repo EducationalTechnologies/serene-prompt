@@ -86,6 +86,5 @@ class LoginViewModel extends BaseViewModel {
 
   validateUserId(String value) {
     return true;
-    // TODO: Create new validation function to check if user id is valid
   }
 }

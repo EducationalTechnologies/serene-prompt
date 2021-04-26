@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:prompt/locator.dart';
 import 'package:prompt/models/internalisation.dart';
-import 'package:prompt/models/recall_task.dart';
 import 'package:prompt/screens/rewards/reward_selection_screen.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
@@ -39,6 +40,8 @@ class _NoTasksScreenState extends State<NoTasksScreen>
 
   bool _showNextButton = false;
 
+  Timer updateRegularlyTimer;
+
   @override
   void initState() {
     super.initState();
@@ -49,12 +52,24 @@ class _NoTasksScreenState extends State<NoTasksScreen>
     });
 
     WidgetsBinding.instance.addObserver(this);
+
+    updateRegularly();
+  }
+
+  updateRegularly() {
+    updateRegularlyTimer = Timer(Duration(seconds: 30), () {
+      setState(() {
+        getNextText();
+      });
+      updateRegularly();
+    });
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+    updateRegularlyTimer.cancel();
   }
 
   @override
@@ -170,7 +185,7 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_USABILITY;
       _showNextButton = true;
       _textNextTask =
-          "Beantworte uns jetzt ein paar Fragen, und erledige dann die Wortaufgabe.";
+          "Beantworte ein paar Fragen zum Merken der Pläne, und erledige dann die Wortaufgabe.";
       return true;
     }
 
@@ -214,7 +229,7 @@ class _NoTasksScreenState extends State<NoTasksScreen>
     _showNextButton = true;
     _textNotification = "";
     _textNextTask = _textNextTask =
-        "Jetzt ist es Zeit für die Abschlussbefragung. Danach hast alle Aufgaben erledigt, und bist mit der gesamten Studie fertig.";
+        "Jetzt ist es Zeit für die Abschlussbefragung. Danach hast du alle Aufgaben erledigt, und bist mit der gesamten Studie fertig.";
   }
 
   _setNextRecallTimeToday(Internalisation lastInternalisation) {
@@ -255,7 +270,6 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       child: Container(
         decoration: BoxDecoration(
             gradient: rewardService.backgroundColor,
-            // color: Colors.black,
             image: DecorationImage(
                 image: AssetImage(rewardService.backgroundImagePath),
                 fit: BoxFit.contain,
@@ -263,7 +277,7 @@ class _NoTasksScreenState extends State<NoTasksScreen>
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: SereneAppBar(),
-          drawer: _getDrawer(),
+          // drawer: _getDrawer(),
           body: FutureBuilder(
               future: _nextTask,
               builder: (context, snapshot) {
@@ -273,26 +287,15 @@ class _NoTasksScreenState extends State<NoTasksScreen>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              // Text(_textNext,
-                              //     textAlign: TextAlign.center,
-                              //     style: Theme.of(context).textTheme.headline5),
-                              // UIHelper.verticalSpaceLarge(),
                               UIHelper.verticalSpaceMedium(),
                               Text(_textNotification,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.headline6),
-                              // UIHelper.verticalSpaceSmall(),
-                              // Text(_textStreakDays,
-                              //     textAlign: TextAlign.center,
-                              //     style: Theme.of(context).textTheme.headline6),
                               UIHelper.verticalSpaceMedium(),
                               Text(_textNextTask,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.headline6),
                               UIHelper.verticalSpaceMedium(),
-                              // Text("Du kriegst für deine Teilnahme 15💎.",
-                              //     textAlign: TextAlign.center,
-                              //     style: Theme.of(context).textTheme.headline5),
                               if (_showNextButton) _buildToRecallTaskButton(),
                               UIHelper.verticalSpaceMedium(),
                               _buildChangeBackgroundButton()
