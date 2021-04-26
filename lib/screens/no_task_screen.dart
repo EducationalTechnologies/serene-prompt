@@ -181,9 +181,7 @@ class _NoTasksScreenState extends State<NoTasksScreen>
     }
 
     if (widget.previousRoute == NoTaskSituation.afterFinal) {
-      _textNotification =
-          "Vielen Dank, dass du mitgemacht hast! Du bist mit allen Aufgaben fertig! 🎉🎉 Anfang Juli bekommst du von uns deinen Gutschein zugeschickt. Dann erfährst du auch, ob du bei der Verlosung gewonnen hast.";
-      _textNextTask = "";
+      _setIsStudyCompleted();
       return true;
     }
 
@@ -226,15 +224,28 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       }
     }
 
+    // the most unlikely request at the end in order to not do this request
+    if (await dataService.finalAssessmentCompleted()) {
+      _setIsStudyCompleted();
+      return true;
+    }
+
     _textNextTask = "Du hast für heute alle Aufgaben erledigt";
     return true;
+  }
+
+  _setIsStudyCompleted() {
+    _showNextButton = false;
+    _textNotification =
+        "Vielen Dank, dass du mitgemacht hast! Du bist mit allen Aufgaben fertig! 🎉🎉 Anfang Juli bekommst du von uns deinen Gutschein zugeschickt. Dann erfährst du auch, ob du bei der Verlosung gewonnen hast.";
+    _textNextTask = "";
   }
 
   _setIsFinalTask() {
     _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_FINISH;
     _showNextButton = true;
     _textNotification = "";
-    _textNextTask = _textNextTask =
+    _textNextTask =
         "Jetzt ist es Zeit für die Abschlussbefragung. Danach hast du alle Aufgaben erledigt, und bist mit der gesamten Studie fertig.";
   }
 

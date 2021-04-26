@@ -115,6 +115,9 @@ class NotificationService {
       if (payload == PAYLOAD_TASK_REMINDER) {
         locator.get<LoggingService>().logEvent("NotificationClickRecallTask");
       }
+      if (payload == PAYLOAD_FINAL_REMINDER) {
+        locator.get<LoggingService>().logEvent("NotificationClickFinalTask");
+      }
     }
   }
 
@@ -145,12 +148,11 @@ class NotificationService {
 
     locator.get<LoggingService>().logEvent("ScheduleNotificationTaskReminder");
 
-    await localNotifications.zonedSchedule(
-        ID_INTERNALISATION,
-        "Mache jetzt weiter mit PROMPT",
-        "",
-        _getNextScheduleTimeFromTime(time),
-        notificationDetails,
+    String title = "Mache jetzt weiter mit PROMPT!";
+    String body = "";
+
+    await localNotifications.zonedSchedule(ID_INTERNALISATION, title, body,
+        _getNextScheduleTimeFromTime(time), notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
@@ -180,17 +182,13 @@ class NotificationService {
     var scheduledDate = tz.TZDateTime(
         tz.local, time.year, time.month, time.day, time.hour, time.minute);
 
-    var textReminder =
-        "Überprüfe, wie gut du dich an deinen heutigen Plan erinnern kannst.";
+    String title = "Mache jetzt weiter mit PROMPT!";
+    String body = "";
 
     locator.get<LoggingService>().logEvent("ScheduleNotificationTaskReminder");
 
     await localNotifications.zonedSchedule(
-        ID_TASK_REMINDER,
-        "Mache jetzt weiter mit PROMPT",
-        textReminder,
-        scheduledDate,
-        notificationDetails,
+        ID_TASK_REMINDER, title, body, scheduledDate, notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         payload: PAYLOAD_TASK_REMINDER,
@@ -208,11 +206,14 @@ class NotificationService {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
+    String title = "Mache jetzt weiter mit PROMPT!";
+    String body = "";
+
     var scheduledDate = tz.TZDateTime(
         tz.local, time.year, time.month, time.day, time.hour, time.minute);
 
-    await localNotifications.zonedSchedule(ID_LDT_REMINDER,
-        "Die Wortaufgabe steht an", "", scheduledDate, notificationDetails,
+    await localNotifications.zonedSchedule(
+        ID_LDT_REMINDER, title, body, scheduledDate, notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         payload: PAYLOAD_LDT_REMINDER,
@@ -235,12 +236,12 @@ class NotificationService {
     var scheduledDate = tz.TZDateTime(tz.local, dateTime.year, dateTime.month,
         dateTime.day, dateTime.hour, dateTime.minute);
 
+    String title = "Wir haben noch ein paar Fragen an dich!";
+    String body =
+        "Nimm jetzt an der PROMPT-Abschlussbefragung teil und sichere dir die letzten 💎";
+
     await localNotifications.zonedSchedule(
-        ID_FINAL_TASK_REMINDER,
-        "Erledige jetzt die Abschlussbefragung",
-        "",
-        scheduledDate,
-        notificationDetails,
+        ID_FINAL_TASK_REMINDER, title, body, scheduledDate, notificationDetails,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         payload: PAYLOAD_FINAL_REMINDER,

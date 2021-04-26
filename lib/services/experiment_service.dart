@@ -283,15 +283,13 @@ class ExperimentService {
       if (await isTimeForLexicalDecisionTask()) {
         return await _navigationService
             .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
-      } else {
-        return await _navigationService
-            .navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
       }
-
       if (await isTimeForFinalTask()) {
         this._rewardService.onFinalTask();
         _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
       }
+      return await _navigationService
+          .navigateTo(RouteNames.NO_TASKS_AFTER_RECALL);
     }
     if (currentScreen == RouteNames.INIT_START) {
       return await _navigationService
