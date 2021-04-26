@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:prompt/locator.dart';
 import 'package:prompt/services/reward_service.dart';
 import 'package:prompt/shared/ui_helpers.dart';
+import 'package:prompt/screens/info_screen.dart';
 
 class SereneAppBar extends StatefulWidget with PreferredSizeWidget {
   final String title;
@@ -36,15 +37,6 @@ class _SereneAppBarState extends State<SereneAppBar> {
   AppBar build(BuildContext context) {
     var rewardService = locator.get<RewardService>();
     return AppBar(
-      // TODO: REMOVE SEMI_TRANSPARENT ICON BEFORE RELEASE
-      leading: Opacity(
-          opacity: 0.0,
-          child: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          )),
       backgroundColor: Colors.transparent,
       elevation: 0,
       actions: [
@@ -52,20 +44,18 @@ class _SereneAppBarState extends State<SereneAppBar> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Icon(Icons.brush),
-                // Text(
-                //   "Hintergrund ändern",
-                //   style: TextStyle(
-                //     color: Colors.black,
-                //     fontSize: 20,
-                //   ),
-                // )
+                Icon(Icons.info_outline),
+                Text(
+                  "Über PROMPT",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                )
               ],
             ),
             onPressed: () async {
-              // var rewardWidget = RewardSelectionScreen();
-              // await Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => rewardWidget));
+              await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => InfoScreen()));
               setState(() {});
             }),
         UIHelper.horizontalSpaceMedium(),
