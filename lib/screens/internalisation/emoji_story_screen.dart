@@ -22,6 +22,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
   bool _done = false;
   // String _emojiStoryIf = "";
   // String _emojiStoryThen = "";
+  String emojiInfo = "!INFO:";
 
   final TextEditingController _controllerLeft = TextEditingController();
   final TextEditingController _controllerRight = TextEditingController();
@@ -47,11 +48,11 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
             Expanded(
               child: ListView(
                 children: [
-                  UIHelper.verticalSpaceMedium(),
+                  UIHelper.verticalSpaceSmall(),
                   InfoBubble(
                       text:
                           "Erstelle aus Emojis eine Darstellung deines Planes"),
-                  UIHelper.verticalSpaceMedium(),
+                  UIHelper.verticalSpaceSmall(),
                   SpeechBubble(text: "'${vm.plan}'"),
                   UIHelper.verticalSpaceMedium(),
                   // buildEmojiFieldsHorizontal(),
@@ -83,7 +84,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                 child: Stack(children: [
                   TextField(
                     minLines: 1,
-                    maxLines: 2,
+                    maxLines: 3,
                     controller: _controllerLeft,
                     autofocus: true,
                     autocorrect: false,
@@ -132,7 +133,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                 child: Stack(children: [
                   TextField(
                     minLines: 1,
-                    maxLines: 2,
+                    maxLines: 3,
                     controller: _controllerRight,
                     autofocus: true,
                     autocorrect: false,
@@ -180,6 +181,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
       onEmojiSelected: (Emoji emoji) {
         setState(() {
           _activeController.text += emoji.text;
+          emojiInfo += "(${emoji.name})";
         });
         _checkIfIsDone();
       },
@@ -195,7 +197,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
           height: 40,
           onPressed: () async {
             await vm.submit(InternalisationCondition.emoji,
-                "Wenn ${_controllerLeft.text} dann ${_controllerRight.text}");
+                "Wenn ${_controllerLeft.text} dann ${_controllerRight.text}.$emojiInfo");
             Navigator.pushNamed(context, RouteNames.NO_TASKS);
           },
         ));
