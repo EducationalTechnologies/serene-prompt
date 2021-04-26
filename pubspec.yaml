@@ -11,7 +11,7 @@ description: Prompting Implementation Intentions
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.2.3+2
+version: 0.2.4+2
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -34,7 +34,7 @@ dependencies:
   flutter_local_notifications: ^5.0.0+1
   http: ^0.13.0
   get_it: ^6.0.0
-  email_validator: ^1.0.6
+  email_validator: ^2.0.1
   flutter_native_timezone: ^1.0.10
   google_fonts: ^2.0.0
   csv: ^5.0.0

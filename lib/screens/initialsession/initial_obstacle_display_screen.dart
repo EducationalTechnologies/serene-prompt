@@ -26,7 +26,7 @@ class InitialObstacleDisplayScreen extends StatelessWidget {
           UIHelper.verticalSpaceMedium(),
           MarkdownBody(
               data:
-                  "### Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Fasse diese Handlung oder den Gedanken in ein paar Stichworten zusammen. "),
+                  "### Was könntest du machen, um dieses Hindernis zu überwinden? Finde eine Handlung, die du ausführen kannst, oder einen Gedanken, den du denken kannst, um das Hindernis zu überwinden. Stelle dir dazu genau vor, wie du das Hindernis überwindest. Beschreibe kurz, was du dann tun könntest."),
           UIHelper.verticalSpaceMedium(),
           Theme(
             data: Theme.of(context).copyWith(splashColor: Colors.white),

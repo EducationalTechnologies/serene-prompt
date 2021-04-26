@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:prompt/models/assessment.dart';
 import 'package:prompt/models/assessment_result.dart';
@@ -255,8 +256,10 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       return selectedObstacles.length > 0;
     }
     if (currentPageKey == ValueKey(STEP.stepCabuuLink)) {
+      var isEmail = EmailValidator.validate(cabuuLinkEmail);
       return consented &&
-          (cabuuLinkUserName.isNotEmpty || cabuuLinkEmail.isNotEmpty);
+          (cabuuLinkUserName.isNotEmpty || cabuuLinkEmail.isNotEmpty) &&
+          isEmail;
     }
     if (currentPageKey == ValueKey(STEP.stepInitialDailyLearningGoal)) {
       return numberOfDaysLearningGoal.isNotEmpty;
