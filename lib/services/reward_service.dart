@@ -123,10 +123,10 @@ class RewardService {
   }
 
   Future initialize() async {
+    await getBackgroundImagePath();
     await retrieveScore();
     await getDaysActive();
     await getStreakDays();
-    await getBackgroundImagePath();
   }
 
   setBackgroundImagePath(String imagePath) async {
@@ -145,7 +145,7 @@ class RewardService {
   }
 
   onRecallTask() async {
-    int points = 10 + daysActive;
+    int points = 10 + streakDays;
     await addPoints(points);
   }
 
@@ -173,5 +173,10 @@ class RewardService {
   addStreakDays(int days) async {
     streakDays += days;
     await _dataService.setStreakDays(days);
+  }
+
+  clearStreakDays() async {
+    streakDays = 0;
+    await _dataService.setStreakDays(0);
   }
 }

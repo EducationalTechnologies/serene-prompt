@@ -36,11 +36,11 @@ enum STEP {
   stepObstacleSortingScreen,
   stepObstacleDisplayScreen,
   stepQuestionsSrl,
+  stepQuestionsLearningGoals2,
   stepVideoLdtInstruction,
   ldt00,
   ldt01,
   stepRewardSecond,
-  stepQuestionsLearningGoals2,
   stepVideoFinish,
 }
 
