@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prompt/locator.dart';
+import 'package:prompt/services/data_service.dart';
+import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/user_service.dart';
 import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/widgets/version_info.dart';
@@ -79,10 +81,12 @@ class SereneDrawer extends StatelessWidget {
           _buildDrawerItem(
               icon: Icons.filter_1,
               text: "LDT Test",
-              onTap: () {
+              onTap: () async {
+                var last = await locator<DataService>().getDateOfLastLDT();
+                print(last.toIso8601String());
                 // Navigator.pop(context);
                 //
-                Navigator.pushNamed(context, RouteNames.INIT_START);
+                // Navigator.pushNamed(context, RouteNames.INIT_START);
                 // var now = DateTime.now();
                 // var next = now.add(Duration(seconds: 100));
                 // locator<NotificationService>().scheduleRecallTaskReminder(next);

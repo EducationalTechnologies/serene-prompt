@@ -37,7 +37,7 @@ class DataService {
 
   UserData _userDataCache;
   RecallTask _lastRecallTask;
-  LdtData _lastLdt;
+  DateTime _lastLdtDate;
 
   DataService(
       this._databaseService, this._userService, this._localDatabaseService);
@@ -203,7 +203,7 @@ class DataService {
   }
 
   saveLdtData(LdtData ldtData) async {
-    _lastLdt = ldtData;
+    _lastLdtDate = ldtData.completionDate;
     await _databaseService.saveLdt(_userService.getUsername(), ldtData);
   }
 
@@ -251,8 +251,11 @@ class DataService {
   }
 
   Future<DateTime> getDateOfLastLDT() async {
-    return await _databaseService
-        .getLastLdtTaskDate(_userService.getUsername());
+    if (_lastLdtDate == null) {
+      _lastLdtDate =
+          await _databaseService.getLastLdtTaskDate(_userService.getUsername());
+    }
+    return _lastLdtDate;
   }
 
   getAssessment(String name) async {

@@ -171,6 +171,12 @@ class AppRouter {
                   previousRoute: NoTaskSituation.afterLdt,
                 ));
 
+      case RouteNames.NO_TASKS_AFTER_FINAL:
+        return MaterialPageRoute(
+            builder: (_) => NoTasksScreen(
+                  previousRoute: NoTaskSituation.afterFinal,
+                ));
+
       case RouteNames.NO_TASKS_AFTER_INITIALIZATION:
         return MaterialPageRoute(
             builder: (_) => NoTasksScreen(

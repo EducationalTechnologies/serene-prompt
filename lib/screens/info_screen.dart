@@ -4,7 +4,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 class InfoScreen extends StatelessWidget {
   const InfoScreen({Key key}) : super(key: key);
 
-  final String _headline1 = "# Was ist PROMPT?";
   final String _body1 =
       "PROMPT ist eine Studie des *DIPF | Leibniz-Institut für Bildungsforschung und Bildungsinformation*. Mit deiner Hilfe wollen wir herausfinden, wie wir Kinder am besten beim Lernen mit Apps - wie zum Beispiel cabuu - unterstützen können. Deshalb stellen wir dir während der Studie einige Fragen dazu, wie du mit cabuu lernst. Außerdem stellen wir dir Aufgaben. Zum Beispiel sollst du dir für das Monster Lernpläne merken. Dabei ist es wichtig, dass du dich bei den Aufgaben richtig anstrengst und alle Fragen ehrlich beantwortest.";
   final String _headline2 = "# Belohnung";

@@ -111,6 +111,7 @@ class _NoTasksScreenState extends State<NoTasksScreen>
     if (widget.previousRoute == NoTaskSituation.standard) return;
     if (widget.previousRoute == NoTaskSituation.afterLdt) return;
     if (widget.previousRoute == NoTaskSituation.afterInitialization) return;
+    if (widget.previousRoute == NoTaskSituation.afterFinal) return;
     String _title = "";
     String _textReward = "";
     String _textStreak = "";
@@ -179,6 +180,20 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       return true;
     }
 
+    if (widget.previousRoute == NoTaskSituation.afterFinal) {
+      _textNotification =
+          "Vielen Dank, dass du mitgemacht hast! Du bist mit allen Aufgaben fertig! 🎉🎉 Anfang Juli bekommst du von uns deinen Gutschein zugeschickt. Dann erfährst du auch, ob du bei der Verlosung gewonnen hast.";
+      _textNextTask = "";
+      return true;
+    }
+
+    if (await _experimentService.isTimeForRecallTask()) {
+      _nextRoute = RouteNames.RECALL_TASK;
+      _showNextButton = true;
+      _textNextTask = "Versuche jetzt, dich an deinen Plan zu erinnern.";
+      return true;
+    }
+
     if (await _experimentService.isTimeForLexicalDecisionTask()) {
       _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_USABILITY;
       _showNextButton = true;
@@ -191,13 +206,6 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
       _showNextButton = true;
       _textNextTask = "Es ist jetzt Zeit, dir deinen Plan zu merken.";
-      return true;
-    }
-
-    if (await _experimentService.isTimeForRecallTask()) {
-      _nextRoute = RouteNames.RECALL_TASK;
-      _showNextButton = true;
-      _textNextTask = "Versuche jetzt, dich an deinen Plan zu erinnern.";
       return true;
     }
 

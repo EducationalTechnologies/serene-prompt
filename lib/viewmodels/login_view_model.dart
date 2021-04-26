@@ -48,7 +48,6 @@ class LoginViewModel extends BaseViewModel {
       email = "$email@prompt.studie";
     }
     if (password.isEmpty) {
-      // TODO: Change for production to read from environment file
       password = getDefaultPassword(input);
     }
     setState(ViewState.busy);
