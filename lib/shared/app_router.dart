@@ -50,7 +50,8 @@ class AppRouter {
                 ChangeNotifierProvider<InternalisationViewModel>(
                     create: (_) => InternalisationViewModel(
                         locator.get<DataService>(),
-                        locator.get<ExperimentService>()),
+                        locator.get<ExperimentService>(),
+                        locator.get<LoggingService>()),
                     child: InternalisationScreen()));
 
       case RouteNames.RECALL_TASK:

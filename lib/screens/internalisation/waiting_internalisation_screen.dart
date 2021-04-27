@@ -56,9 +56,11 @@ class _WaitingInternalisationScreenState
 
   _buildSubmitButton() {
     final vm = Provider.of<InternalisationViewModel>(context, listen: false);
-    return FullWidthButton(onPressed: () async {
-      await vm.submit(InternalisationCondition.waiting, "");
-    });
+    return FullWidthButton(
+        text: "Weiter",
+        onPressed: () async {
+          await vm.submit(InternalisationCondition.waiting, "");
+        });
   }
 
   @override
@@ -71,7 +73,7 @@ class _WaitingInternalisationScreenState
         children: <Widget>[
           InfoBubble(
               text:
-                  "Lies den folgenden Text dreimal, und drücke dann auf Abschicken"),
+                  "Lies dir den Plan mindestens dreimal durch und merke ihn dir gut! Drücke dann auf abschicken."),
           UIHelper.verticalSpaceMedium(),
           SpeechBubble(text: vm.plan),
           UIHelper.verticalSpaceMedium(),

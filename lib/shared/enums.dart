@@ -31,6 +31,9 @@ class SettingsKeys {
   static const String initSessionStep = "initSessionStep";
   static const String backGroundImage = "backgroundImage";
   static const String backgroundColors = "backgroundColors";
+  static const String hasSeenEmojiCondition = "hasSeenEmojiCondition";
+  static const String hasSeenWaitingCondition = "hasSeenWaitingCondition";
+  static const String hasSeenPuzzleCondition = "hasSeenPuzzleCondition";
 }
 
 class Hindrances {
@@ -52,6 +55,14 @@ class ExperimentalGroup {
   static const Control = "Control";
   static const ExperimentGoalShieldingPersonalized =
       "Experiment_GoalShielding_Personalized";
+}
+
+enum HelpType {
+  general,
+  emojiInternalisation,
+  waitingInternalisation,
+  scrambleInternalisation,
+  recall
 }
 
 enum InternalisationCondition {

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:prompt/locator.dart';
 import 'package:prompt/models/internalisation.dart';
+import 'package:prompt/screens/info_screen.dart';
 import 'package:prompt/screens/rewards/reward_selection_screen.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
@@ -192,17 +193,12 @@ class _NoTasksScreenState extends State<NoTasksScreen>
     }
 
     if (await _experimentService.isTimeForLexicalDecisionTask(now)) {
-      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_USABILITY;
-      _showNextButton = true;
-      _textNextTask =
-          "Beantworte ein paar Fragen zum Merken der Pläne, und erledige dann die Wortaufgabe.";
+      _setIsTimeForLDT();
       return true;
     }
 
     if (await _experimentService.isTimeForInternalisationTask()) {
-      _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
-      _showNextButton = true;
-      _textNextTask = "Es ist jetzt Zeit, dir deinen Plan zu merken.";
+      _setIsTimeForInternalisation();
       return true;
     }
 
@@ -211,8 +207,11 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       return true;
     }
 
+    // No prior recall task done
     if (lastRecallTask == null) {
+      // Previously done an internalisation
       if (lastInternalisation != null) {
+        // That internalisation was today
         if (lastInternalisation.completionDate.isToday()) {
           _setNextRecallTimeToday(lastInternalisation);
           return true;
@@ -220,10 +219,18 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       }
     }
 
+    // Previously performed a recall task
     if (lastRecallTask != null) {
       if (!lastRecallTask.completionDate.isToday()) {
-        _setNextRecallTimeToday(lastInternalisation);
-        return true;
+        // Previously done an internalisation
+        if (lastInternalisation != null) {
+          // The last recall task was before the last internalisation
+          if (lastRecallTask.completionDate
+              .isBefore(lastInternalisation.completionDate)) {
+            _setNextRecallTimeToday(lastInternalisation);
+            return true;
+          }
+        }
       }
     }
 
@@ -233,8 +240,26 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       return true;
     }
 
-    _textNextTask = "Du hast für heute alle Aufgaben erledigt";
+    _setIsNoTasksForToday();
     return true;
+  }
+
+  _setIsNoTasksForToday() {
+    _showNextButton = false;
+    _textNextTask = "Du hast für heute alle Aufgaben erledigt";
+  }
+
+  _setIsTimeForLDT() {
+    _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_USABILITY;
+    _showNextButton = true;
+    _textNextTask =
+        "Beantworte ein paar Fragen zum Merken der Pläne, und erledige dann die Wortaufgabe.";
+  }
+
+  _setIsTimeForInternalisation() {
+    _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_MORNING;
+    _showNextButton = true;
+    _textNextTask = "Es ist jetzt Zeit, dir deinen Plan zu merken.";
   }
 
   _setIsRecallTask() {
@@ -301,9 +326,10 @@ class _NoTasksScreenState extends State<NoTasksScreen>
                 fit: BoxFit.contain,
                 alignment: Alignment.bottomCenter)),
         child: Scaffold(
+          // floatingActionButton: _buildAboutButton(),
           backgroundColor: Colors.transparent,
-          appBar: SereneAppBar(),
-          // drawer: _getDrawer(),
+          appBar: SereneAppBar(showBackButton: true),
+          drawer: _getDrawer(),
           body: FutureBuilder(
               future: _nextTask,
               builder: (context, snapshot) {

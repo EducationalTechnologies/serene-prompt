@@ -194,6 +194,7 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
     return Align(
         alignment: Alignment.bottomCenter,
         child: FullWidthButton(
+          text: "Weiter",
           height: 40,
           onPressed: () async {
             await vm.submit(InternalisationCondition.emoji,

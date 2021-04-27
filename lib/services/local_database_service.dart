@@ -174,6 +174,8 @@ class LocalDatabaseService {
         allInternalisations.add(Internalisation.fromDocument(map));
       }
     }
+
+    return allInternalisations;
   }
 
   clearUser() async {
