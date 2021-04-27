@@ -73,12 +73,14 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   bool _showPlan = true;
   bool _showPuzzle = false;
   int _timesWrong = 0;
+  String _originalSentence = "";
 
   @override
   initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
       var vm = Provider.of<InternalisationViewModel>(context, listen: false);
+      _originalSentence = vm.plan;
       _correctSentence = _cleanInputString(vm.plan);
       setState(() {
         _scrambledSentence = ScrambleText.randomizeList(
@@ -126,7 +128,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
             child: ListView(
               children: <Widget>[
                 UIHelper.verticalSpaceMedium(),
-                _buildCorrectText(_correctSentence),
+                _buildCorrectText(_originalSentence),
                 UIHelper.verticalSpaceMedium(),
                 Container(
                   height: MediaQuery.of(context).size.height / 4,
