@@ -357,7 +357,7 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       ldtvm = null;
     }
     // Give rewards after the two long LDTs
-    if (currentPageKey == ValueKey(STEP.questionsSrl) ||
+    if (currentPageKey == ValueKey(STEP.questionsLearningGoals1) ||
         currentPageKey == ValueKey(STEP.ldt01)) {
       _rewardService.onLdtInitialLongLdtFinished();
     }

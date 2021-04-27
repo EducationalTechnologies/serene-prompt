@@ -327,8 +327,8 @@ class _NoTasksScreenState extends State<NoTasksScreen>
         child: Scaffold(
           // floatingActionButton: _buildAboutButton(),
           backgroundColor: Colors.transparent,
-          appBar: SereneAppBar(showBackButton: true),
-          drawer: _getDrawer(),
+          appBar: SereneAppBar(showBackButton: false),
+          // drawer: _getDrawer(),
           body: FutureBuilder(
               future: _nextTask,
               builder: (context, snapshot) {
