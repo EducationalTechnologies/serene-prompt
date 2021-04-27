@@ -134,15 +134,21 @@ class ExperimentService {
     return true;
   }
 
-  Future<bool> isTimeForRecallTask() async {
+  Future<bool> isTimeForRecallTask(DateTime dateTime) async {
     var lastInternalisation = await _dataService.getLastInternalisation();
 
+    // If there was no prior internalisation, definitely no recall task
     if (lastInternalisation == null) {
       return false;
     }
 
-    var lastRecall = await _dataService.getLastRecallTask();
+    // Recall only on the same day as internalisation
+    if (!lastInternalisation.completionDate.isToday()) {
+      return false;
+    }
 
+    var lastRecall = await _dataService.getLastRecallTask();
+    // Was there already a recall task completed after the last internalisation?
     if (lastRecall != null) {
       if (lastRecall.completionDate
           .isAfter(lastInternalisation.completionDate)) {
@@ -150,8 +156,8 @@ class ExperimentService {
       }
     }
 
-    var now = DateTime.now();
-    var hourDiff = now.hour - lastInternalisation.completionDate.hour;
+    // Is it now at least 6 hours after the last internalisation?
+    var hourDiff = dateTime.hour - lastInternalisation.completionDate.hour;
     if (hourDiff >= ExperimentService.INTERNALISATION_RECALL_BREAK) {
       return true;
     }
@@ -165,19 +171,18 @@ class ExperimentService {
         .every((element) => element.condition == lastThree[0].condition);
   }
 
-  Future<bool> isTimeForLexicalDecisionTask() async {
+  Future<bool> isTimeForLexicalDecisionTask(DateTime now) async {
+    // If the last three conditions were not the same, no need for LDT
     if (!await lastThreeConditionsWereTheSame()) return false;
 
     var lastInternalisation = await _dataService.getLastInternalisation();
 
-    // LDT and Internalisation have to be at least 6 hours
-    var now = DateTime.now();
+    // LDT and Internalisation have to be at least 6 hours apart
     var difference = now.difference(lastInternalisation.completionDate);
     if (difference.inHours < INTERNALISATION_RECALL_BREAK) {
       return false;
     }
 
-    // TODO: This one has to be checked urgently
     DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
 
     // Last three conditions were the same, it is 6 hours after the last, and there was no prior one
@@ -273,6 +278,7 @@ class ExperimentService {
   }
 
   Future<void> nextScreen(String currentScreen) async {
+    var now = DateTime.now();
     if (currentScreen == RouteNames.LDT) {
       return await _navigationService.navigateTo(RouteNames.NO_TASKS_AFTER_LDT);
     }
@@ -280,7 +286,7 @@ class ExperimentService {
       return await _navigationService.navigateTo(RouteNames.INTERNALISATION);
     }
     if (currentScreen == RouteNames.AMBULATORY_ASSESSMENT_EVENING) {
-      if (await isTimeForLexicalDecisionTask()) {
+      if (await isTimeForLexicalDecisionTask(now)) {
         return await _navigationService
             .navigateTo(RouteNames.AMBULATORY_ASSESSMENT_USABILITY);
       }

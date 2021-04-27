@@ -185,14 +185,13 @@ class _NoTasksScreenState extends State<NoTasksScreen>
       return true;
     }
 
-    if (await _experimentService.isTimeForRecallTask()) {
-      _nextRoute = RouteNames.RECALL_TASK;
-      _showNextButton = true;
-      _textNextTask = "Versuche jetzt, dich an deinen Plan zu erinnern.";
+    var now = DateTime.now();
+    if (await _experimentService.isTimeForRecallTask(now)) {
+      _setIsRecallTask();
       return true;
     }
 
-    if (await _experimentService.isTimeForLexicalDecisionTask()) {
+    if (await _experimentService.isTimeForLexicalDecisionTask(now)) {
       _nextRoute = RouteNames.AMBULATORY_ASSESSMENT_USABILITY;
       _showNextButton = true;
       _textNextTask =
@@ -213,8 +212,12 @@ class _NoTasksScreenState extends State<NoTasksScreen>
     }
 
     if (lastRecallTask == null) {
-      _setNextRecallTimeToday(lastInternalisation);
-      return true;
+      if (lastInternalisation != null) {
+        if (lastInternalisation.completionDate.isToday()) {
+          _setNextRecallTimeToday(lastInternalisation);
+          return true;
+        }
+      }
     }
 
     if (lastRecallTask != null) {
@@ -232,6 +235,12 @@ class _NoTasksScreenState extends State<NoTasksScreen>
 
     _textNextTask = "Du hast für heute alle Aufgaben erledigt";
     return true;
+  }
+
+  _setIsRecallTask() {
+    _nextRoute = RouteNames.RECALL_TASK;
+    _showNextButton = true;
+    _textNextTask = "Versuche jetzt, dich an deinen Plan zu erinnern.";
   }
 
   _setIsStudyCompleted() {

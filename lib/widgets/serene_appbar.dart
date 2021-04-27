@@ -44,7 +44,7 @@ class _SereneAppBarState extends State<SereneAppBar> {
       elevation: 0,
       actions: [
         // IconButton(
-        //     icon: Icon(Icons.info_outline),
+        //     icon: Icon(Icons.info),
         //     onPressed: () async {
         //       await Navigator.push(context,
         //           MaterialPageRoute(builder: (context) => InfoScreen()));
