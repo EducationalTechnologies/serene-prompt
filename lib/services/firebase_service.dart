@@ -58,8 +58,10 @@ class FirebaseService {
   }
 
   Stream<User> getCurrentUser() {
-    return FirebaseAuth.instance.authStateChanges();
-    // return _firebaseAuth.currentUser;
+    var x = FirebaseAuth.instance.currentUser;
+    // return FirebaseAuth.instance.authStateChanges();
+    return FirebaseAuth.instance.userChanges();
+       // return _firebaseAuth.currentUser;
     //
     // return FirebaseAuth.instance.authStateChanges().listen((User user) {
     //   return user;

@@ -11,7 +11,7 @@ class UserService {
     FirebaseService().getCurrentUser().listen((user) {
       _isSignedIn = user != null;
     });
-  }
+     }
 
   SettingsService _settings;
   String userId = "";
