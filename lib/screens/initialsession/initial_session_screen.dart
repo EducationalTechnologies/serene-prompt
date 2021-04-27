@@ -89,10 +89,10 @@ class _InitialSessionScreenState extends State<InitialSessionScreen> {
       InitialLdtScreen("0_0", _onLdtFinished, key: ValueKey(STEP.ldt00)),
       InitialLdtScreen("0_1", _onLdtFinished, key: ValueKey(STEP.ldt01)),
       InitialRewardScreenSecond(key: ValueKey(STEP.rewardSecond)),
+      questionnaire(AssessmentTypes.srl, ValueKey(STEP.questionsSrl)),
       VideoScreen('assets/videos/videoFinished.mp4',
           key: ValueKey(STEP.videoFinish),
           onVideoCompleted: vm.videoFinishCompleted),
-      questionnaire(AssessmentTypes.srl, ValueKey(STEP.questionsSrl)),
     ];
   }
 

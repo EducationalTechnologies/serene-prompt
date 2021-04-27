@@ -24,6 +24,9 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
   // String _emojiStoryThen = "";
   String emojiInfo = "!INFO:";
 
+  List<Emoji> emojiNamesLeft = [];
+  List<Emoji> emojiNamesRight = [];
+
   final TextEditingController _controllerLeft = TextEditingController();
   final TextEditingController _controllerRight = TextEditingController();
   // bool _useEmojiPicker = false;
@@ -117,7 +120,13 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                       child: IconButton(
                           icon: Icon(Icons.backspace),
                           onPressed: () {
-                            _controllerLeft.text = "";
+                            if (emojiNamesLeft.length > 0) {
+                              emojiNamesLeft
+                                  .removeAt(emojiNamesLeft.length - 1);
+                            }
+                            _controllerLeft.text =
+                                textFromEmojiList(emojiNamesLeft);
+                            //
                             _checkIfIsDone();
                           })),
                 ])),
@@ -166,7 +175,13 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
                       child: IconButton(
                           icon: Icon(Icons.backspace),
                           onPressed: () {
-                            _controllerRight.text = "";
+                            if (emojiNamesRight.length > 0) {
+                              emojiNamesRight
+                                  .removeAt(emojiNamesRight.length - 1);
+                            }
+                            _controllerRight.text =
+                                textFromEmojiList(emojiNamesRight);
+                            //
                             _checkIfIsDone();
                           })),
                 ])),
@@ -176,12 +191,28 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
     );
   }
 
+  String textFromEmojiList(List<Emoji> emojiList) {
+    if (emojiList.length == 0) return "";
+    return emojiList.map((e) => e.text).toList().join("");
+  }
+
+  String emojiNamesFromEmojiList(List<Emoji> emojiList) {
+    if (emojiList.length == 0) return "";
+    return emojiList.map((e) => e.name).toList().join("-");
+  }
+
   _buildEmojiPicker() {
     var emojiKeyboard = EmojiKeyboard(
       onEmojiSelected: (Emoji emoji) {
         setState(() {
           _activeController.text += emoji.text;
-          emojiInfo += "(${emoji.name})";
+          // Log whether the emoji was left or right
+          var left = _activeController == _controllerLeft;
+          if (left) {
+            emojiNamesLeft.add(emoji);
+          } else {
+            emojiNamesRight.add(emoji);
+          }
         });
         _checkIfIsDone();
       },
@@ -197,6 +228,9 @@ class _EmojiStoryScreenState extends State<EmojiStoryScreen> {
           text: "Weiter",
           height: 40,
           onPressed: () async {
+            var emojiInfoLeft = emojiNamesFromEmojiList(emojiNamesLeft);
+            var emojiInfoRight = emojiNamesFromEmojiList(emojiNamesRight);
+            var emojiInfo = "L:$emojiInfoLeft | R:$emojiInfoRight";
             await vm.submit(InternalisationCondition.emoji,
                 "Wenn ${_controllerLeft.text} dann ${_controllerRight.text}.$emojiInfo");
             Navigator.pushNamed(context, RouteNames.NO_TASKS);

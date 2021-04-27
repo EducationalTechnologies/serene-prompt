@@ -88,7 +88,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
       });
 
       if (widget.showText) {
-        Timer(Duration(seconds: 5), () {
+        Timer(Duration(seconds: 8), () {
           setState(() {
             _showPlan = false;
             _showPuzzle = true;
@@ -207,13 +207,13 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     var vm = Provider.of<InternalisationViewModel>(context, listen: false);
     setState(() {
       scramble.isSelected = !scramble.isSelected;
+      print(scramble.isSelected);
       if (scramble.isSelected) {
         _builtSentence.add(scramble);
-        print(scramble.isSelected);
         setState(() {});
       } else {
-        _builtSentence.remove(scramble);
         vm.onScrambleCorrection(_builtSentence.last.text);
+        _builtSentence.remove(scramble);
       }
     });
   }
@@ -252,12 +252,16 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
             ],
           ),
           onPressed: () {
-            setState(() {
-              if (_builtSentence.length > 0) {
-                var last = _builtSentence.last;
-                _scrambleTextClick(last);
-              }
-            });
+            try {
+              setState(() {
+                if (_builtSentence.length > 0) {
+                  var last = _builtSentence.last;
+                  _scrambleTextClick(last);
+                }
+              });
+            } catch (e) {
+              print(e.toString());
+            }
           }),
     );
   }
