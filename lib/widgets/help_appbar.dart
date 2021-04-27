@@ -157,7 +157,8 @@ class _HelpAppBarState extends State<HelpAppBar> {
       children: [
         MarkdownBody(
             data:
-                """Hier sollst du aus einzelnen Wörtern den kompletten Plan wieder zusammenbauen. 
+                """Hier sollst du dir den Satz erstmal durchlesen und einprägen. 
+                Dann verschwindet der Satz und du sollst ihn aus einzelnen Wörtern wieder zusammenbauen. 
                 Am Anfang ist der Plan noch wild durcheinander gewürfelt, zum Beispiel:"""),
         getHelpImage("assets/information/puzzle_bare.png"),
         MarkdownBody(

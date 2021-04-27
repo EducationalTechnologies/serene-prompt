@@ -19,7 +19,7 @@
             "labels": {
                 "1": "Sehr wichtig",
                 "2": "Eher wichtig",
-                "3": "Neutral",
+                "3": "Mittel",
                 "4": "Eher unwichtig",
                 "5": "Sehr unwichtig"
             }
@@ -30,7 +30,7 @@
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
-                "3": "Teils / teils",
+                "3": "Teils/teils",
                 "4": "Ein bisschen",
                 "5": "Zu sehr"
             }
@@ -41,7 +41,7 @@
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
-                "3": "Neutral",
+                "3": "Mittel",
                 "4": "Ziemlich",
                 "5": "Voll und ganz"
             }
