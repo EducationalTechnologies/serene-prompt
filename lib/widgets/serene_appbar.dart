@@ -43,31 +43,7 @@ class _SereneAppBarState extends State<SereneAppBar> {
       automaticallyImplyLeading: widget.showBackButton,
       elevation: 0,
       actions: [
-        // IconButton(
-        //     icon: Icon(Icons.info),
-        //     onPressed: () async {
-        //       await Navigator.push(context,
-        //           MaterialPageRoute(builder: (context) => InfoScreen()));
-        //       setState(() {});
-        //     }),
-        TextButton(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.info_outline),
-                Text(
-                  "Über PROMPT",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                )
-              ],
-            ),
-            onPressed: () async {
-              await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => InfoScreen()));
-              setState(() {});
-            }),
+        _buildAboutButton(),
         UIHelper.horizontalSpaceSmall(),
         StreamBuilder(
             stream: rewardService.controller.stream,
@@ -99,5 +75,29 @@ class _SereneAppBarState extends State<SereneAppBar> {
           TextTheme(headline6: TextStyle(color: Colors.black, fontSize: 22)),
       centerTitle: true,
     );
+  }
+
+  _buildAboutButton() {
+    return TextButton(
+        style: TextButton.styleFrom(
+          primary: Colors.grey[850],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.info_outline),
+            Text(
+              "Über PROMPT",
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            )
+          ],
+        ),
+        onPressed: () async {
+          await Navigator.push(
+              context, MaterialPageRoute(builder: (context) => InfoScreen()));
+          setState(() {});
+        });
   }
 }

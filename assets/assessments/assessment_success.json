@@ -4,35 +4,35 @@
     "questions": [
         {
             "id": "success_1",
-            "questionText": "Wie wichtig ist es dir, dass du es heute schaffst, mit cabuu zu lernen?",
+            "questionText": "Wie **wichtig** ist es dir, dass du es heute schaffst, mit cabuu zu lernen?",
             "labels": {
                 "1": "Sehr wichtig",
                 "2": "Eher wichtig",
-                "3": "Neutral",
+                "3": "Mittel",
                 "4": "Eher unwichtig",
                 "5": "Sehr unwichtig"
             }
         },
         {
             "id": "success_2",
-            "questionText": "Wie sehr verpasst du andere Dinge, wenn du heute mit cabuu lernst?",
+            "questionText": "**Verpasst** du andere Dinge, wenn du heute mit cabuu lernst?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
-                "3": "Teils / teils",
+                "3": "Vielleicht",
                 "4": "Ein bisschen",
-                "5": "Zu sehr"
+                "5": "Auf alle Fälle"
             }
         },
         {
             "id": "success_3",
-            "questionText": "Wie wahrscheinlich ist es, dass du heute mit cabuu lernen wirst?",
+            "questionText": "Wie **sicher** bist du dir, dass du heute mit cabuu lernen wirst?",
             "labels": {
-                "1": "Sehr wahrscheinlich",
-                "2": "Eher wahrscheinlich",
-                "3": "Weder noch",
-                "4": "Eher unwahrscheinlich",
-                "5": "Sehr unwahrscheinlich"
+                "1": "Sehr sicher",
+                "2": "Sicher",
+                "3": "Mittel",
+                "4": "Unsicher",
+                "5": "Sehr unsicher"
             }
         }
     ]

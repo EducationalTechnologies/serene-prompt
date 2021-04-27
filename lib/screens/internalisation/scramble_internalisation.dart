@@ -72,6 +72,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   Duration fadeOutDuration = Duration(seconds: 15);
   bool _showPlan = true;
   bool _showPuzzle = false;
+  int _timesWrong = 0;
 
   @override
   initState() {
@@ -99,9 +100,13 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
     return input.replaceAll("**", "").replaceAll("#", "");
   }
 
+  _wrongTooOften() {
+    return _timesWrong >= 3;
+  }
+
   _isDone() {
     var built = ScrambleText.stringFromScrambleTextList(_builtSentence);
-    return built == _correctSentence;
+    return (built == _correctSentence);
   }
 
   _allChunksUsed() {
@@ -167,7 +172,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
               ],
             ),
           ),
-          if (_isDone()) _buildSubmitButton()
+          if (_isDone() || _wrongTooOften()) _buildSubmitButton()
         ],
       ),
     );
@@ -267,7 +272,7 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
               var condition = InternalisationCondition.scrambleWithHint;
               vm.submit(condition, "");
             },
-            child: Text("Abschicken", style: TextStyle(fontSize: 20)),
+            child: Text("Weiter", style: TextStyle(fontSize: 20)),
           )),
     );
   }
@@ -289,13 +294,23 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
   }
 
   _buildIncorrectWarning() {
+    _timesWrong += 1;
     return Container(
       color: Colors.red[100],
       child: Center(
-          child: (Text(
-        "Der Satz ist so leider nicht richtig.",
-        style: TextStyle(fontSize: 20),
-      ))),
+          child: Column(
+        children: [
+          (Text(
+            "Der Satz ist so leider nicht richtig. Versuche es doch weiter.",
+            style: TextStyle(fontSize: 20),
+          )),
+          if (_timesWrong >= 3)
+            Text(
+              "Wenn du nicht mehr magst, versuche trotzdem, dir den Plan so gut wie möglich zu merken, und drücke dann auf 'Weiter'.",
+              style: TextStyle(fontSize: 20),
+            ),
+        ],
+      )),
       margin: EdgeInsets.fromLTRB(2, 10, 2, 20),
       padding: EdgeInsets.fromLTRB(2, 10, 2, 10),
     );

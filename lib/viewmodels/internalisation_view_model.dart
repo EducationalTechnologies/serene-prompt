@@ -1,6 +1,8 @@
 import 'package:prompt/models/internalisation.dart';
+import 'package:prompt/screens/settings_screen.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
+import 'package:prompt/services/logging_service.dart';
 import 'package:prompt/shared/enums.dart';
 import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/viewmodels/base_view_model.dart';
@@ -8,6 +10,7 @@ import 'package:prompt/viewmodels/base_view_model.dart';
 class InternalisationViewModel extends BaseViewModel {
   final DataService _dataService;
   final ExperimentService _experimentService;
+  final LoggingService _loggingService;
 
   String get plan => _currentInternalisation.plan;
 
@@ -20,9 +23,7 @@ class InternalisationViewModel extends BaseViewModel {
   Internalisation _currentInternalisation = Internalisation();
 
   InternalisationViewModel(
-    this._dataService,
-    this._experimentService,
-  ) {
+      this._dataService, this._experimentService, this._loggingService) {
     initialized = init();
     waitingDuration = ExperimentService.WAITING_TIMER_DURATION;
   }
@@ -41,6 +42,8 @@ class InternalisationViewModel extends BaseViewModel {
           this.internalisationCondition.toString();
     } catch (e) {
       print(
+          "Exception when trying get the current internalisation ${e.toString()}");
+      _loggingService.logError(
           "Exception when trying get the current internalisation ${e.toString()}");
       _experimentService.nextScreen(RouteNames.INTERNALISATION);
     }

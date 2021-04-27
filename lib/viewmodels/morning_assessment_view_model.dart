@@ -67,6 +67,29 @@ class MorningAssessmentViewModel extends MultiStepAssessmentViewModel {
     _experimentService.nextScreen(RouteNames.AMBULATORY_ASSESSMENT_MORNING);
   }
 
+  Future<InternalisationCondition> getNextCondition() async {
+    var numberOf =
+        await _experimentService.getNumberOfCompletedInternalisations();
+    var ud = await _dataService.getUserData();
+    var condition = await _experimentService.getTodaysInternalisationCondition(
+        numberOf, ud.group);
+    return condition;
+  }
+
+  Future<bool> shouldShowHelp() async {
+    var condition = await getNextCondition();
+    return shouldShowHelpText(condition);
+  }
+
+  Future<bool> shouldShowHelpText(InternalisationCondition condition) async {
+    var allInternalisations = await _dataService
+        .getLastInternalisations(ExperimentService.STUDY_DURATION);
+    var first = allInternalisations.firstWhere(
+        (element) => element.condition == condition.toString(),
+        orElse: () => null);
+    return first == null;
+  }
+
   @override
   bool canMoveBack(Key currentStep) {
     return false;

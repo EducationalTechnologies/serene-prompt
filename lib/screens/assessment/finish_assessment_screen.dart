@@ -25,7 +25,7 @@ class _FinishAssessmentScreenState extends State<FinishAssessmentScreen> {
 
     _pages = [
       TextExplanationScreen(
-        "Wir sind am Ende der Studie angelangt. Noch einmal vielen Dank, dass du mitgemacht hast! Zum Schluss haben wir noch ein paar Fragen an dich. Bitte antworte ehrlich. Es gibt keine richtigen oder falschen Antworten und deine Antworten haben keinen Einfluss darauf, welchen Preis zu erhältst.",
+        "Wir sind am Ende der Studie angelangt. Noch einmal vielen Dank, dass du mitgemacht hast! Zum Schluss haben wir noch ein paar Fragen an dich, für die du die letzten 10💎 bekommst.",
         key: ValueKey(STEPS.instruction),
       ),
       questionnaireFuture(AssessmentTypes.visibilitySelection,

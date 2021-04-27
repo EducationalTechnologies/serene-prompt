@@ -185,7 +185,7 @@ class ExperimentService {
 
     DateTime lastLdtDate = await _dataService.getDateOfLastLDT();
 
-    // Last three conditions were the same, it is 6 hours after the last, and there was no prior one
+    // Last three conditions were the same, it is 6 hours after the last, and there was no ldt before this one
     if (lastLdtDate == null) {
       return true;
     }
@@ -194,7 +194,7 @@ class ExperimentService {
     if (lastLdtDate.isAfter(lastInternalisation.completionDate)) {
       return false;
     }
-    // Last three conditions were the same, it is 6 hours after the alst, and no ldt afterwards
+    // Last three conditions were the same, it is 6 hours after the last, and no ldt afterwards
     return true;
   }
 

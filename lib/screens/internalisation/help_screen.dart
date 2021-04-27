@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:prompt/models/internalisation.dart';
 import 'package:prompt/shared/enums.dart';
 
 class HelpScreen extends StatelessWidget {
@@ -15,14 +14,6 @@ class HelpScreen extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(10),
       child: getHelpWidget(helpType),
-
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: ElevatedButton(
-      //   onPressed: () {
-      //     Navigator.pop(context);
-      //   },
-      //   child: Text("Ok"),
-      // ),
     );
   }
 
