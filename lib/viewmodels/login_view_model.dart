@@ -12,7 +12,7 @@ import 'package:prompt/services/data_service.dart';
 import 'package:prompt/viewmodels/init_session_view_model.dart';
 
 class LoginViewModel extends BaseViewModel {
-  String _email;
+  String _email = "";
   String get email => _email;
 
   UserService _userService;
@@ -20,7 +20,15 @@ class LoginViewModel extends BaseViewModel {
 
   String defaultPassword = "Hasselhoernchen";
 
-  LoginViewModel(this._userService, this._navigationService);
+  LoginViewModel(this._userService, this._navigationService) {
+    var username = this._userService.getUsername();
+    if (username != null && username.isNotEmpty) {
+      var indexOfSplit = username.indexOf("@");
+      if (indexOfSplit >= 0) {
+        _email = username.substring(0, indexOfSplit);
+      }
+    }
+  }
 
   Future<String> register(String input, String password) async {
     var email = input;
@@ -67,7 +75,8 @@ class LoginViewModel extends BaseViewModel {
   submit() async {
     int maxStep = await locator<DataService>().getCompletedInitialSessionStep();
     locator<DataService>().setRegistrationDate(DateTime.now());
-    bool userHasCreatedSession0 = maxStep >= STEP.values.length;
+    // TODO: This is semi-random and we just want to assure that they have linked their cabuu id /email
+    bool userHasCreatedSession0 = maxStep >= 3;
     if (userHasCreatedSession0) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);
     } else {

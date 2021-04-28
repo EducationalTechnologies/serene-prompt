@@ -83,10 +83,10 @@ class SereneDrawer extends StatelessWidget {
               text: "LDT Test",
               onTap: () async {
                 var last = await locator<DataService>().getDateOfLastLDT();
-                print(last.toIso8601String());
+                print(last?.toIso8601String());
                 // Navigator.pop(context);
                 //
-                // Navigator.pushNamed(context, RouteNames.INIT_START);
+                Navigator.pushNamed(context, RouteNames.LOG_IN);
                 // var now = DateTime.now();
                 // var next = now.add(Duration(seconds: 100));
                 // locator<NotificationService>().scheduleRecallTaskReminder(next);
