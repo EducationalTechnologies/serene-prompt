@@ -276,8 +276,11 @@ class _ScrambleInternalisationState extends State<ScrambleInternalisation> {
           child: ElevatedButton(
             onPressed: () async {
               var condition = InternalisationCondition.scrambleWithHint;
-              var built =
-                  ScrambleText.stringFromScrambleTextList(_builtSentence);
+              var built = "";
+              if (_builtSentence.length > 0) {
+                built = ScrambleText.stringFromScrambleTextList(_builtSentence);
+              }
+
               vm.submit(condition, built);
             },
             child: Text("Weiter", style: TextStyle(fontSize: 20)),
