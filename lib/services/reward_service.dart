@@ -172,7 +172,7 @@ class RewardService {
 
   addStreakDays(int days) async {
     streakDays += days;
-    await _dataService.setStreakDays(days);
+    await _dataService.setStreakDays(streakDays);
   }
 
   clearStreakDays() async {
