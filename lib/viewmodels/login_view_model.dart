@@ -74,12 +74,13 @@ class LoginViewModel extends BaseViewModel {
 
   submit() async {
     int maxStep = await locator<DataService>().getCompletedInitialSessionStep();
-    locator<DataService>().setRegistrationDate(DateTime.now());
     // TODO: This is semi-random and we just want to assure that they have linked their cabuu id /email
     bool userHasCreatedSession0 = maxStep >= 3;
     if (userHasCreatedSession0) {
       _navigationService.navigateTo(RouteNames.NO_TASKS);
     } else {
+      // User is not "fully" registered, so registration date is set to today until session 0 is sufficiently completed
+      locator<DataService>().setRegistrationDate(DateTime.now());
       _navigationService.navigateTo(RouteNames.INIT_START);
     }
   }
