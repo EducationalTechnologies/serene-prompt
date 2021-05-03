@@ -31,9 +31,10 @@ class RewardService {
         "Flugzeug", "assets/illustrations/mascot_plane_2.png", 0,
         backgroundColor:
             LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
-    UnlockableBackground("Ozean", "assets/illustrations/mascot_space_1.png", 1,
+    UnlockableBackground(
+        "Weltraum 1", "assets/illustrations/mascot_space_1.png", 1,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
     UnlockableBackground(
         "Pyramiden", "assets/illustrations/mascot_pyramid.png", 3,
         backgroundColor:
@@ -41,15 +42,15 @@ class RewardService {
     UnlockableBackground(
         "Vulkan 1", "assets/illustrations/mascot_vulcan_1.png", 6,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xffb7c6d6)])),
     UnlockableBackground(
         "Wikinger", "assets/illustrations/mascot_viking_1.png", 9,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xff08172e)])),
     UnlockableBackground(
         "Ozean 1", "assets/illustrations/mascot_ocean_2.png", 12,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xff97b9d3)])),
     UnlockableBackground(
         "Pyramide 2", "assets/illustrations/mascot_pyramid_2.png", 15,
         backgroundColor:
@@ -57,19 +58,19 @@ class RewardService {
     UnlockableBackground(
         "Weltraum", "assets/illustrations/mascot_space_2.png", 18,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xff08111f)])),
     UnlockableBackground(
-        "Zauberei 2", "assets/illustrations/mascot_vulcan_2.png", 21,
+        "Vulkan 2", "assets/illustrations/mascot_vulcan_2.png", 21,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xff9fc7f0)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xffb7c6d6)])),
     UnlockableBackground(
         "Wikinger 2", "assets/illustrations/mascot_viking_2.png", 24,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xff08172e)])),
     UnlockableBackground(
-        "Wikinger 2", "assets/illustrations/mascot_wizard_2.png", 27,
+        "Zauberei 2", "assets/illustrations/mascot_wizard_2.png", 27,
         backgroundColor:
-            LinearGradient(colors: [Colors.orange[50], Color(0xffa2d0ff)])),
+            LinearGradient(colors: [Colors.orange[50], Color(0xffccdcf6)])),
   ];
 
   RewardService(this._dataService, this._logService) {
@@ -110,12 +111,13 @@ class RewardService {
   Future<List<Color>> getBackgroundColors() async {
     _dataService.getBackgroundGradientColors().then((colors) {
       if (colors != null) {
-        var backgroundColor = LinearGradient(
+        var bgColor = LinearGradient(
           colors: colors,
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         );
-        setBackgroundColor(backgroundColor);
+        // setBackgroundColor(bgColor);
+        this.backgroundColor = bgColor;
       }
       return colors;
     });
@@ -123,6 +125,7 @@ class RewardService {
   }
 
   Future initialize() async {
+    await getBackgroundColors();
     await getBackgroundImagePath();
     await retrieveScore();
     await getDaysActive();
