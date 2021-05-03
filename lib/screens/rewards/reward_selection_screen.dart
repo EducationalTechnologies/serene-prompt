@@ -115,6 +115,7 @@ class _RewardSelectionScreenState extends State<RewardSelectionScreen> {
               style: ElevatedButton.styleFrom(primary: Colors.green[300]),
               onPressed: () {
                 setState(() {});
+                Navigator.pop(context);
               },
               child: Text("Ausgewählt"),
             ),
