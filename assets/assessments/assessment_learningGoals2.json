@@ -4,7 +4,7 @@
     "questions": [
         {
             "id": "learningGoals2_1",
-            "questionText": "Wie wahrscheinlich ist es, dass du es schaffst, an X Tagen pro Woche mit cabuu zu lernen?",
+            "questionText": "Wie wahrscheinlich ist es, dass du es schaffst, an X Tagen pro Woche Vokabeln zu lernen?",
             "labels": {
                 "1": "Sehr wahrscheinlich",
                 "2": "Eher wahrscheinlich",
@@ -15,7 +15,7 @@
         },
         {
             "id": "learningGoals2_2",
-            "questionText": "Wie wichtig ist es dir persönlich, dass du es schaffst, an X Tagen pro Woche mit cabuu zu lernen?",
+            "questionText": "Wie wichtig ist es dir persönlich, dass du es schaffst, an X Tagen pro Woche Vokabeln zu lernen?",
             "labels": {
                 "1": "Sehr wichtig",
                 "2": "Eher wichtig",
@@ -26,7 +26,7 @@
         },
         {
             "id": "learningGoals2_3",
-            "questionText": "Wie sehr verpasst du andere Dinge, wenn du an X Tagen pro Woche mit cabuu lernst?",
+            "questionText": "Wie sehr verpasst du andere Dinge, wenn du an X Tagen pro Woche Vokabeln lernst?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
@@ -37,7 +37,7 @@
         },
         {
             "id": "learningGoals2_4",
-            "questionText": "Wie enttäuscht würdest du sein, wenn du es nicht schaffen würdest, an X Tagen pro Woche mit cabuu zu lernen?",
+            "questionText": "Wie enttäuscht würdest du sein, wenn du es nicht schaffen würdest, an X Tagen pro Woche Vokabeln zu lernen?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",

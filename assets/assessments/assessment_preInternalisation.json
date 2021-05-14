@@ -4,12 +4,12 @@
     "questions": [
         {
             "id": "affect_1",
-            "questionText": "Hast du vor, heute mit cabuu zu lernen?",
+            "questionText": "Hast du vor, heute Vokabeln zu lernen?",
             "labels": {
                 "1": "Ja",
                 "2": "Nein",
                 "3": "Weiß noch nicht",
-                "4": "Ich habe heute schon mit cabuu gelernt"
+                "4": "Ich habe heute schon Vokabeln gelernt"
             }
         },
         {

@@ -29,7 +29,7 @@ class _EveningAssessmentScreenState extends State<EveningAssessmentScreen> {
     _pages = [
       _buildAssessmentFuture(
           AssessmentTypes.didLearnToday, ValueKey(vm.stepDidLearnToday)),
-      FreeTextQuestion("Warum hast du heute nicht mit cabuu gelernt?",
+      FreeTextQuestion("Warum hast du heute keine Vokabeln gelernt?",
           textChanged: vm.whyNotLearnReason, key: ValueKey(vm.stepWhyNotLearn)),
       _buildAssessmentFuture(
           AssessmentTypes.evening, ValueKey(vm.stepEveningAssessment)),

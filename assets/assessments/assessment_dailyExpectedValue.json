@@ -4,7 +4,7 @@
     "questions": [
         {
             "id": "dailyExpectedValue_1",
-            "questionText": "Wie wichtig ist es dir, dass du es heute schaffst, mit cabuu zu lernen?",
+            "questionText": "Wie wichtig ist es dir, dass du es heute schaffst, Vokabeln zu lernen?",
             "labels": {
                 "1": "Sehr wichtig",
                 "2": "Eher wichtig",
@@ -15,7 +15,7 @@
         },
         {
             "id": "dailyExpectedValue_2",
-            "questionText": "Wie sehr verpasst du andere Dinge, wenn du heute mit cabuu lernst?",
+            "questionText": "Wie sehr verpasst du andere Dinge, wenn du heute Vokabeln lernst?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
@@ -26,7 +26,7 @@
         },
         {
             "id": "dailyExpectedValue_3",
-            "questionText": "Wie wahrscheinlich ist es, dass du heute mit cabuu lernen wirst?",
+            "questionText": "Wie wahrscheinlich ist es, dass du heute Vokabeln lernen wirst?",
             "labels": {
                 "1": "Sehr wahrscheinlich",
                 "2": "Eher wahrscheinlich",

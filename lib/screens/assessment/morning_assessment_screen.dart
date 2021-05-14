@@ -28,7 +28,7 @@ class _MorningAssessmentScreenState extends State<MorningAssessmentScreen> {
     _pages = [
       questionnaireFuture(AssessmentTypes.dailyLearningIntention,
           ValueKey(vm.stepLearningIntention)),
-      FreeTextQuestion("Warum möchtest du heute nicht mit cabuu lernen?",
+      FreeTextQuestion("Warum möchtest du heute keine Vokabeln lernen?",
           key: ValueKey(vm.stepReasonNotLearning),
           textChanged: vm.onNotLearningReasonChanged),
       questionnaireFuture(AssessmentTypes.success, ValueKey(vm.stepSuccess)),

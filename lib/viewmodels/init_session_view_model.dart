@@ -256,10 +256,11 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
       return selectedObstacles.length > 0;
     }
     if (currentPageKey == ValueKey(STEP.cabuuLink)) {
-      var isEmail = EmailValidator.validate(cabuuLinkEmail);
-      return consented &&
-          (cabuuLinkUserName.isNotEmpty || cabuuLinkEmail.isNotEmpty) &&
-          isEmail;
+      return consented;
+      // var isEmail = EmailValidator.validate(cabuuLinkEmail);
+      // return consented &&
+      //     (cabuuLinkUserName.isNotEmpty || cabuuLinkEmail.isNotEmpty) &&
+      //     isEmail;
     }
     if (currentPageKey == ValueKey(STEP.initialDailyLearningGoal)) {
       return numberOfDaysLearningGoal.isNotEmpty;

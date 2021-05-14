@@ -4,7 +4,7 @@
     "questions": [
         {
             "id": "dailyObstacle_1",
-            "questionText": "Warum bist du dir nicht ganz sicher, ob du heute mit cabuu lernen wirst? Was steht dir am ehesten im Weg?",
+            "questionText": "Warum bist du dir nicht ganz sicher, ob du heute Vokabeln lernen wirst? Was steht dir am ehesten im Weg?",
             "labels": {
                 "1": "Ich habe andere wichtige Sachen zu tun.",
                 "2": "Ich habe keine rechte Lust.",

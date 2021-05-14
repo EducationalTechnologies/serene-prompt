@@ -13,7 +13,7 @@ class CabuuLinkScreen extends StatelessWidget {
       child: ListView(
         children: [
           Text(
-            "Verknüpfung mit cabuu",
+            "",
             style: Theme.of(context).textTheme.headline5,
             textAlign: TextAlign.center,
           ),
@@ -35,17 +35,17 @@ class CabuuLinkScreen extends StatelessWidget {
             ],
           ),
           UIHelper.verticalSpaceMedium(),
-          Text(
-            "Gib hier die E-Mail-Adresse ein, mit der du bei cabuu angemeldet bist",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          UIHelper.verticalSpaceMedium(),
-          buildEmailField(context),
-          UIHelper.verticalSpaceMedium(),
-          Text(
-            "Falls du bei cabuu auch mit einem Benutzernamen angemeldet bist, gib diesen bitte hier ein",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
+          // Text(
+          //   "Gib hier die E-Mail-Adresse ein, mit der du bei cabuu angemeldet bist",
+          //   style: Theme.of(context).textTheme.subtitle1,
+          // ),
+          // UIHelper.verticalSpaceMedium(),
+          // buildEmailField(context),
+          // UIHelper.verticalSpaceMedium(),
+          // Text(
+          //   "Falls du bei cabuu auch mit einem Benutzernamen angemeldet bist, gib diesen bitte hier ein",
+          //   style: Theme.of(context).textTheme.subtitle1,
+          // ),
           UIHelper.verticalSpaceMedium(),
           buildUserIdField(context),
         ],

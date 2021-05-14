@@ -25,7 +25,7 @@ class _InitialDailyLearningGoalScreenState
         UIHelper.verticalSpaceMedium(),
         Center(
           child: MarkdownBody(
-            data: "## Setze dir hier ein Ziel für das Lernen mit cabuu:",
+            data: "## Setze dir hier ein Ziel für das Vokabellernen:",
           ),
         ),
         UIHelper.verticalSpaceLarge(),
@@ -66,7 +66,7 @@ class _InitialDailyLearningGoalScreenState
         UIHelper.verticalSpaceMedium(),
         Center(
           child: MarkdownBody(
-            data: "## *Tagen pro Woche mit cabuu zu lernen.*",
+            data: "## *Tagen pro Woche Vokabeln zu lernen.*",
           ),
         )
       ]),
