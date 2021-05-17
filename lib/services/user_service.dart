@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:package_info/package_info.dart';
 import 'package:prompt/locator.dart';
 import 'package:prompt/models/user_data.dart';
 import 'package:prompt/services/experiment_service.dart';
@@ -11,7 +12,7 @@ class UserService {
     FirebaseService().getCurrentUser().listen((user) {
       _isSignedIn = user != null;
     });
-     }
+  }
 
   SettingsService _settings;
   String userId = "";
@@ -49,16 +50,24 @@ class UserService {
     }
   }
 
-  static UserData getDefaultUserData(email, {uid = ""}) {
+  static Future<UserData> getDefaultUserData(email, {uid = ""}) async {
     var rng = Random();
     var condition = rng.nextInt(6);
     condition += 1;
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    String appVersion = "v.$version+$buildNumber";
+
     return UserData(
         userId: uid,
         email: email,
         group: condition,
         score: 0,
         streakDays: 0,
+        appVersion: appVersion,
         registrationDate: DateTime.now());
   }
 
@@ -68,7 +77,7 @@ class UserService {
       await saveUsername(email);
       var userData = await FirebaseService().getUserData(email);
       if (userData == null) {
-        var defaultUserData = getDefaultUserData(email, uid: user.uid);
+        var defaultUserData = await getDefaultUserData(email, uid: user.uid);
         await FirebaseService().insertUserData(defaultUserData);
       }
       return RegistrationCodes.SUCCESS;

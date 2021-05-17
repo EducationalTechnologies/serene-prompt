@@ -95,7 +95,7 @@ class FirebaseService {
       var result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: userId, password: password);
 
-      var userData = UserService.getDefaultUserData(result.user.email,
+      var userData = await UserService.getDefaultUserData(result.user.email,
           uid: result.user.uid);
       await insertUserData(userData);
 

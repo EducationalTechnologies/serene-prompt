@@ -7,6 +7,7 @@ class UserData {
   int score = 0;
   int daysActive = 0;
   int initSessionStep = 0;
+  String appVersion = "";
 
   UserData(
       {this.userId,
@@ -15,6 +16,7 @@ class UserData {
       this.registrationDate,
       this.streakDays = 0,
       this.score = 0,
+      this.appVersion = "",
       this.daysActive = 0});
 
   Map<String, dynamic> toMap() {
@@ -26,7 +28,8 @@ class UserData {
       "streakDays": this.streakDays,
       "score": this.score,
       "daysActive": this.daysActive,
-      "initSessionStep": this.initSessionStep
+      "initSessionStep": this.initSessionStep,
+      "appVersion": this.appVersion
     };
   }
 
@@ -47,6 +50,9 @@ class UserData {
     }
     if (json.containsKey("initSessionStep")) {
       initSessionStep = json["initSessionStep"];
+    }
+    if (json.containsKey("appVersion")) {
+      appVersion = json["appVersion"];
     }
   }
 }
