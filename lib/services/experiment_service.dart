@@ -111,18 +111,15 @@ class ExperimentService {
   }
 
   Future<bool> isTimeForInternalisationTask() async {
-    _loggingService.logEvent("Trying to retrieve the last internalisation");
     var ud = await _dataService.getUserData();
     if (ud.registrationDate.isToday()) return false;
 
     var lastInternalisation = await _dataService.getLastInternalisation();
     // If there is no previous internalisation, we definitely need the first one
     if (lastInternalisation == null) {
-      _loggingService.logEvent("Last Internalisation was NULL");
       return true;
     }
 
-    _loggingService.logEvent("Checking if last internalisation was today");
     if (lastInternalisation.completionDate.isToday()) {
       return false;
     }
