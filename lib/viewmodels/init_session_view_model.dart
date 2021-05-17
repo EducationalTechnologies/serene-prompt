@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:prompt/models/assessment.dart';
 import 'package:prompt/models/assessment_result.dart';
