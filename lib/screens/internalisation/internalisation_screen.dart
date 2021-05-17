@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:prompt/widgets/help_appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:prompt/screens/internalisation/emoji_story_screen.dart';
-import 'package:prompt/screens/internalisation/help_screen.dart';
 import 'package:prompt/screens/internalisation/scramble_internalisation.dart';
 import 'package:prompt/screens/internalisation/waiting_internalisation_screen.dart';
 import 'package:prompt/shared/enums.dart';

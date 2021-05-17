@@ -9,7 +9,6 @@ import 'package:prompt/shared/enums.dart';
 import 'package:prompt/shared/route_names.dart';
 import 'package:prompt/viewmodels/base_view_model.dart';
 import 'package:prompt/services/data_service.dart';
-import 'package:prompt/viewmodels/init_session_view_model.dart';
 
 class LoginViewModel extends BaseViewModel {
   String _email = "";

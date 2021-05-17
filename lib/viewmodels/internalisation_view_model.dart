@@ -1,5 +1,4 @@
 import 'package:prompt/models/internalisation.dart';
-import 'package:prompt/screens/settings_screen.dart';
 import 'package:prompt/services/data_service.dart';
 import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/logging_service.dart';
