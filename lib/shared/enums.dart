@@ -83,10 +83,7 @@ enum AppStartupMode {
 
 enum AssessmentTypes {
   affect,
-  dailyQuestion,
-  dailyQuestionsAll,
   dailyLearningIntention,
-  dailyLearningGoal,
   dailyObstacle,
   didLearnToday,
   evening,
