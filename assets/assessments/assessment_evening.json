@@ -23,7 +23,7 @@
         },
         {
             "id": "evening_3",
-            "questionText": "Hat dir das Lernen heute Spaß gemach?",
+            "questionText": "Hat dir das Vokabellernen heute Spaß gemach?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
@@ -34,7 +34,7 @@
         },
         {
             "id": "evening_4",
-            "questionText": "Warst du beim Lernen heute angespannt und nervös?",
+            "questionText": "Warst du beim Vokabellernen heute angespannt und nervös?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
@@ -45,7 +45,7 @@
         },
         {
             "id": "evening_5",
-            "questionText": "Hast du dich beim Lernen gelangweilt?",
+            "questionText": "Hast du dich beim Vokabellernen gelangweilt?",
             "labels": {
                 "1": "Gar nicht",
                 "2": "Kaum",
@@ -56,7 +56,7 @@
         },
         {
             "id": "evening_6",
-            "questionText": "Hast du während des Lernens nebenbei Musik gehört?",
+            "questionText": "Hast du während des Vokabellernens nebenbei Musik gehört?",
             "labels": {
                 "1": "Überhaupt nicht",
                 "2": "Kaum",
@@ -67,7 +67,7 @@
         },
         {
             "id": "evening_7",
-            "questionText": "Hast du während des Lernens nebenbei andere Dinge auf deinem Smartphone gemacht (z.B. Spiele, Chatten)?",
+            "questionText": "Hast du während des Vokabellernens nebenbei andere Dinge auf deinem Smartphone gemacht (z.B. Spiele, Chatten)?",
             "labels": {
                 "1": "Überhaupt nicht",
                 "2": "Kaum",
@@ -78,7 +78,7 @@
         },
         {
             "id": "evening_8",
-            "questionText": "Hast du während des Lernens nebenbei Videos geschaut (z.B. YouTube, Fernsehen)?",
+            "questionText": "Hast du während des Vokabellernens nebenbei Videos geschaut (z.B. YouTube, Fernsehen)?",
             "labels": {
                 "1": "Überhaupt nicht",
                 "2": "Kaum",
