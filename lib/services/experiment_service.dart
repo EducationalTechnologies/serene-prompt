@@ -23,8 +23,7 @@ class ExperimentService {
   static const int STUDY_DURATION = 27;
   static const Duration WAITING_TIMER_DURATION = Duration(seconds: 15);
   static const int NUM_GROUPS = 6;
-  // ignore: non_constant_identifier_names
-  static final DateTime FINAL_DATE = DateTime(2021, 6, 21);
+  static const Duration MAX_STUDY_DURATION = Duration(days: 50);
 
   final DataService _dataService;
   final NotificationService _notificationService;
@@ -72,7 +71,9 @@ class ExperimentService {
   isTimeForFinalTask() async {
     bool timeForFinalTask = false;
 
-    var isAfterFinalDay = DateTime.now().isAfter(FINAL_DATE);
+    var ud = await _dataService.getUserData();
+    var maxDate = ud.registrationDate.add(MAX_STUDY_DURATION);
+    var isAfterFinalDay = DateTime.now().isAfter(maxDate);
 
     if (isAfterFinalDay) {
       timeForFinalTask = true;

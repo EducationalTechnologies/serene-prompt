@@ -60,7 +60,8 @@ class LoginViewModel extends BaseViewModel {
     setState(ViewState.busy);
     var signin = await _userService.signInUser(email, password);
     await locator<RewardService>().initialize();
-    var dayAfterFinal = ExperimentService.FINAL_DATE.add(Duration(days: 1));
+    var dayAfterFinal =
+        DateTime.now().add(ExperimentService.MAX_STUDY_DURATION);
     await locator<NotificationService>()
         .scheduleFinalTaskReminder(dayAfterFinal);
     setState(ViewState.idle);
