@@ -137,7 +137,8 @@ class InitSessionViewModel extends MultiStepAssessmentViewModel {
         iconPath: AppAssetPaths.ICON_ANATOMY),
     Obstacle(
         name: "Multitasking",
-        description: "Ich mache beim Lernen andere Sachen (z.B. Fernsehen).",
+        description:
+            "Ich mache beim Vokabellernen andere Sachen (z.B. Fernsehen).",
         iconPath: AppAssetPaths.ICON_TEACHER),
   ];
 

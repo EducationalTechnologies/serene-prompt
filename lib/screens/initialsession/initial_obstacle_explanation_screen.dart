@@ -14,7 +14,7 @@ class InitialObstacleExplanationScreen extends StatelessWidget {
         children: [
           MarkdownBody(
               data:
-                  "### Was sind typische **Hindernisse**, die dich davon abhalten, mit cabuu zu lernen oder die dich während des Lernens mit cabuu stören? Wähle aus der Liste die Hindernisse aus, die auf dich persönlich zutreffen. Auf der übernächsten Seite kannst du wieder ergänzen.")
+                  "### Was sind typische **Hindernisse**, die dich vom Vokabellernen abhalten, oder die dich während des Vokabellernens stören? Wähle aus der Liste die Hindernisse aus, die auf dich persönlich zutreffen. Auf der übernächsten Seite kannst du wieder ergänzen.")
         ],
       ),
     );
