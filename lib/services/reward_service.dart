@@ -14,6 +14,7 @@ class RewardService {
   int daysActive = 0;
   int streakDays = 0;
   String backgroundImagePath = "assets/illustrations/mascot_bare.png";
+  static const int STREAK_THRESHOLD = 5;
   // LinearGradient _baseGradient =
   LinearGradient backgroundColor = LinearGradient(
     colors: [Colors.orange[50], Colors.orange[50]],
@@ -179,7 +180,7 @@ class RewardService {
   }
 
   clearStreakDays() async {
-    streakDays = 0;
-    await _dataService.setStreakDays(0);
+    streakDays = ((streakDays / STREAK_THRESHOLD).floor() * STREAK_THRESHOLD);
+    await _dataService.setStreakDays(streakDays);
   }
 }

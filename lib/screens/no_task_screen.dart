@@ -118,18 +118,14 @@ class _NoTasksScreenState extends State<NoTasksScreen>
     String _textTotal = "";
     var rewardService = locator<RewardService>();
     if (widget.previousRoute == NoTaskSituation.afterRecall) {
-      _title = "🎉 Belohnung erhalten 🎉";
+      _title = "🎉Belohnung erhalten🎉";
       _textReward =
-          "### Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎";
+          "### Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎.";
 
       if (rewardService.streakDays > 0) {
-        if (rewardService.streakDays == 1) {
-          _textStreak =
-              "### Außerdem hast du gestern auch schon **alle** Aufgaben erledigt. Dafür bekommst du heute zusätzlich ${rewardService.streakDays}💎 als Bonus";
-        }
         if (rewardService.streakDays > 1) {
           _textStreak =
-              "### Außerdem hast du ${rewardService.streakDays} Tage in Folge alle Aufgaben erledigt. Dafür bekommst du heute zusätzlich ${rewardService.streakDays}💎 als Bonus";
+              "### Außerdem bekommst du ${rewardService.streakDays}💎 als Bonus. Wenn du mehrere Tage in Folge **alle** Aufgaben rechtzeitig erledigst, erhöhen sich die Bonuspunkte, die du bekommst.";
         }
       }
     }

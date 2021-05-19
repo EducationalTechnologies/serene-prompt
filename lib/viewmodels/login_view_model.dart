@@ -3,6 +3,7 @@ import 'package:prompt/locator.dart';
 import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/navigation_service.dart';
 import 'package:prompt/services/notification_service.dart';
+import 'package:prompt/services/push_notification_service.dart';
 import 'package:prompt/services/reward_service.dart';
 import 'package:prompt/services/user_service.dart';
 import 'package:prompt/shared/enums.dart';
@@ -73,6 +74,8 @@ class LoginViewModel extends BaseViewModel {
   }
 
   submit() async {
+    // TODO: Reactivate once again if we decide to use push notifications
+    // await locator<PushNotificationService>().initialize();
     int maxStep = await locator<DataService>().getCompletedInitialSessionStep();
     // TODO: This is semi-random and we just want to assure that they have linked their cabuu id /email
     bool userHasCreatedSession0 = maxStep >= 3;
