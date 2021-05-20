@@ -123,10 +123,8 @@ class _NoTasksScreenState extends State<NoTasksScreen>
           "### Du hast heute **beide** Aufgaben erledigt. Dafür bekommst du 10💎.";
 
       if (rewardService.streakDays > 0) {
-        if (rewardService.streakDays > 1) {
-          _textStreak =
-              "### Außerdem bekommst du ${rewardService.streakDays}💎 als Bonus. Wenn du mehrere Tage in Folge **alle** Aufgaben rechtzeitig erledigst, erhöhen sich die Bonuspunkte, die du bekommst.";
-        }
+        _textStreak =
+            "### Außerdem bekommst du ${rewardService.streakDays}💎 als Bonus. Wenn du mehrere Tage in Folge **alle** Aufgaben rechtzeitig erledigst, erhöhen sich die Bonuspunkte, die du bekommst.";
       }
     }
     if (widget.previousRoute == NoTaskSituation.afterFinal) {
