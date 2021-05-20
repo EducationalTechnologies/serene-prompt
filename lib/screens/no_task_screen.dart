@@ -124,7 +124,7 @@ class _NoTasksScreenState extends State<NoTasksScreen>
 
       if (rewardService.streakDays > 0) {
         _textStreak =
-            "### Außerdem bekommst du ${rewardService.streakDays}💎 als Bonus. Wenn du mehrere Tage in Folge **alle** Aufgaben rechtzeitig erledigst, erhöhen sich die Bonuspunkte, die du bekommst.";
+            "### Außerdem bekommst du ${rewardService.streakDays}💎 als Bonus. Wenn du mehrere Tage in Folge **alle** Aufgaben erledigst, erhöhen sich die Bonuspunkte, die du sicher bekommst.";
       }
     }
     if (widget.previousRoute == NoTaskSituation.afterFinal) {
