@@ -3,7 +3,6 @@ import 'package:prompt/locator.dart';
 import 'package:prompt/services/experiment_service.dart';
 import 'package:prompt/services/navigation_service.dart';
 import 'package:prompt/services/notification_service.dart';
-import 'package:prompt/services/push_notification_service.dart';
 import 'package:prompt/services/reward_service.dart';
 import 'package:prompt/services/user_service.dart';
 import 'package:prompt/shared/enums.dart';
